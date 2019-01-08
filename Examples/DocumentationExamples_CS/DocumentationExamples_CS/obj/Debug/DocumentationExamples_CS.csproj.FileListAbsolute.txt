@@ -1,0 +1,13 @@
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\DocumentationExamples_CS.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\DocumentationExamples_CS.pdb
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\AdvancedUsage_MockingNonPublicMembersAndTypesSUT.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\nunit.framework.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\Telerik.JustMock.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\Telerik.JustMock.pdb
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\bin\Debug\AdvancedUsage_MockingNonPublicMembersAndTypesSUT.pdb
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\obj\Debug\DocumentationExamples_CS.csprojAssemblyReference.cache
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\obj\Debug\DocumentationExamples_CS.csproj.CoreCompileInputs.cache
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\obj\Debug\DocumentationExamples_CS.csproj.CopyComplete
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\obj\Debug\DocumentationExamples_CS.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_CS\DocumentationExamples_CS\obj\Debug\DocumentationExamples_CS.pdb

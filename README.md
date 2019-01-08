@@ -67,7 +67,7 @@ Detailed instructions on how to achieve this can be found in the [docs-seed repo
 
 ## License
 
-The Telerik JustMock Lite and JustMock Documentation is licensed under an MIT license. This license applies to the markdown (.md) files in this site **ONLY**, and does not convey, override or modify any existing licenses covering the runtime source and components of Telerik JustMock Lite and JustMock. For information about available licenses for Telerik JustMock click [here](https://www.telerik.com/purchase/license-agreement/justmock-dlw-s).
+The Telerik JustMock Lite and JustMock Documentation is licensed under an MIT license. This license applies to the markdown (.md) files in this site **ONLY**, and does not convey, override or modify any existing licenses covering the runtime source and components of Telerik JustMock Lite and JustMock. For information about available licenses for Telerik JustMock Lite click [here](https://www.telerik.com/purchase/license-agreement/justmock-free-edition) and for Telerik JustMock click [here](https://www.telerik.com/purchase/license-agreement/justmock-dlw-s).
 
 ### MIT License
 

@@ -1,0 +1,16 @@
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\DocumentationExamples_VB.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\DocumentationExamples_VB.pdb
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\DocumentationExamples_VB.xml
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\AdvancedUsage_MockingNonPublicMembersAndTypesSUT_VB.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\nunit.framework.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\Telerik.JustMock.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\Telerik.JustMock.pdb
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\AdvancedUsage_MockingNonPublicMembersAndTypesSUT_VB.pdb
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\bin\Debug\AdvancedUsage_MockingNonPublicMembersAndTypesSUT_VB.xml
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\obj\Debug\DocumentationExamples_VB.vbprojAssemblyReference.cache
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\obj\Debug\DocumentationExamples_VB.vbproj.CoreCompileInputs.cache
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\obj\Debug\DocumentationExamples_VB.vbproj.CopyComplete
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\obj\Debug\DocumentationExamples_VB.dll
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\obj\Debug\DocumentationExamples_VB.xml
+C:\Work\MATTeam\JustMock\JustMock 2.0\Documentation\Examples\DocumentationExamples_VB\DocumentationExamples_VB\obj\Debug\DocumentationExamples_VB.pdb
