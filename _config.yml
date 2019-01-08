@@ -1,0 +1,88 @@
+# The public documentation URL, used for sitemap.xml
+url: "https://docs.telerik.com/devtools/justmock"
+
+# Exclude files which should not be in the output
+exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb]
+navigation:
+## List your directory names and order here, like this:
+    getting-started:
+        title: Getting Started
+        position: 1
+
+    licensing:
+        title: Licensing
+        position: 2
+
+    basic-usage:
+        title: Basic Usage
+        position: 3
+
+    advanced-usage:
+        title: Advanced Usage
+        position: 4
+
+    scenarios:
+        title: Scenarios
+        position: 5
+
+    integration:
+        title: Other Integrations
+        position: 8
+
+    code-coverage:
+        title: Code Coverage Integrations
+        position: 7
+
+    continuous-integration:
+        title: Continuous Integration
+        position: 6
+
+    basic-usage/mock-behaviors:
+        title: Mock Behaviors
+        position: 2
+
+    basic-usage/mock:
+        title: Mock
+        position: 3
+
+## The application virtual path
+baseurl: /devtools/justmock
+
+
+## Assign layout and category per different paths
+defaults:
+-
+    scope:
+        path: ""
+    values:
+        layout: "page"
+        category: "default"
+        product: "justmock"
+        editable: false
+-
+    scope:
+        path: "api"
+    values:
+        layout: "api"
+        
+## The Kendo UI version used
+cdnVersion: "2017.3.1026"
+
+# Aliases available in the markdown template. The below will expand {{site.foo}} to Bar in the output
+# "foo": "Bar"
+
+ff-sheet-id: f22ac032-a3ef-411e-af2e-6202e27709be
+
+# The google services configuration
+google_tag_manager: GTM-6X92
+google_custom_search: '001595215763381649090:bmvql-x1xsw'
+
+# Assets pipeline configuration
+assets:
+    cachebust: soft
+    js_compressor: uglifier
+    gzip: false
+
+## Do not edit below this line
+safe: false
+markdown: MarkdownProcessor

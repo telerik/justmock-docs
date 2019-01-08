@@ -1,0 +1,57 @@
+---
+layout: index
+---
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "{{site.baseurl}}/{{page.category}}.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            messages: {
+                loading: " "
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("{{site.baseurl}}/"),
+            dataBound: expandNavigation("{{page.url | remove_first: '/' }}")
+        });
+        </script>
+        <div id="page-tree" data-role="treeview" class="api-ref k-widget k-treeview" tabindex="0" aria-activedescendant="page-tree_tv_active">
+            <ul class="k-group k-treeview-lines k-treeview" role="tree">
+                <li role="treeitem" class="k-item k-last" data-uid="609b5a7e-4fbd-48f4-9155-0f6a6c08deeb" aria-selected="false">
+                    <div class="k-bot">
+                        <span class="k-in">
+                            <div class="navigation-item-content">
+                                <a href="/devtools/justmock/api">API Reference</a>
+                            </div>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {% if page.editable %}<a id="page-edit-link" href="https://github.com/telerik/kendo-ui-core/edit/master/docs/{{ page.url | replace: '.html','' }}.md"><span class="k-icon k-i-pencil"></span> Edit this page</a>{% endif %}
+
+    <div id="page-article">
+        <article>
+            {% if page.is_main %}{% include api-filter.html %}{% endif %}
+            {% if page.slug == 'knowledge_base' %}{% include kb-last-updated-articles.html %} {% else %} {{ content }} {% endif %}
+        </article>
+    </div>
+    {% if page.slug != 'knowledge_base' and page.is_main != true %}{% if site.ff-sheet-id %}{% include feedback-form.html %}{% endif %}{% endif %}
+    {% include footer.html %}
+</div>
