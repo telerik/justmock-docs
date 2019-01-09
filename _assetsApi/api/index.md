@@ -87,9 +87,10 @@ The API reference section of the documentation contains a list and descriptions 
 
 ## Namespaces
 
-Namespaces | Description
-[Telerik.JustMock](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock)|In: *Telerik.JustMock.dll* This namespace must be included to any JustMock test project.
-[Telerik.JustMock.AutoMock](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.AutoMock)|In: *Telerik.JustMock.dll* This namespace must be included to use AutoMock.
-[Telerik.JustMock.Helpers](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Helpers)|In: *Telerik.JustMock.dll* This namespace must be included in any JustMock test project using fluent syntaxt for its tests.Also contains helpers methods.
-[Telerik.JustMock.Setup](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Setup)|In: *Telerik.JustMock.dll* This namespace is used for configuring the JustMocks behavior.
-[Telerik.JustMock.Trial](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Trial)|In: *Telerik.JustMock.dll*
+| Namespaces | Description |
+| -----------| ----------- |
+| [Telerik.JustMock](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock) | In: *Telerik.JustMock.dll* <br/> This namespace must be included to any JustMock test project. |
+| [Telerik.JustMock.AutoMock](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.AutoMock) | In: *Telerik.JustMock.dll* <br/> This namespace must be included to use AutoMock. |
+| [Telerik.JustMock.Helpers](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Helpers) | In: *Telerik.JustMock.dll* <br/> This namespace must be included in any JustMock test project using fluent syntaxt for its tests.Also contains helpers methods. |
+| [Telerik.JustMock.Setup](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Setup) | In: *Telerik.JustMock.dll* <br/> This namespace is used for configuring the JustMocks behavior. |
+| [Telerik.JustMock.Trial](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Trial) | In: *Telerik.JustMock.dll*
