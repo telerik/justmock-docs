@@ -85,4 +85,11 @@ article:not(.api-reference)>p:first-child, article:not(.api-reference) h1+p {
 # Telerik JustMock API Reference
 The API reference section of the documentation contains a list and descriptions of all public available classes, methods and properties of the Telerik JustMock product.
 
-> This documentation refers to the latest version of Telerik JustMock.
+## Namespaces
+
+Namespaces | Description
+[Telerik.JustMock](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock)|In: *Telerik.JustMock.dll* This namespace must be included to any JustMock test project.
+[Telerik.JustMock.AutoMock](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.AutoMock)|In: *Telerik.JustMock.dll* This namespace must be included to use AutoMock.
+[Telerik.JustMock.Helpers](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Helpers)|In: *Telerik.JustMock.dll* This namespace must be included in any JustMock test project using fluent syntaxt for its tests.Also contains helpers methods.
+[Telerik.JustMock.Setup](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Setup)|In: *Telerik.JustMock.dll* This namespace is used for configuring the JustMocks behavior.
+[Telerik.JustMock.Trial](http://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Trial)|In: *Telerik.JustMock.dll*
