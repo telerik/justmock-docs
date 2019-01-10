@@ -2,7 +2,7 @@
 url: "https://docs.telerik.com/devtools/justmock"
 
 # Exclude files which should not be in the output
-exclude: [readme.md, Gemfile, Gemfile.lock,api_sort.rb]
+exclude: [README.md, Gemfile, Gemfile.lock, docs-watcher/*, api/*]
 navigation:
 ## List your directory names and order here, like this:
     getting-started:
@@ -44,10 +44,9 @@ navigation:
     basic-usage/mock:
         title: Mock
         position: 3
-
+        
 ## The application virtual path
 baseurl: /devtools/justmock
-
 
 ## Assign layout and category per different paths
 defaults:
@@ -55,27 +54,52 @@ defaults:
     scope:
         path: ""
     values:
-        layout: "page"
+        layout: "documentation"
         category: "default"
         product: "justmock"
-        editable: false
--
-    scope:
-        path: "api"
-    values:
-        layout: "api"
-        
-## The Kendo UI version used
-cdnVersion: "2017.3.1026"
 
 # Aliases available in the markdown template. The below will expand {{site.foo}} to Bar in the output
 # "foo": "Bar"
+
+product: "Telerik JustMock"
+productName: "Telerik JustMock"
+platform: justmock
 
 ff-sheet-id: f22ac032-a3ef-411e-af2e-6202e27709be
 
 # The google services configuration
 google_tag_manager: GTM-6X92
-google_custom_search: '001595215763381649090:bmvql-x1xsw'
+gcs_engine: '001595215763381649090:bmvql-x1xsw'
+gcs_api_key: 'AIzaSyC8edQ_EPDSw2G4lsc7HhAfJ6e-aWhQ4bY'
+
+edit_repo_url: https://github.com/telerik/justmock-docs/edit/master
+
+download: http://www.telerik.com/download-trial-file/v2/justmock
+nav:
+  "Videos": http://www.telerik.com/videos/justmock/work-less-do-more-with-justmock-
+  "Release History": https://www.telerik.com/support/whats-new/justmock/release-history
+  "About": http://www.telerik.com/products/mocking
+  "Pricing": http://www.telerik.com/purchase/individual-justmock
+
+footer:
+-
+  title: "Getting Started"
+  links:
+    "Unit Testing and Mocking Explained": https://www.telerik.com/products/mocking/unit-testing.aspx
+    "Videos": https://www.telerik.com/videos/justmock
+    "FAQs": https://www.telerik.com/products/mocking/faq.aspx
+-
+  title: "Community"
+  links:
+    "Forums": https://www.telerik.com/forums/justmock
+    "Blogs": https://www.telerik.com/blogs/tag/justmock
+    "Feedback Portal": https://feedback.telerik.com/Project/105
+  
+footer_social: 
+    facebook: https://www.facebook.com/Telerik/
+    youtube: https://www.youtube.com/user/TelerikInc
+    linkedin: https://www.linkedin.com/showcase/telerik/ 
+    twitter: https://twitter.com/Telerik/ 
 
 # Assets pipeline configuration
 assets:
