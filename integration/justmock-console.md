@@ -3,10 +3,10 @@ title: JustMock Console
 page_title: JustMock Console | JustMock Documentation
 description: JustMock Console integration with Telerik JustMock
 slug: justmock/integration/justmock-console
-tags: windows,batch,command, console
+tags: justmock-console,console, command
 published: True
 position: 16
-previous_url: /scenarios/running-justmock-profiler-outside-visual-studio, /scenarios/running-justmock-profiler-outside-visual-studio.html, /integration-windows-batch-command.html, /integration-windows-batch-command
+previous_url: /integration-justmock-console.html
 ---
 
 # JustMock Console
