@@ -15,6 +15,8 @@ __Telerik® JustMock__ enables you to mock classes/members from Silverlight asse
 
 As JustMock comes in two versions ([Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})), there are also number of possible ways to apply mocking inside/to your Silverlight tests/assemblies:
 
+> Since R3 2018 Silverlight is in maintanance mode meaning that it wont be included in the newer versions and if needed only critical problems will be fixed. Please submit a support ticket in our [support ticketing system](https://www.telerik.com/account/support-tickets) if you have any questions.
+
 ## Mocking without Profiler inside Silverlight Projects
 
 This approach is possible with both the free and commercial versions of JustMock.
