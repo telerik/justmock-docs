@@ -48,6 +48,7 @@ The following table shows the differences between the commercial and free versio
 |[Mocking LINQ Queries]({%slug justmock/advanced-usage/mocking-linq-queries%})|![Supported](images/Black-10x10.png)|![Not Supported](images/White-10x10.png)|
 |[Private Accessor]({%slug justmock/advanced-usage/private-accessor%})|![Supported](images/Black-10x10.png)|![Not Supported](images/White-10x10.png)|
 |[Mocking DLL Imports]({%slug justmock/advanced-usage/mocking-dll-imports%})|![Supported](images/Black-10x10.png)|![Not Supported](images/White-10x10.png)|
+|[.Net Core Support]|![Supported](images/Black-10x10.png)|![Supported](images/Black-10x10.png)|
 
 __Legend__
 
