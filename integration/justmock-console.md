@@ -11,56 +11,42 @@ previous_url: /integration-justmock-console.html
 
 # JustMock Console
 
-The **JustMockConsole** tool is the result of **JustMockRunner** evolution. Therefore, those of you who were familiar with **JustMockRunner** will easily get used to **JustMockConsole**. Existing users of **JustMockRunner** will be able to migrate theirs scripts to **JustMockConsole** with just a couple of tiny modifications.
+The **JustMockConsole** comes in hady for executing **installation-free** elevated mocking tests extending the functionality of **JustMockRunner**. Those of you who are familiar using **JustMockRunner** will easily get used to **JustMockConsole**.
 
-**JustMockConsole** supports both **.NET Framework** and **.NET Core** and is shipped as executable and dll file.  The tool can be found in the following folder as part of JustMock installation:
-<pre><code class="nohighlight">C:\Program Files (x86)\Progress\Telerik JustMock\Libraries</code></pre>
-    
+With **JustMockConsole** it is easy to execute **.NET Framework** and/or **.NET Core** tests. The tool is shipped with JustMock installation and can be located in the following folder:
+
+    C:\Program Files (x86)\Progress\Telerik JustMock\Libraries
 
 To get a feeling about the functionality of the command line tool you may execute:
 
-<pre><code class="no-highlight/plain/text">justmock.console –help</code></pre>
+    Telerik.JustMock.Console –help
 
 A sample output from running the above command may look like following:
 
-<pre><code class="no-highlight/plain/text">C:\>justmock.console --help
-    Telerik 1.0.0
-    Copyright c 2010-2015 Telerik EAD
-    
-      --profiler-path-32Path to JustMock x86 profiler.
-    
-      --profiler-path-64Path to JustMock x64 profiler.
-    
-      --command Required. Path to test runner assembly.
-    
-      --command-argsRequired. Arguments that will be passed to the tool that was specified by "--command" option.
-    
-      --no-logo (Default: false) Hide JustMock logo header and copyright notice: "false" -
-    display JustMock logo header and copyright notice; "true" - hide JustMock
-    logo header and copyright notice.
-    
-      --helpDisplay this help screen.
-    
-      --version Display version information.
-</code></pre>
+![Telerik.JustMock.Console Help](images/JustMockConsoleHelp.png)
 
 
-##  Installation for .NET Core
+Note that the command line options on the screenshot are part of **runadvanced** verb. The current version of **JustMockConsole** contains just a single verb that can be omitted, but we strongly advice to actually **include the verb** when using **JustMockConsole**. This way it will be far easier to adopt new versions of **JustMockConsole**, that may have more verbs and functionality.
 
-To use **JustMockConsole** with **.NET Core** framework more easily we strongly advice to install the tool as dotnet external global tool. It can be installed either from local or remote nuget package. For example installing the tool from local source may look like this:
+##  How to run profiler enabled JustMock tests in command prompt
 
-<pre><code class="no-highlight/plain/text">dotnet tool install --global --add-source ./nupkg-path Telerik.JustMockConsole</code></pre>
+Running advanced JustMock tests is achieved by specifying proper values for **—command** and **—command-args** options. 
 
-##  Running JustMock advanced tests with profiler
+Below is example usage of JustMockConsole with VSTestConsole:
 
-The **runadvanced** verb of **JustMockConsole** is used for running tests with JustMock advanced features. The process is straightforward and requires the user to specify proper values for **—command** and **—command-args** options like in the following example:
+    Telerik.JustMock.Console runadvanced --command "\"C:\full\path\to\vstest.console.exe\"" --command-args "\"C:\full\path\to\JustMock.Tests.dll\"" 
 
-<pre><code class="no-highlight/plain/text">justmock.console runadvanced --command "dotnet" --command-args "exec \"C:\Program Files\dotnet\sdk\2.1.403\vstest.console.dll\" --Framework:\".NETCoreApp,Version=v2.0\" --Logger:console;verbosity=detailed --Diag:\"c:\Temp\testrun.log" "C:\...PathToDllWithTests...\JustMock.Tests.dll\""</code></pre>
+Another sample may use .NET Core **dotnet** tool like following:
 
-Note that **runadvanced** verb can be omitted right now, but we strongly encourage that it’s used in your scripts. This way it will be easier for you to adapt new versions of JustMockConsole, that may have more verbs and functionality.
+    Telerik.JustMock.Console runadvanced --command "dotnet" --command-args "exec \"C:\full\path\to\dotnet\vstest.console.dll\" --Framework:\".NETCoreApp,Version=v2.0\" "C:\full\path\to\JustMock.Tests.dll\""
 
-##  Registry free profiling with JustMockConsole
 
-The example in the above section is based on running JustMock based on registry key values. In order to achieve registry free profiling the user may provide values to “—profiler-path-32” and/or “—profiler-path-64” like demonstrated below:
+##  How to run installation free profiling with JustMockConsole
 
-<pre><code class="no-highlight/plain/text">justmock.console runadvanced --profiler-path-64 "\"C:\...Path To 64 bit JustMock profiler...CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll\"" --command "dotnet" --command-args "exec \"C:\Program Files\dotnet\sdk\2.1.403\vstest.console.dll\" --Framework:\".NETCoreApp,Version=v2.0\" --Logger:console;verbosity=detailed --Diag:\"c:\Temp\testrun.log" "C:\...PathToDllWithTests...\JustMock.Tests.dll\""</code></pre>
+In order to perform installation free profiling you need to provide values for **—profiler-path-32**  and/or **—profiler-path-64** command line options like demonstrated in the following example:
+
+    Telerik.JustMock.Console --profiler-path-64 "\"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll\"" --command "\"C:\full\path\to\vstest.console.exe\"" --command-args "\"C:\full\path\to\JustMock.Tests.dll\""
+
+Note that it is possible to mix 32 and 64 bit profiling by specifying both command options like:
+
+    Telerik.JustMock.Console --profiler-path-32 "\"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll\"" --profiler-path-64 "\"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll\"" --command "\"C:\full\path\to\vstest.console.exe\"" --command-args "\"C:\full\path\to\JustMock.Tests.dll\""
