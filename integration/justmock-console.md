@@ -5,7 +5,7 @@ description: JustMock Console integration with Telerik JustMock
 slug: justmock/integration/justmock-console
 tags: justmock-console,console, command
 published: True
-position: 16
+position: 2
 previous_url: /integration-justmock-console.html
 ---
 
