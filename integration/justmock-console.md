@@ -19,7 +19,7 @@ With **JustMockConsole** it is easy to execute **.NET Framework** and/or **.NET 
 
 To get a feeling about the functionality of the command line tool you may execute:
 
-```Telerik.JustMock.Console -–help```
+```Telerik.JustMock.Console --help```
 
 A sample output from running the above command may look like following:
 
@@ -34,7 +34,7 @@ Running advanced JustMock tests is achieved by specifying proper values for **�
 
 Below is example usage of JustMockConsole with VSTestConsole:
 
-```Telerik.JustMock.Console runadvanced --command "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" --command-args "C:\full\path\to\JustMock.Tests.dll"```
+```Telerik.JustMock.Console runadvanced --command "vstest.console.exe" --command-args "C:\full\path\to\JustMock.Tests.dll"```
 
 Another sample may use .NET Core **dotnet** tool like following:
 
@@ -45,7 +45,7 @@ Another sample may use .NET Core **dotnet** tool like following:
 
 In order to perform installation free profiling you need to provide values for **—profiler-path-32**  and/or **—profiler-path-64** command line options depending on the profiled process. Here is an example for .Net Framework:
 
-```Telerik.JustMock.Console runadvanced --profiler-path-32 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --command "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" --command-args "C:\full\path\to\JustMock.Tests.dll"```
+```Telerik.JustMock.Console runadvanced --profiler-path-32 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --command "vstest.console.exe" --command-args "C:\full\path\to\JustMock.Tests.dll"```
 
 And here is an example for .Net Core:
 
@@ -53,7 +53,7 @@ And here is an example for .Net Core:
 
 Note that it is possible to mix 32 and 64 bit profiling by specifying both command options like:
 
-```Telerik.JustMock.Console runadvanced --profiler-path-32 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --profiler-path-64 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll" --command "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" --command-args "C:\full\path\to\JustMock.Tests.dll"```
+```Telerik.JustMock.Console runadvanced --profiler-path-32 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --profiler-path-64 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll" --command "vstest.console.exe" --command-args "C:\full\path\to\JustMock.Tests.dll"```
 
 The same thing is applicable for .Net Core as well.
 
