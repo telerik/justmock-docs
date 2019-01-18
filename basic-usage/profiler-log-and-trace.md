@@ -14,14 +14,14 @@ position: 16
 In this article you will get familiar with Telerik JustMock Profiler built-in log and trace capabilities. Elevated mocking is strongly relies on profiler and sometimes it might be blocked by unexpected behavior which is hard to be troubleshooted. Here comes the profiler trace, it is really useful for finding where the problem comes from.
 
 ## Enabling the Profiler Log And Trace
-The log and trace functionality could be enabled by setting a dedicated environment variable __JUSTMOCK\_LOG\_LEVEL__. Possible values are: __TRACE__, __DEBUG__, __INFO__, __WARN__, __ERROR__, __CRITICAL__ and __OFF__. Values from __TRACE__ to __CRITICAL__ enable tracing with different verbosity level in descending order, while __OFF__ completely disables it. All traces are redirected to system debug output.
+The log and trace functionality is controlled entirely via environment using dedicated variable__JUSTMOCK\_LOG\_LEVEL__. Possible values are: __TRACE__, __DEBUG__, __INFO__, __WARN__, __ERROR__, __CRITICAL__ and __OFF__. Values from __TRACE__ to __CRITICAL__ enable tracing with different verbosity level in descending order, while __OFF__ completely disables it. All traces are redirected to system debug output.
 
 ## Inspecting the Profiler traces
-System debug could be visualized even without debugger by using [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview). The typical output from the tool look like as following:
+System debug could be visualized without debugger by using [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview). The typical output from the tool look like as following:
 
 ![Debug View Traces](images/DebugView_Traces.png)
 
-Keep in mind that the tool captures the output from whole system, so for convenience the traces could be filtered by key word __JustMockProfiler__.
+Keep in mind that the tool captures the output from whole system, so for convenience the traces could be filtered by the key word __JustMockProfiler__.
 
 ![Debug View Filter Trace](images/DebugView_FilterTrace.png)
 
