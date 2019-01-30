@@ -32,7 +32,7 @@ In order to use JustMock the following additional development tools must be inst
 * __.NET Framework .NET 4.5+, .NET 4.6+, .NET 4.7+__
 * __Microsoft Visual Studio 2010/2012/2013/2015/2017/2019__ - download from [here](https://visualstudio.microsoft.com/vs/).
 
->tip Since R1 2019, .NET Core 2 is also supported.
+>tip Since R1 2019, .NET Core 2 and later versions are also supported.
 
 ## Installing JustMock
 
