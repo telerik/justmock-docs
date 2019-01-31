@@ -2,11 +2,11 @@
 title: Profiler Log And Trace
 page_title: Profiler Log And Trace | JustMock Documentation
 description: Profiler Log And Trace
-previous_url: /basic-usage-debug-view.html
-slug: justmock/basic-usage/debug-view
+previous_url: /advanced-usage-profiler-log-and-trace.html
+slug: justmock/advanced-usage/profiler-log-and-trace
 tags: log,trace,profiler
 published: True
-position: 16
+position: 22
 ---
 
 # Profiler Log And Trace
@@ -21,7 +21,7 @@ System debug could be visualized without debugger by using [DebugView](https://d
 
 ![Debug View Traces](images/DebugView_Traces.png)
 
-Keep in mind that the tool captures the output from whole system, so for convenience the traces could be filtered by the key word __JustMockProfiler__.
+Keep in mind that the tool captures the output from whole system, so for convenience the traces could be filtered by the keyword __JustMockProfiler__.
 
 ![Debug View Filter Trace](images/DebugView_FilterTrace.png)
 
@@ -31,7 +31,7 @@ Keep in mind that the tool captures the output from whole system, so for conveni
 
 Let's follow up an example, showing how the profiler trace can be enabled while executing test container from the command prompt step by step:
 
-1. Setting up profiler trace to __DEBUG__
+1. Setting up profiler trace level using environment variable
 
  ```set JUSTMOCK_LOG_LEVEL=DEBUG```
 
@@ -45,4 +45,4 @@ Let's follow up an example, showing how the profiler trace can be enabled while 
 
 ```"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\Telerik.JustMock.Console.exe" --profiler-path-32="C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --command="vstest.console.exe" --command-args="bin\Debug\net45\UnitTestProject.dll"```
 
-5. Profiler traces will be start to appear inside __DebugView__ window
+5. Profiler traces will start to appear inside __DebugView__ window
