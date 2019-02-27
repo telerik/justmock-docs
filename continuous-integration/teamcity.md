@@ -5,7 +5,7 @@ description: Telerik JustMock integration with TeamCity
 slug: justmock/integration/teamcity
 tags: teamcity
 published: True
-position: 5
+position: 6
 previous_url: integration-teamcity.html, integration-teamcity
 ---
 
