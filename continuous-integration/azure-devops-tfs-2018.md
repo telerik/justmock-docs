@@ -20,9 +20,11 @@ It breaks you free from tedious configuration of environment variables and provi
 1. To install the extension go to the Azure DevOps marketplace and search for JustMock or click on this [link](https://marketplace.visualstudio.com/items?itemName=vs-publisher-443.jm-vstest-2).
 
 2. Click on the click on the "Get it free" button. The marketplace will require you to login if you haven't done that already.
+
 ![JustMock extension Get it free](images/MarketPlace_JustMock.png)
 
 3. Click on the install button and follow the procedure.
+
 ![Install JustMock extension](images/Install_JustMock_Extension.png)
 
 ## Adding the Telerik JustMock VSTest v.2 to your build
@@ -51,4 +53,8 @@ For this scenario you have two possible variants to choose from.
 
 ## See Also
 
-Installation free
+* [Cruise Control .NET]({%slug justmock/integration/cruise-control-.net%})
+
+* [Jenkins CI]({%slug justmock/integration/jenkins-ci%})
+
+* [TeamCity]({%slug justmock/integration/teamcity%})
