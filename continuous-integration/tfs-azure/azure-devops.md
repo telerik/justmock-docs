@@ -27,17 +27,17 @@ It breaks you free from tedious configuration of environment variables and provi
 
 2. Click on the "Get it free" button. The marketplace will require you to login if you haven't done that already.
 
-![JustMock extension Get it free](images/MarketPlace_JustMock.png)
+![JustMock extension Get it free](images/Azure_MarketPlace_JustMock.png)
 
 3. Click on the install button and follow the procedure.
 
-![Install JustMock extension](images/Install_JustMock_Extension.png)
+![Install JustMock extension](images/Azure_Install_JustMock_Extension.png)
 
 ## Adding the Telerik JustMock VSTest v.2 to your build
 
 Go to your build pipepile and click on the "Add task" button and find the "Telerik JustMock VSTest v.2" task located under the "Test" tab and click on the "Add" button of the task. As an alternative you could drag the task to the desired location in your build pipeline.
 
-![Add Telerik JustMock VSTest v.2 task to the build](images/Add_JustMock_Task.png)
+![Add Telerik JustMock VSTest v.2 task to the build](images/Azure_Add_JustMock_Task.png)
 
 ## Confuguring the Telerik JustMock VSTest v.2 task
 
@@ -47,7 +47,7 @@ The task is in essence a wrapper of the VSTest task and the configuration is the
 
 For this scenario you have to configure the JustMock options in the "Telerik JustMock VSTest v.2 task". The options allow you to specify a relative path to the 32 and 64 bit JustMock Profiler. In this scenario the JustMock Profiler in his 32 and 64 bit variant should be included in your repository. The different variations are used in regards of whether the test execution process is 32 or 64 bit. The bitness of this process is different for .Net Framework and .Net Core. This is why we recommend specifying both paths.
 
-![Configure JustMock Options](images/JustMock_Options.png)
+![Configure JustMock Options](images/Azure_JustMock_Options.png)
 
 ### Using build agent at on-premises server
 
