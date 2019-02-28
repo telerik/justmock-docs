@@ -27,11 +27,11 @@ It breaks you free from tedious configuration of environment variables and provi
 
 2. Click on the "Get it free" button. The marketplace will require you to login if you haven't done that already.
 
-![JustMock extension Get it free](images/Azure_MarketPlace_JustMock.png)
+    ![JustMock extension Get it free](images/Azure_MarketPlace_JustMock.png)
 
 3. Click on the install button and follow the procedure.
 
-![Install JustMock extension](images/Azure_Install_JustMock_Extension.png)
+    ![Install JustMock extension](images/Azure_Install_JustMock_Extension.png)
 
 ## Adding the Telerik JustMock VSTest v.2 to your build
 
@@ -41,15 +41,15 @@ Go to your build pipepile and click on the "Add task" button and find the "Teler
 
 ## Confuguring the Telerik JustMock VSTest v.2 task
 
-The task is in essence a wrapper of the VSTest task and the configuration is the same. The only additional configuration is related to whether the build agent is at the could or at on-premisses server.
+The task is in essence a wrapper of the VSTest task and the configuration is the same. The only additional configuration is related to whether the build agent is hosted at the cloud or at on-premisses server.
 
-### Using build agent at the Azure DevOps cloud
+### Using build agent hosted at the Azure DevOps cloud
 
-For this scenario you have to configure the JustMock options in the "Telerik JustMock VSTest v.2 task". The options allow you to specify a relative path to the 32 and 64 bit JustMock Profiler. In this scenario the JustMock Profiler in his 32 and 64 bit variant should be included in your repository. The different variations are used in regards of whether the test execution process is 32 or 64 bit. The bitness of this process is different for .Net Framework and .Net Core. This is why we recommend specifying both paths.
+For this scenario you have to configure the JustMock options in the "Telerik JustMock VSTest v.2 task". The options allow you to specify a relative path to the 32 and 64 bit JustMock Profiler. In this scenario the JustMock Profiler in his 32 and 64 bit variant should be included in your repository. The different variations are used in regards of whether the test execution process is 32 or 64 bit. By configuring both paths you will ensure that regardless of the bitness of the installation for .Net Framework or .Net Core the test execution process will be profiled and the JustMock advanced elevated features will be available.
 
 ![Configure JustMock Options](images/Azure_JustMock_Options.png)
 
-### Using build agent at on-premises server
+### Using build agent hosted at on-premises server
 
 For this scenario you have two possible variants to choose from.
 
