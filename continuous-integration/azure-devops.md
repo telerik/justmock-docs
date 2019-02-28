@@ -1,7 +1,7 @@
 ---
-title: Azure Devops and TFS 2018
-page_title: Azure Devops | JustMock Documentation
-description: Integrating Telerik JustMock with Azure Devops and TFS 2018
+title: Azure Pipelines
+page_title: Azure Pipelines | JustMock Documentation
+description: Integrating Telerik JustMock with Azure Devops Pipelines, TFS 2018 and TFS 2017
 previous_url: azure-devops, azure-devops.html
 slug: justmock/integration/azure-devops
 tags: azure,tfs,2018
@@ -9,11 +9,17 @@ published: True
 position: 0
 ---
 
-# Azure Pipelines
+# Azure Devops Pipelines
 
-The [Telerik JustMock Tests v.2](https://marketplace.visualstudio.com/items?itemName=vs-publisher-443.jm-vstest-2) extension for Azure Piplines and TFS 2018 is designed to deploy your JustMock test projects to Azure Pipelines or TFS 2018 with minimal manual configurations for setting up your build environment.
+The [Telerik JustMock Tests v.2](https://marketplace.visualstudio.com/items?itemName=vs-publisher-443.jm-vstest-2) extension is designed to deploy your JustMock test projects with minimal manual configurations for setting up your build environment.
 
 It breaks you free from tedious configuration of environment variables and provides you simple options that can get you on the move in no time. In this topic we will focus on what are the required configuration steps when working with JustMock Tests v.2 extension.
+
+## Suported Continuous Integration Environment
+
+- Azure Devops Piplines
+- TFS 2018 and all subsequent updates
+- TFS 2017 Update 2 and all subsequent updates
 
 ## Steps for installing the JustMock Tests v.2 extension and the task
 
