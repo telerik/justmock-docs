@@ -19,7 +19,7 @@ It breaks you free from tedious configuration of environment variables and provi
 
 1. To install the extension go to the Azure DevOps marketplace and search for JustMock or click on this [link](https://marketplace.visualstudio.com/items?itemName=vs-publisher-443.jm-vstest-2).
 
-2. Click on the click on the "Get it free" button. The marketplace will require you to login if you haven't done that already.
+2. Click on the "Get it free" button. The marketplace will require you to login if you haven't done that already.
 
 ![JustMock extension Get it free](images/MarketPlace_JustMock.png)
 
@@ -39,7 +39,7 @@ The task is in essence a wrapper of the VSTest task and the configuration is the
 
 ### Using build agent at the Azure DevOps cloud
 
-For this scenario you have to configure the JustMock options in the "Telerik JustMock VSTest v.2 task". The options allow you to specify a relative path to the 32 and 64 bit JustMock Profiler. In this scenario the JustMock Profiler in his 32 and 64 bit variant should be included in your source code. The different variations are used in regards of whether the test execution process is 32 or 64 bit. The bitness of this process is different for .Net Framework and .Net Core. This is why we recommend specifying both paths.
+For this scenario you have to configure the JustMock options in the "Telerik JustMock VSTest v.2 task". The options allow you to specify a relative path to the 32 and 64 bit JustMock Profiler. In this scenario the JustMock Profiler in his 32 and 64 bit variant should be included in your repository. The different variations are used in regards of whether the test execution process is 32 or 64 bit. The bitness of this process is different for .Net Framework and .Net Core. This is why we recommend specifying both paths.
 
 ![Configure JustMock Options](images/JustMock_Options.png)
 
