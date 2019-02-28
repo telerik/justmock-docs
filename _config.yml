@@ -29,14 +29,18 @@ navigation:
         title: Other Integrations
         position: 8
 
-    code-coverage:
-        title: Code Coverage Integrations
-        position: 7
-
     continuous-integration:
         title: Continuous Integration
         position: 6
+    
+    continuous-integration/tfs-azure:
+        title: TFS and Azure Pipelines
+        position: 1
 
+    code-coverage:
+        title: Code Coverage Integrations
+        position: 7
+    
     basic-usage/mock-behaviors:
         title: Mock Behaviors
         position: 2
