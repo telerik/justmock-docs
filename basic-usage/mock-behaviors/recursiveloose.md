@@ -316,41 +316,82 @@ To enter the `If` statement of the MethodUnderTest(), we simply need to pass a `
 		End Sub
   {{endregion}}
 
-The RecursiveLoose behavior understands Task\<TResult\> return types and automatically arranges that awaiting a task returns a mock:
+### RecursiveLoose Mocks in Async Tests  
+  
+The RecursiveLoose behavior automatically intercepts the return types in asynchronous calls and returns a mock object:
         
   #### __[C#]__
 
   {{region MockBehaviorRecursiveLoose#RecursiveLooseMockAsync}}
     [TestMethod]
-        public async Task ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
-        {
-            //Arrange
-            var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose); // This equals to: Mock.Create<IFirst>();
+    public async Task ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
+    {
+        //Arrange
+        var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose); // This equals to: Mock.Create<IFirst>();
 
-            //Act
-            var actual = await foo.Second.Third.GetFourthAsync();
+        //Act
+        var actual = await foo.Second.Third.GetFourthAsync();
 
-            // Assert
-            Assert.IsNotNull(actual.DoSomething());
-        }
+        // Assert
+        Assert.IsNotNull(actual.DoSomething());
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockBehaviorRecursiveLoose#RecursiveLooseMockAsync}}
     <TestMethod>
-		Public Async Function ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
-			'Arrange
-			Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose) ' This equals to: Mock.Create(Of IFirst)()
+    Public Async Function ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
+        'Arrange
+        Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose) ' This equals to: Mock.Create(Of IFirst)()
 
-			'Act
-			Dim actual = Await foo.Second.Third.GetFourthAsync()
+        'Act
+        Dim actual = Await foo.Second.Third.GetFourthAsync()
 
-			' Assert
-			Assert.IsNotNull(actual.DoSomething())
-		End Function
+        ' Assert
+        Assert.IsNotNull(actual.DoSomething())
+    End Function
   {{endregion}}
 
+In some scenarios returning mock objects on asynchronous calls might lead to undesired behavior during acting phase, consider the cases when the return type is a system type. The automatic return type interception could be disabled by explicitly using `NotIntercept` in the following way:
+
+  #### __[C#]__
+
+  {{region MockBehaviorRecursiveLoose#RecursiveLooseDisableMockAsync}}
+    [TestMethod]
+    [ExpectedException(typeof(NotImplementedException))]
+    public async Task ShouldThrowAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
+    {
+        //Arrange
+        Mock.NotIntercept<IFourth>();
+        var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose);
+
+        //Act
+        var actual = await foo.Second.Third.GetFourthAsync();
+
+        // Assert
+        Assert.IsNull(actual.DoSomething());
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region MockBehaviorRecursiveLoose#RecursiveLooseDisableMockAsync}}
+    <TestMethod>
+    <ExpectedException(GetType(NotImplementedException))>
+    Public Async Function ShouldThrowAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
+        'Arrange
+        Mock.NotIntercept(Of IFourth)()
+        Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose)
+
+        'Act
+        Dim actual = Await foo.Second.Third.GetFourthAsync()
+
+        ' Assert
+        Assert.IsNotNull(actual.DoSomething())
+    End Function
+  {{endregion}}
+  
 ## See Also
 
  * [Mock Behaviors]({%slug justmock/basic-usage/mock-behaviors%})
