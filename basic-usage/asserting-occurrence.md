@@ -36,6 +36,10 @@ JustMock also enables you to verify the calls order, with:
 
 * [InOrder()](#verifying-calls-order) - Specifies exactly the order, a call should occur on the mock. 
 
+In addition to that JustMock allows you to verify that method call prerequisites are satisfied
+
+* [AfterAll(prerequisites)](#verifying-call-prerequisites) - Specifies prerequisites which should be met before a method call. 
+
 __In the following examples we will use the following interface to test:__
 
   #### __[C#]__
@@ -752,4 +756,94 @@ Here we have defined the `IUserValidationService` and the `IShoppingCartService`
 
 
 In the arrange phase we have defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.
-    
+
+## Verifying Call Prerequisites
+JustMock gives you an ability to ensure that a method can be called only after one or more prerequisites have been called in prior. To achieve this use case, the following workflow is applicable: 
+
+1. Arrange the methods to define the prerequisites.
+1. Specify the list all required prerequisites in `AfterAll`.
+1. Assert the target mock, to verify that all expected prerequisites have been called.
+
+ Next is an typical example, showing `AfterAll()` in action. Imagine that you have the following interfaces:
+ 
+  #### __[C#]__
+
+  {{region Occurrence#VerifyAll1}}
+    public interface IBar
+    {
+        void Init();
+    }
+
+    public interface IBarContainer
+    {
+        IEnumerable<IBar> Elements { get; }
+    }   
+  {{endregion}}
+  
+  #### __[VB]__
+  
+  {{region Occurrence#VerifyAll1}}  
+    Public Interface IBar
+        Sub Init()
+    End Interface
+
+    Public Interface IBarContainer
+        ReadOnly Property Elements As IEnumerable(Of IBar)
+    End Interface
+  {{endregion}}
+ 
+ and you need to verify that `FooContainer.Elements` is called after all `Foo.Init` have beeen called, than the following test can help:
+
+ 
+  #### __[C#]__
+  
+  {{region Occurrence#VerifyAll2}}
+    [TestMethod]
+    public void ShouldAssertPrerequisites()
+    {
+        // Arrange
+        var barCollection = new List<IBar>()
+        {
+            Mock.Create<IBar>(),
+            Mock.Create<IBar>(),
+            Mock.Create<IBar>()
+        };
+        var barContainer = Mock.Create<IBarContainer>();
+        Mock.Arrange(() => barContainer.Elements)
+            .ReturnsCollection(barCollection)
+            .AfterAll(barCollection.Select(bar => Mock.Arrange(() => bar.Init())).ToArray());
+
+        // Act
+        barCollection.ForEach(bar => bar.Init());
+        var actualCollection = barContainer.Elements;
+
+        // Assert
+        Mock.Assert(barContainer);
+    }
+  {{endregion}}
+  
+  #### __[VB]__
+  
+  {{region Occurrence#VerifyAll2}}
+    <TestMethod>
+    Public Sub ShouldAssertPrerequisites()
+        ' Arrange
+        Dim barCollection As New List(Of IBar) From
+        {
+            Mock.Create(Of IBar)(),
+            Mock.Create(Of IBar)(),
+            Mock.Create(Of IBar)()
+        }
+        Dim barContainer = Mock.Create(Of IBarContainer)()
+        Mock.Arrange(Function() barContainer.Elements) _
+            .ReturnsCollection(barCollection) _
+            .AfterAll(barCollection.Select(Function(bar As IBar) Mock.Arrange(Sub() bar.Init())).ToArray())
+
+        ' Act
+        barCollection.ForEach(Sub(bar As IBar) bar.Init())
+        Dim actualCollection = barContainer.Elements
+
+        ' Assert
+        Mock.Assert(barContainer)
+    End Sub
+  {{endregion}}
