@@ -36,6 +36,10 @@ JustMock also enables you to verify the calls order, with:
 
 * [InOrder()](#verifying-calls-order) - Specifies exactly the order, a call should occur on the mock. 
 
+In addition to that JustMock allows you to verify that method call prerequisites are satisfied
+
+* [AfterAll(prerequisites)](#verifying-call-prerequisites) - Specifies prerequisites which should be met before a method call. 
+
 __In the following examples we will use the following interface to test:__
 
   #### __[C#]__
