@@ -6,7 +6,7 @@ previous_url: /basic-usage-mock-when.html
 slug: justmock/basic-usage/mock/when
 tags: when
 published: True
-position: 9
+position: 10
 ---
 
 # When
