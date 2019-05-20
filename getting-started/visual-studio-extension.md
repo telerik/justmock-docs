@@ -73,8 +73,6 @@ Opens the Telerik JustMock about window.
 
 # Troubleshooting
 
-## 
-
 *Problem:*
 
 **Missing Telerik menu in Visual Studio**
