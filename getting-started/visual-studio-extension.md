@@ -71,7 +71,7 @@ The functionality to update references can also be used by right-clicking on the
 
 Opens the Telerik JustMock about window.
 
-# Troubleshooting
+## Troubleshooting
 
 *Problem:* **Missing Telerik menu in Visual Studio**
 
