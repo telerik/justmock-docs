@@ -71,6 +71,29 @@ The functionality to update references can also be used by right-clicking on the
 
 Opens the Telerik JustMock about window.
 
+## Troubleshooting
+
+*Problem:* **Missing Telerik menu in Visual Studio**
+
+*Reason:* Telerik Visual Studio Extensions are disabled.
+
+*Suggested solution:*
+
+* Open Visual Studio;
+
+* Go to menu Tools - > Extensions and Updates...(for Visual Studio 2019 Extensions - > Manage Extensions)
+
+* Open the Installed tab on the left​
+
+* Search for Telerik JustMock extension and make sure it is Enabled
+
+![vsextensions-disabled](images/vsextensions-disabled.png)
+
+>important If the article does not help solving your problem, please follow these steps to generate Visual Studio [ActivityLog](https://docs.microsoft.com/en-us/visualstudio/ide/reference/log-devenv-exe?view=vs-2019) file before contacting our support:
+>* Open [Developer Command prompt](https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs) for Visual Studio 20xx under **Administrative rights**.
+>* Execute the command - devenv /log %userprofile%\desktop\ActivityLog.xml . This will start Visual Studio and create logs on your Desktop.
+>* Reproduce the problem
+>* Attach the **Activitylog** files when you contact our support.
 
 # See Also
 
