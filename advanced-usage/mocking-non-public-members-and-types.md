@@ -38,6 +38,16 @@ In the further examples we will use the following sample class to test:
             DoPrivate();
         }
 
+        private void DoPrivateGeneric<T>(T arg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoPublicGeneric<T>(T arg)
+        {
+            DoPrivateGeneric<T>(arg);
+        }
+
         public void Execute(int arg)
         {
             DoPrivate(arg);
@@ -95,6 +105,14 @@ In the further examples we will use the following sample class to test:
         DoPrivate()
     End Sub
 
+    Private Sub DoPrivateGeneric(Of T)(ByVal arg As T)
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub DoPublicGeneric(Of T)(ByVal arg As T)
+        DoPrivateGeneric(Of T)(arg)
+    End Sub
+
     Public Sub Execute(arg As Integer)
         DoPrivate(arg)
     End Sub
@@ -149,44 +167,87 @@ First, create an instance of the type you want to test. To mock a non-public mem
 
   {{region NonPublicMocking#StepByStep}}
     [TestMethod]
-		public void ShouldInvokeNonPublicMember()
-		{
-			Foo foo = new Foo();
+    public void ShouldInvokeNonPublicMember()
+    {
+        Foo foo = new Foo();
 
-			bool called = false;
+        bool called = false;
 
-			// Arrange
-			Mock.NonPublic.Arrange(foo, "DoPrivate").DoInstead(() => called = true);
+        // Arrange
+        Mock.NonPublic.Arrange(foo, "DoPrivate").DoInstead(() => called = true);
 
-			// Act
-			foo.DoPublic();
+        // Act
+        foo.DoPublic();
 
-			// Assert
-			Assert.IsTrue(called);
-		}
+        // Assert
+        Assert.IsTrue(called);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#StepByStep}}
     <TestMethod>
-		Public Sub ShouldInvokeNonPublicMember()
-			Dim foo As New Foo()
+    Public Sub ShouldInvokeNonPublicMember()
+        Dim foo As New Foo()
 
-			Dim called As Boolean = False
+        Dim called As Boolean = False
 
-			' Arrange
-			Mock.NonPublic.Arrange(foo, "DoPrivate").DoInstead(Sub() called = True)
+        ' Arrange
+        Mock.NonPublic.Arrange(foo, "DoPrivate").DoInstead(Sub() called = True)
 
-			' Act
-			foo.DoPublic()
+        ' Act
+        foo.DoPublic()
 
-			' Assert
-			Assert.IsTrue(called)
-		End Sub
+        ' Assert
+        Assert.IsTrue(called)
+    End Sub
   {{endregion}}
 
 Here we setup that a call to the `DoPrivate` method of the `Foo` class should set a local variable `called`. Thus, we override the original method behavior with one that we specify.
+
+`Mock.NonPublic` can be also used to mock generic non-public methods. In addition to the non-generic method mock the generic type arguments has to be supplied in the arrangement, the code look as following:
+
+  #### __[C#]__
+
+  {{region NonPublicMocking#StepByStepGeneric}}
+    [TestMethod]
+    public void ShouldInvokeNonPublicGenericMember()
+    {
+        Foo foo = new Foo();
+
+        bool called = false;
+
+        // Arrange
+        Mock.NonPublic.Arrange(foo, "DoPrivateGeneric", new Type[] { typeof(int) }, 10).DoInstead(() => called = true);
+
+        // Act
+        foo.DoPublicGeneric<int>(10);
+
+        // Assert
+        Assert.IsTrue(called);
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region NonPublicMocking#StepByStepGeneric}}
+    <TestMethod>
+    Public Sub ShouldInvokeNonPublicGenericMember()
+        Dim foo As Foo = New Foo()
+
+        Dim called As Boolean = False
+
+        ' Arrange
+        Mock.NonPublic.Arrange(foo, "DoPrivateGeneric", New Type() {GetType(Integer)}, 10).DoInstead(Sub() called = True)
+
+        ' Act
+        foo.DoPublicGeneric(Of Integer)(10)
+
+        ' Assert
+        Assert.IsTrue(called)
+    End Sub
+  {{endregion}}
 
 ## Mock Private Call with Matcher
 Arrange a call to a private method accepting an argument that matches any integer value.
@@ -195,41 +256,41 @@ Arrange a call to a private method accepting an argument that matches any intege
 
   {{region NonPublicMocking#ShouldMockPrivateCallsWithMatcherArgument}}
     [TestMethod]
-		public void ShouldInvokeNonPublicMemberWithMatcher()
-		{
-			Foo foo = new Foo();
+    public void ShouldInvokeNonPublicMemberWithMatcher()
+    {
+        Foo foo = new Foo();
 
-			int expected = 1;
+        int expected = 1;
 
-			// Arrange
-			Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", ArgExpr.IsAny<int>()).Returns(expected);
+        // Arrange
+        Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", ArgExpr.IsAny<int>()).Returns(expected);
 
-			// Act
-			int actual = foo.Echo(5);
+        // Act
+        int actual = foo.Echo(5);
 
-			// Assert
-			Assert.AreEqual(expected, actual);
-		}
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#ShouldMockPrivateCallsWithMatcherArgument}}
     <TestMethod>
-		Public Sub ShouldInvokeNonPublicMemberWithMatcher()
-			Dim foo As New Foo()
+    Public Sub ShouldInvokeNonPublicMemberWithMatcher()
+        Dim foo As New Foo()
 
-			Dim expected As Integer = 1
+        Dim expected As Integer = 1
 
-			' Arrange
-			Mock.NonPublic.Arrange(Of Integer)(foo, "PrivateEcho", ArgExpr.IsAny(Of Integer)()).Returns(expected)
+        ' Arrange
+        Mock.NonPublic.Arrange(Of Integer)(foo, "PrivateEcho", ArgExpr.IsAny(Of Integer)()).Returns(expected)
 
-			' Act
-			Dim actual As Integer = foo.Echo(5)
+        ' Act
+        Dim actual As Integer = foo.Echo(5)
 
-			' Assert
-			Assert.AreEqual(expected, actual)
-		End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 Here we specify that `PrivateEcho` method called with any `int` argument will return `1`. Acting is by calling it with `5` as argument. Finally, we verify that the return value is actually `1`.
@@ -246,51 +307,51 @@ You need to reference the Microsoft.CSharp assembly when using dynamic expressio
 
   {{region NonPublicMocking#StepByStepDynamic}}
     [TestMethod]
-		public void ShouldInvokeNonPublicMemberDynamic()
-		{
-			Foo foo = new Foo();
+    public void ShouldInvokeNonPublicMemberDynamic()
+    {
+        Foo foo = new Foo();
 
-			// Arrange
-			dynamic fooAcc = Mock.NonPublic.Wrap(foo);
-			Mock.NonPublic.Arrange<int>(fooAcc.PrivateEcho(ArgExpr.IsAny<int>())).Returns(10);
-			Mock.NonPublic.Arrange<string>(fooAcc.Value).Returns("foo");
-			Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce();
+        // Arrange
+        dynamic fooAcc = Mock.NonPublic.Wrap(foo);
+        Mock.NonPublic.Arrange<int>(fooAcc.PrivateEcho(ArgExpr.IsAny<int>())).Returns(10);
+        Mock.NonPublic.Arrange<string>(fooAcc.Value).Returns("foo");
+        Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce();
 
-			// Act
-			var actual = foo.Echo(5);
-			var value = foo.Value;
-			foo.Value = "abc";
+        // Act
+        var actual = foo.Echo(5);
+        var value = foo.Value;
+        foo.Value = "abc";
 
-			// Assert
-			Assert.AreEqual(10, actual);
-			Assert.AreEqual("foo", value);
-			Mock.Assert(foo);
-		}
+        // Assert
+        Assert.AreEqual(10, actual);
+        Assert.AreEqual("foo", value);
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#StepByStepDynamic}}
     <TestMethod>
-		Public Sub ShouldInvokeNonPublicMemberDynamic()
-			Dim foo As New Foo()
+    Public Sub ShouldInvokeNonPublicMemberDynamic()
+        Dim foo As New Foo()
 
-			' Arrange
-			Dim fooAcc As Object = Mock.NonPublic.Wrap(foo)
-			Mock.NonPublic.Arrange(Of Integer)(fooAcc.PrivateEcho(ArgExpr.IsAny(Of Integer)())).Returns(10)
-			Mock.NonPublic.Arrange(Of String)(fooAcc.Value).Returns("foo")
-			Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce()
+        ' Arrange
+        Dim fooAcc As Object = Mock.NonPublic.Wrap(foo)
+        Mock.NonPublic.Arrange(Of Integer)(fooAcc.PrivateEcho(ArgExpr.IsAny(Of Integer)())).Returns(10)
+        Mock.NonPublic.Arrange(Of String)(fooAcc.Value).Returns("foo")
+        Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce()
 
-			' Act
-			Dim actual As Integer = foo.Echo(5)
-			Dim value As String = foo.Value
-			foo.Value = "abc"
+        ' Act
+        Dim actual As Integer = foo.Echo(5)
+        Dim value As String = foo.Value
+        foo.Value = "abc"
 
-			' Assert
-			Assert.AreEqual(10, actual)
-			Assert.AreEqual("foo", value)
-			Mock.Assert(foo)
-		End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+        Assert.AreEqual("foo", value)
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 
@@ -364,40 +425,40 @@ We mock the `pExecute` method that accepts an *integer* value as argument. We ar
 
   {{region NonPublicMocking#PrivateMethodWithOverloads}}
     [TestMethod]
-		public void ShouldInvokeNonPublicMemberWithOverloads()
-		{
-			FooInternal foo = new FooInternal();
-			bool isCalled = false;
+    public void ShouldInvokeNonPublicMemberWithOverloads()
+    {
+        FooInternal foo = new FooInternal();
+        bool isCalled = false;
 
-			// Arrange
-			Mock.NonPublic.Arrange(foo, "pExecute", 10).DoInstead(() => isCalled = true);
+        // Arrange
+        Mock.NonPublic.Arrange(foo, "pExecute", 10).DoInstead(() => isCalled = true);
 
-			// Act
-			foo.Execute(10);
+        // Act
+        foo.Execute(10);
 
-			// Assert
-			Assert.IsTrue(isCalled);
-		}
+        // Assert
+        Assert.IsTrue(isCalled);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#PrivateMethodWithOverloads}}
     <TestMethod> _
-		Public Sub ShouldInvokeNonPublicMemberWithOverloads()
-			' Arrange
-			Dim foo As New FooInternal()
-			Dim isCalled As Boolean = False
+    Public Sub ShouldInvokeNonPublicMemberWithOverloads()
+        ' Arrange
+        Dim foo As New FooInternal()
+        Dim isCalled As Boolean = False
 
-			' Arrange
-			Mock.NonPublic.Arrange(foo, "pExecute", 10).DoInstead(Sub() isCalled = True)
+        ' Arrange
+        Mock.NonPublic.Arrange(foo, "pExecute", 10).DoInstead(Sub() isCalled = True)
 
-			' Act
-			foo.Execute(10)
+        ' Act
+        foo.Execute(10)
 
-			' Assert
-			Assert.IsTrue(isCalled)
-		End Sub
+        ' Assert
+        Assert.IsTrue(isCalled)
+    End Sub
   {{endregion}}
 
 
@@ -432,23 +493,23 @@ The following classes will be used:
   #### __[VB]__
 
   {{region NonPublicMocking#PrivateInterfaceMethod}}
-	Public Interface IManager
-		ReadOnly Property Provider() As Object
-	End Interface
-	
-	Public Class FooBase
-	    Implements IManager
-	    Private ReadOnly Property Provider() As Object Implements IManager.Provider
-	        Get
-	            Throw New NotImplementedException()
-	        End Get
-	    End Property
-	End Class
-	
-	Public Class Bar
-	    Inherits FooBase
-	    '...
-	End Class
+    Public Interface IManager
+        ReadOnly Property Provider() As Object
+    End Interface
+    
+    Public Class FooBase
+        Implements IManager
+        Private ReadOnly Property Provider() As Object Implements IManager.Provider
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+    End Class
+    
+    Public Class Bar
+        Inherits FooBase
+        '...
+    End Class
   {{endregion}}
 
 We can now mock the `IManager.Provider` call in this way:
@@ -457,33 +518,33 @@ We can now mock the `IManager.Provider` call in this way:
 
   {{region NonPublicMocking#PrivateInterfaceMethod2}}
     [TestMethod]
-		public void ShouldMockPrivateInterfaceImplementationMethod()
-		{
-			const string expected = "dummy";
+    public void ShouldMockPrivateInterfaceImplementationMethod()
+    {
+        const string expected = "dummy";
 
-			// Arrange
-			var bar = Mock.Create<Bar>();
-			Mock.Arrange(() => ((IManager)bar).Provider).Returns(expected);
+        // Arrange
+        var bar = Mock.Create<Bar>();
+        Mock.Arrange(() => ((IManager)bar).Provider).Returns(expected);
 
-			// Act, Assert
-			Assert.AreEqual(expected, ((IManager)bar).Provider);
-		}
+        // Act, Assert
+        Assert.AreEqual(expected, ((IManager)bar).Provider);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#PrivateInterfaceMethod2}}
     <TestMethod> _
-		Public Sub ShouldMockPrivateInterfaceImplementationMethod()
-			Const expected As String = "dummy"
+    Public Sub ShouldMockPrivateInterfaceImplementationMethod()
+        Const expected As String = "dummy"
 
-			' Arrange
-			Dim bar = Mock.Create(Of Bar)()
-			Mock.Arrange(Function() DirectCast(bar, IManager).Provider).Returns("dummy")
+        ' Arrange
+        Dim bar = Mock.Create(Of Bar)()
+        Mock.Arrange(Function() DirectCast(bar, IManager).Provider).Returns("dummy")
 
-			' Act, Assert
-			Assert.AreEqual(expected, DirectCast(bar, IManager).Provider)
-		End Sub
+        ' Act, Assert
+        Assert.AreEqual(expected, DirectCast(bar, IManager).Provider)
+    End Sub
   {{endregion}}
 
 
@@ -495,41 +556,41 @@ Arrange a call to an internal virtual method.
 
   {{region NonPublicMocking#ShouldMockInternalVirtualMethod}}
     [TestMethod]
-		public void ShouldMockInternalVirtualMethod()
-		{
-			Foo foo = new Foo();
+    public void ShouldMockInternalVirtualMethod()
+    {
+        Foo foo = new Foo();
 
-			bool isCalled = false;
+        bool isCalled = false;
 
-			// Arrange
-			Mock.Arrange(() => foo.Do()).DoInstead(() => isCalled = true);
+        // Arrange
+        Mock.Arrange(() => foo.Do()).DoInstead(() => isCalled = true);
 
-			// Act
-			foo.Do();
+        // Act
+        foo.Do();
 
-			// Assert
-			Assert.IsTrue(isCalled);
-		}
+        // Assert
+        Assert.IsTrue(isCalled);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualMethod}}
     <TestMethod> _
-		Public Sub ShouldMockInternalVirtualMethod()
-			Dim foo As New Foo()
+    Public Sub ShouldMockInternalVirtualMethod()
+        Dim foo As New Foo()
 
-			Dim isCalled As Boolean = False
+        Dim isCalled As Boolean = False
 
-			' Arrange
-			Mock.Arrange(Sub() foo.Do()).DoInstead(Sub() isCalled = True)
+        ' Arrange
+        Mock.Arrange(Sub() foo.Do()).DoInstead(Sub() isCalled = True)
 
-			' Act
-			foo.[Do]()
+        ' Act
+        foo.[Do]()
 
-			' Assert
-			Assert.IsTrue(isCalled)
-		End Sub
+        ' Assert
+        Assert.IsTrue(isCalled)
+    End Sub
   {{endregion}}
 
 Note that in the arrange statement we don't use a mock of `Foo`, but the actual instance.
@@ -542,37 +603,37 @@ Arrange a call to an internal virtual property.
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertyGet}}
     [TestMethod]
-		public void ShouldMockInternalVirtualPropertyGET()
-		{
-			Foo foo = new Foo();
+    public void ShouldMockInternalVirtualPropertyGET()
+    {
+        Foo foo = new Foo();
 
-			// Arrange
-			Mock.Arrange(() => foo.Value).Returns("ping");
+        // Arrange
+        Mock.Arrange(() => foo.Value).Returns("ping");
 
-			// Act
-			string actual = foo.Value;
+        // Act
+        string actual = foo.Value;
 
-			// Assert
-			Assert.AreEqual("ping", actual);
-		}
+        // Assert
+        Assert.AreEqual("ping", actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertyGet}}
     <TestMethod> _
-		Public Sub ShouldMockInternalVirtualPropertyGET()
-			Dim foo As New Foo()
+    Public Sub ShouldMockInternalVirtualPropertyGET()
+        Dim foo As New Foo()
 
-			' Arrange
-			Mock.Arrange(Function() foo.Value).Returns("ping")
+        ' Arrange
+        Mock.Arrange(Function() foo.Value).Returns("ping")
 
-			' Act
-			Dim actual As String = foo.Value
+        ' Act
+        Dim actual As String = foo.Value
 
-			' Assert
-			Assert.AreEqual("ping", actual)
-		End Sub
+        ' Assert
+        Assert.AreEqual("ping", actual)
+    End Sub
   {{endregion}}
 
 Note that in the arrange statement we don't use a mock of `Foo`, but the actual instance.
@@ -583,35 +644,35 @@ Follows an example of mocking internal virtual property set. We override the act
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertySet}}
     [TestMethod]
-		public void ShouldMockInternalVirtualPropertySET()
-		{
-			// Arrange
-			Foo foo = Mock.Create<Foo>();
-			Mock.ArrangeSet(() => foo.Value = "ping").MustBeCalled();
+    public void ShouldMockInternalVirtualPropertySET()
+    {
+        // Arrange
+        Foo foo = Mock.Create<Foo>();
+        Mock.ArrangeSet(() => foo.Value = "ping").MustBeCalled();
 
-			// Act
-			foo.Value = "ping";
+        // Act
+        foo.Value = "ping";
 
-			// Assert
-			Mock.Assert(foo);
-		}
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertySet}}
     <TestMethod> _
-		Public Sub ShouldMockInternalVirtualPropertySET()
-			' Arrange
-			Dim foo As Foo = Mock.Create(Of Foo)()
-			Mock.ArrangeSet(Sub() foo.Value = "ping").MustBeCalled()
+    Public Sub ShouldMockInternalVirtualPropertySET()
+        ' Arrange
+        Dim foo As Foo = Mock.Create(Of Foo)()
+        Mock.ArrangeSet(Sub() foo.Value = "ping").MustBeCalled()
 
-			' Act
-			foo.Value = "ping"
+        ' Act
+        foo.Value = "ping"
 
-			' Assert
-			Mock.Assert(foo)
-		End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 
@@ -634,6 +695,16 @@ The following example shows how to mock a *private static method*. We use the fo
         {
             return EchoPrivate(arg1);
         }
+
+        private static int EchoPrivateGeneric<T>(T arg1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static int EchoGeneric<T>(T arg1)
+        {
+            return EchoPrivateGeneric<T>(arg1);
+        }
     }
   {{endregion}}
 
@@ -641,14 +712,22 @@ The following example shows how to mock a *private static method*. We use the fo
 
   {{region NonPublicMocking#FooInternalStatic}}
     Friend Class FooInternalStatic
-    Private Shared Function EchoPrivate(arg1 As Integer) As Integer
-        Throw New NotImplementedException()
-    End Function
+        Private Shared Function EchoPrivate(arg1 As Integer) As Integer
+            Throw New NotImplementedException()
+        End Function
 
-    Public Shared Function Echo(arg1 As Integer) As Integer
-        Return EchoPrivate(arg1)
-    End Function
-End Class
+        Public Shared Function Echo(arg1 As Integer) As Integer
+            Return EchoPrivate(arg1)
+        End Function
+
+        Private Shared Function EchoPrivateGeneric(Of T)(ByVal arg1 As T) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Public Shared Function EchoGeneric(Of T)(ByVal arg1 As T) As Integer
+            Return EchoPrivateGeneric(Of T)(arg1)
+        End Function
+    End Class
   {{endregion}}
 
 
@@ -668,36 +747,69 @@ The method we arrange is `FooInternalStatic.EchoPrivate()`.
 
   {{region NonPublicMocking#PrivateStaticMethod}}
     [TestMethod]
-		public void ShouldMockPrivateStaticMethod()
-		{
-			// Arrange
-			Mock.NonPublic.Arrange<FooInternalStatic, int>("EchoPrivate", 10);
+    public void ShouldMockPrivateStaticMethod()
+    {
+        // Arrange
+        Mock.NonPublic.Arrange<FooInternalStatic, int>("EchoPrivate", 10);
 
-			// Act
-			FooInternalStatic.Echo(10);
+        // Act
+        FooInternalStatic.Echo(10);
 
-			// Assert
-			Mock.NonPublic.Assert<FooInternalStatic, int>("EchoPrivate", 10);
-		}
+        // Assert
+        Mock.NonPublic.Assert<FooInternalStatic, int>("EchoPrivate", 10);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#PrivateStaticMethod}}
     <TestMethod> _
-		Public Sub ShouldMockPrivateStaticMethod()
-			' Arrange
-			Mock.NonPublic.Arrange(Of FooInternalStatic, Integer)("EchoPrivate", 10)
+    Public Sub ShouldMockPrivateStaticMethod()
+        ' Arrange
+        Mock.NonPublic.Arrange(Of FooInternalStatic, Integer)("EchoPrivate", 10)
 
-			' Act
-			FooInternalStatic.Echo(10)
+        ' Act
+        FooInternalStatic.Echo(10)
 
-			' Assert
-			Mock.NonPublic.Assert(Of FooInternalStatic, Integer)("EchoPrivate", 10)
-		End Sub
+        ' Assert
+        Mock.NonPublic.Assert(Of FooInternalStatic, Integer)("EchoPrivate", 10)
+    End Sub
   {{endregion}}
 
-We call the `Echo` method, but its implementation calls the `EchoPrivate` method, so our assertion passes.
+We call the `Echo` method, but its implementation calls the `EchoPrivate` method, so our assertion passes. Like an instance non-public generic methods `Mock.NonPublic` can be used to mock non-public generic static ones, here is the sample test:
+
+  #### __[C#]__
+
+  {{region NonPublicMocking#PrivateStaticGenericMethod}}
+    [TestMethod]
+    public void ShouldMockPrivateStaticGenericMethod()
+    {
+        // Arrange
+        Mock.NonPublic.Arrange<FooInternalStatic, int>("EchoPrivateGeneric", new Type[] { typeof(int) }, 10);
+
+        // Act
+        FooInternalStatic.EchoGeneric<int>(10);
+
+        // Assert
+        Mock.NonPublic.Assert<FooInternalStatic, int>("EchoPrivateGeneric", new Type[] { typeof(int) }, 10);
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region NonPublicMocking#PrivateStaticGenericMethod}}
+    <TestMethod>
+    Public Sub ShouldMockPrivateStaticGenericMethod()
+        ' Arrange
+        Mock.NonPublic.Arrange(Of FooInternalStatic, Integer)("EchoPrivateGeneric", New Type() {GetType(Integer)}, 10)
+
+        ' Act
+        FooInternalStatic.EchoGeneric(Of Integer)(10)
+
+        ' Assert
+        Mock.NonPublic.Assert(Of FooInternalStatic, Integer)("EchoPrivateGeneric", New Type() {GetType(Integer)}, 10)
+    End Sub
+  {{endregion}}
 
 ## Mock Private Static Property
 
@@ -709,41 +821,41 @@ The property we arrange is `Foo.PrivateStaticProperty`. When called, it will ret
 
   {{region NonPublicMocking#PrivateStaticProperty}}
     [TestMethod]
-		public void ShouldMockPrivateStaticProperty()
-		{
-			var expected = 10;
+    public void ShouldMockPrivateStaticProperty()
+    {
+        var expected = 10;
 
-			// Arrange
-			Foo foo = new Foo();
+        // Arrange
+        Foo foo = new Foo();
 
-			Mock.NonPublic.Arrange<int>(typeof(Foo), "PrivateStaticProperty").Returns(expected);
+        Mock.NonPublic.Arrange<int>(typeof(Foo), "PrivateStaticProperty").Returns(expected);
 
-			// Act
-			int actual = foo.GetMyPrivateStaticProperty();
+        // Act
+        int actual = foo.GetMyPrivateStaticProperty();
 
-			// Assert
-			Assert.AreEqual(expected, actual);
-		}
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#PrivateStaticProperty}}
     <TestMethod> _
-		Public Sub ShouldMockPrivateStaticProperty()
-			Dim expected = 10
+    Public Sub ShouldMockPrivateStaticProperty()
+        Dim expected = 10
 
-			' Arrange
-			Dim foo As New Foo()
+        ' Arrange
+        Dim foo As New Foo()
 
-			Mock.NonPublic.Arrange(Of Integer)(GetType(Foo), "PrivateStaticProperty").Returns(expected)
+        Mock.NonPublic.Arrange(Of Integer)(GetType(Foo), "PrivateStaticProperty").Returns(expected)
 
-			' Act
-			Dim actual As Integer = foo.GetMyPrivateStaticProperty()
+        ' Act
+        Dim actual As Integer = foo.GetMyPrivateStaticProperty()
 
-			' Assert
-			Assert.AreEqual(expected, actual)
-		End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 To act, we call the `GetMyPrivateStaticProperty()` method, but its implementation returns the `PrivateStaticProperty`, so our assertion passes.
@@ -756,49 +868,49 @@ Let's see an example of how to mock an internal class from .NET framework. Consi
 
   {{region NonPublicMocking#ShouldMockNonPublicClassFromFramework}}
     [TestMethod]
-		public void ShouldMockInternaldotNETClass()
-		{
-			// Arrange
-			string typeName = "System.Net.HttpRequestCreator";
+    public void ShouldMockInternaldotNETClass()
+    {
+        // Arrange
+        string typeName = "System.Net.HttpRequestCreator";
 
-			var httpRequestCreator = Mock.Create(typeName);
+        var httpRequestCreator = Mock.Create(typeName);
 
-			bool isCalled = false;
+        bool isCalled = false;
 
-			Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny<Uri>()).DoInstead(() => isCalled = true);
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny<Uri>()).DoInstead(() => isCalled = true);
 
-			// Act
-			System.Net.IWebRequestCreate iWebRequestCreate = (System.Net.IWebRequestCreate)httpRequestCreator;
+        // Act
+        System.Net.IWebRequestCreate iWebRequestCreate = (System.Net.IWebRequestCreate)httpRequestCreator;
 
-			iWebRequestCreate.Create(new Uri("https://www.telerik.com"));
+        iWebRequestCreate.Create(new Uri("https://www.telerik.com"));
 
-			// Assert
-			Assert.IsTrue(isCalled);
-		}
+        // Assert
+        Assert.IsTrue(isCalled);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#ShouldMockNonPublicClassFromFramework}}
     <TestMethod> _
-		Public Sub ShouldMockInternaldotNETClass()
-			' Arrange
-			Dim typeName As String = "System.Net.HttpRequestCreator"
+    Public Sub ShouldMockInternaldotNETClass()
+        ' Arrange
+        Dim typeName As String = "System.Net.HttpRequestCreator"
 
-			Dim httpRequestCreator = Mock.Create(typeName)
+        Dim httpRequestCreator = Mock.Create(typeName)
 
-			Dim isCalled As Boolean = False
+        Dim isCalled As Boolean = False
 
-			Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny(Of Uri)()).DoInstead(Sub() isCalled = True)
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny(Of Uri)()).DoInstead(Sub() isCalled = True)
 
-			' Act
-			Dim iWebRequestCreate As System.Net.IWebRequestCreate = DirectCast(httpRequestCreator, System.Net.IWebRequestCreate)
+        ' Act
+        Dim iWebRequestCreate As System.Net.IWebRequestCreate = DirectCast(httpRequestCreator, System.Net.IWebRequestCreate)
 
-			iWebRequestCreate.Create(New Uri("https://www.telerik.com"))
+        iWebRequestCreate.Create(New Uri("https://www.telerik.com"))
 
-			' Assert
-			Assert.IsTrue(isCalled)
-		End Sub
+        ' Assert
+        Assert.IsTrue(isCalled)
+    End Sub
   {{endregion}}
 
 Note the use of `ArgExpr.IsAny<Uri>()` - as we mock a non-public call, we need to know the type of the argument to resolve the method. Thus, instead of using `Arg`, like we do in most of the other cases, we must use `ArgExpr`. 
@@ -865,23 +977,23 @@ First we will arrange that our `IntValue()` method should never occur, like this
 
   {{region NonPublicMocking#FakingProtectedMembersTest1}}
     [TestMethod]
-		public void ShouldAssertOccrenceForNonPublicFunction()
-		{
-			var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
+    public void ShouldAssertOccrenceForNonPublicFunction()
+    {
+        var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
 
-			Mock.NonPublic.Assert<int>(foo, "IntValue", Occurs.Never());
-		}
+        Mock.NonPublic.Assert<int>(foo, "IntValue", Occurs.Never());
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#FakingProtectedMembersTest1}}
     <TestMethod> _
-		Public Sub ShouldAssertOccrenceForNonPublicFunction()
-			Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
+    Public Sub ShouldAssertOccrenceForNonPublicFunction()
+        Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
 
-			Mock.NonPublic.Assert(Of Integer)(foo, "IntValue", Occurs.Never())
-		End Sub
+        Mock.NonPublic.Assert(Of Integer)(foo, "IntValue", Occurs.Never())
+    End Sub
   {{endregion}}
 
 The second test will test if our protected `Load()` method is actually been called, when `Init()` is initiated.
@@ -890,31 +1002,31 @@ The second test will test if our protected `Load()` method is actually been call
 
   {{region NonPublicMocking#FakingProtectedMembersTest2}}
     [TestMethod]
-		public void ShouldMockProtectedVirtualMembers()
-		{
-			var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
+    public void ShouldMockProtectedVirtualMembers()
+    {
+        var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
 
-			Mock.NonPublic.Arrange(foo, "Load").MustBeCalled();
+        Mock.NonPublic.Arrange(foo, "Load").MustBeCalled();
 
-			foo.Init();
+        foo.Init();
 
-			Mock.Assert(foo);
-		}
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region NonPublicMocking#FakingProtectedMembersTest2}}
     <TestMethod> _
-		Public Sub ShouldMockProtectedVirtualMembers()
-			Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
+    Public Sub ShouldMockProtectedVirtualMembers()
+        Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
 
-			Mock.NonPublic.Arrange(foo, "Load").MustBeCalled()
+        Mock.NonPublic.Arrange(foo, "Load").MustBeCalled()
 
-			foo.Init()
+        foo.Init()
 
-			Mock.Assert(foo)
-		End Sub
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 
