@@ -162,7 +162,7 @@ __Next, we will show how to call non-public methods from a mocked instance:__
 1.  Call the non-public method by giving its exact name
 1.  Finally, you can assert against its expected return value
 
-Using the steps above and supplying the type arguments you can call non-public generic methods, the sample test look as following:
+Using the steps above and supplying the type arguments you can call non-public generic methods, the sample test looks as following:
 
   #### __[C#]__
 
@@ -236,6 +236,7 @@ The next example will show how to invoke non-public static method with the __Tel
   {{endregion}}
 
 To call non-public static methods with the __PrivateAccessor__ you must: 
+
 1.  Wrap the instance holding the private method by type
 1.  Call the non-public static method by giving its exact name
 1.  Finally, you can assert against its value
@@ -287,7 +288,7 @@ __Next, we will show how to call non-public static methods from a mocked instanc
 1.  Call the non-public method by giving its exact name
 1.  Finally, you can assert against its expected return value
 
-Like an non-public generic instance methods, you can use `PrivateAccessor` to call non-public generic static ones, here is the sample test:
+Like a non-public generic instance methods, you can use __PrivateAccessor__ to call non-public generic static ones, here is the sample test:
 
   #### __[C#]__
 

@@ -675,8 +675,6 @@ Follows an example of mocking internal virtual property set. We override the act
     End Sub
   {{endregion}}
 
-
-
 ## Mock Private Static Method
 
 The following example shows how to mock a *private static method*. We use the following class:
@@ -776,7 +774,9 @@ The method we arrange is `FooInternalStatic.EchoPrivate()`.
     End Sub
   {{endregion}}
 
-We call the `Echo` method, but its implementation calls the `EchoPrivate` method, so our assertion passes. Like an instance non-public generic methods `Mock.NonPublic` can be used to mock non-public generic static ones, here is the sample test:
+We call the `Echo` method, but its implementation calls the `EchoPrivate` method, so our assertion passes.
+
+Like a non-public instance generic methods `Mock.NonPublic` can be used to mock non-public static generic ones, here is the sample test:
 
   #### __[C#]__
 
