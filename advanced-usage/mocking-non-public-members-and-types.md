@@ -93,65 +93,65 @@ In the further examples we will use the following sample class to test:
 
   {{region NonPublicMocking#SampleClass}}
     Public Class Foo
-    Private Sub DoPrivate()
-        Throw New NotImplementedException()
-    End Sub
-
-    Private Sub DoPrivate(arg As Integer)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Sub DoPublic()
-        DoPrivate()
-    End Sub
-
-    Private Sub DoPrivateGeneric(Of T)(ByVal arg As T)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Sub DoPublicGeneric(Of T)(ByVal arg As T)
-        DoPrivateGeneric(Of T)(arg)
-    End Sub
-
-    Public Sub Execute(arg As Integer)
-        DoPrivate(arg)
-    End Sub
-
-    Private Function PrivateEcho(arg As Integer) As Integer
-        Return arg
-    End Function
-
-    Public Function Echo(arg As Integer) As Integer
-        Return PrivateEcho(arg)
-    End Function
-
-    Friend Overridable Sub [Do]()
-        Throw New NotImplementedException()
-    End Sub
-
-    Friend Overridable Property Value() As String
-        Get
+        Private Sub DoPrivate()
             Throw New NotImplementedException()
-        End Get
-        Set(value As String)
+        End Sub
+
+        Private Sub DoPrivate(arg As Integer)
             Throw New NotImplementedException()
-        End Set
-    End Property
+        End Sub
 
-    Private Shared Property PrivateStaticProperty() As Integer
-        Get
-            Return m_PrivateStaticProperty
-        End Get
-        Set(value As Integer)
-            m_PrivateStaticProperty = Value
-        End Set
-    End Property
-    Private Shared m_PrivateStaticProperty As Integer
+        Public Sub DoPublic()
+            DoPrivate()
+        End Sub
 
-    Public Function GetMyPrivateStaticProperty() As Integer
-        Return PrivateStaticProperty
-    End Function
-End Class
+        Private Sub DoPrivateGeneric(Of T)(ByVal arg As T)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub DoPublicGeneric(Of T)(ByVal arg As T)
+            DoPrivateGeneric(Of T)(arg)
+        End Sub
+
+        Public Sub Execute(arg As Integer)
+            DoPrivate(arg)
+        End Sub
+
+        Private Function PrivateEcho(arg As Integer) As Integer
+            Return arg
+        End Function
+
+        Public Function Echo(arg As Integer) As Integer
+            Return PrivateEcho(arg)
+        End Function
+
+        Friend Overridable Sub [Do]()
+            Throw New NotImplementedException()
+        End Sub
+
+        Friend Overridable Property Value() As String
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As String)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Private Shared Property PrivateStaticProperty() As Integer
+            Get
+                Return m_PrivateStaticProperty
+            End Get
+            Set(value As Integer)
+                m_PrivateStaticProperty = Value
+            End Set
+        End Property
+        Private Shared m_PrivateStaticProperty As Integer
+
+        Public Function GetMyPrivateStaticProperty() As Integer
+            Return PrivateStaticProperty
+        End Function
+    End Class
   {{endregion}}
 
 
