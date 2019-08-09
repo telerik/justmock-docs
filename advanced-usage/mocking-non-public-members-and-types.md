@@ -913,12 +913,69 @@ Let's see an example of how to mock an internal class from .NET framework. Consi
     End Sub
   {{endregion}}
 
-Note the use of `ArgExpr.IsAny<Uri>()` - as we mock a non-public call, we need to know the type of the argument to resolve the method. Thus, instead of using `Arg`, like we do in most of the other cases, we must use `ArgExpr`. 
+Note the use of `ArgExpr.IsAny<Uri>()` - as we mock a non-public call, we need to know the type of the argument to resolve the method. Thus, instead of using `Arg`, like we do in most of the other cases, we must use `ArgExpr`.
 
 > **Important**
 >
 >  To mock internal type, your assembly name must be fully qualified according to the framework design rules, i.e. `assembly name = namespace`. Note that you can't mock types from `mscorlib` in this way. We do a hierarchical search to find the proper qualified name as in the above example. `System.Net.HttpRequestCreator` is found in the `System` assembly, not in `System.Net`. 
 
+With the next sample we can handle even more complex scenario - mock internal class by calling original constructor with arguments, then make a call to the original implementation from public interface. This time we will use another internal class `System.Net.WebSocketHttpRequestCreator` derived from public interface `System.Net.IWebRequestCreate`
+
+  #### __[C#]__
+
+  {{region NonPublicMocking#ShouldMockNonPublicClassFromFrameworkWithArgs}}
+    [TestMethod]
+    public void ShouldMockInternaldotNETClassWithArgs()
+    {
+        // Arrange
+        string typeName = "System.Net.WebSocketHttpRequestCreator";
+
+        var httpRequestCreator = Mock.Create(typeName, (config) => config
+            .CallConstructor(new object[] {true}));
+
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny<Uri>())
+            .CallOriginal()
+            .MustBeCalled();
+
+        // Act
+        System.Net.IWebRequestCreate iWebRequestCreate = (System.Net.IWebRequestCreate)httpRequestCreator;
+
+        var result = iWebRequestCreate.Create(new Uri("https://www.telerik.com"));
+
+        // Assert
+        Mock.Assert(httpRequestCreator);
+        Assert.AreEqual(new Uri("https://www.telerik.com"), result.RequestUri);
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region NonPublicMocking#ShouldMockNonPublicClassFromFrameworkWithArgs}}
+    <TestMethod>
+    Public Sub ShouldMockInternaldotNETClassWithArgs()
+        ' Arrange
+        Dim typeName As String = "System.Net.WebSocketHttpRequestCreator"
+
+        Dim httpRequestCreator = Mock.Create(typeName, Sub(config) _
+            config.CallConstructor(New Object() {True}))
+
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny(Of Uri)()) _
+            .CallOriginal() _
+            .MustBeCalled()
+
+        ' Act
+        Dim iWebRequestCreate As System.Net.IWebRequestCreate = DirectCast(httpRequestCreator, System.Net.IWebRequestCreate)
+
+        Dim result = iWebRequestCreate.Create(New Uri("https://www.telerik.com"))
+
+        ' Assert
+        Mock.Assert(httpRequestCreator)
+
+        Assert.AreEqual(New Uri("https://www.telerik.com"), result.RequestUri)
+    End Sub
+  {{endregion}}
+
+The sample test verifies whether the call to `Create` method has been made and the returned `Web.WebRequest` object has an expected value for `RequestUri` property set.
 
 ## Mock Protected Member
 
