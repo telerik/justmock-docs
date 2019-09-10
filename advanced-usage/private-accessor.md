@@ -413,6 +413,11 @@ __Next, we will show how to get an arranged non-public property from a mocked in
 1.  Set the non-public property by giving its exact name
 1.  Finally, you can assert against its expected return value
 
+## Throw the original exception when calling method
+
+__PrivateAccessor__ is using the reflection API to invoke the required method. When that method throws exception the reflection API is automatically wrapping it in a [TargetInvocationException](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.targetinvocationexception?view=netframework-4.8). This could cause inconvenience in determining what the original problem is. 
+__PrivateAccessor.RethrowOriginalOnCallMethod__ is a boolean property that solves that problem by controling whether the original exception should be thrown or not. For backward compatibility the default value is __false__.
+
 
 ## See Also
 
