@@ -413,6 +413,60 @@ __Next, we will show how to get an arranged non-public property from a mocked in
 1.  Set the non-public property by giving its exact name
 1.  Finally, you can assert against its expected return value
 
+## Throw the original exception when calling method
+
+__PrivateAccessor__ is using the reflection API to invoke the required method. When that method throws exception the reflection API is automatically wrapping it in a [TargetInvocationException](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.targetinvocationexception?view=netframework-4.8). This could cause inconvenience in determining what the original problem is.
+__PrivateAccessor.RethrowOriginalOnCallMethod__ is a boolean property that solves that problem by controling whether the original exception should be thrown or not. For backward compatibility the default value is __false__.
+To better illustrate the usage of this property consinder the following code sample:
+
+  #### __[C#]__
+
+  {{region PrivateAccessor#RethrowOriginalOnCallMethod_ClassExample}}
+    public class Foo
+    {
+        private void ThrowsException()
+        {
+            throw new NotImplementedException("There is no implementation for this method.");
+        }
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region PrivateAccessor#RethrowOriginalOnCallMethod_ClassExample}}
+    Public Class Foo
+        Private Sub ThrowsException()
+            Throw New NotImplementedException("There is no implementation for this method.")
+        End Sub
+    End Class
+  {{endregion}}
+
+And here is how a test for the ThrowsException method will look like:
+ 
+  #### __[C#]__
+
+  {{region PrivateAccessor#RethrowOriginalOnCallMethod_TestExample}}
+    [TestMethod]
+    [ExpectedException(typeof(NotImplementedException))]
+    public void PrivateAccessor_CallMethod_ThrowsException()
+    {
+        var instance = new PrivateAccessor(new Foo());
+        instance.RethrowOriginalOnCallMethod = true;
+        instance.CallMethod("ThrowsException");
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region PrivateAccessor#RethrowOriginalOnCallMethod_TestExample}}
+    <TestMethod>
+    <ExpectedException(GetType(NotImplementedException))>
+    Public Sub PrivateAccessor_CallMethod_ThrowsException()
+        Dim instance = New PrivateAccessor(New Foo())
+        instance.RethrowOriginalOnCallMethod = True
+        instance.CallMethod("ThrowsException")
+    End Sub
+  {{endregion}}
 
 ## See Also
 
