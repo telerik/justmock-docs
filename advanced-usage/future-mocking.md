@@ -491,6 +491,7 @@ Let's see a UI example where we have a form. Based on some action against the fo
 
 Imagine that we have defined an `EntryService` the purpose of which is to save some entries to a database when the user has made any changes. For instance, we can have a button on the form and when the user is finished editing the entries pressing this button will trigger a call to the following method:
 
+#### __[C#]__
   {{region FutureMocking#SampleCode4}}
     public void SaveToDatabase(string value)
 	{
@@ -507,7 +508,8 @@ Imagine that we have defined an `EntryService` the purpose of which is to save s
 
 
 Here is the handler for the `service.Saved` event:
-	
+
+#### __[C#]__	
 {{region FutureMocking#SampleCode5}}
 	public void service_Saved(object sender, EntrySavedEventArgs e)
 	{
@@ -517,6 +519,7 @@ Here is the handler for the `service.Saved` event:
 
 Next, is a simple test using [MSpec](https://codebetter.com/aaronjensen/2008/05/08/introducing-machine-specifications-or-mspec-for-short/) where we have created an event handler which will receive as an argument the value which was passed to the `service.Save` call in the `SaveToDatabase` method.
 
+#### __[C#]__
 {{region FutureMocking#SampleCode6}}
 	[Subject(typeof(Form))]
 	public class when_save_to_database_is_invoked_on_form
