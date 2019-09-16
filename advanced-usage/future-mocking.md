@@ -467,10 +467,17 @@ This will work for each new instance of the `FooWithProp` type outside the test 
 
 Future mocking across all threads is an unsafe operation because it may compromise the stability of the testing framework. Arrangements that ignore the instance are valid only for the current thread by default. To make an arrangement that ignores the instance valid on all threads, add the .OnAllThreads() clause to the arrangement: 
 
+  #### __[C#]__
+
   {{region }}
     Mock.Arrange(() => new DBContext()).DoNothing().OnAllThreads();
   {{endregion}}
-
+  
+  #### __[VB]__
+  
+  {{region }}
+    Mock.Arrange(Function() New DBContext()).DoNothing().OnAllThreads()
+  {{endregion}}
 
 ## Advanced Example
 
@@ -480,13 +487,23 @@ Let's see a UI example where we have a form. Based on some action against the fo
 
   {{region FutureMocking#SampleCode3}}
     public Form()
-	{
-		InitializeComponent();
-	
-		this.service = new EntryService();
-	
-		service.Saved += new EventHandler<EntrySavedEventArgs>(service_Saved);
-	}
+    {
+      InitializeComponent();
+    
+      this.service = new EntryService();
+    
+      service.Saved += new EventHandler<EntrySavedEventArgs>(service_Saved);
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region FutureMocking#SampleCode3}}
+    Public Sub New()
+        InitializeComponent()
+        Me.service = New EntryService()
+        service.Saved += New EventHandler(Of EntrySavedEventArgs)(service_Saved)
+    End Sub
   {{endregion}}
 
 Imagine that we have defined an `EntryService` the purpose of which is to save some entries to a database when the user has made any changes. For instance, we can have a button on the form and when the user is finished editing the entries pressing this button will trigger a call to the following method:
@@ -494,54 +511,104 @@ Imagine that we have defined an `EntryService` the purpose of which is to save s
 #### __[C#]__
   {{region FutureMocking#SampleCode4}}
     public void SaveToDatabase(string value)
-	{
-		try
-		{
-			this.service.Save(value);
-		}
-		catch (DuplicateEntryException ex)
-		{
-			MessageBox.Show("Entry Duplicated " + ex.DuplicatedValue);
-		}
-	}
+    {
+      try
+      {
+        this.service.Save(value);
+      }
+      catch (DuplicateEntryException ex)
+      {
+        MessageBox.Show("Entry Duplicated " + ex.DuplicatedValue);
+      }
+    }
   {{endregion}}
 
+  #### __[VB]__
+
+  {{region FutureMocking#SampleCode4}}
+    Public Sub SaveToDatabase(ByVal value As String)
+        Try
+            Me.service.Save(value)
+        Catch ex As DuplicateEntryException
+            MessageBox.Show("Entry Duplicated " & ex.DuplicatedValue)
+        End Try
+    End Sub
+  {{endregion}}
 
 Here is the handler for the `service.Saved` event:
 
-#### __[C#]__	
-{{region FutureMocking#SampleCode5}}
-	public void service_Saved(object sender, EntrySavedEventArgs e)
-	{
-		this.label1.Text = "Saved string : " + e.EntryValue;
-	}
-{{endregion}}
+  #### __[C#]__	
+
+  {{region FutureMocking#SampleCode5}}
+    public void service_Saved(object sender, EntrySavedEventArgs e)
+    {
+      this.label1.Text = "Saved string : " + e.EntryValue;
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region FutureMocking#SampleCode5}}
+    Public Sub service_Saved(ByVal sender As Object, ByVal e As EntrySavedEventArgs)
+        Me.label1.Text = "Saved string : " & e.EntryValue
+    End Sub
+  {{endregion}}
 
 Next, is a simple test using [MSpec](https://codebetter.com/aaronjensen/2008/05/08/introducing-machine-specifications-or-mspec-for-short/) where we have created an event handler which will receive as an argument the value which was passed to the `service.Save` call in the `SaveToDatabase` method.
 
-#### __[C#]__
-{{region FutureMocking#SampleCode6}}
-	[Subject(typeof(Form))]
-	public class when_save_to_database_is_invoked_on_form
-	{
-	    Establish context = () =>
-	    {
-	        IEntryService serviceMock = Mock.Create<EntryService>();
-	        Mock.Arrange(() => serviceMock.Save(valueToSave)).Raises(() => serviceMock.Saved += null, new EntrySavedEventArgs(valueToSave));
-	    };
-	
-	    private Because of = () =>
-	    {
-	        sut = new Form();
-	        sut.SaveToDatabase(valueToSave);
-	    };
-	
-	    private It should_assert_that_label_contains_expected_valueToSave = () =>
-	        sut.label1.Text.ShouldEqual("Saved string : " + valueToSave);
-	
-	    static Form sut;
-	    const string valueToSave = "Raise Event";
-	}
+  #### __[C#]__
+  
+  {{region FutureMocking#SampleCode6}}
+    [Subject(typeof(Form))]
+    public class when_save_to_database_is_invoked_on_form
+    {
+        Establish context = () =>
+        {
+            IEntryService serviceMock = Mock.Create<EntryService>();
+            Mock.Arrange(() => serviceMock.Save(valueToSave)).Raises(() => serviceMock.Saved += null, new EntrySavedEventArgs(valueToSave));
+        };
+    
+        private Because of = () =>
+        {
+            sut = new Form();
+            sut.SaveToDatabase(valueToSave);
+        };
+    
+        private It should_assert_that_label_contains_expected_valueToSave = () =>
+            sut.label1.Text.ShouldEqual("Saved string : " + valueToSave);
+    
+        static Form sut;
+        const string valueToSave = "Raise Event";
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region FutureMocking#SampleCode6}}
+	<Subject(GetType(Form))>
+  Public Class when_save_to_database_is_invoked_on_form
+      Private context As Establish = Function()
+                                        Dim serviceMock As IEntryService = Mock.Create(Of EntryService)()
+                                        Mock.Arrange(Function() serviceMock.Save(valueToSave)).Raises(Function() CSharpImpl.__Assign(serviceMock.Saved, Nothing), New EntrySavedEventArgs(valueToSave))
+                                    End Function
+
+      Private [of] As Because = Function()
+                                    sut = New Form()
+                                    sut.SaveToDatabase(valueToSave)
+                                End Function
+
+      Private should_assert_that_label_contains_expected_valueToSave As It = Function() sut.label1.Text.ShouldEqual("Saved string : " & valueToSave)
+      Shared sut As Form
+      Const valueToSave As String = "Raise Event"
+
+      Private Class CSharpImpl
+          <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
+          Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
+              target = value
+              Return value
+          End Function
+      End Class
+  End Class
 {{endregion}}
 
 Here we can see that although no instance is supplied to the target UI class, JustMock picks up the intended setup from the context.
