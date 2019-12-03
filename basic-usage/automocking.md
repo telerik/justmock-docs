@@ -44,11 +44,13 @@ Assume that we have the following code, to be tested:
     {
         private IFirstDependency firstDep;
         private ISecondDependency secondDep;
+        private IThirdDependency thirdDep;
 
-        public ClassUnderTest(IFirstDependency first, ISecondDependency second)
+        public ClassUnderTest(IFirstDependency first, ISecondDependency second, IThirdDependency third)
         {
             this.firstDep = first;
             this.secondDep = second;
+            this.thirdDep = third;
         }
 
         public IList<object> CollectionMethod()
@@ -64,6 +66,11 @@ Assume that we have the following code, to be tested:
 
             return secondString;
         }
+
+        public void SetIntMethod(int value)
+        {
+            thirdDep.IntValue = value;
+        }
     }
   {{endregion}}
 
@@ -73,10 +80,12 @@ Assume that we have the following code, to be tested:
     Public Class ClassUnderTest
         Private firstDep As IFirstDependency
         Private secondDep As ISecondDependency
+        Private thirdDep As IThirdDependency
 
-        Public Sub New(first As IFirstDependency, second As ISecondDependency)
+        Public Sub New(first As IFirstDependency, second As ISecondDependency, third As IThirdDependency)
             Me.firstDep = first
             Me.secondDep = second
+            Me.thirdDep = third
         End Sub
 
         Public Function CollectionMethod() As IList(Of Object)
@@ -90,6 +99,10 @@ Assume that we have the following code, to be tested:
 
             Return secondString
         End Function
+
+        Public Sub SetIntMethod(ByVal value As Integer)
+            thirdDep.IntValue = value
+        End Sub
     End Class
   {{endregion}}
 
@@ -107,6 +120,11 @@ As you can see, our `ClassUnderTest` has two external dependencies:
     {
         string GetString();
     }
+
+    public interface IThirdDependency
+    {
+        int IntValue { get; set; }
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -118,6 +136,10 @@ As you can see, our `ClassUnderTest` has two external dependencies:
 
     Public Interface ISecondDependency
         Function GetString() As String
+    End Interface
+
+    Interface IThirdDependency
+        Property IntValue As Integer
     End Interface
   {{endregion}}
 
@@ -138,47 +160,55 @@ To test the class under test against certain scenarios you will have to mock the
 
   {{region AutoMocking#TestingWITHOUTContainer}}
     [TestMethod]
-        public void ShouldMockDependenciesWithoutContainer()
-        {
-            // Arrange
-            var firstDep = Mock.Create<IFirstDependency>();
-            var secondDep = Mock.Create<ISecondDependency>();
+    public void ShouldMockDependenciesWithoutContainer()
+    {
+        // Arrange
+        var firstDep = Mock.Create<IFirstDependency>();
+        var secondDep = Mock.Create<ISecondDependency>();
+        var thirdDep = Mock.Create<IThirdDependency>();
 
-            var newInstance = new ClassUnderTest(firstDep, secondDep);
+        var newInstance = new ClassUnderTest(firstDep, secondDep, thirdDep);
 
-            string expected = "Test";
+        string expectedString = "Test";
+        int expectedInt = 10;
 
-            Mock.Arrange(() => secondDep.GetString()).Returns(expected);
+        Mock.Arrange(() => secondDep.GetString()).Returns(expectedString);
 
-            // Act
-            var actual = newInstance.StringMethod();
+        // Act
+        var actual = newInstance.StringMethod();
+        newInstance.SetIntMethod(expectedInt);
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expectedString, actual);
+        Assert.AreEqual(expectedInt, thirdDep.IntValue);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region AutoMocking#TestingWITHOUTContainer}}
     <TestMethod()>
-        Public Sub ShouldMockDependenciesWithoutContainer()
-            ' Arrange
-            Dim firstDep = Mock.Create(Of IFirstDependency)()
-            Dim secondDep = Mock.Create(Of ISecondDependency)()
+    Public Sub ShouldMockDependenciesWithoutContainer()
+        ' Arrange
+        Dim firstDep = Mock.Create(Of IFirstDependency)()
+        Dim secondDep = Mock.Create(Of ISecondDependency)()
+        Dim thirdDep = Mock.Create(Of IThirdDependency)()
 
-            Dim newInstance = New ClassUnderTest(firstDep, secondDep)
+        Dim newInstance = New ClassUnderTest(firstDep, secondDep, thirdDep)
 
-            Dim expected As String = "Test"
+        Dim expectedString As String = "Test"
+        Dim expectedInt As Integer = 10
 
-            Mock.Arrange(Function() secondDep.GetString()).Returns(expected)
+        Mock.Arrange(Function() secondDep.GetString()).Returns(expectedString)
 
-            ' Act
-            Dim actual = newInstance.StringMethod()
+        ' Act
+        Dim actual = newInstance.StringMethod()
+        newInstance.SetIntMethod(expectedInt)
 
-            ' Assert
-            Assert.AreEqual(expected, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expectedString, actual)
+        Assert.AreEqual(expectedInt, thirdDep.IntValue)
+    End Sub
   {{endregion}}
 
 This will work for certain scenarios, but not for all of them. For example there will be scenarios where you will have more dependencies and all of them needing to be mocked. In these cases you will find the JustMock __mocking container__ very handy. Next is how the previous example will look like using the __Automocking__ feature:
@@ -199,42 +229,48 @@ This will work for certain scenarios, but not for all of them. For example there
 
   {{region AutoMocking#TestingWITHContainer}}
     [TestMethod]
-        public void ShouldMockDependenciesWithContainer()
-        {
-            // Arrange
-            var container = new MockingContainer<ClassUnderTest>();
+    public void ShouldMockDependenciesWithContainer()
+    {
+        // Arrange
+        var container = new MockingContainer<ClassUnderTest>();
 
-            string expectedString = "Test";
+        string expectedString = "Test";
+        int expectedInt = 10;
 
-            container.Arrange<ISecondDependency>(
-               secondDep => secondDep.GetString()).Returns(expectedString);
+        container.Arrange<ISecondDependency>(
+           secondDep => secondDep.GetString()).Returns(expectedString);
 
-            // Act
-            var actualString = container.Instance.StringMethod();
+        // Act
+        var actualString = container.Instance.StringMethod();
+        container.Instance.SetIntMethod(expectedInt);
 
-            // Assert
-            Assert.AreEqual(expectedString, actualString);
-        }
+        // Assert
+        Assert.AreEqual(expectedString, actualString);
+        container.AssertSet<IThirdDependency>(thirdDep => thirdDep.IntValue = expectedInt);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region AutoMocking#TestingWITHContainer}}
     <TestMethod()>
-        Public Sub ShouldMockDependenciesWithContainer()
-            ' Arrange
-            Dim container = New MockingContainer(Of ClassUnderTest)()
+    Public Sub ShouldMockDependenciesWithContainer()
+        ' Arrange
+        Dim container = New MockingContainer(Of ClassUnderTest)()
 
-            Dim expectedString As String = "Test"
+        Dim expectedString As String = "Test"
+        Dim expectedInt As Integer = 10
 
-            container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).Returns(expectedString)
+        container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).Returns(expectedString)
 
-            ' Act
-            Dim actualString = container.Instance.StringMethod()
+        ' Act
+        Dim actualString = container.Instance.StringMethod()
+        container.Instance.SetIntMethod(expectedInt)
 
-            ' Assert
-            Assert.AreEqual(expectedString, actualString)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expectedString, actualString)
+        container.AssertSet(Of IThirdDependency)(Sub(thirdDep) thirdDep.IntValue = expectedInt)
+    End Sub
   {{endregion}}
 
 In this way, your test method stays more consistent and adding another dependency, won't break it's logic.
@@ -245,38 +281,43 @@ Another way to __assert__ the arrangements is shown in the next example:
 
   {{region AutoMocking#AssertingAllContainerArrangings}}
     [TestMethod]
-        public void ShouldAssertAllContainerArrangments()
-        {
-            // Arrange
-            var container = new MockingContainer<ClassUnderTest>();
+    public void ShouldAssertAllContainerArrangments()
+    {
+        // Arrange
+        var container = new MockingContainer<ClassUnderTest>();
 
-            container.Arrange<ISecondDependency>(
-               secondDep => secondDep.GetString()).MustBeCalled();
+        container.Arrange<ISecondDependency>(
+           secondDep => secondDep.GetString()).MustBeCalled();
+        container.ArrangeSet<IThirdDependency>(
+            thirdDep => thirdDep.IntValue = Arg.AnyInt).MustBeCalled();
 
-            // Act
-            var actualString = container.Instance.StringMethod();
+        // Act
+        var actualString = container.Instance.StringMethod();
+        container.Instance.SetIntMethod(10);
 
-            // Assert
-            container.AssertAll();
-        }
+        // Assert
+        container.AssertAll();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region AutoMocking#AssertingAllContainerArrangings}}
     <TestMethod()>
-        Public Sub ShouldAssertAllContainerArrangments()
-            ' Arrange
-            Dim container = New MockingContainer(Of ClassUnderTest)()
+    Public Sub ShouldAssertAllContainerArrangments()
+        ' Arrange
+        Dim container = New MockingContainer(Of ClassUnderTest)()
 
-            container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).MustBeCalled()
+        container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).MustBeCalled()
+        container.ArrangeSet(Of IThirdDependency)(Sub(thirdDep) thirdDep.IntValue = Arg.AnyInt).MustBeCalled()
 
-            ' Act
-            Dim actualString = container.Instance.StringMethod()
+        ' Act
+        Dim actualString = container.Instance.StringMethod()
+        container.Instance.SetIntMethod(10)
 
-            ' Assert
-            container.AssertAll()
-        End Sub
+        ' Assert
+        container.AssertAll()
+    End Sub
   {{endregion}}
 
 This style of assertion let's you focus on the __arrange__, as a container of your tests logic.
