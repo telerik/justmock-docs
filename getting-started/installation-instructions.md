@@ -40,7 +40,8 @@ In order to use JustMock the following additional development tools must be inst
 	* If this is your first time here and you want to try JustMock, download the trial installer file from [here](https://www.telerik.com/download-trial-file/v2-b/justmock-b).
 	* If you are a licensed JustMock user, log in your Telerik account and navigate to the [Downloads section](https://www.telerik.com/account/my-downloads).
 
-1. Run the installer and follow the steps. Configure the default installation folder.
+1. Run the installer and follow the steps. Configure the default installation folder. 
+
 ![Installer](images/Installer.png)
 1. You are all set.
 
