@@ -43,18 +43,18 @@ If you want to apply JustMock to an existing unit test project, you need to add 
 
 1. Go to the Browse tab and navigate to the Libraries folder in the JustMock installation directory (by default C:\Program Files (x86)\Progress\Telerik JustMock\Libraries). Select __Telerik.JustMock.dll__ and click OK.
 
-**Figure 4: Select Telerik.JustMock.dll reference**  
-![JustMock Test Project Template](images/SelectReference.png)
+	**Figure 4: Select Telerik.JustMock.dll reference**  
+	![JustMock Test Project Template](images/SelectReference.png)
 
 1. Further, you will need to include the *Telerik.JustMock* namespace into your test project.
 
-**Figure 5: Include TelerikJustMockNamespace namespace**  
-![JustMock Test Project Template](images/Namespace.png)
+	**Figure 5: Include TelerikJustMockNamespace namespace**  
+	![JustMock Test Project Template](images/Namespace.png)
 
 1. Finally, you are ready to create your first test with JustMock.
 
-**Figure 6: Write your first test**  
-![JustMock Test Project Template](images/FirstTest.png)
+	**Figure 6: Write your first test**  
+	![JustMock Test Project Template](images/FirstTest.png)
 
 ## See Also
 
