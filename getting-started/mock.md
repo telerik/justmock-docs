@@ -82,27 +82,27 @@ If you don't have a default constructor in the type you are creating instance of
 
   {{region Mock#MockCreateWithNonDefaultConstructor}}
     [TestMethod]
-        public void SimpleTestMethod()
-        {
-            // Arrange
-            var foo = Mock.Create(() => new Foo(1));
+    public void SimpleTestMethod()
+    {
+      // Arrange
+      var foo = Mock.Create(() => new Foo(1));
 
-            // Assert
-            Assert.IsNotNull(foo);
-        }
+      // Assert
+      Assert.IsNotNull(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#MockCreateWithNonDefaultConstructor}}
     <TestMethod()>
-        Public Sub SimpleTestMethod()
-            ' Arrange
-            Dim foo = Mock.Create(Function() New Foo(1))
+    Public Sub SimpleTestMethod()
+      ' Arrange
+      Dim foo = Mock.Create(Function() New Foo(1))
 
-            ' Assert
-            Assert.IsNotNull(foo)
-        End Sub
+      ' Assert
+      Assert.IsNotNull(foo)
+    End Sub
   {{endregion}}
 
 
@@ -139,25 +139,25 @@ Here is an example of how to arrange a method call to return a custom specified 
 
   {{region Mock#Arrange}}
     [TestMethod]
-        public void ArrangingAMethodCallToReturnACustomValue()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ArrangingAMethodCallToReturnACustomValue()
+    {
+      // Arrange
+      var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Bar).Returns(10);
-        }
+      Mock.Arrange(() => foo.Bar).Returns(10);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#Arrange}}
     <TestMethod()>
-        Public Sub ArrangingAMethodCallToReturnACustomValue()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ArrangingAMethodCallToReturnACustomValue()
+      ' Arrange
+      Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Bar).Returns(10)
-        End Sub
+      Mock.Arrange(Function() foo.Bar).Returns(10)
+    End Sub
   {{endregion}}
 
 
@@ -169,25 +169,25 @@ Here is an example of how to arrange a method call to return a custom specified 
 
   {{region Mock#ArrangeSet}}
     [TestMethod]
-        public void ArrangingAPropertySetToThrowAnException()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ArrangingAPropertySetToThrowAnException()
+    {
+      // Arrange
+      var foo = Mock.Create<IFoo>();
 
-            Mock.ArrangeSet(() => foo.Bar = 0).Throws<ArgumentException>();
-        }
+      Mock.ArrangeSet(() => foo.Bar = 0).Throws<ArgumentException>();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#ArrangeSet}}
     <TestMethod()>
-        Public Sub ArrangingAPropertySetToThrowAnException()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ArrangingAPropertySetToThrowAnException()
+      ' Arrange
+      Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.ArrangeSet(Sub() foo.Bar = 0).Throws(Of ArgumentException)()
-        End Sub
+      Mock.ArrangeSet(Sub() foo.Bar = 0).Throws(Of ArgumentException)()
+    End Sub
   {{endregion}}
 
 
@@ -275,45 +275,45 @@ In the following test we use lambda expression in the `Arrange` phase:
 
   {{region Mock#ArrangeDynamicValues2}}
     [TestMethod]
-        public void ShouldAssertMockForDynamicQueryWhenComparedUsingAVariable()
-        {
-            // Arrange
-            var repository = Mock.Create<IBookRepository>();
-            var expected = new Book { Title = "Adventures" };
-            var service = new BookService(repository);
+    public void ShouldAssertMockForDynamicQueryWhenComparedUsingAVariable()
+    {
+      // Arrange
+      var repository = Mock.Create<IBookRepository>();
+      var expected = new Book { Title = "Adventures" };
+      var service = new BookService(repository);
 
-            Mock.Arrange(() => repository.GetWhere(book => book.Id == 1))
-                .Returns(expected)
-                .MustBeCalled();
+      Mock.Arrange(() => repository.GetWhere(book => book.Id == 1))
+          .Returns(expected)
+          .MustBeCalled();
 
-            // Act
-            var actual = service.GetSingleBook(1);
+      // Act
+      var actual = service.GetSingleBook(1);
 
-            // Assert
-            Assert.AreEqual(actual.Title, expected.Title);
-        }
+      // Assert
+      Assert.AreEqual(actual.Title, expected.Title);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#ArrangeDynamicValues2}}
     <TestMethod()>
-        Public Sub ShouldAssertMockForDynamicQueryWhenComparedUsingAVariable()
+    Public Sub ShouldAssertMockForDynamicQueryWhenComparedUsingAVariable()
 
-            Dim repository = Mock.Create(Of IBookRepository)()
-            Dim expected = New Book() With {
-             .Title = "Adventures"
-            }
-            Dim service = New BookService(repository)
+        Dim repository = Mock.Create(Of IBookRepository)()
+        Dim expected = New Book() With {
+          .Title = "Adventures"
+        }
+        Dim service = New BookService(repository)
 
-            Mock.Arrange(Function() repository.GetWhere(Function(book) book.Id = 1)).Returns(expected).MustBeCalled()
+        Mock.Arrange(Function() repository.GetWhere(Function(book) book.Id = 1)).Returns(expected).MustBeCalled()
 
-            ' Act
-            Dim actual = service.GetSingleBook(1)
+        ' Act
+        Dim actual = service.GetSingleBook(1)
 
-            ' Assert
-            Assert.AreEqual(actual.Title, expected.Title)
-        End Sub
+        ' Assert
+        Assert.AreEqual(actual.Title, expected.Title)
+    End Sub
   {{endregion}}
 
 We specify that when the repository `GetWhere` method is called with an `id` of 1, the returned book should be a specific book. Then we act - we execute the `GetSingleBook` method of the `BookService` and we assert that the expected book is returned.
@@ -328,55 +328,55 @@ As you saw in the first section above, when you use `Mock.Create`, you can speci
 
   {{region Mock#Create2}}
     public class Item
+    {
+        public virtual string Name { get; set; }
+
+        public Item(string name)
         {
-            public virtual string Name { get; set; }
-
-            public Item(string name)
-            {
-                Name = name;
-            }
+            Name = name;
         }
+    }
 
-        [TestMethod]
-        public void ShouldAutoArrangePropertySetInConstructor()
-        {
-            // Arrange
-            var expected = "name";
-            var item = Mock.Create<Item>(() => new Item(expected));
+    [TestMethod]
+    public void ShouldAutoArrangePropertySetInConstructor()
+    {
+        // Arrange
+        var expected = "name";
+        var item = Mock.Create<Item>(() => new Item(expected));
 
-            // Assert
-            Assert.AreEqual(expected, item.Name);
-        }
+        // Assert
+        Assert.AreEqual(expected, item.Name);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#Create2}}
     Public Class Item
-            Public Overridable Property Name() As String
-                Get
-                    Return m_Name
-                End Get
-                Set(value As String)
-                    m_Name = value
-                End Set
-            End Property
-            Private m_Name As String
+        Public Overridable Property Name() As String
+            Get
+                Return m_Name
+            End Get
+            Set(value As String)
+                m_Name = value
+            End Set
+        End Property
+        Private m_Name As String
 
-            Public Sub New(ByVal name1 As String)
-                Name = name1
-            End Sub
-        End Class
-
-        <TestMethod()>
-        Public Sub ShouldAutoArrangePropertySetInConstructor()
-            ' Arrange
-            Dim expected = "name"
-            Dim item = Mock.Create(Of Item)(Function() New Item(expected), Behavior.CallOriginal)
-
-            ' Assert
-            Assert.AreEqual(expected, item.Name)
+        Public Sub New(ByVal name1 As String)
+            Name = name1
         End Sub
+    End Class
+
+    <TestMethod()>
+    Public Sub ShouldAutoArrangePropertySetInConstructor()
+        ' Arrange
+        Dim expected = "name"
+        Dim item = Mock.Create(Of Item)(Function() New Item(expected), Behavior.CallOriginal)
+
+        ' Assert
+        Assert.AreEqual(expected, item.Name)
+    End Sub
   {{endregion}}
 
 
@@ -390,37 +390,37 @@ Let's assert that an arrange method is actually called.
 
   {{region Mock#Assert}}
     [TestMethod]
-        public void TestMethodShowingAssertFunctionality()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void TestMethodShowingAssertFunctionality()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.ToString()).MustBeCalled();
+        Mock.Arrange(() => foo.ToString()).MustBeCalled();
 
-            // Act
-            foo.ToString();
+        // Act
+        foo.ToString();
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#Assert}}
     <TestMethod()>
-        Public Sub TestMethodShowingAssertFunctionality()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub TestMethodShowingAssertFunctionality()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.ToString()).MustBeCalled()
+        Mock.Arrange(Function() foo.ToString()).MustBeCalled()
 
-            ' Act
-            foo.ToString()
+        ' Act
+        foo.ToString()
 
-            ' Assert
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 Even if you don't arrange the method invocation you can still assert whether the method is called.
@@ -430,35 +430,35 @@ You can also assert property get calls in the same way as method calls.
 
   {{region Mock#AssertPropertyGet}}
     [TestMethod]
-        public void TestMethodShowingAssertFunctionalityOnPropGet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
-            Mock.Arrange(() => foo.Bar).Returns(10);
+    public void TestMethodShowingAssertFunctionalityOnPropGet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
+        Mock.Arrange(() => foo.Bar).Returns(10);
 
-            // Act
-            var returnValue = foo.Bar;
+        // Act
+        var returnValue = foo.Bar;
 
-            // Assert
-            Assert.AreEqual(10,returnValue);
-        }
+        // Assert
+        Assert.AreEqual(10,returnValue);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#AssertPropertyGet}}
     <TestMethod()> _
-        Public Sub TestMethodShowingAssertFunctionalityOnPropGet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
-            Mock.Arrange(Function() foo.Bar).Returns(10)
+    Public Sub TestMethodShowingAssertFunctionalityOnPropGet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
+        Mock.Arrange(Function() foo.Bar).Returns(10)
 
-            ' Act
-            Dim returnValue = foo.Bar
+        ' Act
+        Dim returnValue = foo.Bar
 
-            ' Assert
-            Assert.AreEqual(10, returnValue)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, returnValue)
+    End Sub
   {{endregion}}
 
 
@@ -471,35 +471,35 @@ You can also assert property get calls in the same way as method calls.
 
   {{region Mock#AssertPropertySet}}
     [TestMethod]
-        public void TestMethodShowingAssertFunctionalityOnPropSet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
-            Mock.ArrangeSet(() => foo.Bar = 0).MustBeCalled();
+    public void TestMethodShowingAssertFunctionalityOnPropSet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
+        Mock.ArrangeSet(() => foo.Bar = 0).MustBeCalled();
 
-            // Act
-            foo.Bar = 0;
+        // Act
+        foo.Bar = 0;
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#AssertPropertySet}}
     <TestMethod()>
-        Public Sub TestMethodShowingAssertFunctionalityOnPropSet()
-            'Arrange
-            Dim foo = Mock.Create(Of IFoo)()
-            Mock.ArrangeSet(Sub() foo.Bar = 0).MustBeCalled()
+    Public Sub TestMethodShowingAssertFunctionalityOnPropSet()
+        'Arrange
+        Dim foo = Mock.Create(Of IFoo)()
+        Mock.ArrangeSet(Sub() foo.Bar = 0).MustBeCalled()
 
-            'Act
-            foo.Bar = 0
+        'Act
+        foo.Bar = 0
 
-            'Assert
-            Mock.Assert(foo)
-        End Sub
+        'Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 
@@ -533,61 +533,61 @@ For this example we will be using the following `IFooRepository`:
 
   {{region Mock#AssertListReturn}}
     [TestMethod]
-        public void VerifyingNumbersOfReturnedItemsAndAssertingAMethodIsCalled()
-        {
-            // Arrange
-            var repository = Mock.Create<IFooRepository>();
+    public void VerifyingNumbersOfReturnedItemsAndAssertingAMethodIsCalled()
+    {
+        // Arrange
+        var repository = Mock.Create<IFooRepository>();
 
-            List<Foo> list = new List<Foo>() {
-                new Foo(1),
-                new Foo(2),
-                new Foo(3),
-                new Foo(4),
-                new Foo(5)
-            };
+        List<Foo> list = new List<Foo>() {
+            new Foo(1),
+            new Foo(2),
+            new Foo(3),
+            new Foo(4),
+            new Foo(5)
+        };
 
-            Mock.Arrange(() => repository.GetFoos).Returns(list).MustBeCalled();
+        Mock.Arrange(() => repository.GetFoos).Returns(list).MustBeCalled();
 
-            // Act
-            IList<Foo> foos = repository.GetFoos;
+        // Act
+        IList<Foo> foos = repository.GetFoos;
 
-            var expected = 5;
-            var actual = foos.Count;
+        var expected = 5;
+        var actual = foos.Count;
 
-            // Assert
-            Assert.AreEqual(expected, actual);
+        // Assert
+        Assert.AreEqual(expected, actual);
 
-            Mock.Assert(repository);
-        }
+        Mock.Assert(repository);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Mock#AssertListReturn}}
     <TestMethod()>
-        Public Sub VerifyingNumbersOfReturnedItemsAndAssertingAMethodIsCalled()
-            ' Arrange
-            Dim repository = Mock.Create(Of IFooRepository)()
+    Public Sub VerifyingNumbersOfReturnedItemsAndAssertingAMethodIsCalled()
+        ' Arrange
+        Dim repository = Mock.Create(Of IFooRepository)()
 
-            Dim list As New List(Of Foo)
-            list.Add(New Foo(1))
-            list.Add(New Foo(2))
-            list.Add(New Foo(3))
-            list.Add(New Foo(4))
-            list.Add(New Foo(5))
+        Dim list As New List(Of Foo)
+        list.Add(New Foo(1))
+        list.Add(New Foo(2))
+        list.Add(New Foo(3))
+        list.Add(New Foo(4))
+        list.Add(New Foo(5))
 
-            Mock.Arrange(Function() repository.GetFoos).Returns(list).MustBeCalled()
+        Mock.Arrange(Function() repository.GetFoos).Returns(list).MustBeCalled()
 
-            ' Act
-            Dim foos As IList(Of Foo) = repository.GetFoos
+        ' Act
+        Dim foos As IList(Of Foo) = repository.GetFoos
 
-            Dim expected = 5
-            Dim actual = foos.Count
-            ' Assert
-            Assert.AreEqual(expected, actual)
+        Dim expected = 5
+        Dim actual = foos.Count
+        ' Assert
+        Assert.AreEqual(expected, actual)
 
-            Mock.Assert(repository)
-        End Sub
+        Mock.Assert(repository)
+    End Sub
   {{endregion}}
 
 
