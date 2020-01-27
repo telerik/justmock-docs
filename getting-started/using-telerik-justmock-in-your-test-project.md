@@ -20,15 +20,14 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 
 1. Start by adding a new test project to your Solution. Right click on the Solution, select Add, then New Project.... 
 
-**Figure 1: Add new project**
+	**Figure 1: Add new project**
 
-![Add New Project to VS Solution](images/AddNewProject.png)
+	![Add New Project to VS Solution](images/AddNewProject.png)
 
 1. Select the Test Project template. Enter a Name and click OK.
 
-**Figure 2: Choose the JustMock Test Project template**
-
-![JustMock Test Project Template](images/ProjectTemplate.png)
+	**Figure 2: Choose the JustMock Test Project template**  
+	![JustMock Test Project Template](images/ProjectTemplate.png)
 
 1. Using the default *JustMock Test Project* template, you can start writing JustMock tests right away. 
 	
@@ -40,9 +39,8 @@ If you want to apply JustMock to an existing unit test project, you need to add 
 
 1. Right click on your test project and select Add Reference.
 
-**Figure 3: Add reference to a project**
-
-![JustMock Test Project Template](images/AddReference.png)
+	**Figure 3: Add reference to a project**  
+	![JustMock Test Project Template](images/AddReference.png)
 
 1. Go to the Browse tab and navigate to the Libraries folder in the JustMock installation directory (by default C:\Program Files (x86)\Progress\Telerik JustMock\Libraries). Select __Telerik.JustMock.dll__ and click OK.
 
