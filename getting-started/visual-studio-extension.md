@@ -30,11 +30,11 @@ Opens the Telerik JustMock Configuration window, which is used to link JustMock 
 
 ## Documentation
 
-Opens the online Telerik JustMock documentation. With your JustMock installation you also have access to the documentation in CHM format, the file is located in the installation folder (by default C:\Program Files (x86)\Progress\Telerik JustMock\Documentation).
+Opens the online Telerik JustMock documentation. You could download an offline documentation in PDF from your [account](https://www.telerik.com/account/).
 
 ## Suggest a Feature
 
-Opens the [JustMock Ideas and Feedback Portal](https://feedback.telerik.com/Project/105) where you can submit ideas and feature requests or vote for features that are already in the backlog.
+Opens the [JustMock Ideas and Feedback Portal](https://feedback.telerik.com/justmock) where you can submit ideas and feature requests or vote for features that are already in the backlog.
 
 ## Check for Updates
 

@@ -140,41 +140,41 @@ You can use the `DoInstead` method when you want to change the behavior of a met
 
   {{region QuickStart#DoInsteadCS}}
     [TestMethod]
-        public void DoInstead_TestMethod()
-        {
-            //Arrange
-            var warehouse = Mock.Create<Iwarehouse>();
-            var order = new Order("Camera", 2);
+    public void DoInstead_TestMethod()
+    {
+        //Arrange
+        var warehouse = Mock.Create<Iwarehouse>();
+        var order = new Order("Camera", 2);
 
-            bool called = false;
-            Mock.Arrange(() => warehouse.HasInventory("Camera", 2)).DoInstead(() => called = true);
-            
-            //Act
-            order.Fill(warehouse);
+        bool called = false;
+        Mock.Arrange(() => warehouse.HasInventory("Camera", 2)).DoInstead(() => called = true);
+        
+        //Act
+        order.Fill(warehouse);
 
-            //Assert
-            Assert.IsTrue(called);
-        }
+        //Assert
+        Assert.IsTrue(called);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region QuickStart#DoInsteadVB}}
     <TestMethod()>
-        Public Sub DoInstead_TestMethod()
-            ' Arrange
-            Dim order = New Order("Camera", 2)
-            Dim warehouse = Mock.Create(Of IWarehouse)()
+    Public Sub DoInstead_TestMethod()
+        ' Arrange
+        Dim order = New Order("Camera", 2)
+        Dim warehouse = Mock.Create(Of IWarehouse)()
 
-            Dim called As Boolean = False
-            Mock.Arrange(Function() warehouse.HasInventory("Camera", 2)).DoInstead(Sub() called = True)
+        Dim called As Boolean = False
+        Mock.Arrange(Function() warehouse.HasInventory("Camera", 2)).DoInstead(Sub() called = True)
 
-            ' Act
-            order.Fill(warehouse)
+        ' Act
+        order.Fill(warehouse)
 
-            ' Assert
-            Assert.IsTrue(called)
-        End Sub
+        ' Assert
+        Assert.IsTrue(called)
+    End Sub
   {{endregion}}
 
 Put simple – we arrange that when the warehouse’s `HasInventory` method is called with parameters "Camera" and 2 we will execute the action "__() => called = true__" instead of calling the actual method.
@@ -189,42 +189,42 @@ In some cases you may want to arrange to call the original method implementation
 
   {{region QuickStart#CallOriginalCS}}
     [TestMethod]
-        public void CallOriginal_TestMethod()
-        {
-            //Arrange
-            var order = Mock.Create<Order>(Behavior.CallOriginal, "Camera", 2);
+    public void CallOriginal_TestMethod()
+    {
+        //Arrange
+        var order = Mock.Create<Order>(Behavior.CallOriginal, "Camera", 2);
 
-            Mock.Arrange(() => order.Receipt(DateTime.Today)).CallOriginal();
-            Mock.Arrange(() => order.Receipt(Arg.Matches<DateTime>(d => d > DateTime.Today))).Returns("Invalid DateTime");
+        Mock.Arrange(() => order.Receipt(DateTime.Today)).CallOriginal();
+        Mock.Arrange(() => order.Receipt(Arg.Matches<DateTime>(d => d > DateTime.Today))).Returns("Invalid DateTime");
 
-            //Act
-            var callWithToday = order.Receipt(DateTime.Today);
-            var callWithDifferentDay = order.Receipt(DateTime.Today.AddDays(1));
+        //Act
+        var callWithToday = order.Receipt(DateTime.Today);
+        var callWithDifferentDay = order.Receipt(DateTime.Today.AddDays(1));
 
-            //Assert
-            Assert.AreEqual("Ordered 2 Camera on " + DateTime.Today.ToString("d"), callWithToday);
-            Assert.AreEqual("Invalid DateTime", callWithDifferentDay);
-        }
+        //Assert
+        Assert.AreEqual("Ordered 2 Camera on " + DateTime.Today.ToString("d"), callWithToday);
+        Assert.AreEqual("Invalid DateTime", callWithDifferentDay);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region QuickStart#CallOriginalVB}}
     <TestMethod()>
-        Public Sub CallOriginal_TestMethod()
-            'Arrange
-            Dim order = Mock.Create(Of Order)(Behavior.CallOriginal, "Camera", 2)
+    Public Sub CallOriginal_TestMethod()
+        'Arrange
+        Dim order = Mock.Create(Of Order)(Behavior.CallOriginal, "Camera", 2)
 
-            Mock.Arrange(Function() order.Receipt(Arg.Matches(Of DateTime)(Function(d) d > DateTime.Today))).Returns("Invalid DateTime")
+        Mock.Arrange(Function() order.Receipt(Arg.Matches(Of DateTime)(Function(d) d > DateTime.Today))).Returns("Invalid DateTime")
 
-            'Act
-            Dim callWithToday = order.Receipt(DateTime.Today)
-            Dim callWithDifferentDay = order.Receipt(DateTime.Today.AddDays(1))
+        'Act
+        Dim callWithToday = order.Receipt(DateTime.Today)
+        Dim callWithDifferentDay = order.Receipt(DateTime.Today.AddDays(1))
 
-            'Assert
-            Assert.AreEqual("Ordered 2 Camera on " + DateTime.Today, callWithToday)
-            Assert.AreEqual("Invalid DateTime", callWithDifferentDay)
-        End Sub
+        'Assert
+        Assert.AreEqual("Ordered 2 Camera on " + DateTime.Today, callWithToday)
+        Assert.AreEqual("Invalid DateTime", callWithDifferentDay)
+    End Sub
   {{endregion}}
 
 In this example we arrange that when `order.Receipt` method is called with argument `DateTime.Today`, then the original method implementation should be called. But once the same method is called with a date later than `DateTime.Today` then we return __"Invalid date"__.
@@ -258,44 +258,44 @@ The `Throws` method is used when you want to throw an exception for a particular
 
   {{region QuickStart#ThrowsCS}}
     [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Throws_TestMethod()
-        {
-            // Arrange
-            var order = new Order("Camera", 0);
-            var warehouse = Mock.Create<Iwarehouse>();
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void Throws_TestMethod()
+    {
+        // Arrange
+        var order = new Order("Camera", 0);
+        var warehouse = Mock.Create<Iwarehouse>();
 
-            // Set up that the ware house has inventory of any products with any quantities.
-            Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
+        // Set up that the ware house has inventory of any products with any quantities.
+        Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
 
-            // Set up that call to warehouse.Remove with zero quantity is invalid and throws an exception.
-            Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.Matches<int>(x => x == 0)))
-                        .Throws(new InvalidOperationException());
+        // Set up that call to warehouse.Remove with zero quantity is invalid and throws an exception.
+        Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.Matches<int>(x => x == 0)))
+                    .Throws(new InvalidOperationException());
 
-            // Act
-            order.Fill(warehouse);
-        }
+        // Act
+        order.Fill(warehouse);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region QuickStart#ThrowsVB}}
     <TestMethod()>
-        <ExpectedException(GetType(InvalidOperationException))>
-        Public Sub Throws_TestMethod()
-            ' Arrange
-            Dim order = New Order("Camera", 0)
-            Dim warehouse = Mock.Create(Of IWarehouse)()
+    <ExpectedException(GetType(InvalidOperationException))>
+    Public Sub Throws_TestMethod()
+        ' Arrange
+        Dim order = New Order("Camera", 0)
+        Dim warehouse = Mock.Create(Of IWarehouse)()
 
-            ' Set up that the ware house has inventory of any products with any quantities.
-            Mock.Arrange(Function() warehouse.HasInventory(Arg.IsAny(Of String)(), Arg.IsAny(Of Integer)())).Returns(True)
+        ' Set up that the ware house has inventory of any products with any quantities.
+        Mock.Arrange(Function() warehouse.HasInventory(Arg.IsAny(Of String)(), Arg.IsAny(Of Integer)())).Returns(True)
 
-            ' Set up that call to warehouse.Remove with zero quantity is invalid and throws an exception.
-            Mock.Arrange(Sub() warehouse.Remove(Arg.IsAny(Of String)(), Arg.Matches(Of Integer)(Function(x) x = 0))).Throws(New InvalidOperationException())
+        ' Set up that call to warehouse.Remove with zero quantity is invalid and throws an exception.
+        Mock.Arrange(Sub() warehouse.Remove(Arg.IsAny(Of String)(), Arg.Matches(Of Integer)(Function(x) x = 0))).Throws(New InvalidOperationException())
 
-            ' Act
-            order.Fill(warehouse)
-        End Sub
+        ' Act
+        order.Fill(warehouse)
+    End Sub
   {{endregion}}
 
 In this case we use the `ExpectedException` attribute from `Microsoft.VisualStudio.TestTools.UnitTesting` to verify that exception of type `InvalidOperationException` is thrown.
@@ -379,41 +379,41 @@ In the above examples we mock only methods, but you can also mock properties in 
 
   {{region QuickStart#Properties1CS}}
     [TestMethod]
-        public void MockingProperties_TestMethod()
-        {
-            // Arrange
-            var warehouse = Mock.Create<Iwarehouse>();
+    public void MockingProperties_TestMethod()
+    {
+        // Arrange
+        var warehouse = Mock.Create<Iwarehouse>();
 
-            Mock.Arrange(() => warehouse.Manager).Returns("John");
+        Mock.Arrange(() => warehouse.Manager).Returns("John");
 
-            string manager = string.Empty;
+        string manager = string.Empty;
 
-            // Act
-            manager = warehouse.Manager;
+        // Act
+        manager = warehouse.Manager;
 
-            // Assert
-            Assert.AreEqual("John", manager);
-        }
+        // Assert
+        Assert.AreEqual("John", manager);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region QuickStart#Properties1VB}}
     <TestMethod()>
-        Public Sub MockingProperties_TestMethod()
-            ' Arrange
-            Dim warehouse = Mock.Create(Of IWarehouse)()
+    Public Sub MockingProperties_TestMethod()
+        ' Arrange
+        Dim warehouse = Mock.Create(Of IWarehouse)()
 
-            Mock.Arrange(Function() warehouse.Manager).Returns("John")
+        Mock.Arrange(Function() warehouse.Manager).Returns("John")
 
-            Dim manager As String = String.Empty
+        Dim manager As String = String.Empty
 
-            ' Act
-            manager = warehouse.Manager
+        ' Act
+        manager = warehouse.Manager
 
-            ' Assert
-            Assert.AreEqual("John", manager)
-        End Sub
+        ' Assert
+        Assert.AreEqual("John", manager)
+    End Sub
   {{endregion}}
 
 Additionally, you can assert for property set.
@@ -422,33 +422,33 @@ Additionally, you can assert for property set.
 
   {{region QuickStart#Properties2CS}}
     [TestMethod]
-        [ExpectedException(typeof(StrictMockException))]
-        public void MockingProperties_PropertySet_TestMethod()
-        {
-            // Arrange
-            var warehouse = Mock.Create<Iwarehouse>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void MockingProperties_PropertySet_TestMethod()
+    {
+        // Arrange
+        var warehouse = Mock.Create<Iwarehouse>(Behavior.Strict);
 
-            Mock.ArrangeSet(() => warehouse.Manager = "John");
+        Mock.ArrangeSet(() => warehouse.Manager = "John");
 
-            // Act
-            warehouse.Manager = "Scott";
-        }
+        // Act
+        warehouse.Manager = "Scott";
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region QuickStart#Properties2VB}}
     <TestMethod()> _
-        <ExpectedException(GetType(StrictMockException))> _
-        Public Sub MockingProperties_PropertySet_TestMethod()
-            ' Arrange
-            Dim warehouse = Mock.Create(Of IWarehouse)(Behavior.[Strict])
+    <ExpectedException(GetType(StrictMockException))> _
+    Public Sub MockingProperties_PropertySet_TestMethod()
+        ' Arrange
+        Dim warehouse = Mock.Create(Of IWarehouse)(Behavior.[Strict])
 
-            Mock.ArrangeSet(Sub() warehouse.Manager = "John")
+        Mock.ArrangeSet(Sub() warehouse.Manager = "John")
 
-            ' Act
-            warehouse.Manager = "Scott"
-        End Sub
+        ' Act
+        warehouse.Manager = "Scott"
+    End Sub
   {{endregion}}
 
 In the arrange step we set up that the warehouse manager can only be set to "John". But in the act step we set the manager to "Scott". That throws a mock exception. Have in mind that this will only work if you create your mock with __StrictBehavior__.
@@ -459,21 +459,21 @@ Another commonly used technique is to assert that setting a property to a specif
 
   {{region QuickStart#Properties3CS}}
     [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void MockingProperties_PropertySet_Throws_TestMethod()
-        {
-            // Arrange
-            var warehouse = Mock.Create<Iwarehouse>();
+    [ExpectedException(typeof(ArgumentException))]
+    public void MockingProperties_PropertySet_Throws_TestMethod()
+    {
+        // Arrange
+        var warehouse = Mock.Create<Iwarehouse>();
 
-            Mock.ArrangeSet(() => warehouse.Manager = "John").Throws<ArgumentException>();
+        Mock.ArrangeSet(() => warehouse.Manager = "John").Throws<ArgumentException>();
 
-            // Act
-            // that's ok
-            warehouse.Manager = "Scott";
+        // Act
+        // that's ok
+        warehouse.Manager = "Scott";
 
-            // but that would throw an ArgumentException
-            warehouse.Manager = "John";
-        }
+        // but that would throw an ArgumentException
+        warehouse.Manager = "John";
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -481,19 +481,19 @@ Another commonly used technique is to assert that setting a property to a specif
   {{region QuickStart#Properties3VB}}
     <TestMethod()> 
     <ExpectedException(GetType(ArgumentException))> _
-        Public Sub MockingProperties_PropertySet_Throws_TestMethod()
-            ' Arrange
-            Dim warehouse = Mock.Create(Of IWarehouse)()
+    Public Sub MockingProperties_PropertySet_Throws_TestMethod()
+        ' Arrange
+        Dim warehouse = Mock.Create(Of IWarehouse)()
 
-            Mock.ArrangeSet(Sub() warehouse.Manager = "John").Throws(Of ArgumentException)()
+        Mock.ArrangeSet(Sub() warehouse.Manager = "John").Throws(Of ArgumentException)()
 
-            ' Act
-            ' that's ok
-            warehouse.Manager = "Scott"
+        ' Act
+        ' that's ok
+        warehouse.Manager = "Scott"
 
-            ' but that would throw an ArgumentException
-            warehouse.Manager = "John"
-        End Sub
+        ' but that would throw an ArgumentException
+        warehouse.Manager = "John"
+    End Sub
   {{endregion}}
 
 Here we used the `Throws` method discussed above to indicate that an exception should be thrown if the `warehouse.Manager` is set to "John".
@@ -506,26 +506,26 @@ The method `Raises` allows you to raise an event when a method is called and to 
 
   {{region QuickStart#EventsCS}}
     [TestMethod]
-        public void RaisingAnEvent_TestMethod()
-        {
-            // Arrange
-            var warehouse = Mock.Create<Iwarehouse>();
+    public void RaisingAnEvent_TestMethod()
+    {
+        // Arrange
+        var warehouse = Mock.Create<Iwarehouse>();
 
-            Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.IsInRange(int.MinValue, int.MaxValue, RangeKind.Exclusive)))
-                .Raises(() => warehouse.ProductRemoved += null, "Camera", 2);
+        Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.IsInRange(int.MinValue, int.MaxValue, RangeKind.Exclusive)))
+            .Raises(() => warehouse.ProductRemoved += null, "Camera", 2);
 
-            string productName = string.Empty;
-            int quantity = 0;
+        string productName = string.Empty;
+        int quantity = 0;
 
-            warehouse.ProductRemoved += (p, q) => { productName = p; quantity = q; };
+        warehouse.ProductRemoved += (p, q) => { productName = p; quantity = q; };
 
-            // Act
-            warehouse.Remove(Arg.AnyString, Arg.AnyInt);
+        // Act
+        warehouse.Remove(Arg.AnyString, Arg.AnyInt);
 
-            // Assert
-            Assert.AreEqual("Camera", productName);
-            Assert.AreEqual(2, quantity);
-        }
+        // Assert
+        Assert.AreEqual("Camera", productName);
+        Assert.AreEqual(2, quantity);
+    }
   {{endregion}}
 
 Here in the arrange step we set up that once the warehouse’s `Remove` method is called we will raise the `ProductRemoved` event with parameters "Camera" and 2.
