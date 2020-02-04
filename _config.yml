@@ -7,31 +7,31 @@ navigation:
 ## List your directory names and order here, like this:
     getting-started:
         title: Getting Started
-        position: 1
+        position: 2
 
     licensing:
         title: Licensing
-        position: 2
+        position: 3
 
     basic-usage:
         title: Basic Usage
-        position: 3
+        position: 4
 
     advanced-usage:
         title: Advanced Usage
-        position: 4
+        position: 5
 
     scenarios:
         title: Scenarios
-        position: 5
+        position: 6
 
     integration:
         title: Other Integrations
-        position: 8
+        position: 9
 
     continuous-integration:
         title: Continuous Integration
-        position: 6
+        position: 7
     
     continuous-integration/tfs-azure:
         title: TFS and Azure Pipelines
@@ -39,7 +39,7 @@ navigation:
 
     code-coverage:
         title: Code Coverage Integrations
-        position: 7
+        position: 8
     
     basic-usage/mock-behaviors:
         title: Mock Behaviors
