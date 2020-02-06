@@ -49,15 +49,15 @@ Unlike other mocking frameworks, JustMock lets you mock:
 	* non-public members and types
 	* mscorlib members
 	* DLL imports
-	* Silverlight runtime mocking
 * __Clean Arrange/Act/Assert syntax__ - keep your unit tests clean and readable 
 * __Strongly typed fluent interface__ - no magic strings, compile time checks, refactoring support 
 * __Loose mocks, Partial mocking, Recursive/nested mocking, Sequential mocking__
 * __Hybrid mode__ - use profiler only when necessary (i.e. mocking final, sealed and static) 
 * __Fast and lightweight__ - custom dynamic proxy library meets mocking needs only
-* __Support for Visual Studio__ - JustMock supports Visual Studio 2017, 2015, 2013, 2012 and 2010 
-* __Support of Telerik OpenAccess, Microsoft SharePoint and Microsoft Entity Framework mocking__
+* __Support for Visual Studio__ - JustMock supports Visual Studio 2019, 2017, 2015, and older
+* __Support of Microsoft SharePoint and Microsoft Entity Framework mocking__
 * __Support for code coverage tools, profilers, unit testing add-ins, build tools__
+	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/continuous-integration/tfs-azure/azure-devops%})
 	* Integration in the TFS Code Activity Workflow - integrate JustMock in Team Foundation Server 2010, TFS 2012 or TFS 2013. [ Read how to integrate JustMock with TFS 2010 and TFS 2012 ]({%slug justmock/integration/tfs-2010%}), or [ with TFS 2013 ]({%slug justmock/integration/tfs-2013%}). 
 	* [MSBuild](https://msdn.microsoft.com/en-us/library/wea2sca5(VS.90).aspx) - integrate JustMock with an MSBuild build task. [ Read how to integrate JustMock with MSBuild ]({%slug justmock/integration/msbuild-tasks%}). 
 	* [NAnt](http://nant.sourceforge.net/) - integrate JustMock with an NAnt build task. [ Read how to integrate JustMock with NAnt ]({%slug justmock/integration/nant%}). 
