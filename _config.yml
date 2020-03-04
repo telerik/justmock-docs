@@ -68,6 +68,7 @@ defaults:
 product: "Telerik JustMock"
 productName: "Telerik JustMock"
 platform: justmock
+api_reference_url: "api/"
 
 ff-sheet-id: f22ac032-a3ef-411e-af2e-6202e27709be
 
