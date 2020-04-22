@@ -1,19 +1,19 @@
 ---
-title: Step 2 - Adding Telerik JustMock to Your Test Project
-page_title: Adding Telerik JustMock in Your Test Project| JustMock Documentation
+title: Add Telerik JustMock to Your Test Project
+page_title: Add Telerik JustMock in Your Test Project| JustMock Documentation
 description: Create a JustMock Test Project or add JustMock to your project and start using it.
 previous_url: /getting-started-using-telerik-justmock-in-your-test-project.html
 slug: justmock/getting-started/using-telerik-justmock-in-your-test-project
 tags: using,telerik,justmock,in,your,test,project
 published: True
-position: 1
+position: 2
 ---
 
-# Using Telerik JustMock in Your Test Project
+# Add Telerik JustMock to Your Test Project
 
 This topic demonstrates how to use __Telerik® JustMock__ in a new test project or integrate it in your existing project.
 
->Before proceeding further, make sure you have successfully completed [Step 1: Installation and Setup]({%slug justmock/getting-started/installation-instructions%}).
+>Before proceeding further, make sure you have successfully completed [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}).
 
     	
 ## Create New Project with JustMock Test Project Template
@@ -30,7 +30,7 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 
 1. Using the default *JustMock Test Project* template, you can start writing JustMock tests right away. 
 	
-	See an example how to use JustMock in [Step 3 - JustMock API Basics]({%slug justmock/basic-usage/mock%}) 
+	>tip See an example how to use JustMock in [JustMock API Basics]({%slug justmock/basic-usage/mock%}) 
 
 ## Add JustMock to a Test Project
 
@@ -55,9 +55,14 @@ If you want to apply JustMock to an existing unit test project, you need to add 
 
 	**Figure 6: Write your first test**  
 	![JustMock Test Project Template](images/FirstTest.png)
+	
+## Next Steps
+
+* [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+* [Test Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
 
 ## See Also
 
- * __[Step 3 - JustMock API Basics]({%slug justmock/basic-usage/mock%})__
+ * [JustMock API Basics]({%slug justmock/basic-usage/mock%})
 
  * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})

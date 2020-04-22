@@ -1,5 +1,5 @@
 ---
-title: Step 3 - JustMock API Basics
+title: JustMock API Basics
 page_title: Mock | JustMock Documentation
 description: _Mock_ is the main class of JustMock and it is used to create an instance, arrange and verify behavior.
 slug: justmock/basic-usage/mock
@@ -13,7 +13,7 @@ previous_url: basic-usage-mock, basic-usage-mock.html
 
 `Mock` is the main class in the __Telerik® JustMock__ framework. `Mock` is used to create instance and static mocks, arrange and verify behavior. 
 
-This article covers the basic usage of `Mock' using the following interface as system under test for some of the examples in this article:
+This article covers the basic usage of `Mock` using the following interface as system under test for some of the examples in this article:
 
   #### __[C#]__
 
@@ -35,7 +35,7 @@ This article covers the basic usage of `Mock' using the following interface as s
   {{endregion}}
   
 
->Make sure to run through [Step 1 - Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Step 2 - Adding Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your project and environment before continuing further.
+>Make sure to run through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your project and environment before continuing further.
 
 ## Create Instance Mocks
 
@@ -105,33 +105,22 @@ If you don't have a default constructor in the type you are creating instance of
     End Sub
   {{endregion}}
 
-
-> **Tip**
->
 > Creating static mocks is explained in the [Static Mocking]({%slug justmock/advanced-usage/static-mocking%}) topic.
-
 
 ## Arrange
 
 The `Arrange` method is used to change the behavior of a method or property calls on a mock. It is used in conjunction with one or more of the supported behaviors described in this section:
 
-* `CallOriginal()` - use the original method implementation. 
-
-* `DoInstead()` - execute custom code when the method is called. 
-
-* `Initialize()` - sets all framework methods up. 
-
-* `DoNothing()` - ignore the call. This method is used only for readability and is applicable only for `void` methods. 
-
-* `MustBeCalled()` - mark the method assert that it is called during the executing of the test. 
-
-* `Raise()` - raise mocked event. 
-
-* `Raises()` - raise an event once the method is called. 
-
-* `Returns()` - use with a non-void method to return a custom value. 
-
-* `Throws()` - throw an exception once the method is called. 
+| Method		  | Purpose 				|
+| --------------- | ----------------------- |
+| [CallOriginal]({%slug justmock/basic-usage/mock/call-original%})  | Use the original method implementation. |
+| [DoInstead]({%slug justmock/basic-usage/mock/do-instead%})     | Execute custom code when the method is called. |
+| [DoNothing]({%slug justmock/basic-usage/mock/do-nothing%})     | Ignore the call. This method is used only for readability and is applicable only for `void` methods. |
+| [MustBeCalled]({%slug justmock/basic-usage/mock/must-be-called%})  | Mark the method assert that it is called during the executing of the test. |
+| [Raise]({%slug justmock/basic-usage/mock/raise%}) 		  | Raise mocked event. |
+| [Raises]({%slug justmock/basic-usage/mock/raises%})  	  | Raise an event once the method is called. |
+| [Returns]({%slug justmock/basic-usage/mock/returns%})  	  | Use with a non-void method to return a custom value. |
+| [Throws]({%slug justmock/basic-usage/mock/throws%})	 	  | Throw an exception once the method is called. |
 
 Here is an example of how to arrange a method call to return a custom specified value.
  
@@ -160,10 +149,7 @@ Here is an example of how to arrange a method call to return a custom specified 
     End Sub
   {{endregion}}
 
-
-
-                    If you want to mock a property set, instead of using the `Arrange` method you should use the `ArrangeSet` method.
-                    The following example demonstrates how to arrange the throwing of an exception once a property is set to a certain value.
+If you want to mock a property set, instead of using the `Arrange` method you should use the `ArrangeSet` method. The following example demonstrates how to arrange the throwing of an exception once a property is set to a certain value.
                     
   #### __[C#]__
 
@@ -462,10 +448,7 @@ You can also assert property get calls in the same way as method calls.
   {{endregion}}
 
 
-              To assert a property set instead of `Mock.Assert` you need to use `Mock.AssertSet`. To demonstrate
-              the use of `Mock.AssertSet` we will use one of the behaviors mentioned earlier in this topic, namely `MustBeCalled`.
-              We will verify that the property was actually set during the test run.
-            
+To assert a property set instead of `Mock.Assert` you need to use `Mock.AssertSet`. To demonstrate the use of `Mock.AssertSet` we will use one of the behaviors mentioned earlier in this topic, namely `MustBeCalled`. We will verify that the property was actually set during the test run.      
 
   #### __[C#]__
 
@@ -503,10 +486,8 @@ You can also assert property get calls in the same way as method calls.
   {{endregion}}
 
 
-> **Tip**
-> In this example we verify that the `Bar` property has been set to 0, not that the property has been set to  *something* . To verify that the property has been set at all, we can use the matcher `Arg.Matches`.
+>In this example we verify that the `Bar` property has been set to 0, not that the property has been set to  *something* . To verify that the property has been set at all, we can use the matcher `Arg.Matches`.
             
-
 Let's finish this topic with a slightly more complex example. You may have a case where you return a list of values. The next example demonstrates how to verify the number of returned items and asserts that a specific method is called.
             
 For this example we will be using the following `IFooRepository`:
@@ -589,11 +570,14 @@ For this example we will be using the following `IFooRepository`:
         Mock.Assert(repository)
     End Sub
   {{endregion}}
+  
+## Next Steps
 
+* [Test Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
 
 # See Also
 
- * __[Step 4 - Testing Your Application with JustMock]({%slug justmock/getting-started/quick-start%})__
+ * [Test Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
 
  * [Call Original]({%slug justmock/basic-usage/mock/call-original%})
 

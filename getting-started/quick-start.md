@@ -1,19 +1,19 @@
 ---
-title: Step 4 - Testing Your Application with JustMock
-page_title: Testing Your Application with JustMock | JustMock Documentation
+title: Test Your Application with JustMock
+page_title: Test Your Application with JustMock | JustMock Documentation
 description: Quick Start
 previous_url: /getting-started-quick-start.html
 slug: justmock/getting-started/quick-start
 tags: quick,start
 published: True
-position: 3
+position: 4
 ---
 
-# Testing Your Application with JustMock
+# Test Your Application with JustMock
 
 This topic will guide you through several simple steps to enable easier testing of your applications by using __Telerik® JustMock__. You will understand a simple principle called Arrange/Act/Assert and get familiar with core methods and properties from the framework, which are used in the most common testing scenarios.
 
->Make sure to go through [Step 1 - Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Step 2 - Using JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. [Step 3 - JustMock API Basics]({%slug justmock/basic-usage/mock%}) contains basic examples that this article extends.
+>Make sure to go through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. [JustMock API Basics]({%slug justmock/basic-usage/mock%}) contains basic examples that this article extends.
 
 To illustrate the use of JustMock in the next examples, we will use a sample warehouse and a dependent order object. The warehouse holds inventories of different products. An order contains a product and a quantity. 
 
@@ -134,7 +134,7 @@ There are a number of additional handy methods that you can use to make your tes
 
 ### DoInstead
 
-You can use the `DoInstead` method when you want to change the behavior of a method when it is called by replacing it with a custom action. Let's use the example from above to illustrate to use of `DoInstead`.
+You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) method when you want to change the behavior of a method when it is called by replacing it with a custom action. Let's use the example from above to illustrate to use of `DoInstead`.
 
   #### __[C#]__
 
@@ -179,11 +179,9 @@ You can use the `DoInstead` method when you want to change the behavior of a met
 
 Put simple – we arrange that when the warehouse’s `HasInventory` method is called with parameters "Camera" and 2 we will execute the action "__() => called = true__" instead of calling the actual method.
 
-Read more about [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}).
-
 ### CallOriginal
 
-In some cases you may want to arrange to call the original method implementation when it is called with a specific value and to call the mock with other values. For this you can use the `CallOriginal` method.
+In some cases you may want to arrange to call the original method implementation when it is called with a specific value and to call the mock with other values. For this you can use the [CallOriginal]({%slug justmock/basic-usage/mock/call-original%}) method.
 
   #### __[C#]__
 
@@ -229,10 +227,9 @@ In some cases you may want to arrange to call the original method implementation
 
 In this example we arrange that when `order.Receipt` method is called with argument `DateTime.Today`, then the original method implementation should be called. But once the same method is called with a date later than `DateTime.Today` then we return __"Invalid date"__.
 
-
 ### DoNothing
 
-For arranging a void call it is a good practice to explicitly mark the mock with `DoNothing. The method is basically syntactic sugar and does nothing, as the name suggests, but improves the readability of your code. Lets see it in practice.
+For arranging a void call it is a good practice to explicitly mark the mock with [DoNothing]({%slug justmock/basic-usage/mock/do-nothing%}). The method is basically syntactic sugar and does nothing, as the name suggests, but improves the readability of your code. Lets see it in practice.
 
   #### __[C#]__
 
@@ -252,7 +249,7 @@ The first and the second line are functionally the same, but specifying explicit
 
 ### Throws
 
-The `Throws` method is used when you want to throw an exception for a particular method invocation. In the following example, we are throwing an invalid operation exception for trying to call *warehouse.Remove* with zero quantity.
+The [Throws]({%slug justmock/basic-usage/mock/throws%}) method is used when you want to throw an exception for a particular method invocation. In the following example, we are throwing an invalid operation exception for trying to call *warehouse.Remove* with zero quantity.
 
   #### __[C#]__
 
@@ -370,6 +367,8 @@ This is the most flexible matcher and it allows you to specify your own matching
 	{{endregion}}
 
 With our expression (or predicate) `x => x < 10` we specify that a call to `foo.Echo` with an argument less than 10 should return `true`.
+
+>For detailed information on the supported by JustMock matchers, visit [Basic Usage | Matchers]({%slug justmock/basic-usage/matchers%}) topic.
 
 ## Properties
 
@@ -600,9 +599,9 @@ Additionally, with JustMock installed you receive a sample project that uses thi
 
 # See Also
 
- * __[Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})__
+* [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
  
- * __[Strict Behavior]({%slug justmock/basic-usage/mock-behaviors/strict%})__ 
+* [Strict Behavior]({%slug justmock/basic-usage/mock-behaviors/strict%})
  
- * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
+* [Matchers]({%slug justmock/basic-usage/matchers%})
  
