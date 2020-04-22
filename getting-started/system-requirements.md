@@ -18,8 +18,8 @@ Telerik JustMock can be installed on any operating system that supports .NET 4.5
 
 | OS	  | Version |
 | ------- | --------|
-| Windows | 10, 8, 8.1, 7, Vista, XP |
-| Windows Server | 2019, 2016, 2012, 2010, 2008 |
+| Windows | 10, 8, 8.1 |
+| Windows Server | 2019, 2016 |
 
 ## Development Environment
 
@@ -36,7 +36,7 @@ In order to use JustMock the following additional development tools must be inst
 
 | IDE			| Version							 |
 | ------------- | ---------------------------------- |
-| Visual Studio | 2019, 2017, 2015, 2013, 2012, 2010 |
+| Visual Studio | 2019, 2017, 2015, 2013, 2012 |
 
 >tip Since R1 2019, .NET Core 2 and later versions are also supported.
 
