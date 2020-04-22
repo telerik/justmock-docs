@@ -6,7 +6,7 @@ previous_url: /getting-started-visual-studio-extension.html
 slug: justmock/getting-started/visual-studio-extension
 tags: visual,studio,extension
 published: True
-position: 4
+position: 5
 ---
 
 # Visual Studio Extension
