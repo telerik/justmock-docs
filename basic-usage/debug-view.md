@@ -75,8 +75,8 @@ This pane shows the same content as Full Trace, but it does not required any exp
 
 ![Debug Window Debug Trace Pane](images/DebugWindow_DebugTrace.png)
 
-* __Mocks Repository__
+* __Mock Repository__
 
 The pane shows basic information about particular method mock like name, declaring type and its invocations. The test method sample has the following repository view:
 
-![Debug Window Mocks Repository Pane](images/DebugWindow_MocksRepository.png)
+![Debug Window Mock Repository Pane](images/DebugWindow_MockRepository.png)
