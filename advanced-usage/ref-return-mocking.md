@@ -129,7 +129,7 @@ Non-public API provides several dedicated interfaces for mocking ref returns and
     {
         // Arrange
         var sut = Mock.Create<ClassUsingRefReturns>();
-        Mock.NonPublic.RefReturn.Arrange<int>(sut, "GetRefReturnPrivInstanceWithArgs", ArgExpr.Ref(1))
+        Mock.NonPublic.RefReturn.Arrange<int>(sut, "GetRefReturnPrivInstanceWithArgs", Arg.Expr.Ref(1))
             .Returns(LocalRef.WithValue(12).Handle)
             .OccursOnce();
 

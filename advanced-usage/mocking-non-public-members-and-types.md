@@ -263,7 +263,7 @@ Arrange a call to a private method accepting an argument that matches any intege
         int expected = 1;
 
         // Arrange
-        Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", ArgExpr.IsAny<int>()).Returns(expected);
+        Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", Arg.Expr.IsAny<int>()).Returns(expected);
 
         // Act
         int actual = foo.Echo(5);
@@ -283,7 +283,7 @@ Arrange a call to a private method accepting an argument that matches any intege
         Dim expected As Integer = 1
 
         ' Arrange
-        Mock.NonPublic.Arrange(Of Integer)(foo, "PrivateEcho", ArgExpr.IsAny(Of Integer)()).Returns(expected)
+        Mock.NonPublic.Arrange(Of Integer)(foo, "PrivateEcho", Arg.Expr.IsAny(Of Integer)()).Returns(expected)
 
         ' Act
         Dim actual As Integer = foo.Echo(5)
@@ -299,7 +299,7 @@ Here we specify that `PrivateEcho` method called with any `int` argument will re
 
 JustMock leverages .NET 4 and the DLR to allow you to arrange non-public members as naturally as you can public members.
 
-In the example below, we wrap the mock instance in a dynamic object using Mock.NonPublic.Wrap(). The wrapper can be passed to Mock.NonPublic.Arrange and Mock.NonPublic.Assert together with an operation to specify what you want to arrange. We could also arrange the value of a property getter or the action of a property setter. Matchers are again passed using members of the ArgExpr class.
+In the example below, we wrap the mock instance in a dynamic object using Mock.NonPublic.Wrap(). The wrapper can be passed to Mock.NonPublic.Arrange and Mock.NonPublic.Assert together with an operation to specify what you want to arrange. We could also arrange the value of a property getter or the action of a property setter. Argument matchers are specified using Arg.Expr again.
 
 You need to reference the Microsoft.CSharp assembly when using dynamic expressions in Visual C# projects.
 
@@ -313,7 +313,7 @@ You need to reference the Microsoft.CSharp assembly when using dynamic expressio
 
         // Arrange
         dynamic fooAcc = Mock.NonPublic.Wrap(foo);
-        Mock.NonPublic.Arrange<int>(fooAcc.PrivateEcho(ArgExpr.IsAny<int>())).Returns(10);
+        Mock.NonPublic.Arrange<int>(fooAcc.PrivateEcho(Arg.Expr.IsAny<int>())).Returns(10);
         Mock.NonPublic.Arrange<string>(fooAcc.Value).Returns("foo");
         Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce();
 
@@ -338,7 +338,7 @@ You need to reference the Microsoft.CSharp assembly when using dynamic expressio
 
         ' Arrange
         Dim fooAcc As Object = Mock.NonPublic.Wrap(foo)
-        Mock.NonPublic.Arrange(Of Integer)(fooAcc.PrivateEcho(ArgExpr.IsAny(Of Integer)())).Returns(10)
+        Mock.NonPublic.Arrange(Of Integer)(fooAcc.PrivateEcho(Arg.Expr.IsAny(Of Integer)())).Returns(10)
         Mock.NonPublic.Arrange(Of String)(fooAcc.Value).Returns("foo")
         Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce()
 
@@ -877,7 +877,7 @@ Let's see an example of how to mock an internal class from .NET framework. Consi
 
         bool isCalled = false;
 
-        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny<Uri>()).DoInstead(() => isCalled = true);
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", Arg.Expr.IsAny<Uri>()).DoInstead(() => isCalled = true);
 
         // Act
         System.Net.IWebRequestCreate iWebRequestCreate = (System.Net.IWebRequestCreate)httpRequestCreator;
@@ -901,7 +901,7 @@ Let's see an example of how to mock an internal class from .NET framework. Consi
 
         Dim isCalled As Boolean = False
 
-        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny(Of Uri)()).DoInstead(Sub() isCalled = True)
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", Arg.Expr.IsAny(Of Uri)()).DoInstead(Sub() isCalled = True)
 
         ' Act
         Dim iWebRequestCreate As System.Net.IWebRequestCreate = DirectCast(httpRequestCreator, System.Net.IWebRequestCreate)
@@ -913,7 +913,7 @@ Let's see an example of how to mock an internal class from .NET framework. Consi
     End Sub
   {{endregion}}
 
-Note the use of `ArgExpr.IsAny<Uri>()` - as we mock a non-public call, we need to know the type of the argument to resolve the method. Thus, instead of using `Arg`, like we do in most of the other cases, we must use `ArgExpr`.
+Note the use of `Arg.Expr.IsAny<Uri>()` - as we mock a non-public call, we need to know the type of the argument to resolve the method. Thus, instead of using `Arg`, like we do in most of the other cases, we must use `Arg.Expr`.
 
 > **Important**
 >
@@ -933,7 +933,7 @@ With the next sample we can handle even more complex scenario - mock internal cl
         var httpRequestCreator = Mock.Create(typeName, (config) => config
             .CallConstructor(new object[] {true}));
 
-        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny<Uri>())
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", Arg.Expr.IsAny<Uri>())
             .CallOriginal()
             .MustBeCalled();
 
@@ -959,7 +959,7 @@ With the next sample we can handle even more complex scenario - mock internal cl
         Dim httpRequestCreator = Mock.Create(typeName, Sub(config) _
             config.CallConstructor(New Object() {True}))
 
-        Mock.NonPublic.Arrange(httpRequestCreator, "Create", ArgExpr.IsAny(Of Uri)()) _
+        Mock.NonPublic.Arrange(httpRequestCreator, "Create", Arg.Expr.IsAny(Of Uri)()) _
             .CallOriginal() _
             .MustBeCalled()
 

@@ -238,7 +238,7 @@ There is another approach to assert that a certain method was executed when you 
     </tr>
     <tr>
         <td>
-            Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", ArgExpr.IsAny<int>()).Returns(42);
+            Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", Arg.Expr.IsAny<int>()).Returns(42);
         </td>
         <td>Arrange a private method to return a predefined value.</td>
     </tr>
