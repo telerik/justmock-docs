@@ -62,4 +62,21 @@ In the text visualizer you will be able to see the following information about e
 ![Debug View Full Trace View](images/DebugView_FullTraceView.png)
 
 As the logs can be rather long, you can copy them from the Visual Studio's Text Visualizer and paste them in another source code editor (Notepad++ for example). Then, changing the language to Python will provide the possibility of collapsing or expanding certain groups inside the log. Further, you will also get an appropriate syntax highlighting:
+
 ![Debug View Full Trace Text Editor View](images/DebugView_FullTraceTextEditorView.png)
+
+## Debug Window (Beta)
+
+JustMock extension for Visual Studio 2017 (and above) makes mock debugging even more convenient by adding tool window for visualizing trace messages and arranged method mocks. It can be opened from main menu __View > Other Windows > JustMock Debug Window__ or extension menu - __JustMock > Show Debug Window__. The debug window consist of two pains which are active only while debugging:
+
+* __Debug Trace__
+
+This pane shows the same content as Full Trace, but it does not required any explicit activation. The sample output produced by the sample unit test looks as following:
+
+![Debug Window Debug Trace Pane](images/DebugWindow_DebugTrace.png)
+
+* __Mock Repository__
+
+The pane shows basic information about particular method mock like name, declaring type and its invocations. The test method sample has the following repository view:
+
+![Debug Window Mock Repository Pane](images/DebugWindow_MockRepository.png)
