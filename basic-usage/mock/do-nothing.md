@@ -41,37 +41,37 @@ Before describing the usage of the `DoNothing` method, let's first see an exampl
 
   {{region DoNothing#AssertDoNothingOnVoidCall}}
     [TestMethod]
-        public void SimpleExampleWithDoNothing()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void SimpleExampleWithDoNothing()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.VoidCall()).DoNothing().MustBeCalled();
+        Mock.Arrange(() => foo.VoidCall()).DoNothing().MustBeCalled();
 
-            // Act
-            foo.VoidCall();
+        // Act
+        foo.VoidCall();
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoNothing#AssertDoNothingOnVoidCall}}
     <TestMethod()>
-        Public Sub SimpleExampleWithDoNothing()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub SimpleExampleWithDoNothing()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.VoidCall()).DoNothing().MustBeCalled()
+        Mock.Arrange(Function() foo.VoidCall()).DoNothing().MustBeCalled()
 
-            ' Act
-            foo.VoidCall()
+        ' Act
+        foo.VoidCall()
 
-            ' Assert
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 In the example, we mark `foo.VoidCall()` with `DoNothing` and `MustBeCalled`. In this way we indicate that a call to `foo.VoidCall` must be ignored, but still the method should be called during the execution of the test. We can achieve the same behavior without marking the call with `DoNothing`. Marking it explicitly improves the code readability. The `DoNothing` method makes no functional difference in the test execution, just a good practice to improve your code. The following two lines are functionally equivalent.
@@ -80,27 +80,27 @@ In the example, we mark `foo.VoidCall()` with `DoNothing` and `MustBeCalled`. In
 
   {{region DoNothing#Example}}
     [TestMethod]
-        public void ShouldShowHowDoNothingIsUsed()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldShowHowDoNothingIsUsed()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.VoidCall()).MustBeCalled();
-            Mock.Arrange(() => foo.VoidCall()).DoNothing().MustBeCalled();
-        }
+        Mock.Arrange(() => foo.VoidCall()).MustBeCalled();
+        Mock.Arrange(() => foo.VoidCall()).DoNothing().MustBeCalled();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoNothing#Example}}
     <TestMethod()>
-        Public Sub ShouldShowHowDoNothingIsUsed()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldShowHowDoNothingIsUsed()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.VoidCall()).MustBeCalled()
-            Mock.Arrange(Function() foo.VoidCall()).DoNothing().MustBeCalled()
-        End Sub
+        Mock.Arrange(Function() foo.VoidCall()).MustBeCalled()
+        Mock.Arrange(Function() foo.VoidCall()).DoNothing().MustBeCalled()
+    End Sub
   {{endregion}}
 
 You can use `DoNothing` with non-void calls as well. For the example we will be using the following `Foo` class:
@@ -132,30 +132,30 @@ You can use `DoNothing` with non-void calls as well. For the example we will be 
 
   {{region DoNothing#ExampleNonVoid}}
     [TestMethod]
-        public void DoNothingWithNonPublicCalls()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void DoNothingWithNonPublicCalls()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            Mock.Arrange(() => foo.Echo(Arg.AnyInt)).DoNothing();
+        Mock.Arrange(() => foo.Echo(Arg.AnyInt)).DoNothing();
 
-            // Act
-            foo.Echo(10);
-        }
+        // Act
+        foo.Echo(10);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoNothing#ExampleNonVoid}}
     <TestMethod()>
-        Public Sub DoNothingWithNonPublicCalls()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
-            Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).DoNothing()
+    Public Sub DoNothingWithNonPublicCalls()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
+        Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).DoNothing()
 
-            ' Act
-            foo.Echo(10)
-        End Sub
+        ' Act
+        foo.Echo(10)
+    End Sub
   {{endregion}}
 
 
@@ -166,36 +166,36 @@ You can use `DoNothing` with non-void calls as well. For the example we will be 
 
   {{region DoNothing#AssertDoNothingOnPropertySet}}
     [TestMethod]
-        public void AssertDoNothingOnPropertySet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void AssertDoNothingOnPropertySet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.ArrangeSet(() => foo.Bar = 1).DoNothing().MustBeCalled();
+        Mock.ArrangeSet(() => foo.Bar = 1).DoNothing().MustBeCalled();
 
-            // Act
-            foo.Bar = 1;
+        // Act
+        foo.Bar = 1;
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoNothing#AssertDoNothingOnPropertySet}}
     <TestMethod()>
-        Public Sub DAssertDoNothingOnPropertySet()
-            'Arrange
-            Dim foo = Mock.Create(Of IFoo)()
-            Mock.ArrangeSet(Sub() foo.Bar = 0).DoNothing().MustBeCalled()
+    Public Sub DAssertDoNothingOnPropertySet()
+        'Arrange
+        Dim foo = Mock.Create(Of IFoo)()
+        Mock.ArrangeSet(Sub() foo.Bar = 0).DoNothing().MustBeCalled()
 
-            'Act
-            foo.Bar = 0
+        'Act
+        foo.Bar = 0
 
-            'Assert
-            Mock.Assert(foo)
-        End Sub
+        'Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 

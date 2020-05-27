@@ -48,37 +48,37 @@ To mock an interface under Windows Runtime, we use `Mock.Create<T>()`:
 
   {{region MockingInWinRT#NonElevatedTest1}}
     [TestMethod]
-        public void DoSomething_MustBeCalled()
-        {
-            // Arrange
-            var myMock = Mock.Create<IFoo>();
+    public void DoSomething_MustBeCalled()
+    {
+        // Arrange
+        var myMock = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => myMock.DoSomething()).DoNothing().MustBeCalled();
+        Mock.Arrange(() => myMock.DoSomething()).DoNothing().MustBeCalled();
 
-            // Act
-            myMock.DoSomething();
+        // Act
+        myMock.DoSomething();
 
-            // Assert
-            Mock.Assert(myMock);
-        }
+        // Assert
+        Mock.Assert(myMock);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingInWinRT#NonElevatedTest1}}
     <TestMethod> _
-        Public Sub DoSomething_MustBeCalled()
-            ' Arrange
-            Dim myMock = Mock.Create(Of IFoo)()
+    Public Sub DoSomething_MustBeCalled()
+        ' Arrange
+        Dim myMock = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Sub() myMock.DoSomething()).DoNothing().MustBeCalled()
+        Mock.Arrange(Sub() myMock.DoSomething()).DoNothing().MustBeCalled()
 
-            ' Act
-            myMock.DoSomething()
+        ' Act
+        myMock.DoSomething()
 
-            ' Assert
-            Mock.Assert(myMock)
-        End Sub
+        ' Assert
+        Mock.Assert(myMock)
+    End Sub
   {{endregion}}
 
 
@@ -93,37 +93,37 @@ Here we perform a mocking of an interface `string` method:
 
   {{region MockingInWinRT#NonElevatedTest2}}
     [TestMethod]
-        public void ReturnMyString_ShouldReturnExpectedAndMustBeCalled()
-        {
-            // Arrange
-            var myMock = Mock.Create<IFoo>();
+    public void ReturnMyString_ShouldReturnExpectedAndMustBeCalled()
+    {
+        // Arrange
+        var myMock = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => myMock.ReturnMyString(Arg.AnyString)).Returns("Test").MustBeCalled();
+        Mock.Arrange(() => myMock.ReturnMyString(Arg.AnyString)).Returns("Test").MustBeCalled();
 
-            // Act
-            var actual = myMock.ReturnMyString("Telerik");
+        // Act
+        var actual = myMock.ReturnMyString("Telerik");
 
-            // Assert
-            Assert.AreEqual("Test", actual);
-        }
+        // Assert
+        Assert.AreEqual("Test", actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingInWinRT#NonElevatedTest2}}
     <TestMethod>
-        Public Sub ReturnMyString_ShouldReturnExpectedAndMustBeCalled()
-            ' Arrange
-            Dim myMock = Mock.Create(Of IFoo)()
+    Public Sub ReturnMyString_ShouldReturnExpectedAndMustBeCalled()
+        ' Arrange
+        Dim myMock = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() myMock.ReturnMyString(Arg.AnyString)).Returns("Test").MustBeCalled()
+        Mock.Arrange(Function() myMock.ReturnMyString(Arg.AnyString)).Returns("Test").MustBeCalled()
 
-            ' Act
-            Dim actual = myMock.ReturnMyString("Telerik")
+        ' Act
+        Dim actual = myMock.ReturnMyString("Telerik")
 
-            ' Assert
-            Assert.AreEqual("Test", actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual("Test", actual)
+    End Sub
   {{endregion}}
 
 Again, we create a mocked instance of the *IFoo* interface. Then, we arrange that *ReturnMyString()* must be called during the test execution and it should return "Test". Note that we ignore the arguments by expecting any string to be passed. After acting on the system under test, we assert that the actual and the expected return value are the same.
@@ -183,33 +183,33 @@ To mock a static property inside Windows Runtime you can refer to the following:
 
   {{region MockingInWinRT#ElevatedTest1}}
     [TestMethod]
-        public void StatProp_ShouldReturnExpectedAndMustBeCalled()
-        {
-            // Arrange
-            Mock.Arrange(() => FooStatic.StatProp).Returns("Test").MustBeCalled();
+    public void StatProp_ShouldReturnExpectedAndMustBeCalled()
+    {
+        // Arrange
+        Mock.Arrange(() => FooStatic.StatProp).Returns("Test").MustBeCalled();
 
-            // Act
-            var actual = FooStatic.StatProp;
+        // Act
+        var actual = FooStatic.StatProp;
 
-            // Assert
-            Assert.AreEqual("Test", actual);
-        }
+        // Assert
+        Assert.AreEqual("Test", actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingInWinRT#ElevatedTest1}}
     <TestMethod>
-        Public Sub StatProp_ShouldReturnExpectedAndMustBeCalled()
-            ' Arrange
-            Mock.Arrange(Function() FooStatic.StatProp).Returns("Test").MustBeCalled()
+    Public Sub StatProp_ShouldReturnExpectedAndMustBeCalled()
+        ' Arrange
+        Mock.Arrange(Function() FooStatic.StatProp).Returns("Test").MustBeCalled()
 
-            ' Act
-            Dim actual = FooStatic.StatProp
+        ' Act
+        Dim actual = FooStatic.StatProp
 
-            ' Assert
-            Assert.AreEqual("Test", actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual("Test", actual)
+    End Sub
   {{endregion}}
 
 We directly arrange that, *StatProp* must be called during the test execution and it should return "Test". Then, the only thing needed is to act on the system under test and assert the results.
@@ -222,33 +222,33 @@ To mock a static method you use similar syntax as when mocking properties. Howev
 
   {{region MockingInWinRT#ElevatedTest2}}
     [TestMethod]
-        public void DoSomething_ShouldDoNothingAndMustBeCalled()
-        {
-            // Arrange
-            Mock.Arrange(() => FooStatic.DoSomething()).DoNothing().MustBeCalled();
+    public void DoSomething_ShouldDoNothingAndMustBeCalled()
+    {
+        // Arrange
+        Mock.Arrange(() => FooStatic.DoSomething()).DoNothing().MustBeCalled();
 
-            // Act
-            FooStatic.DoSomething();
+        // Act
+        FooStatic.DoSomething();
 
-            // Assert
-            Mock.Assert(() => FooStatic.DoSomething());
-        }
+        // Assert
+        Mock.Assert(() => FooStatic.DoSomething());
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingInWinRT#ElevatedTest2}}
     <TestMethod>
-        Public Sub DoSomething_ShouldDoNothingAndMustBeCalled()
-            ' Arrange
-            Mock.Arrange(Sub() FooStatic.DoSomething()).DoNothing().MustBeCalled()
+    Public Sub DoSomething_ShouldDoNothingAndMustBeCalled()
+        ' Arrange
+        Mock.Arrange(Sub() FooStatic.DoSomething()).DoNothing().MustBeCalled()
 
-            ' Act
-            FooStatic.DoSomething()
+        ' Act
+        FooStatic.DoSomething()
 
-            ' Assert
-            Mock.Assert(Sub() FooStatic.DoSomething())
-        End Sub
+        ' Assert
+        Mock.Assert(Sub() FooStatic.DoSomething())
+    End Sub
   {{endregion}}
 
 

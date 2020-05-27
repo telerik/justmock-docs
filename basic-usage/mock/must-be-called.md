@@ -62,49 +62,49 @@ Let's arrange that a call must be made and then assert that. Only calls marked a
 
   {{region MustBeCalled#OnlyTheOnesMarkedAsAssertable}}
     [TestMethod]
-        public void ShouldAssertAllCallsMarkedAsAssertable()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void ShouldAssertAllCallsMarkedAsAssertable()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            Mock.Arrange(() => foo.Echo(1)).Returns(1).MustBeCalled();
-            Mock.Arrange(() => foo.Echo(2)).Returns(2);
+        Mock.Arrange(() => foo.Echo(1)).Returns(1).MustBeCalled();
+        Mock.Arrange(() => foo.Echo(2)).Returns(2);
 
-            // Act
-            var actual1 = 0;
-            var actual2 = 0;
-            actual1 = foo.Echo(1);
-            actual2 = foo.Echo(2);
+        // Act
+        var actual1 = 0;
+        var actual2 = 0;
+        actual1 = foo.Echo(1);
+        actual2 = foo.Echo(2);
 
-            // Assert
-            Assert.AreEqual(1, actual1);
-            Assert.AreEqual(2, actual2);
-            Mock.Assert(foo);
-        }
+        // Assert
+        Assert.AreEqual(1, actual1);
+        Assert.AreEqual(2, actual2);
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MustBeCalled#OnlyTheOnesMarkedAsAssertable}}
     <TestMethod()>
-        Public Sub ShouldAssertAllCallsMarkedAsAssertable()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldAssertAllCallsMarkedAsAssertable()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Mock.Arrange(Function() foo.Echo(1)).Returns(1).MustBeCalled()
-            Mock.Arrange(Function() foo.Echo(2)).Returns(2)
+        Mock.Arrange(Function() foo.Echo(1)).Returns(1).MustBeCalled()
+        Mock.Arrange(Function() foo.Echo(2)).Returns(2)
 
-            ' Act
-            Dim actual1 = 0
-            Dim actual2 = 0
-            actual1 = foo.Echo(1)
-            actual2 = foo.Echo(2)
+        ' Act
+        Dim actual1 = 0
+        Dim actual2 = 0
+        actual1 = foo.Echo(1)
+        actual2 = foo.Echo(2)
 
-            ' Assert
-            Assert.AreEqual(1, actual1)
-            Assert.AreEqual(2, actual2)
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Assert.AreEqual(1, actual1)
+        Assert.AreEqual(2, actual2)
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 Here we ensure that `foo.Echo` is called with argument 1, however, the call with argument 2 is not verified.
@@ -120,31 +120,31 @@ When `MustBeCalled` setup for some method is never invoked an exception is throw
 
   {{region MustBeCalled#FailsOnNotCalling}}
     [TestMethod]
-        public void ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
-        {
-            // Arrange
-            var foo = new Foo();
+    public void ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
+    {
+        // Arrange
+        var foo = new Foo();
 
-            Mock.Arrange(() => foo.Execute()).MustBeCalled();
+        Mock.Arrange(() => foo.Execute()).MustBeCalled();
 
-            // Assert
-            Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
-        }
+        // Assert
+        Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MustBeCalled#FailsOnNotCalling}}
     <TestMethod()>
-        Public Sub ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
-            ' Arrange
-            Dim foo = New Foo()
+    Public Sub ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
+        ' Arrange
+        Dim foo = New Foo()
 
-            Mock.Arrange(Sub() foo.Execute()).MustBeCalled()
+        Mock.Arrange(Sub() foo.Execute()).MustBeCalled()
 
-            ' Assert
-            Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
-        End Sub
+        ' Assert
+        Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
+    End Sub
   {{endregion}}
 
 As a result, when verifying the `foo` object, `MockAssertion` exception is thrown as `foo.Execute` is never actually called.
@@ -176,46 +176,46 @@ You can use `MustBeCalled` when arranging property set. Here is an example:
 
   {{region MustBeCalled#OnPropertySet}}
     [TestMethod]
-        public void ShouldArrangeMustBeCalledForPropertySet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
-            Mock.ArrangeSet(() => { foo.Value = 1; })
-                .DoNothing()
-                .MustBeCalled();
+    public void ShouldArrangeMustBeCalledForPropertySet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
+        Mock.ArrangeSet(() => { foo.Value = 1; })
+            .DoNothing()
+            .MustBeCalled();
 
-            // Assert
-            Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
+        // Assert
+        Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
 
-            // Act
-            foo.Value = 1;
+        // Act
+        foo.Value = 1;
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MustBeCalled#OnPropertySet}}
     <TestMethod()>
-        Public Sub ShouldArrangeMustBeCalledForPropertySet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldArrangeMustBeCalledForPropertySet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.ArrangeSet(Sub() foo.Value = 1).
-                        DoNothing().
-                        MustBeCalled()
+        Mock.ArrangeSet(Sub() foo.Value = 1).
+                    DoNothing().
+                    MustBeCalled()
 
-            ' Assert
-            Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
+        ' Assert
+        Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
 
-            ' Act
-            foo.Value = 1
+        ' Act
+        foo.Value = 1
 
-            ' Assert
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 We use `DoNothing` to ignore the actual implementation when `foo.Value` is set to `1` and specify that it must be set to exactly `1` in our test. Before acting with `foo.Value = 1;` an exception of type `MockAssertion` would be thrown when asserting `foo`. After acting we verify that `foo.Value` was previously set to `1`.
@@ -228,37 +228,37 @@ You can use `MustBeCalled` in conjunction with `IgnoreArguments`. Here is an exa
 
   {{region MustBeCalled#IgnoreArguments}}
     [TestMethod]
-        public void ShouldCombineMustBeCalledWithIgnoreArguments()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void ShouldCombineMustBeCalledWithIgnoreArguments()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            Mock.Arrange(() => foo.Execute(0)).IgnoreArguments().MustBeCalled();
+        Mock.Arrange(() => foo.Execute(0)).IgnoreArguments().MustBeCalled();
 
-            // Act
-            foo.Execute(10);
+        // Act
+        foo.Execute(10);
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MustBeCalled#IgnoreArguments}}
     <TestMethod()>
-        Public Sub ShouldCombineMustBeCalledWithIgnoreArguments()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldCombineMustBeCalledWithIgnoreArguments()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Mock.Arrange(Function() foo.Execute(0)).IgnoreArguments().MustBeCalled()
+        Mock.Arrange(Function() foo.Execute(0)).IgnoreArguments().MustBeCalled()
 
-            ' Act
-            foo.Execute(10)
+        ' Act
+        foo.Execute(10)
 
-            ' Assert
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 We use `IgnoreArguments()` to ignore the arguments passed to `foo.Execute` method and specify that it must be called. Our acting is by `foo.Execute(10);`. Finally, we verify that the method is actually called with some or other argument.

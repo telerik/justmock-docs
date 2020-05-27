@@ -44,46 +44,46 @@ Next is an example on how to use `Raise` to fire custom event.
 
   {{region Raise#CustomEvent}}
     [TestMethod]
-        public void ShouldInvokeMethodForACustomEventWhenRaised()
+    public void ShouldInvokeMethodForACustomEventWhenRaised()
+    {
+        string expected = "ping";
+        string actual = string.Empty;
+
+        // Arrange
+        var foo = Mock.Create<IFoo>();
+
+        foo.CustomEvent += delegate(string s)
         {
-            string expected = "ping";
-            string actual = string.Empty;
+            actual = s;
+        };
 
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+        // Act
+        Mock.Raise(() => foo.CustomEvent += null, expected);
 
-            foo.CustomEvent += delegate(string s)
-            {
-                actual = s;
-            };
-
-            // Act
-            Mock.Raise(() => foo.CustomEvent += null, expected);
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raise#CustomEvent}}
     <TestMethod>
-        Public Sub ShouldInvokeMethodForACustomEventWhenRaised()
-            Dim expected As String = "ping"
-            Dim actual As String = String.Empty
+    Public Sub ShouldInvokeMethodForACustomEventWhenRaised()
+        Dim expected As String = "ping"
+        Dim actual As String = String.Empty
 
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            AddHandler foo.CustomEvent, Sub(s As String) actual = s
+        AddHandler foo.CustomEvent, Sub(s As String) actual = s
 
-            ' Act
-            Mock.Raise(Sub() AddHandler foo.CustomEvent, Nothing, expected)
+        ' Act
+        Mock.Raise(Sub() AddHandler foo.CustomEvent, Nothing, expected)
 
-            ' Assert
-            Assert.AreEqual(expected, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 We use `Raise` to raise `foo.CustomEvent` and pass "ping" to it. Before acting we have attached a delegate to the event. Executing the delegate will result in assigning the passed string to `actual`. Finally, we verify that `expected` and `actual` have the same value.
@@ -149,46 +149,46 @@ An example on how to use `Raise` to fire standard event would look like this:
 
   {{region Raise#StandardEvent}}
     [TestMethod]
-        public void ShouldRaiseEventWithStandardEventArgs()
+    public void ShouldRaiseEventWithStandardEventArgs()
+    {
+        string actual = null;
+        string expected = "ping";
+
+        // Arrange
+        var executor = Mock.Create<IExecutor<int>>();
+
+        executor.Done += delegate(object sender, FooArgs args)
         {
-            string actual = null;
-            string expected = "ping";
+            actual = args.Value;
+        };
 
-            // Arrange
-            var executor = Mock.Create<IExecutor<int>>();
+        // Act
+        Mock.Raise(() => executor.Done += null, new FooArgs(expected));
 
-            executor.Done += delegate(object sender, FooArgs args)
-            {
-                actual = args.Value;
-            };
-
-            // Act
-            Mock.Raise(() => executor.Done += null, new FooArgs(expected));
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raise#StandardEvent}}
     <TestMethod>
-        Public Sub ShouldRaiseEventWithStandardEventArgs()
-            Dim actual As String = Nothing
-            Dim expected As String = "ping"
+    Public Sub ShouldRaiseEventWithStandardEventArgs()
+        Dim actual As String = Nothing
+        Dim expected As String = "ping"
 
-            ' Arrange
-            Dim executor = Mock.Create(Of IExecutor(Of Integer))()
+        ' Arrange
+        Dim executor = Mock.Create(Of IExecutor(Of Integer))()
 
-            AddHandler executor.Done, Sub(sender As Object, args As FooArgs) actual = args.Value
+        AddHandler executor.Done, Sub(sender As Object, args As FooArgs) actual = args.Value
 
-            ' Act
-            Mock.Raise(Sub() AddHandler executor.Done, Nothing, New FooArgs(expected))
+        ' Act
+        Mock.Raise(Sub() AddHandler executor.Done, Nothing, New FooArgs(expected))
 
-            ' Assert
-            Assert.AreEqual(expected, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 Here we use `Raise` to raise a standard event - `executor.Done` accepting `FooArgs` object. The attached delegate sets the `Value` property in `FooArgs` object to the variable `actual`. Finally, we verify that `expected` and `actual` have the same value.

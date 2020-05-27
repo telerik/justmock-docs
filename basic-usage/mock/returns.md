@@ -44,40 +44,40 @@ With `Returns` method you can change the return value from a property get call.
 
   {{region Returns#AssertPropertyGetCall}}
     [TestMethod]
-        public void ShouldAssertPropertyGetCall()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldAssertPropertyGetCall()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Bar).Returns(10);
+        Mock.Arrange(() => foo.Bar).Returns(10);
 
 
-            // Act
-            var actual = 0;
-            actual = foo.Bar;
+        // Act
+        var actual = 0;
+        actual = foo.Bar;
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Returns#AssertPropertyGetCall}}
     <TestMethod()>
-        Public Sub ShouldAssertPropertyGetCall()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertPropertyGetCall()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Bar).Returns(10)
+        Mock.Arrange(Function() foo.Bar).Returns(10)
 
-            ' Act
-            Dim actual = 0
-            actual = foo.Bar
+        ' Act
+        Dim actual = 0
+        actual = foo.Bar
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 In this example we arrange the `Bar` property get to return `10` when called. By acting with `actual = foo.Bar;` we assign `10` to `actual`, as `foo.Bar` will result in `10`. Finally, a verification is asserted.
@@ -90,37 +90,37 @@ A common case is to mock a method call to return a custom value in conjunction w
 
   {{region Returns#AssertCallWithMatcher}}
     [TestMethod]
-        public void ShouldAssertMethodCallWithMatcher1()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldAssertMethodCallWithMatcher1()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int i) => ++i);
+        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int i) => ++i);
 
-            // Act
-            var actual = foo.Echo(10); 
+        // Act
+        var actual = foo.Echo(10); 
 
-            // Assert
-            Assert.AreEqual(11, actual);
-        }
+        // Assert
+        Assert.AreEqual(11, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Returns#AssertCallWithMatcher}}
     <TestMethod()>
-        Public Sub ShouldAssertMethodCallWithMatcher1()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertMethodCallWithMatcher1()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(i As Integer) System.Threading.Interlocked.Increment(i))
+        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(i As Integer) System.Threading.Interlocked.Increment(i))
 
-            ' Act
-            Dim actual = foo.Echo(10)
+        ' Act
+        Dim actual = foo.Echo(10)
 
-            ' Assert
-            Assert.AreEqual(11, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(11, actual)
+    End Sub
   {{endregion}}
 
 Here we use an `Arg.IsAny` matcher for the call to match calls to `foo.Echo` with any `int` argument. In the `Returns` method, instead of using a simple `int` value, we use a function to return the passed value incremented with 1.
@@ -131,37 +131,37 @@ You may also use a more complicated matcher. For example, you can make arrangeme
 
   {{region Returns#AssertCallWithMatcher2}}
     [TestMethod]
-        public void ShouldAssertMethodCallWithMatcher2()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldAssertMethodCallWithMatcher2()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x == 10))).Returns((int i) => i);
+        Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x == 10))).Returns((int i) => i);
 
-            // Act
-            var actual = foo.Echo(10);
+        // Act
+        var actual = foo.Echo(10);
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Returns#AssertCallWithMatcher2}}
     <TestMethod()>
-        Public Sub ShouldAssertMethodCallWithMatcher2()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertMethodCallWithMatcher2()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x = 10))).Returns(Function(i As Integer) i)
+        Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x = 10))).Returns(Function(i As Integer) i)
 
-            ' Act
-            Dim actual As Integer = foo.Echo(10)
+        ' Act
+        Dim actual As Integer = foo.Echo(10)
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 The following example mocks the `Execute` method so that it returns its second argument. We use *lambda expression* in the `Returns` body to select the desired argument. After we have arranged we act by calling `foo.Execute(100, 10)` and verify that it has returned actually what we expect, namely `10`. Additionally, we verify that a call with any `int` as first argument and exactly `10` as second has been made.
@@ -170,35 +170,35 @@ The following example mocks the `Execute` method so that it returns its second a
 
   {{region Returns#AssertCallWithMatcherAndReturn}}
     [TestMethod]
-        public void ShouldReturnWhateverSecondArgIs()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldReturnWhateverSecondArgIs()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Execute(Arg.IsAny<int>(), Arg.IsAny<int>())).Returns((int id, int i) => i);
+        Mock.Arrange(() => foo.Execute(Arg.IsAny<int>(), Arg.IsAny<int>())).Returns((int id, int i) => i);
 
-            // Act, Assert
-            Assert.AreEqual(foo.Execute(100, 10), 10);
+        // Act, Assert
+        Assert.AreEqual(foo.Execute(100, 10), 10);
 
-            Mock.Assert(() => foo.Execute(Arg.IsAny<int>(), Arg.Matches<int>(x => x == 10)));
-        }
+        Mock.Assert(() => foo.Execute(Arg.IsAny<int>(), Arg.Matches<int>(x => x == 10)));
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Returns#AssertCallWithMatcherAndReturn}}
     <TestMethod()>
-        Public Sub ShouldReturnWhateverSecondArgIs()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldReturnWhateverSecondArgIs()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Execute(Arg.AnyInt, Arg.AnyInt)).Returns(Function(id As Integer, i As Integer) i)
+        Mock.Arrange(Function() foo.Execute(Arg.AnyInt, Arg.AnyInt)).Returns(Function(id As Integer, i As Integer) i)
 
-            ' Act, Assert
-            Assert.AreEqual(foo.Execute(100, 10), 10)
+        ' Act, Assert
+        Assert.AreEqual(foo.Execute(100, 10), 10)
 
-            Mock.Assert(Sub() foo.Execute(Arg.AnyInt, Arg.Matches(Of Integer)(Function(x) x = 10)))
-        End Sub
+        Mock.Assert(Sub() foo.Execute(Arg.AnyInt, Arg.Matches(Of Integer)(Function(x) x = 10)))
+    End Sub
   {{endregion}}
 
 Follows an example, showing mocking method in F#:
@@ -254,31 +254,31 @@ JustMock supports executing mocked method in same test method without necessaril
 
   {{region Returns#SameTestMethod}}
     [TestMethod]
-        public void ShouldExecuteMockForSameInstanceInSameContext()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void ShouldExecuteMockForSameInstanceInSameContext()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            Mock.Arrange(() => foo.Echo(Arg.AnyInt)).IgnoreInstance().Returns((int arg1) => arg1);
+        Mock.Arrange(() => foo.Echo(Arg.AnyInt)).IgnoreInstance().Returns((int arg1) => arg1);
 
-            // Assert
-            Assert.AreEqual(new Foo().Echo(10), 10);
-        }
+        // Assert
+        Assert.AreEqual(new Foo().Echo(10), 10);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Returns#SameTestMethod}}
     <TestMethod()>
-        Public Sub ShouldExecuteMockForSameInstanceInSameContext()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldExecuteMockForSameInstanceInSameContext()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).IgnoreInstance().Returns(Function(arg1 As Integer) arg1)
+        Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).IgnoreInstance().Returns(Function(arg1 As Integer) arg1)
 
-            ' Assert
-            Assert.AreEqual(New Foo().Echo(10), 10)
-        End Sub
+        ' Assert
+        Assert.AreEqual(New Foo().Echo(10), 10)
+    End Sub
   {{endregion}}
 
 In this example, `Echo` is called on a new `Foo` instance, instead of a mocked one. However, the arrangement is applied.

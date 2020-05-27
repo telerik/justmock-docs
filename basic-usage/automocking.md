@@ -402,31 +402,31 @@ With JustMocks __Elevated Automocking__ we are able to directly write the next t
 
   {{region ElevatedAutoMocking#ShouldAutoMockConcretedDependecies}}
     [TestMethod]
-        public void ShouldAutoMockConcretedDependecies()
-        {
-            var container = new MockingContainer<PersonRepository>();
+    public void ShouldAutoMockConcretedDependecies()
+    {
+        var container = new MockingContainer<PersonRepository>();
 
-            container.Arrange<Person>(anml => anml.Walk()).MustBeCalled();
+        container.Arrange<Person>(anml => anml.Walk()).MustBeCalled();
 
-            container.Instance.Walk();
+        container.Instance.Walk();
 
-            container.Assert<Person>(anml => anml.Walk());
-        }
+        container.Assert<Person>(anml => anml.Walk());
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region ElevatedAutoMocking#ShouldAutoMockConcretedDependecies}}
     <TestMethod>
-        Public Sub ShouldAutoMockConcretedDependecies()
-            Dim container = New MockingContainer(Of PersonRepository)()
+    Public Sub ShouldAutoMockConcretedDependecies()
+        Dim container = New MockingContainer(Of PersonRepository)()
 
-            container.Arrange(Of Person)(Sub(anml) anml.Walk()).MustBeCalled()
+        container.Arrange(Of Person)(Sub(anml) anml.Walk()).MustBeCalled()
 
-            container.Instance.Walk()
-            
-            container.Assert(Of Person)(Sub(anml) anml.Walk())
-        End Sub
+        container.Instance.Walk()
+        
+        container.Assert(Of Person)(Sub(anml) anml.Walk())
+    End Sub
   {{endregion}}
 
 This saves us the time of creating independent mock for our dependency, and further, the inheritance is preserved.
@@ -523,43 +523,43 @@ Again, we are able to directly apply the next test method:
 
   {{region ElevatedAutoMocking#ShouldTransferFundsBetweenTwoAccounts}}
     [TestMethod]
-        public void ShouldTransferFundsBetweenTwoAccounts()
-        {
-            var container = new MockingContainer<AccountService>();
+    public void ShouldTransferFundsBetweenTwoAccounts()
+    {
+        var container = new MockingContainer<AccountService>();
 
-            decimal expectedBalance = 100;
+        decimal expectedBalance = 100;
 
-            container.Bind<Account>().ToMock().InjectedIntoParameter("fromAccount")
-                .AndArrange(x => Mock.Arrange(() => x.Balance).Returns(expectedBalance).MustBeCalled())
-                .AndArrange(x => Mock.Arrange(() => x.Withdraw(expectedBalance)).MustBeCalled());
-            container.Bind<Account>().ToMock().InjectedIntoParameter("toAccount")
-                .AndArrange(x => Mock.Arrange(() => x.Deposit(expectedBalance)).MustBeCalled());
+        container.Bind<Account>().ToMock().InjectedIntoParameter("fromAccount")
+            .AndArrange(x => Mock.Arrange(() => x.Balance).Returns(expectedBalance).MustBeCalled())
+            .AndArrange(x => Mock.Arrange(() => x.Withdraw(expectedBalance)).MustBeCalled());
+        container.Bind<Account>().ToMock().InjectedIntoParameter("toAccount")
+            .AndArrange(x => Mock.Arrange(() => x.Deposit(expectedBalance)).MustBeCalled());
 
-            container.Instance.TransferFunds(expectedBalance);
+        container.Instance.TransferFunds(expectedBalance);
 
-            container.Assert();
-        }
+        container.Assert();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region ElevatedAutoMocking#ShouldTransferFundsBetweenTwoAccounts}}
     <TestMethod> _
-        Public Sub ShouldTransferFundsBetweenTwoAccounts()
-            Dim container = New MockingContainer(Of AccountService)()
+    Public Sub ShouldTransferFundsBetweenTwoAccounts()
+        Dim container = New MockingContainer(Of AccountService)()
 
-            Dim expectedBalance As Decimal = 100
+        Dim expectedBalance As Decimal = 100
 
-            container.Bind(Of Account)().ToMock().InjectedIntoParameter("fromAccount") _
-                .AndArrange(Sub(x) Mock.Arrange(Function() x.Balance).Returns(expectedBalance).MustBeCalled()) _
-                .AndArrange(Sub(x) Mock.Arrange(Sub() x.Withdraw(expectedBalance)).MustBeCalled())
-            container.Bind(Of Account).ToMock().InjectedIntoParameter("toAccount") _
-                .AndArrange(Sub(x) Mock.Arrange(Sub() x.Deposit(expectedBalance)).MustBeCalled())
+        container.Bind(Of Account)().ToMock().InjectedIntoParameter("fromAccount") _
+            .AndArrange(Sub(x) Mock.Arrange(Function() x.Balance).Returns(expectedBalance).MustBeCalled()) _
+            .AndArrange(Sub(x) Mock.Arrange(Sub() x.Withdraw(expectedBalance)).MustBeCalled())
+        container.Bind(Of Account).ToMock().InjectedIntoParameter("toAccount") _
+            .AndArrange(Sub(x) Mock.Arrange(Sub() x.Deposit(expectedBalance)).MustBeCalled())
 
-            container.Instance.TransferFunds(expectedBalance)
+        container.Instance.TransferFunds(expectedBalance)
 
-            container.Assert()
-        End Sub
+        container.Assert()
+    End Sub
   {{endregion}}
 
 Here, you are able to arrange the behavior of the different Account dependencies, from the mocking container.

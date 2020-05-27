@@ -89,27 +89,27 @@ Provided that the `InternalsVisibleTo` attribute is included in the `AssemblyInf
 
   {{region InternalMocking#Example}}
     [TestMethod]
-        public void ShouldMockInternalTypeViaProxy()
-        {
-            // Arrange
-            var foo = Mock.Create<FooInternal>(Behavior.CallOriginal);
+    public void ShouldMockInternalTypeViaProxy()
+    {
+        // Arrange
+        var foo = Mock.Create<FooInternal>(Behavior.CallOriginal);
 
-            // Assert
-            Assert.IsNotNull(foo.Builder);
-        }
+        // Assert
+        Assert.IsNotNull(foo.Builder);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region InternalMocking#Example}}
     <TestMethod()>
-        Public Sub ShouldMockInternalTypeViaProxy()
-            ' Arrange
-            Dim foo = Mock.Create(Of FooInternal)(Behavior.CallOriginal)
+    Public Sub ShouldMockInternalTypeViaProxy()
+        ' Arrange
+        Dim foo = Mock.Create(Of FooInternal)(Behavior.CallOriginal)
 
-            ' Assert
-            Assert.IsNotNull(foo.Builder)
-        End Sub
+        ' Assert
+        Assert.IsNotNull(foo.Builder)
+    End Sub
   {{endregion}}
 
 Here we verify that the mock is created and its constructor is called. Thus, `foo.Builder` will be assigned.
@@ -127,38 +127,38 @@ You can mock class that exposes internal constructor in the same way you mock pu
 
   {{region InternalMocking#InternalCtor}}
     [TestMethod]
-        public void ShouldCreateMockWithInternalCtor()
+    public void ShouldCreateMockWithInternalCtor()
+    {
+        // Arrange
+        var expected = "hello";
+
+        var foo = Mock.Create<FooInternalCtor>(x =>
         {
-            // Arrange
-            var expected = "hello";
+            x.CallConstructor(() => new FooInternalCtor(expected));
+            x.SetBehavior(Behavior.CallOriginal);
+        });
 
-            var foo = Mock.Create<FooInternalCtor>(x =>
-            {
-                x.CallConstructor(() => new FooInternalCtor(expected));
-                x.SetBehavior(Behavior.CallOriginal);
-            });
-
-            // Assert
-            Assert.AreEqual(foo.Name, expected);
-        }
+        // Assert
+        Assert.AreEqual(foo.Name, expected);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region InternalMocking#InternalCtor}}
     <TestMethod()>
-        Public Sub ShouldCreateMockWithInternalCtor()
-            ' Arrange
-            Dim expected = "hello"
+    Public Sub ShouldCreateMockWithInternalCtor()
+        ' Arrange
+        Dim expected = "hello"
 
-            Dim foo = Mock.Create(Of FooInternalCtor)(Function(x)
-                                                          x.CallConstructor(Function() New FooInternalCtor(expected))
-                                                          x.SetBehavior(Behavior.CallOriginal)
-                                                      End Function)
+        Dim foo = Mock.Create(Of FooInternalCtor)(Function(x)
+                                                        x.CallConstructor(Function() New FooInternalCtor(expected))
+                                                        x.SetBehavior(Behavior.CallOriginal)
+                                                    End Function)
 
-            ' Assert
-            Assert.AreEqual(foo.Name, expected)
-        End Sub
+        ' Assert
+        Assert.AreEqual(foo.Name, expected)
+    End Sub
   {{endregion}}
 
 In the example above, we mock the internal constructor of `FooInternalCtor` class. When `foo` is created the internal constructor will be called with `"hello"` as argument and the `Name` property will be assigned `"hello"` respectively. We verify that by calling `foo.Name` in the assertion phase of the [AAA]({%slug justmock/basic-usage/arrange-act-assert%}) pattern.
@@ -214,41 +214,41 @@ The derived class `Bar` will be our object to mock, in the example below.
 
   {{region InternalMocking#InterfaceMemInBaseClassTest}}
     [TestMethod]
-        public void ShouldMockAnInterfaceMemberPrivatelyImplementedInBaseClass()
-        {
-            // Arrange
-            var bar = Mock.Create<Bar>();
+    public void ShouldMockAnInterfaceMemberPrivatelyImplementedInBaseClass()
+    {
+        // Arrange
+        var bar = Mock.Create<Bar>();
 
-            string expected = "dummy";
+        string expected = "dummy";
 
-            Mock.Arrange(() => ((IManager)bar).Provider).Returns("dummy");
+        Mock.Arrange(() => ((IManager)bar).Provider).Returns("dummy");
 
-            // Act
-            var actual = ((IManager)bar).Provider;
+        // Act
+        var actual = ((IManager)bar).Provider;
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region InternalMocking#InterfaceMemInBaseClassTest}}
     <TestMethod()>
-        Public Sub ShouldMockAnInterfaceMemberPrivatelyImplementedInBaseClass()
-            ' Arrange
-            Dim bar = Mock.Create(Of Bar)()
+    Public Sub ShouldMockAnInterfaceMemberPrivatelyImplementedInBaseClass()
+        ' Arrange
+        Dim bar = Mock.Create(Of Bar)()
 
-            Dim expected As String = "dummy"
+        Dim expected As String = "dummy"
 
-            Mock.Arrange(Function() DirectCast(bar, IManager).Provider).Returns("dummy")
+        Mock.Arrange(Function() DirectCast(bar, IManager).Provider).Returns("dummy")
 
-            ' Act
-            Dim actual = DirectCast(bar, IManager).Provider
+        ' Act
+        Dim actual = DirectCast(bar, IManager).Provider
 
-            ' Assert
-            Assert.AreEqual(expected, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 We have mocked the `Bar` class. Then we make arranges about the interface member, `Provider` and we act. Finally, we can assert that the test behavior is as expected.

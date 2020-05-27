@@ -44,27 +44,27 @@ Now, we will set up that a call to a method should call the original implementat
 
   {{region CallOriginal#AssertCallOriginal}}
     [TestMethod]
-        public void ShouldCallOriginalForSpecificArgs()
-        {
-            // Arrange
-            var foo = Mock.Create<FooBase>();
+    public void ShouldCallOriginalForSpecificArgs()
+    {
+        // Arrange
+        var foo = Mock.Create<FooBase>();
 
-            Mock.Arrange(() => foo.GetString("x")).CallOriginal();
-            Mock.Arrange(() => foo.GetString("y")).Returns("z");
+        Mock.Arrange(() => foo.GetString("x")).CallOriginal();
+        Mock.Arrange(() => foo.GetString("y")).Returns("z");
 
-            // Act
-            var actualX = string.Empty;
-            var actualY = string.Empty;
-            actualX = foo.GetString("x");
-            actualY = foo.GetString("y");
+        // Act
+        var actualX = string.Empty;
+        var actualY = string.Empty;
+        actualX = foo.GetString("x");
+        actualY = foo.GetString("y");
 
-            var expectedX = "x";
-            var expectedY = "z";
+        var expectedX = "x";
+        var expectedY = "z";
 
-            // Assert
-            Assert.AreEqual(expectedX, actualX);
-            Assert.AreEqual(expectedY, actualY);
-        }
+        // Assert
+        Assert.AreEqual(expectedX, actualX);
+        Assert.AreEqual(expectedY, actualY);
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -126,16 +126,16 @@ Let's arrange its `Info` method to be called with its original implementation an
 
   {{region CallOriginal#AssertCallOriginalForVoid}}
     [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void MockAssertOnCallOriginal()
-        {
-            // Arrange
-            var log = Mock.Create<Log>();
-            Mock.Arrange(() => log.Info(Arg.IsAny<string>())).CallOriginal();
+    [ExpectedException(typeof(Exception))]
+    public void MockAssertOnCallOriginal()
+    {
+        // Arrange
+        var log = Mock.Create<Log>();
+        Mock.Arrange(() => log.Info(Arg.IsAny<string>())).CallOriginal();
 
-            // Act
-            log.Info("test");
-        }
+        // Act
+        log.Info("test");
+    }
   {{endregion}}
 
   #### __[VB]__

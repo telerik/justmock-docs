@@ -22,43 +22,43 @@ In the further examples we will use the following sample class to test:
 
   {{region PartialMocks#Foo}}
     public class Foo
+    {
+        public static int FooStaticProp { get; set; }
+
+        public int Echo(int arg1)
         {
-            public static int FooStaticProp { get; set; }
-
-            public int Echo(int arg1)
-            {
-                return default(int);
-            }
-
-            public void Execute()
-            {
-                throw new NotImplementedException();
-            }
+            return default(int);
         }
+
+        public void Execute()
+        {
+            throw new NotImplementedException();
+        }
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region PartialMocks#Foo}}
     Public Class Foo
-            Public Shared Property FooStaticProp() As Integer
-                Get
-                    Return m_FooStaticProp
-                End Get
-                Set(value As Integer)
-                    m_FooStaticProp = value
-                End Set
-            End Property
-            Private Shared m_FooStaticProp As Integer
+        Public Shared Property FooStaticProp() As Integer
+            Get
+                Return m_FooStaticProp
+            End Get
+            Set(value As Integer)
+                m_FooStaticProp = value
+            End Set
+        End Property
+        Private Shared m_FooStaticProp As Integer
 
-            Public Function Echo(arg1 As Integer) As Integer
-                Return 0
-            End Function
+        Public Function Echo(arg1 As Integer) As Integer
+            Return 0
+        End Function
 
-            Public Sub Execute()
-                Throw New NotImplementedException()
-            End Sub
-        End Class
+        Public Sub Execute()
+            Throw New NotImplementedException()
+        End Sub
+    End Class
   {{endregion}}
 
 
@@ -73,35 +73,35 @@ In the following example we use a non mocked instance, but we call a method whic
 
   {{region PartialMocks#MockInstanceCallPartially}}
     [TestMethod]
-        public void ShouldMockInstanceCallPartially()
-        {
-            // Arrange
-            Foo foo = new Foo();
-            Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
+    public void ShouldMockInstanceCallPartially()
+    {
+        // Arrange
+        Foo foo = new Foo();
+        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
 
-            // Act
-            int actual = foo.Echo(10);
+        // Act
+        int actual = foo.Echo(10);
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region PartialMocks#MockInstanceCallPartially}}
     <TestMethod>
-        Public Sub ShouldMockInstanceCallPartially()
-            ' Arrange
-            Dim foo As New Foo()
-            Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg__1 As Integer) arg__1)
+    Public Sub ShouldMockInstanceCallPartially()
+        ' Arrange
+        Dim foo As New Foo()
+        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg__1 As Integer) arg__1)
 
-            ' Act
-            Dim actual As Integer = foo.Echo(10)
+        ' Act
+        Dim actual As Integer = foo.Echo(10)
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 With partial mocks we are still able to arrange a method call even when we don't use a mock object. Running the above test would pass.
@@ -113,39 +113,39 @@ While not using a mock object in partial mocking you can still assert that a spe
 
   {{region PartialMocks#AssertInvokedPartialCalls}}
     [TestMethod]
-        public void ShouldAssertCallsPartially()
-        {
-            // Arrange
-            Foo foo = new Foo();
+    public void ShouldAssertCallsPartially()
+    {
+        // Arrange
+        Foo foo = new Foo();
 
-            Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
+        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
 
-            // Act
-            foo.Echo(10);
-            foo.Echo(10);
+        // Act
+        foo.Echo(10);
+        foo.Echo(10);
 
-            // Assert
-            Mock.Assert(() => foo.Echo(10), Occurs.Exactly(2));
-        }
+        // Assert
+        Mock.Assert(() => foo.Echo(10), Occurs.Exactly(2));
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region PartialMocks#AssertInvokedPartialCalls}}
     <TestMethod>
-        Public Sub ShouldAssertCallsPartially()
-            ' Arrange
-            Dim foo As New Foo()
+    Public Sub ShouldAssertCallsPartially()
+        ' Arrange
+        Dim foo As New Foo()
 
-            Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg__1 As Integer) arg__1)
+        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg__1 As Integer) arg__1)
 
-            ' Act
-            foo.Echo(10)
-            foo.Echo(10)
+        ' Act
+        foo.Echo(10)
+        foo.Echo(10)
 
-            ' Assert
-            Mock.Assert(Function() foo.Echo(10), Occurs.Exactly(2))
-        End Sub
+        ' Assert
+        Mock.Assert(Function() foo.Echo(10), Occurs.Exactly(2))
+    End Sub
   {{endregion}}
 
 In the Assert section we make sure that the `foo.Echo` method has been called exactly two times by passing `10` as an argument. It is not required to enter a specific argument - you can use a [matcher]({%slug justmock/basic-usage/matchers%}) instead.
@@ -157,33 +157,33 @@ Another common usage of partial mocks is to arrange a call to a *static method/p
 
   {{region PartialMocks#ArrangeStaticCallsDirectly}}
     [TestMethod]
-        public void ShouldArrangeStaticCallPartially()
-        {
-            // Arrange
-            Mock.Arrange(() => Foo.FooStaticProp).Returns(10);
+    public void ShouldArrangeStaticCallPartially()
+    {
+        // Arrange
+        Mock.Arrange(() => Foo.FooStaticProp).Returns(10);
 
-            // Act
-            int actual = Foo.FooStaticProp;
+        // Act
+        int actual = Foo.FooStaticProp;
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region PartialMocks#ArrangeStaticCallsDirectly}}
     <TestMethod>
-        Public Sub ShouldArrangeStaticCallPartially()
-            ' Arrange
-            Mock.Arrange(Function() Foo.FooStaticProp).Returns(10)
+    Public Sub ShouldArrangeStaticCallPartially()
+        ' Arrange
+        Mock.Arrange(Function() Foo.FooStaticProp).Returns(10)
 
-            ' Act
-            Dim actual As Integer = Foo.FooStaticProp
+        ' Act
+        Dim actual As Integer = Foo.FooStaticProp
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 Here we arrange that the static `Foo.FooStaticProp` property should return `10`.

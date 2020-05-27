@@ -59,6 +59,8 @@ In the following examples we will use this sample interface:
 
 
 Having defined the `IFileReader` interface we now want to create a mock and to check whether certain expectations are fulfilled.
+  
+  #### __[C#]__
 
   {{region FluentAssertions#SampleMockCS}}
     IFileReader fileReader = Mock.Create<IFileReader>();
@@ -92,6 +94,8 @@ In this example we have also defined that the `Initialize` method must be called
 
 Let's assert our expectations:
 
+  #### __[C#]__
+
   {{region FluentAssertions#MockAssertCS}}
     Assert.AreEqual( expected, actual ); // explicit assert
 	fileReader.Assert( x => x.Path ); // fluent assert
@@ -110,6 +114,8 @@ The first explicit assert in this example will call the `fileReader.Path` proper
 
 There is a slight difference between the last two lines.
 
+  #### __[C#]__
+
   {{region FluentAssertions#Assert1CS}}
     fileReader.Assert( x => x.Path )
   {{endregion}}
@@ -123,6 +129,8 @@ There is a slight difference between the last two lines.
 
 Will check only the arrangements defined for the `fileReader.Path` property. In our example JustMock will verify that the `Path` property has been called exactly one time.
 
+  #### __[C#]__
+  
   {{region FluentAssertions#Assert2CS}}
     fileReader.Assert();
   {{endregion}}

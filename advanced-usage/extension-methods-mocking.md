@@ -124,6 +124,8 @@ Here we first arrange that the extension method should never occur as described 
 
 This last section will show that we can easily mock interface extension method calls when needed. In the example we will use the following classes:
 
+  #### __[C#]__
+
   {{region ExtensionMethodsMocking#SampleCode5}}
 	public interface IDataProvider
 	{
@@ -148,6 +150,8 @@ This last section will show that we can easily mock interface extension method c
 
 We have the `IDataProvider` interface which we extend with the `GetScope` extension method. We can now write tests that mock the extension method's execution:
 
+  #### __[C#]__
+  
   {{region ExtensionMethodsMocking#SampleCode6}}
 	[TestMethod]
 	public void ShouldAssertInterfaceExtensionMethodCall()

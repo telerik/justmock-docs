@@ -129,39 +129,39 @@ Next is an example, demonstrating how easy is to arrange functions, decorated wi
 
   {{region DLLImport#CurrentPorcessId}}
     [TestMethod]
-        public void FormatCurrentProcessId_OnExecute_ShouldReturnExpected()
-        {
-            var expected = 3500;
+    public void FormatCurrentProcessId_OnExecute_ShouldReturnExpected()
+    {
+        var expected = 3500;
 
-            // Arrange
-            Mock.Arrange(() => Foo.GetCurrentProcessId()).Returns(expected);
+        // Arrange
+        Mock.Arrange(() => Foo.GetCurrentProcessId()).Returns(expected);
 
-            // Act
-            var myFoo = new Foo();
-            var actual = myFoo.FormatCurrentProcessId();
+        // Act
+        var myFoo = new Foo();
+        var actual = myFoo.FormatCurrentProcessId();
 
-            // Assert
-            Assert.AreEqual(string.Format("The current process ID is {0}", expected), actual);
-        }
+        // Assert
+        Assert.AreEqual(string.Format("The current process ID is {0}", expected), actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DLLImport#CurrentPorcessId}}
     <TestMethod>
-        Public Sub FormatCurrentProcessId_OnExecute_ShouldReturnExpected()
-            Dim expected = 3500
+    Public Sub FormatCurrentProcessId_OnExecute_ShouldReturnExpected()
+        Dim expected = 3500
 
-            ' Arrange
-            Mock.Arrange(Function() Foo.GetCurrentProcessId()).Returns(expected)
+        ' Arrange
+        Mock.Arrange(Function() Foo.GetCurrentProcessId()).Returns(expected)
 
-            ' Act
-            Dim myFoo = New Foo()
-            Dim actual = myFoo.FormatCurrentProcessId()
+        ' Act
+        Dim myFoo = New Foo()
+        Dim actual = myFoo.FormatCurrentProcessId()
 
-            ' Assert
-            Assert.AreEqual(String.Format("The current process ID is {0}", expected), actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(String.Format("The current process ID is {0}", expected), actual)
+    End Sub
   {{endregion}}
 
 
@@ -176,31 +176,31 @@ Let's assume we need to isolate certain function which is depending on an extern
 
   {{region DLLImport#MessageBox}}
     [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void Start_OnExecute_ShouldThrowNotImplementedException()
-        {
-            // Arrange
-            Mock.Arrange(() => Foo.MessageBox(Arg.IsAny<IntPtr>(), Arg.AnyString, Arg.AnyString, Arg.IsAny<uint>())).DoNothing();
+    [ExpectedException(typeof(NotImplementedException))]
+    public void Start_OnExecute_ShouldThrowNotImplementedException()
+    {
+        // Arrange
+        Mock.Arrange(() => Foo.MessageBox(Arg.IsAny<IntPtr>(), Arg.AnyString, Arg.AnyString, Arg.IsAny<uint>())).DoNothing();
 
-            // Act
-            var myFoo = new Foo();
-            myFoo.Start();
-        }
+        // Act
+        var myFoo = new Foo();
+        myFoo.Start();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DLLImport#MessageBox}}
     <TestMethod>
-        <ExpectedException(GetType(NotImplementedException))>
-        Public Sub Start_OnExecute_ShouldThrowNotImplementedException()
-            ' Arrange
-            Mock.Arrange(Function() Foo.MessageBox(Arg.IsAny(Of IntPtr)(), Arg.AnyString, Arg.AnyString, Arg.IsAny(Of UInteger)())).DoNothing()
+    <ExpectedException(GetType(NotImplementedException))>
+    Public Sub Start_OnExecute_ShouldThrowNotImplementedException()
+        ' Arrange
+        Mock.Arrange(Function() Foo.MessageBox(Arg.IsAny(Of IntPtr)(), Arg.AnyString, Arg.AnyString, Arg.IsAny(Of UInteger)())).DoNothing()
 
-            ' Act
-            Dim myFoo = New Foo()
-            myFoo.Start()
-        End Sub
+        ' Act
+        Dim myFoo = New Foo()
+        myFoo.Start()
+    End Sub
   {{endregion}}
 
 
@@ -216,35 +216,35 @@ Here are the complete tests:
 
   {{region DLLImport#IsWiw64ProcessFirst}}
     [TestMethod]
-        public void Is64BitProcessMessage_On64BitExecute_ShouldReturnExpected()
-        {
-            // Arrange
-            Mock.NonPublic.Arrange<bool>(typeof(Foo), "IsWow64Process").Returns(true);
+    public void Is64BitProcessMessage_On64BitExecute_ShouldReturnExpected()
+    {
+        // Arrange
+        Mock.NonPublic.Arrange<bool>(typeof(Foo), "IsWow64Process").Returns(true);
 
-            // Act
-            var myFoo = new Foo();
-            var actual = myFoo.Is64BitProcessMessage();
+        // Act
+        var myFoo = new Foo();
+        var actual = myFoo.Is64BitProcessMessage();
 
-            // Assert
-            Assert.AreEqual("This is a 64 bit process!", actual);
-        }
+        // Assert
+        Assert.AreEqual("This is a 64 bit process!", actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DLLImport#IsWiw64ProcessFirst}}
     <TestMethod>
-        Public Sub Is64BitProcessMessage_On64BitExecute_ShouldReturnExpected()
-            ' Arrange
-            Mock.NonPublic.Arrange(Of Boolean)(GetType(Foo), "IsWow64Process").Returns(True)
+    Public Sub Is64BitProcessMessage_On64BitExecute_ShouldReturnExpected()
+        ' Arrange
+        Mock.NonPublic.Arrange(Of Boolean)(GetType(Foo), "IsWow64Process").Returns(True)
 
-            ' Act
-            Dim myFoo = New Foo()
-            Dim actual = myFoo.Is64BitProcessMessage()
+        ' Act
+        Dim myFoo = New Foo()
+        Dim actual = myFoo.Is64BitProcessMessage()
 
-            ' Assert
-            Assert.AreEqual("This is a 64 bit process!", actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual("This is a 64 bit process!", actual)
+    End Sub
   {{endregion}}
 
 
@@ -252,35 +252,35 @@ Here are the complete tests:
 
   {{region DLLImport#IsWiw64ProcessSecond}}
     [TestMethod]
-        public void Is64BitProcessMessage_On32BitExecute_ShouldReturnExpected()
-        {
-            // Arrange
-            Mock.NonPublic.Arrange<bool>(typeof(Foo), "IsWow64Process").Returns(false);
+    public void Is64BitProcessMessage_On32BitExecute_ShouldReturnExpected()
+    {
+        // Arrange
+        Mock.NonPublic.Arrange<bool>(typeof(Foo), "IsWow64Process").Returns(false);
 
-            // Act
-            var myFoo = new Foo();
-            var actual = myFoo.Is64BitProcessMessage();
+        // Act
+        var myFoo = new Foo();
+        var actual = myFoo.Is64BitProcessMessage();
 
-            // Assert
-            Assert.AreEqual("This is a 32 bit process!", actual);
-        }
+        // Assert
+        Assert.AreEqual("This is a 32 bit process!", actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DLLImport#IsWiw64ProcessSecond}}
     <TestMethod>
-        Public Sub Is64BitProcessMessage_On32BitExecute_ShouldReturnExpected()
-            ' Arrange
-            Mock.NonPublic.Arrange(Of Boolean)(GetType(Foo), "IsWow64Process").Returns(False)
+    Public Sub Is64BitProcessMessage_On32BitExecute_ShouldReturnExpected()
+        ' Arrange
+        Mock.NonPublic.Arrange(Of Boolean)(GetType(Foo), "IsWow64Process").Returns(False)
 
-            ' Act
-            Dim myFoo = New Foo()
-            Dim actual = myFoo.Is64BitProcessMessage()
+        ' Act
+        Dim myFoo = New Foo()
+        Dim actual = myFoo.Is64BitProcessMessage()
 
-            ' Assert
-            Assert.AreEqual("This is a 32 bit process!", actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual("This is a 32 bit process!", actual)
+    End Sub
   {{endregion}}
 
 

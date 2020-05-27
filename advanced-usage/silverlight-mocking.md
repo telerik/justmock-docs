@@ -28,48 +28,48 @@ __Example: Arranging a void call that must be called__
 
   {{region SilverlightMocking#MockingWithProfilerDisabledTest1}}
     public interface IMyInterface
+    {
+        void DoSomething();
+    }
+
+    public class MyClass:IMyInterface
+    {
+        public void DoSomething()
         {
-            void DoSomething();
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ClassUnderTest
+    {
+        private IMyInterface Dependency;
+
+        public ClassUnderTest(IMyInterface interf)
+        {
+            this.Dependency = interf;
         }
 
-        public class MyClass:IMyInterface
+        public void CallDoSomething()
         {
-            public void DoSomething()
-            {
-                throw new NotImplementedException();
-            }
+            Dependency.DoSomething();
         }
+    }
+    
+    [TestMethod]
+    public void ShouldMockVoidCall()
+    {
+        // Arrange
+        var mockedInterface = Mock.Create<IMyInterface>();
 
-        public class ClassUnderTest
-        {
-            private IMyInterface Dependency;
+        Mock.Arrange(() => mockedInterface.DoSomething()).DoNothing().MustBeCalled();
 
-            public ClassUnderTest(IMyInterface interf)
-            {
-                this.Dependency = interf;
-            }
+        // Act
+        var myTestClass = new ClassUnderTest(mockedInterface);
+        myTestClass.CallDoSomething();
 
-            public void CallDoSomething()
-            {
-                Dependency.DoSomething();
-            }
-        }
-        
-        [TestMethod]
-        public void ShouldMockVoidCall()
-        {
-            // Arrange
-            var mockedInterface = Mock.Create<IMyInterface>();
-
-            Mock.Arrange(() => mockedInterface.DoSomething()).DoNothing().MustBeCalled();
-
-            // Act
-            var myTestClass = new ClassUnderTest(mockedInterface);
-            myTestClass.CallDoSomething();
-
-            // Assert
-            Mock.Assert(mockedInterface);
-        }
+        // Assert
+        Mock.Assert(mockedInterface);
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -158,38 +158,38 @@ __Example: Removing dependency with faking HtmlDocument__
 
   {{region SilverlightMocking#MockingWithProfilerEnabledTest1}}
     public class MyUsingHtmlDocumentClass
+    {
+        private HtmlDocument myHtmlDoc;
+
+        public MyUsingHtmlDocumentClass(HtmlDocument doc)
         {
-            private HtmlDocument myHtmlDoc;
-
-            public MyUsingHtmlDocumentClass(HtmlDocument doc)
-            {
-                this.myHtmlDoc = doc;
-            }
-
-            public string IsMyHtmlDocReady()
-            {
-                if (myHtmlDoc.IsReady)
-                {
-                    return "Document ready!";
-                }
-                return "Document NOT ready!";
-            }
+            this.myHtmlDoc = doc;
         }
 
-        [TestMethod]
-        public void ShouldFakeHtmlDocumentIsReady()
+        public string IsMyHtmlDocReady()
         {
-            // Arrange
-            var htmlDocumentFake = Mock.Create<HtmlDocument>();
-            Mock.Arrange(() => htmlDocumentFake.IsReady).Returns(true);
-
-            // Act
-            var myTestClass = new MyUsingHtmlDocumentClass(htmlDocumentFake);
-            var actualResult = myTestClass.IsMyHtmlDocReady();
-
-            // Assert
-            Assert.AreEqual("Document ready!", actualResult);
+            if (myHtmlDoc.IsReady)
+            {
+                return "Document ready!";
+            }
+            return "Document NOT ready!";
         }
+    }
+
+    [TestMethod]
+    public void ShouldFakeHtmlDocumentIsReady()
+    {
+        // Arrange
+        var htmlDocumentFake = Mock.Create<HtmlDocument>();
+        Mock.Arrange(() => htmlDocumentFake.IsReady).Returns(true);
+
+        // Act
+        var myTestClass = new MyUsingHtmlDocumentClass(htmlDocumentFake);
+        var actualResult = myTestClass.IsMyHtmlDocReady();
+
+        // Assert
+        Assert.AreEqual("Document ready!", actualResult);
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -231,19 +231,19 @@ __Example: Faking MsCorlib DateTime.Now property__
 
   {{region SilverlightMocking#MockingWithProfilerEnabledTest2}}
     [TestMethod]
-        public void ShouldMockDateTimeNowInSilverlightProject()
-        {
-            // Arrange
-            Mock.Arrange(()=>DateTime.Now).Returns(new DateTime(2000, 2, 20));
+    public void ShouldMockDateTimeNowInSilverlightProject()
+    {
+        // Arrange
+        Mock.Arrange(()=>DateTime.Now).Returns(new DateTime(2000, 2, 20));
 
-            // Act
-            var actual = DateTime.Now;
+        // Act
+        var actual = DateTime.Now;
 
-            // Assert
-            Assert.AreEqual(2000, actual.Year);
-            Assert.AreEqual(2, actual.Month);
-            Assert.AreEqual(20, actual.Day);
-        }
+        // Assert
+        Assert.AreEqual(2000, actual.Year);
+        Assert.AreEqual(2, actual.Month);
+        Assert.AreEqual(20, actual.Day);
+    }
   {{endregion}}
 
   #### __[VB]__

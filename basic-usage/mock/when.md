@@ -43,33 +43,33 @@ Using JustMock, we can set a certain arrangement to be used only if another expe
 
   {{region When#FirstExample}}
     [TestMethod]
-        public void IsCalled_ShouldReturnTrue_WithMockedDependencies()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void IsCalled_ShouldReturnTrue_WithMockedDependencies()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Prop).Returns("test");
-            Mock.Arrange(() => foo.IsCalled()).When(() => foo.Prop == "test").Returns(true);
+        Mock.Arrange(() => foo.Prop).Returns("test");
+        Mock.Arrange(() => foo.IsCalled()).When(() => foo.Prop == "test").Returns(true);
 
-            // Assert
-            Assert.IsTrue(foo.IsCalled());
-        }
+        // Assert
+        Assert.IsTrue(foo.IsCalled());
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region When#FirstExample}}
     <TestMethod> _
-        Public Sub IsCalled_ShouldReturnTrue_WithMockedDependencies()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub IsCalled_ShouldReturnTrue_WithMockedDependencies()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Prop).Returns("test")
-            Mock.Arrange(Function() foo.IsCalled()).When(Function() foo.Prop = "test").Returns(True)
+        Mock.Arrange(Function() foo.Prop).Returns("test")
+        Mock.Arrange(Function() foo.IsCalled()).When(Function() foo.Prop = "test").Returns(True)
 
-            ' Assert
-            Assert.IsTrue(foo.IsCalled())
-        End Sub
+        ' Assert
+        Assert.IsTrue(foo.IsCalled())
+    End Sub
   {{endregion}}
 
 
@@ -104,47 +104,47 @@ In the test, we will check if `GetResponse()` has been called once when `Method`
 
   {{region When#ThirdExample}}
     [TestMethod]
-        public void ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
-        {
-            // Arrange
-            var mock = Mock.Create<IRequest>();
+    public void ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
+    {
+        // Arrange
+        var mock = Mock.Create<IRequest>();
 
-            Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "GET").OccursOnce();
-            Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "POST").OccursOnce();
+        Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "GET").OccursOnce();
+        Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "POST").OccursOnce();
 
-            // Act
-            mock.Method = "GET";
-            mock.GetResponse();
+        // Act
+        mock.Method = "GET";
+        mock.GetResponse();
 
-            mock.Method = "POST";
-            mock.GetResponse();
+        mock.Method = "POST";
+        mock.GetResponse();
 
-            // Assert
-            Mock.Assert(mock);
-        }
+        // Assert
+        Mock.Assert(mock);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region When#ThirdExample}}
     <TestMethod> _
-        Public Sub ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
-            ' Arrange
-            Dim requestMock = Mock.Create(Of IRequest)()
+    Public Sub ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
+        ' Arrange
+        Dim requestMock = Mock.Create(Of IRequest)()
 
-            Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "GET").OccursOnce()
-            Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "POST").OccursOnce()
+        Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "GET").OccursOnce()
+        Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "POST").OccursOnce()
 
-            ' Act
-            requestMock.Method = "GET"
-            requestMock.GetResponse()
+        ' Act
+        requestMock.Method = "GET"
+        requestMock.GetResponse()
 
-            requestMock.Method = "POST"
-            requestMock.GetResponse()
+        requestMock.Method = "POST"
+        requestMock.GetResponse()
 
-            ' Assert
-            Mock.Assert(requestMock)
-        End Sub
+        ' Assert
+        Mock.Assert(requestMock)
+    End Sub
   {{endregion}}
 
 
