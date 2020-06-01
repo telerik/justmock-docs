@@ -96,6 +96,8 @@ After creating a new instance of the `NerdDinners` class, we will __Arrange__ th
 
 In this example we will return the same fake collection.
 
+  #### __[C#]__
+
   {{region EntityFramework#FakeDinnersReturn}}
     public IList<Dinner> FakeDinners()
 	{ 
@@ -109,6 +111,8 @@ In this example we will return the same fake collection.
   {{endregion}}
 
 To assure that the instance does not matter during the __Act__ phase we will make a repository class:
+
+  #### __[C#]__
 
   {{region EntityFramework#DinnersRepository}}
 	public class DinnerRepository
@@ -129,6 +133,8 @@ As you see, in the test below we are acting with a `new DinnerRepository()`, but
 
 > Note that when you use `ReturnsCollection()` you must be using the `Telerik.JustMock.Helpers;` namespace.
 
+  #### __[C#]__
+
   {{region EntityFramework#FutureMockingCollectionReturn}}
 	[TestMethod]
 	public void ShouldReturnFakeCollectionForFutureInstance()
@@ -145,6 +151,8 @@ As you see, in the test below we are acting with a `new DinnerRepository()`, but
 
 In the next example we will __Arrange__ the calling of the `Add()` method to actually add an item to a previously created local collection.
 
+  #### __[C#]__
+  
   {{region EntityFramework#FakingAdd}}
 	[TestMethod]
 	public void ShouldReturnFakeCollectionForFutureInstance()

@@ -56,41 +56,41 @@ To test if the `FuncDelegate` is called inside the `GetInteger` method, we can a
 
   {{region MockingDelegates#FirstTest}}
     [TestMethod]
-        public void ShouldArrangeOccurrenceExpectation()
-        {
-            // Arrange
-            var delegateMock = Mock.Create<Func<int, int>>();
+    public void ShouldArrangeOccurrenceExpectation()
+    {
+        // Arrange
+        var delegateMock = Mock.Create<Func<int, int>>();
 
-            Mock.Arrange(() => delegateMock(Arg.AnyInt)).MustBeCalled();
+        Mock.Arrange(() => delegateMock(Arg.AnyInt)).MustBeCalled();
 
-            // Act
-            var mySUT = new Foo();
-            mySUT.FuncDelegate = delegateMock;
-            var actual = mySUT.GetInteger(123);
+        // Act
+        var mySUT = new Foo();
+        mySUT.FuncDelegate = delegateMock;
+        var actual = mySUT.GetInteger(123);
 
-            // Assert
-            Mock.Assert(delegateMock);
-        }
+        // Assert
+        Mock.Assert(delegateMock);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingDelegates#FirstTest}}
     <TestMethod>
-        Public Sub ShouldArrangeOccurrenceExpectation()
-            ' Arrange
-            Dim delegateMock = Mock.Create(Of Func(Of Integer, Integer))()
+    Public Sub ShouldArrangeOccurrenceExpectation()
+        ' Arrange
+        Dim delegateMock = Mock.Create(Of Func(Of Integer, Integer))()
 
-            Mock.Arrange(Function() delegateMock(Arg.AnyInt)).MustBeCalled()
+        Mock.Arrange(Function() delegateMock(Arg.AnyInt)).MustBeCalled()
 
-            ' Act
-            Dim mySUT = New Foo()
-            mySUT.FuncDelegate = delegateMock
-            Dim actual = mySUT.GetInteger(123)
+        ' Act
+        Dim mySUT = New Foo()
+        mySUT.FuncDelegate = delegateMock
+        Dim actual = mySUT.GetInteger(123)
 
-            ' Assert
-            Mock.Assert(delegateMock)
-        End Sub
+        ' Assert
+        Mock.Assert(delegateMock)
+    End Sub
   {{endregion}}
 
 It will assert that a `Func<int, int>` is called at least once, (no matter the integer argument) during the execution of the test method.
@@ -138,41 +138,41 @@ To test the `GetInteger` method in different scenarios, we may need to arrange a
 
   {{region MockingDelegates#SecondTest}}
     [TestMethod]
-        public void ShouldArrangeReturnExpectation()
-        {
-            // Arrange
-            var delegateMock = Mock.Create<Func<int, int>>();
-            
-            Mock.Arrange(() => delegateMock(10)).Returns(20);
+    public void ShouldArrangeReturnExpectation()
+    {
+        // Arrange
+        var delegateMock = Mock.Create<Func<int, int>>();
+        
+        Mock.Arrange(() => delegateMock(10)).Returns(20);
 
-            // Act
-            var mySUT = new Foo();
-            mySUT.FuncDelegate = delegateMock;
-            var actual = mySUT.GetInteger(10);
-            
-            // Assert
-            Assert.AreEqual(20, actual);
-        }
+        // Act
+        var mySUT = new Foo();
+        mySUT.FuncDelegate = delegateMock;
+        var actual = mySUT.GetInteger(10);
+        
+        // Assert
+        Assert.AreEqual(20, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingDelegates#SecondTest}}
     <TestMethod>
-        Public Sub ShouldArrangeReturnExpectation()
-            ' Arrange
-            Dim delegateMock = Mock.Create(Of Func(Of Integer, Integer))()
+    Public Sub ShouldArrangeReturnExpectation()
+        ' Arrange
+        Dim delegateMock = Mock.Create(Of Func(Of Integer, Integer))()
 
-            Mock.Arrange(Function() delegateMock(10)).Returns(20)
+        Mock.Arrange(Function() delegateMock(10)).Returns(20)
 
-            ' Act
-            Dim mySUT = New Foo()
-            mySUT.FuncDelegate = delegateMock
-            Dim actual = mySUT.GetInteger(10)
+        ' Act
+        Dim mySUT = New Foo()
+        mySUT.FuncDelegate = delegateMock
+        Dim actual = mySUT.GetInteger(10)
 
-            ' Assert
-            Assert.AreEqual(20, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(20, actual)
+    End Sub
   {{endregion}}
 
 The test arranges the `Func<int, int>` delegate to return 20 whenever it is called with 10 as an argument. To assert this expectation, next we act on the system under test.
@@ -221,39 +221,39 @@ The first test method will explain how to pass a prearranged delegate mock in th
 
   {{region MockingDelegates#ThirdTest}}
     [TestMethod]
-        public void ShouldPassPrearrangedDelegateMockAsArgument()
-        {
-            // Arrange
-            var delegateMock = Mock.Create<Func<string>>();
+    public void ShouldPassPrearrangedDelegateMockAsArgument()
+    {
+        // Arrange
+        var delegateMock = Mock.Create<Func<string>>();
 
-            Mock.Arrange(() => delegateMock()).Returns("Success");
+        Mock.Arrange(() => delegateMock()).Returns("Success");
 
-            // Act
-            var testInstance = new DataRepository();
-            var actual = testInstance.GetCurrentUserId(delegateMock);
+        // Act
+        var testInstance = new DataRepository();
+        var actual = testInstance.GetCurrentUserId(delegateMock);
 
-            // Assert
-            Assert.AreEqual("Success", actual);
-        }
+        // Assert
+        Assert.AreEqual("Success", actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingDelegates#ThirdTest}}
     <TestMethod>
-        Public Sub ShouldPassPrearrangedDelegateMockAsArgument()
-            ' Arrange
-            Dim delegateMock = Mock.Create(Of Func(Of String))()
+    Public Sub ShouldPassPrearrangedDelegateMockAsArgument()
+        ' Arrange
+        Dim delegateMock = Mock.Create(Of Func(Of String))()
 
-            Mock.Arrange(Function() delegateMock()).Returns("Success")
+        Mock.Arrange(Function() delegateMock()).Returns("Success")
 
-            ' Act
-            Dim testInstance = New DataRepository()
-            Dim actual = testInstance.GetCurrentUserId(delegateMock)
+        ' Act
+        Dim testInstance = New DataRepository()
+        Dim actual = testInstance.GetCurrentUserId(delegateMock)
 
-            ' Assert
-            Assert.AreEqual("Success", actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual("Success", actual)
+    End Sub
   {{endregion}}
 
 The second test method demonstrates how to pass a delegate mock in the above system under test and assert its occurrence instead of invoking its original logic during the test execution:
@@ -262,42 +262,42 @@ The second test method demonstrates how to pass a delegate mock in the above sys
 
   {{region MockingDelegates#FourthTest}}
     [TestMethod]
-        public void ShouldPassDelegateMockAsArgumentAndAssertItsOccurrence()
-        {
-            bool isCalled = false;
+    public void ShouldPassDelegateMockAsArgumentAndAssertItsOccurrence()
+    {
+        bool isCalled = false;
 
-            // Arrange
-            var delegateMock = Mock.Create<Action<int>>();
+        // Arrange
+        var delegateMock = Mock.Create<Action<int>>();
 
-            Mock.Arrange(() => delegateMock(Arg.AnyInt)).DoInstead(() => isCalled = true);
+        Mock.Arrange(() => delegateMock(Arg.AnyInt)).DoInstead(() => isCalled = true);
 
-            // Act
-            var testInstance = new DataRepository();
-            testInstance.ApproveCredentials(delegateMock);
+        // Act
+        var testInstance = new DataRepository();
+        testInstance.ApproveCredentials(delegateMock);
 
-            // Assert
-            Assert.IsTrue(isCalled);
-        }
+        // Assert
+        Assert.IsTrue(isCalled);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingDelegates#FourthTest}}
     <TestMethod>
-        Public Sub ShouldPassDelegateMockAsArgumentAndAssertItsOccurrence()
-            Dim isCalled As Boolean = False
+    Public Sub ShouldPassDelegateMockAsArgumentAndAssertItsOccurrence()
+        Dim isCalled As Boolean = False
 
-            ' Arrange
-            Dim delegateMock = Mock.Create(Of Action(Of Integer))()
+        ' Arrange
+        Dim delegateMock = Mock.Create(Of Action(Of Integer))()
 
-            Mock.Arrange(Sub() delegateMock(Arg.AnyInt)).DoInstead(Sub() isCalled = True)
+        Mock.Arrange(Sub() delegateMock(Arg.AnyInt)).DoInstead(Sub() isCalled = True)
 
-            ' Act
-            Dim testInstance = New DataRepository()
-            testInstance.ApproveCredentials(delegateMock)
+        ' Act
+        Dim testInstance = New DataRepository()
+        testInstance.ApproveCredentials(delegateMock)
 
-            ' Assert
-            Assert.IsTrue(isCalled)
-        End Sub
+        ' Assert
+        Assert.IsTrue(isCalled)
+    End Sub
   {{endregion}}
 

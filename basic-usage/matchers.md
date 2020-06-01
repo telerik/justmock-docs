@@ -144,37 +144,37 @@ To set argument independent expectations against certain method, you have to app
 
   {{region Matchers#IgnoringAllArgumentsForASpecificExpectation}}
     [TestMethod]
-        public void IgnoringAllArgumentsForASpecificExpectation()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void IgnoringAllArgumentsForASpecificExpectation()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Echo(0, 0)).IgnoreArguments().Returns(10);
+        Mock.Arrange(() => foo.Echo(0, 0)).IgnoreArguments().Returns(10);
 
-            // Act
-            int actual = foo.Echo(10, 200);
+        // Act
+        int actual = foo.Echo(10, 200);
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Matchers#IgnoringAllArgumentsForASpecificExpectation}}
     <TestMethod>
-        Public Sub IgnoringAllArgumentsForASpecificExpectation()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub IgnoringAllArgumentsForASpecificExpectation()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Echo(0, 0)).IgnoreArguments().Returns(10)
+        Mock.Arrange(Function() foo.Echo(0, 0)).IgnoreArguments().Returns(10)
 
-            ' Act
-            Dim actual As Integer = foo.Echo(10, 200)
+        ' Act
+        Dim actual As Integer = foo.Echo(10, 200)
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 After creating mock of the `IFoo`, we arrange that every `Echo` call, no matter its arguments should return 10. For this, in the arrangement we pass arguments from their corresponding types and then we apply the `IgnoreArguments` functionality.
@@ -186,37 +186,37 @@ Matchers are also useful in assertion. Consider a fictitious payment service whe
 
   {{region Matchers#Assertion}}
     [TestMethod]
-        public void ShouldUseMatchersInAssert()
-        {
-            // Arrange
-            var paymentService = Mock.Create<IPaymentService>();
+    public void ShouldUseMatchersInAssert()
+    {
+        // Arrange
+        var paymentService = Mock.Create<IPaymentService>();
 
-            // Act
-            paymentService.ProcessPayment(DateTime.Now, 54.44M);
+        // Act
+        paymentService.ProcessPayment(DateTime.Now, 54.44M);
 
-            // Assert
-            Mock.Assert(() => paymentService.ProcessPayment(
-                Arg.IsAny<DateTime>(),
-                Arg.Matches<decimal>(paymentAmount => paymentAmount == 54.44M)));
-        }
+        // Assert
+        Mock.Assert(() => paymentService.ProcessPayment(
+            Arg.IsAny<DateTime>(),
+            Arg.Matches<decimal>(paymentAmount => paymentAmount == 54.44M)));
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Matchers#Assertion}}
     <TestMethod()>
-        Public Sub ShouldUseMatchersInAssert()
-            ' Arrange
-            Dim paymentService = Mock.Create(Of IPaymentService)()
+    Public Sub ShouldUseMatchersInAssert()
+        ' Arrange
+        Dim paymentService = Mock.Create(Of IPaymentService)()
 
-            ' Act
-            paymentService.ProcessPayment(DateTime.Now, 54.44D)
+        ' Act
+        paymentService.ProcessPayment(DateTime.Now, 54.44D)
 
-            ' Assert
-            Mock.Assert(Sub() paymentService.ProcessPayment(
-                            Arg.IsAny(Of DateTime)(), 
-                            Arg.Matches(Of Decimal)(Function(paymentAmount) paymentAmount = 54.44D)))
-        End Sub
+        ' Assert
+        Mock.Assert(Sub() paymentService.ProcessPayment(
+                        Arg.IsAny(Of DateTime)(), 
+                        Arg.Matches(Of Decimal)(Function(paymentAmount) paymentAmount = 54.44D)))
+    End Sub
   {{endregion}}
 
 We assert for calling `ProcessPayment` with whatever `DateTime` argument and payment amount exactly `$54.44`.
@@ -227,38 +227,37 @@ Here is another example. We specify that an `Echo` call with arguments `10` and 
 
   {{region Matchers#Assertion2}}
     [TestMethod]
-        public void ShouldUseMatchersInArrange()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldUseMatchersInArrange()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x == 10), Arg.Matches<int>(x => x == 20))).Returns(30);
+        Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x == 10), Arg.Matches<int>(x => x == 20))).Returns(30);
 
-            // Act
-            int ret = foo.Echo(10, 20);
+        // Act
+        int ret = foo.Echo(10, 20);
 
-            // Assert
-            Assert.AreEqual(30, ret);
-        }
+        // Assert
+        Assert.AreEqual(30, ret);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Matchers#Assertion2}}
     <TestMethod()>
-        Public Sub ShouldUseMatchersInArrange()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldUseMatchersInArrange()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x = 10), Arg.Matches(Of Integer)(Function(x) x = 20))).Returns(30)
+        Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x = 10), Arg.Matches(Of Integer)(Function(x) x = 20))).Returns(30)
 
-            ' Act
-            Dim ret As Integer = foo.Echo(10, 20)
+        ' Act
+        Dim ret As Integer = foo.Echo(10, 20)
 
-            ' Assert
-            Assert.AreEqual(30, ret)
-
-        End Sub
+        ' Assert
+        Assert.AreEqual(30, ret)
+    End Sub
   {{endregion}}
 
 
@@ -269,33 +268,33 @@ You already saw how you can use matchers in your assertion calls. If you need yo
 
   {{region Matchers#IgnoreAll}}
     [TestMethod]
-        public void UsingMatchersInAssertExample2()
-        {
-            // Arrange
-            var paymentService = Mock.Create<IPaymentService>();
+    public void UsingMatchersInAssertExample2()
+    {
+        // Arrange
+        var paymentService = Mock.Create<IPaymentService>();
 
-            // Act
-            paymentService.ProcessPayment(DateTime.Now, 54.44M);
+        // Act
+        paymentService.ProcessPayment(DateTime.Now, 54.44M);
 
-            // Assert
-            Mock.Assert(() => paymentService.ProcessPayment(new DateTime(), 0), Args.Ignore());
-        }
+        // Assert
+        Mock.Assert(() => paymentService.ProcessPayment(new DateTime(), 0), Args.Ignore());
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Matchers#IgnoreAll}}
     <TestMethod()>
-        Public Sub ShouldIgnoreArgumentsInAssert()
-            ' Arrange
-            Dim paymentService = Mock.Create(Of IPaymentService)()
+    Public Sub ShouldIgnoreArgumentsInAssert()
+        ' Arrange
+        Dim paymentService = Mock.Create(Of IPaymentService)()
 
-            ' Act
-            paymentService.ProcessPayment(DateTime.Now, 54.44D)
+        ' Act
+        paymentService.ProcessPayment(DateTime.Now, 54.44D)
 
-            ' Assert
-            Mock.Assert(Sub() paymentService.ProcessPayment(New DateTime(), 0), Args.Ignore())
-        End Sub
+        ' Assert
+        Mock.Assert(Sub() paymentService.ProcessPayment(New DateTime(), 0), Args.Ignore())
+    End Sub
   {{endregion}}
 
 In this way we assert for calling `ProcessPayment` no matter the arguments.
@@ -307,50 +306,50 @@ In an arrangement you can define more than one matcher. Consider the following e
 
   {{region Matchers#Specialization}}
     [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void UsingMatchersAndSpecializations()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    [ExpectedException(typeof(ArgumentException))]
+    public void UsingMatchersAndSpecializations()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Echo(Arg.AnyInt))
-                .Returns(10)
-                .OccursOnce();
-            Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x > 10)))
-                .Throws(new ArgumentException());
+        Mock.Arrange(() => foo.Echo(Arg.AnyInt))
+            .Returns(10)
+            .OccursOnce();
+        Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x > 10)))
+            .Throws(new ArgumentException());
 
-            // Act
-            int actual = foo.Echo(1);
+        // Act
+        int actual = foo.Echo(1);
 
-            // Assert
-            Assert.AreEqual(10, actual);
+        // Assert
+        Assert.AreEqual(10, actual);
 
-            // Act
-            foo.Echo(11);
-        }
+        // Act
+        foo.Echo(11);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Matchers#Specialization}}
     <TestMethod()> _
-        <ExpectedException(GetType(ArgumentException))> _
-        Public Sub ShouldUseMatchersAndSpecializations()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    <ExpectedException(GetType(ArgumentException))> _
+    Public Sub ShouldUseMatchersAndSpecializations()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).Returns(10)
-            Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x > 10))).Throws(New ArgumentException())
+        Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).Returns(10)
+        Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x > 10))).Throws(New ArgumentException())
 
-            ' Act
-            Dim actual As Integer = foo.Echo(1)
+        ' Act
+        Dim actual As Integer = foo.Echo(1)
 
-            ' Assert
-            Assert.AreEqual(10, actual)
+        ' Assert
+        Assert.AreEqual(10, actual)
 
-            ' Act
-            foo.Echo(11)
-        End Sub
+        ' Act
+        foo.Echo(11)
+    End Sub
   {{endregion}}
 
 In the case when a specialization is used among with `Arg.IsAny<T>`, JustMock will select the arrangement with the proper matcher. `foo.Echo(1)` will use the first matcher and will return `10`. But `foo.Echo(11)` will use the second matcher because it is a specialization of the first and applies the call, therefore `ArgumentException` will be thrown.
@@ -366,44 +365,44 @@ With JustMock you are able to use matchers for functions that take ref arguments
 	  #### __[C#]__
 	
 	  {{region Matchers#MatchingCertainRefParams}}
-	    [TestMethod]
-	        public void MatchingCertainRefParameters()
-	        {
-	            int myRefArg = 5;
-	
-	            // Arrange
-	            var foo = Mock.Create<IFoo>();
-	
-	            Mock.Arrange(() => foo.Bar(ref Arg.Ref(5).Value)).Returns(10);
-	
-	            // Act
-	            int actual = foo.Bar(ref myRefArg);
-	
-	            // Assert
-	            Assert.AreEqual(10, actual);
-	            Assert.AreEqual(5, myRefArg);
-	        }
+      [TestMethod]
+      public void MatchingCertainRefParameters()
+      {
+          int myRefArg = 5;
+
+          // Arrange
+          var foo = Mock.Create<IFoo>();
+
+          Mock.Arrange(() => foo.Bar(ref Arg.Ref(5).Value)).Returns(10);
+
+          // Act
+          int actual = foo.Bar(ref myRefArg);
+
+          // Assert
+          Assert.AreEqual(10, actual);
+          Assert.AreEqual(5, myRefArg);
+      }
 	  {{endregion}}
 	
 	  #### __[VB]__
 	
 	  {{region Matchers#MatchingCertainRefParams}}
-	    <TestMethod>
-	        Public Sub MatchingCertainRefParameters()
-	            Dim myRefArg As Integer = 5
-	
-	            ' Arrange
-	            Dim foo = Mock.Create(Of IFoo)()
-	
-	            Mock.Arrange(Function() foo.Bar(5)).Returns(10)
-	
-	            ' Act
-	            Dim actual As Integer = foo.Bar(myRefArg)
-	
-	            ' Assert
-	            Assert.AreEqual(10, actual)
-	            Assert.AreEqual(5, myRefArg)
-	        End Sub
+      <TestMethod>
+      Public Sub MatchingCertainRefParameters()
+          Dim myRefArg As Integer = 5
+
+          ' Arrange
+          Dim foo = Mock.Create(Of IFoo)()
+
+          Mock.Arrange(Function() foo.Bar(5)).Returns(10)
+
+          ' Act
+          Dim actual As Integer = foo.Bar(myRefArg)
+
+          ' Assert
+          Assert.AreEqual(10, actual)
+          Assert.AreEqual(5, myRefArg)
+      End Sub
 	  {{endregion}}
 	
 	Note, the using of the *Value* field at the end of the matcher (`Arg.Ref(5)`__.Value__) is intended and needed in order to use this feature.
@@ -413,44 +412,44 @@ With JustMock you are able to use matchers for functions that take ref arguments
 	  #### __[C#]__
 	
 	  {{region Matchers#MatchingRefParamsOfAnyType}}
-	    [TestMethod]
-	        public void MatchingRefParametersOfAnyType()
-	        {
-	            int myRefArg = 5;
-	
-	            // Arrange
-	            var foo = Mock.Create<IFoo>();
-	
-	            Mock.Arrange(() => foo.Bar(ref Arg.Ref(Arg.AnyInt).Value)).Returns(10);
-	
-	            // Act
-	            int actual = foo.Bar(ref myRefArg);
-	
-	            // Assert
-	            Assert.AreEqual(10, actual);
-	            Assert.AreEqual(5, myRefArg);
-	        }
+      [TestMethod]
+      public void MatchingRefParametersOfAnyType()
+      {
+          int myRefArg = 5;
+
+          // Arrange
+          var foo = Mock.Create<IFoo>();
+
+          Mock.Arrange(() => foo.Bar(ref Arg.Ref(Arg.AnyInt).Value)).Returns(10);
+
+          // Act
+          int actual = foo.Bar(ref myRefArg);
+
+          // Assert
+          Assert.AreEqual(10, actual);
+          Assert.AreEqual(5, myRefArg);
+      }
 	  {{endregion}}
 	
 	  #### __[VB]__
 	
 	  {{region Matchers#MatchingRefParamsOfAnyType}}
-	    <TestMethod>
-	        Public Sub MatchingRefParametersOfAnyType()
-	            Dim myRefArg As Integer = 5
-	
-	            ' Arrange
-	            Dim foo = Mock.Create(Of IFoo)()
-	
-	            Mock.Arrange(Function() foo.Bar(Arg.AnyInt)).Returns(10)
-	
-	            ' Act
-	            Dim actual As Integer = foo.Bar(myRefArg)
-	
-	            ' Assert
-	            Assert.AreEqual(10, actual)
-	            Assert.AreEqual(5, myRefArg)
-	        End Sub
+      <TestMethod>
+      Public Sub MatchingRefParametersOfAnyType()
+          Dim myRefArg As Integer = 5
+
+          ' Arrange
+          Dim foo = Mock.Create(Of IFoo)()
+
+          Mock.Arrange(Function() foo.Bar(Arg.AnyInt)).Returns(10)
+
+          ' Act
+          Dim actual As Integer = foo.Bar(myRefArg)
+
+          ' Assert
+          Assert.AreEqual(10, actual)
+          Assert.AreEqual(5, myRefArg)
+      End Sub
 	  {{endregion}}
 	
 	Note, the using of the *Value* field at the end of the matcher (`Arg.Ref(Arg.AnyInt)`__.Value__) is intended and needed in order to use this feature.
@@ -460,44 +459,44 @@ With JustMock you are able to use matchers for functions that take ref arguments
 	  #### __[C#]__
 	
 	  {{region Matchers#MatchingRefParamsWithSpecialization}}
-	    [TestMethod]
-	        public void MatchingRefParametersWithSpecialization()
-	        {
-	            int myRefArg = 11;
-	
-	            // Arrange
-	            var foo = Mock.Create<IFoo>();
-	
-	            Mock.Arrange(() => foo.Bar(ref Arg.Ref(Arg.Matches<int>(x=> x > 10)).Value)).Returns(10);
-	
-	            // Act
-	            int actual = foo.Bar(ref myRefArg);
-	
-	            // Assert
-	            Assert.AreEqual(10, actual);
-	            Assert.AreEqual(11, myRefArg);
-	        }
+      [TestMethod]
+      public void MatchingRefParametersWithSpecialization()
+      {
+          int myRefArg = 11;
+
+          // Arrange
+          var foo = Mock.Create<IFoo>();
+
+          Mock.Arrange(() => foo.Bar(ref Arg.Ref(Arg.Matches<int>(x=> x > 10)).Value)).Returns(10);
+
+          // Act
+          int actual = foo.Bar(ref myRefArg);
+
+          // Assert
+          Assert.AreEqual(10, actual);
+          Assert.AreEqual(11, myRefArg);
+      }
 	  {{endregion}}
 	
 	  #### __[VB]__
 	
 	  {{region Matchers#MatchingRefParamsWithSpecialization}}
-	    <TestMethod>
-	        Public Sub MatchingRefParametersWithSpecialization()
-	            Dim myRefArg As Integer = 11
-	
-	            ' Arrange
-	            Dim foo = Mock.Create(Of IFoo)()
-	
-	            Mock.Arrange(Function() foo.Bar(Arg.Matches(Of Integer)(Function(x) x > 10))).Returns(10)
-	
-	            ' Act
-	            Dim actual As Integer = foo.Bar(myRefArg)
-	
-	            ' Assert
-	            Assert.AreEqual(10, actual)
-	            Assert.AreEqual(11, myRefArg)
-	        End Sub
+      <TestMethod>
+      Public Sub MatchingRefParametersWithSpecialization()
+          Dim myRefArg As Integer = 11
+
+          ' Arrange
+          Dim foo = Mock.Create(Of IFoo)()
+
+          Mock.Arrange(Function() foo.Bar(Arg.Matches(Of Integer)(Function(x) x > 10))).Returns(10)
+
+          ' Act
+          Dim actual As Integer = foo.Bar(myRefArg)
+
+          ' Assert
+          Assert.AreEqual(10, actual)
+          Assert.AreEqual(11, myRefArg)
+      End Sub
 	  {{endregion}}
 	
 	Note, the using of the *Value* field at the end of the matcher (`Arg.Ref(Arg.Matches<int>(x => x > 10))`__.Value__) is intended and needed in order to use this feature.

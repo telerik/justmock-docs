@@ -167,41 +167,41 @@ You use the `Arrange` method to define the methods invocation order.
 
   {{region BUAAA#VerifyInvocationOrder1}}
     [TestMethod]
-        public void ShouldVerifyCallsOrder()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldVerifyCallsOrder()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Submit()).InOrder();
-            Mock.Arrange(() => foo.Echo()).InOrder();
+        Mock.Arrange(() => foo.Submit()).InOrder();
+        Mock.Arrange(() => foo.Echo()).InOrder();
 
-            // Act
-            foo.Submit();
-            foo.Echo();
+        // Act
+        foo.Submit();
+        foo.Echo();
 
-            // Assert
-            Mock.Assert(foo);
-        }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region BUAAA#VerifyInvocationOrder1}}
     <TestMethod()>
-        Public Sub ShouldVerifyCallsOrder()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldVerifyCallsOrder()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Sub() foo.Submit()).InOrder()
-            Mock.Arrange(Sub() foo.Echo()).InOrder()
+        Mock.Arrange(Sub() foo.Submit()).InOrder()
+        Mock.Arrange(Sub() foo.Echo()).InOrder()
 
-            ' Act
-            foo.Submit()
-            foo.Echo()
+        ' Act
+        foo.Submit()
+        foo.Echo()
 
-            ' Assert
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 Again to verify this we need to call `Mock.Assert` in the `Assert` phase with the foo object.
@@ -240,55 +240,55 @@ Here we have defined the `IUserValidationService` and the `IShoppingCartService`
 
   {{region BUAAA#VerifyInvocationOrder3}}
     [TestMethod]
-        public void ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
-        {
-            string userName = "Bob";
-            string password = "Password";
-            int userID = 5;
-            var cart = new List<string> {"Foo", "Bar"};
+    public void ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
+    {
+        string userName = "Bob";
+        string password = "Password";
+        int userID = 5;
+        var cart = new List<string> {"Foo", "Bar"};
 
-            // Arrange
-            var userServiceMock = Mock.Create<IUserValidationService>();
-            var shoppingCartServiceMock = Mock.Create<IShoppingCartService>();
+        // Arrange
+        var userServiceMock = Mock.Create<IUserValidationService>();
+        var shoppingCartServiceMock = Mock.Create<IShoppingCartService>();
 
-            Mock.Arrange(() => userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce();
-            Mock.Arrange(() => shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce();
+        Mock.Arrange(() => userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce();
+        Mock.Arrange(() => shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce();
 
-            // Act
-            userServiceMock.ValidateUser(userName, password);
-            shoppingCartServiceMock.LoadCart(userID);
+        // Act
+        userServiceMock.ValidateUser(userName, password);
+        shoppingCartServiceMock.LoadCart(userID);
 
-            // Assert
-            Mock.Assert(userServiceMock);
-            Mock.Assert(shoppingCartServiceMock);
-        }
+        // Assert
+        Mock.Assert(userServiceMock);
+        Mock.Assert(shoppingCartServiceMock);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region BUAAA#VerifyInvocationOrder3}}
     <TestMethod()>
-        Public Sub ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
-            Dim userName As String = "Bob"
-            Dim password As String = "Password"
-            Dim userID As Integer = 5
-            Dim cart As IList(Of String) = {"Foo", "Bar"}
+    Public Sub ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
+        Dim userName As String = "Bob"
+        Dim password As String = "Password"
+        Dim userID As Integer = 5
+        Dim cart As IList(Of String) = {"Foo", "Bar"}
 
-            ' Arrange
-            Dim userServiceMock = Mock.Create(Of IUserValidationService)()
-            Dim shoppingCartServiceMock = Mock.Create(Of IShoppingCartService)()
+        ' Arrange
+        Dim userServiceMock = Mock.Create(Of IUserValidationService)()
+        Dim shoppingCartServiceMock = Mock.Create(Of IShoppingCartService)()
 
-            Mock.Arrange(Function() userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce()
-            Mock.Arrange(Function() shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce()
+        Mock.Arrange(Function() userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce()
+        Mock.Arrange(Function() shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce()
 
-            ' Act
-            userServiceMock.ValidateUser(userName, password)
-            shoppingCartServiceMock.LoadCart(userID)
+        ' Act
+        userServiceMock.ValidateUser(userName, password)
+        shoppingCartServiceMock.LoadCart(userID)
 
-            ' Assert
-            Mock.Assert(userServiceMock)
-            Mock.Assert(shoppingCartServiceMock)
-        End Sub
+        ' Assert
+        Mock.Assert(userServiceMock)
+        Mock.Assert(shoppingCartServiceMock)
+    End Sub
   {{endregion}}
 
 In the arrange phase we defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.

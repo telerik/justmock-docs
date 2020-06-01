@@ -41,33 +41,33 @@ Change a method behavior to throw an exception once it is called.
 
   {{region Throws#ThrowExceptionOnMethodCall}}
     [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ShouldThrowExceptionOnMethodCall()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    [ExpectedException(typeof(ArgumentException))]
+    public void ShouldThrowExceptionOnMethodCall()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>();
+        Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>();
 
-            // Act
-            foo.Execute(string.Empty);
-        }
+        // Act
+        foo.Execute(string.Empty);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Throws#ThrowExceptionOnMethodCall}}
     <TestMethod()>
-        <ExpectedException(GetType(ArgumentException))>
-        Public Sub ShouldThrowExceptionOnMethodCall()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    <ExpectedException(GetType(ArgumentException))>
+    Public Sub ShouldThrowExceptionOnMethodCall()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)()
+        Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)()
 
-            ' Act
-            foo.Execute(String.Empty)
-        End Sub
+        ' Act
+        foo.Execute(String.Empty)
+    End Sub
   {{endregion}}
 
 The assert step is done via the `ExpectedException` attribute, where we explicitly specify that an exception of type `ArgumentException` must be thrown during the execution of the test.
@@ -80,33 +80,33 @@ Change a method behavior to throw an exception once it is called and pass argume
 
   {{region Throws#ExceptionWithArgumentsOnMethodCall}}
     [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ShouldThrowExceptionWithArgumentsOnMethodCall()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    [ExpectedException(typeof(ArgumentException))]
+    public void ShouldThrowExceptionWithArgumentsOnMethodCall()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>("Argument shouldn't be empty.");
+        Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>("Argument shouldn't be empty.");
 
-            // Act
-            foo.Execute(string.Empty);
-        }
+        // Act
+        foo.Execute(string.Empty);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Throws#ExceptionWithArgumentsOnMethodCall}}
     <TestMethod()>
-        <ExpectedException(GetType(ArgumentException))>
-        Public Sub ShouldThrowExceptionWithArgumentsOnMethodCall()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    <ExpectedException(GetType(ArgumentException))>
+    Public Sub ShouldThrowExceptionWithArgumentsOnMethodCall()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)("Argument shouldn't be empty.")
+        Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)("Argument shouldn't be empty.")
 
-            ' Act
-            foo.Execute(String.Empty)
-        End Sub
+        ' Act
+        foo.Execute(String.Empty)
+    End Sub
   {{endregion}}
 
 The assert step is done via the `ExpectedException` attribute, where we explicitly specify that an exception of type `ArgumentException` must be thrown during the execution of the test. Calling `foo.Execute` with empty string will result in throwing an exception and passing "Argument shouldn't be empty." to it.

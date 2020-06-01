@@ -23,56 +23,56 @@ In the further examples we will use the following sample class:
 
   {{region ObjectMocking#VirtualSamples}}
     public class FooVirtual
+    {
+        public FooVirtual()
         {
-            public FooVirtual()
-            {
-                throw new NotImplementedException("Constructor");
-            }
-
-            public virtual string Name
-            {
-                get;
-                set;
-            }
-
-            public virtual void VoidMethod()
-            {
-                throw new NotImplementedException();
-            }
-
-            public virtual IList<int> GetList()
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException("Constructor");
         }
+
+        public virtual string Name
+        {
+            get;
+            set;
+        }
+
+        public virtual void VoidMethod()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IList<int> GetList()
+        {
+            throw new NotImplementedException();
+        }
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region ObjectMocking#VirtualSamples}}
     Public Class FooVirtual
-            Public Sub New()
-                Throw New NotImplementedException("Constructor")
-            End Sub
+        Public Sub New()
+            Throw New NotImplementedException("Constructor")
+        End Sub
 
-            Public Overridable Property Name() As String
-                Get
-                    Return m_Name
-                End Get
-                Set(value As String)
-                    m_Name = value
-                End Set
-            End Property
-            Private m_Name As String
+        Public Overridable Property Name() As String
+            Get
+                Return m_Name
+            End Get
+            Set(value As String)
+                m_Name = value
+            End Set
+        End Property
+        Private m_Name As String
 
-            Public Overridable Sub VoidMethod()
-                Throw New NotImplementedException()
-            End Sub
+        Public Overridable Sub VoidMethod()
+            Throw New NotImplementedException()
+        End Sub
 
-            Public Overridable Function GetList() As IList(Of Integer)
-                Throw New NotImplementedException()
-            End Function
-        End Class
+        Public Overridable Function GetList() As IList(Of Integer)
+            Throw New NotImplementedException()
+        End Function
+    End Class
   {{endregion}}
 
 Note that we have declared a concrete class `FooVirtual` which does not implement any interfaces.
@@ -84,37 +84,37 @@ What we need to do is to make sure that all class members are `virtual`. As you 
 
   {{region ObjectMocking#MockingVirtual}}
     [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void ShouldCallOriginalForVirtualExactlyOnceWithMockedConstructor()
-        {
-            //Arrange
-            var foo = Mock.Create<FooVirtual>(Constructor.Mocked);
-            Mock.Arrange(() => foo.GetList()).CallOriginal().OccursOnce();
+    [ExpectedException(typeof(NotImplementedException))]
+    public void ShouldCallOriginalForVirtualExactlyOnceWithMockedConstructor()
+    {
+        //Arrange
+        var foo = Mock.Create<FooVirtual>(Constructor.Mocked);
+        Mock.Arrange(() => foo.GetList()).CallOriginal().OccursOnce();
 
-            //Act
-            foo.GetList();
+        //Act
+        foo.GetList();
 
-            //Assert
-            Mock.Assert(foo);
-        }
+        //Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region ObjectMocking#MockingVirtual}}
     <TestMethod> _
-        <ExpectedException(GetType(NotImplementedException))> _
-        Public Sub ShouldCallOriginalForVirtualExactlyOnceWithMockedConstructor()
-            'Arrange
-            Dim foo = Mock.Create(Of FooVirtual)(Constructor.Mocked)
-            Mock.Arrange(Function() foo.GetList()).CallOriginal().OccursOnce()
+    <ExpectedException(GetType(NotImplementedException))> _
+    Public Sub ShouldCallOriginalForVirtualExactlyOnceWithMockedConstructor()
+        'Arrange
+        Dim foo = Mock.Create(Of FooVirtual)(Constructor.Mocked)
+        Mock.Arrange(Function() foo.GetList()).CallOriginal().OccursOnce()
 
-            'Act
-            foo.GetList()
+        'Act
+        foo.GetList()
 
-            'Assert
-            Mock.Assert(foo)
-        End Sub
+        'Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 When using `Mock.Create` to create your mocked instance of a specific class you can specify whether or not the constructor should be mocked. You can choose from the `Constructor` enumeration:
@@ -138,56 +138,56 @@ Here is the example class we are going to use:
 
   {{region ObjectMocking#Samples2}}
     public class Foo
+    {
+        public Foo()
         {
-            public Foo()
-            {
-                throw new NotImplementedException("Constructor");
-            }
-
-            public string Name
-            {
-                get;
-                set;
-            }
-
-            public void VoidMethod()
-            {
-                throw new NotImplementedException();
-            }
-
-            public IList<int> GetList()
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException("Constructor");
         }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public void VoidMethod()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<int> GetList()
+        {
+            throw new NotImplementedException();
+        }
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region ObjectMocking#Samples2}}
     Public Class Foo
-            Public Sub New()
-                Throw New NotImplementedException("Constructor")
-            End Sub
+        Public Sub New()
+            Throw New NotImplementedException("Constructor")
+        End Sub
 
-            Public Property Name() As String
-                Get
-                    Return m_Name
-                End Get
-                Set(value As String)
-                    m_Name = value
-                End Set
-            End Property
-            Private m_Name As String
+        Public Property Name() As String
+            Get
+                Return m_Name
+            End Get
+            Set(value As String)
+                m_Name = value
+            End Set
+        End Property
+        Private m_Name As String
 
-            Public Sub VoidMethod()
-                Throw New NotImplementedException()
-            End Sub
+        Public Sub VoidMethod()
+            Throw New NotImplementedException()
+        End Sub
 
-            Public Function GetList() As IList(Of Integer)
-                Throw New NotImplementedException()
-            End Function
-        End Class
+        Public Function GetList() As IList(Of Integer)
+            Throw New NotImplementedException()
+        End Function
+    End Class
   {{endregion}}
 
 
@@ -201,37 +201,37 @@ Note that here we are going to mock an instance of the `Foo` class in the same w
 
   {{region ObjectMocking#MockingCommercial}}
     [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void ShouldCallOriginalForNONVirtualExactlyOnceWithMockedConstructor()
-        {
-            //Arrange
-            var foo = Mock.Create<Foo>(Constructor.Mocked);
-            Mock.Arrange(() => foo.GetList()).CallOriginal().OccursOnce();
+    [ExpectedException(typeof(NotImplementedException))]
+    public void ShouldCallOriginalForNONVirtualExactlyOnceWithMockedConstructor()
+    {
+        //Arrange
+        var foo = Mock.Create<Foo>(Constructor.Mocked);
+        Mock.Arrange(() => foo.GetList()).CallOriginal().OccursOnce();
 
-            //Act
-            foo.GetList();
+        //Act
+        foo.GetList();
 
-            //Assert
-            Mock.Assert(foo);
-        }
+        //Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region ObjectMocking#MockingCommercial}}
     <TestMethod> _
-        <ExpectedException(GetType(NotImplementedException))> _
-        Public Sub ShouldCallOriginalForNONVirtualExactlyOnceWithMockedConstructor()
-            'Arrange
-            Dim foo = Mock.Create(Of Foo)(Constructor.Mocked)
-            Mock.Arrange(Function() foo.GetList()).CallOriginal().OccursOnce()
+    <ExpectedException(GetType(NotImplementedException))> _
+    Public Sub ShouldCallOriginalForNONVirtualExactlyOnceWithMockedConstructor()
+        'Arrange
+        Dim foo = Mock.Create(Of Foo)(Constructor.Mocked)
+        Mock.Arrange(Function() foo.GetList()).CallOriginal().OccursOnce()
 
-            'Act
-            foo.GetList()
+        'Act
+        foo.GetList()
 
-            'Assert
-            Mock.Assert(foo)
-        End Sub
+        'Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 

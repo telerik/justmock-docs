@@ -118,37 +118,37 @@ Set up a call to a final method on a sealed class and assert its return value.
 
   {{region SealedMocking#AsssertFinalCall}}
     [TestMethod]
-        public void ShouldAssertFinalMethodCallOnASealedClass()
-        {
-            // Arrange
-            var foo = Mock.Create<FooSealed>();
+    public void ShouldAssertFinalMethodCallOnASealedClass()
+    {
+        // Arrange
+        var foo = Mock.Create<FooSealed>();
 
-            Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
+        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
 
-            // Act
-            var actual = foo.Echo(1);
+        // Act
+        var actual = foo.Echo(1);
 
-            // Assert
-            Assert.AreEqual(10, actual);    
-        }
+        // Assert
+        Assert.AreEqual(10, actual);    
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region SealedMocking#AsssertFinalCall}}
     <TestMethod()>
-        Public Sub ShouldAssertFinalMethodCallOnASealedClass()
-            ' Arrange
-            Dim foo = Mock.Create(Of FooSealed)()
+    Public Sub ShouldAssertFinalMethodCallOnASealedClass()
+        ' Arrange
+        Dim foo = Mock.Create(Of FooSealed)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
+        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
 
-            ' Act
-            Dim actual = foo.Echo(1)
+        ' Act
+        Dim actual = foo.Echo(1)
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 Here we setup that a call to the final `foo.Echo` method with any `int` argument should return `10`.
@@ -161,43 +161,43 @@ Even the `sealed` class has only an `internal` constructor we can still create a
 
   {{region SealedMocking#CreateMockForSealedInternal}}
     [TestMethod]
-        public void ShouldCreateMockForASealedClassWithInternalConstructor()
-        {
-            // Arrange
-            var foo = Mock.Create<FooSealedInternal>();
+    public void ShouldCreateMockForASealedClassWithInternalConstructor()
+    {
+        // Arrange
+        var foo = Mock.Create<FooSealedInternal>();
 
-            Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
+        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
 
-            // Assert
-            Assert.IsNotNull(foo);
+        // Assert
+        Assert.IsNotNull(foo);
 
-            // Act
-            var actual = foo.Echo(1);
+        // Act
+        var actual = foo.Echo(1);
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region SealedMocking#CreateMockForSealedInternal}}
     <TestMethod()>
-        Public Sub ShouldCreateMockForASealedClassWithInternalConstructor()
-            ' Arrange
-            Dim foo = Mock.Create(Of FooSealedInternal)()
+    Public Sub ShouldCreateMockForASealedClassWithInternalConstructor()
+        ' Arrange
+        Dim foo = Mock.Create(Of FooSealedInternal)()
 
-            Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
+        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
 
-            ' Assert
-            Assert.IsNotNull(foo)
+        ' Assert
+        Assert.IsNotNull(foo)
 
-            ' Act
-            Dim actual = foo.Echo(1)
+        ' Act
+        Dim actual = foo.Echo(1)
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 Here we setup that a call to the final `foo.Echo` method with any `int` argument should return 10. After we ensure that the object is actually created, we assert for the return value of the `foo.Echo` method.
@@ -209,41 +209,41 @@ When a mock is created by using `Mock.Create` all dependencies are also implemen
 
   {{region SealedMocking#CreateMockForClassWithInterface}}
     [TestMethod]
-        public void ShouldAssertCallOnVoid()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void ShouldAssertCallOnVoid()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            bool called = false;
+        bool called = false;
 
-            Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
+        Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
 
-            // Act
-            foo.Execute();
+        // Act
+        foo.Execute();
 
-            // Assert
-            Assert.IsTrue(called);
-        }
+        // Assert
+        Assert.IsTrue(called);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region SealedMocking#CreateMockForClassWithInterface}}
     <TestMethod()>
-        Public Sub ShouldAssertCallOnVoid()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldAssertCallOnVoid()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Dim called As Boolean = False
+        Dim called As Boolean = False
 
-            Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
+        Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
 
-            ' Act
-            foo.Execute()
+        ' Act
+        foo.Execute()
 
-            ' Assert
-            Assert.IsTrue(called)
-        End Sub
+        ' Assert
+        Assert.IsTrue(called)
+    End Sub
   {{endregion}}
 
 Furthermore, if you are interested in `IFoo` interface implementation you can use the `as` operator and call the interface members as shown below.
@@ -252,43 +252,43 @@ Furthermore, if you are interested in `IFoo` interface implementation you can us
 
   {{region SealedMocking#CreateMockForClassWithInterfaceExtracted}}
     [TestMethod]
-        public void ShouldAssertCallOnVoidThroughAnInterface()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void ShouldAssertCallOnVoidThroughAnInterface()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            bool called = false;
+        bool called = false;
 
-            Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
+        Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
 
-            // Act
-            IFoo iFoo = foo;
-            iFoo.Execute();
+        // Act
+        IFoo iFoo = foo;
+        iFoo.Execute();
 
-            // Assert
-            Assert.IsTrue(called);
-        }
+        // Assert
+        Assert.IsTrue(called);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region SealedMocking#CreateMockForClassWithInterfaceExtracted}}
     <TestMethod()>
-        Public Sub ShouldAssertCallOnVoidThroughAnInterface()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldAssertCallOnVoidThroughAnInterface()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Dim called As Boolean = False
+        Dim called As Boolean = False
 
-            Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
+        Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
 
-            ' Act
-            Dim iFoo As IFoo = foo
-            iFoo.Execute()
+        ' Act
+        Dim iFoo As IFoo = foo
+        iFoo.Execute()
 
-            ' Assert
-            Assert.IsTrue(called)
-        End Sub
+        ' Assert
+        Assert.IsTrue(called)
+    End Sub
   {{endregion}}
 
 In both examples a local variable is set to `true` once the `Execute` method is called.

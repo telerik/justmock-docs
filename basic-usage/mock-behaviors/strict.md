@@ -31,9 +31,9 @@ The next example shows the creation of a strict mock, without any further arrang
 
   {{region MockBehaviorStrict#InterfaceSamples}}
     public interface IFoo
-        {
-            void VoidCall();
-        }
+    {
+        void VoidCall();
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -49,29 +49,29 @@ The next example shows the creation of a strict mock, without any further arrang
 
   {{region MockBehaviorStrict#ArbitraryCall}}
     [TestMethod]
-            [ExpectedException(typeof(StrictMockException))]
-            public void ArbitraryCallsShouldGenerateException()
-            {
-                //Arrange
-                var foo = Mock.Create<IFoo>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void ArbitraryCallsShouldGenerateException()
+    {
+        //Arrange
+        var foo = Mock.Create<IFoo>(Behavior.Strict);
 
-                //Act
-                foo.VoidCall();
-            }
+        //Act
+        foo.VoidCall();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockBehaviorStrict#ArbitraryCall}}
     <TestMethod> _
-        <ExpectedException(GetType(StrictMockException))> _
-        Public Sub ArbitraryCallsShouldGenerateException()
-            'Arrange
-            Dim foo = Mock.Create(Of IFoo)(Behavior.[Strict])
+    <ExpectedException(GetType(StrictMockException))> _
+    Public Sub ArbitraryCallsShouldGenerateException()
+        'Arrange
+        Dim foo = Mock.Create(Of IFoo)(Behavior.[Strict])
 
-            'Act
-            foo.VoidCall()
-        End Sub
+        'Act
+        foo.VoidCall()
+    End Sub
   {{endregion}}
 
 ### Testing If Functions Work in Isolation
@@ -82,26 +82,26 @@ Let assume we have the following class:
 
   {{region MockBehaviorStrict#ClassSamples}}
     public class Foo
+    {
+        public void VoidMethod()
         {
-            public void VoidMethod()
-            {
-                // Some logic here...
-            }
-            public void ExecuteVoidMethod()
-            {
-                this.VoidMethod();
-            }
-
-            public string SomeStringFunctiond()
-            {
-                return default(string);
-            }
-
-            public int SomeIntFunctiond()
-            {
-                return default(int);
-            }
+            // Some logic here...
         }
+        public void ExecuteVoidMethod()
+        {
+            this.VoidMethod();
+        }
+
+        public string SomeStringFunctiond()
+        {
+            return default(string);
+        }
+
+        public int SomeIntFunctiond()
+        {
+            return default(int);
+        }
+    }
   {{endregion}}
 
   #### __[VB]__
@@ -131,33 +131,33 @@ Now, we want to test the `ExecuteVoidMethod()` function. The next test should th
 
   {{region MockBehaviorStrict#AssertException}}
     [TestMethod]
-            [ExpectedException(typeof(StrictMockException))]
-            public void ShouldAssertIfThereAreCallsToNonArrangedMembers()
-            {
-                // Arrange
-                var foo = Mock.Create<Foo>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void ShouldAssertIfThereAreCallsToNonArrangedMembers()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>(Behavior.Strict);
 
-                Mock.Arrange(() => foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1);
+        Mock.Arrange(() => foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1);
 
-                // Act
-                foo.ExecuteVoidMethod();
-            }
+        // Act
+        foo.ExecuteVoidMethod();
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockBehaviorStrict#AssertException}}
     <TestMethod> _
-        <ExpectedException(GetType(StrictMockException))> _
-        Public Sub ShouldAssertIfThereAreCallsToNonArrangedMembers()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)(Behavior.[Strict])
+    <ExpectedException(GetType(StrictMockException))> _
+    Public Sub ShouldAssertIfThereAreCallsToNonArrangedMembers()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)(Behavior.[Strict])
 
-            Mock.Arrange(Sub() foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1)
+        Mock.Arrange(Sub() foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1)
 
-            ' Act
-            foo.ExecuteVoidMethod()
-        End Sub
+        ' Act
+        foo.ExecuteVoidMethod()
+    End Sub
   {{endregion}}
 
 The next example shows the basic usage of a strict mock. The test checks for the basic functions of the SUT in isolation: 
@@ -166,39 +166,39 @@ The next example shows the basic usage of a strict mock. The test checks for the
 
   {{region MockBehaviorStrict#AssertArrangedCalls}}
     [TestMethod]
-            public void ShouldAssertIfThereAreNOArbitraryCalls()
-            {
-                // Arrange
-                var foo = Mock.Create<Foo>(Behavior.Strict);
+    public void ShouldAssertIfThereAreNOArbitraryCalls()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>(Behavior.Strict);
 
-                Mock.Arrange(() => foo.VoidMethod()).OccursAtLeast(1);
-                Mock.Arrange(() => foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1);
+        Mock.Arrange(() => foo.VoidMethod()).OccursAtLeast(1);
+        Mock.Arrange(() => foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1);
 
-                // Act
-                foo.ExecuteVoidMethod();
+        // Act
+        foo.ExecuteVoidMethod();
 
-                // Assert
-                Mock.Assert(foo);
-            }
+        // Assert
+        Mock.Assert(foo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockBehaviorStrict#AssertArrangedCalls}}
     <TestMethod> _
-        Public Sub ShouldAssertIfThereAreNOArbitraryCalls()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)(Behavior.[Strict])
+    Public Sub ShouldAssertIfThereAreNOArbitraryCalls()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)(Behavior.[Strict])
 
-            Mock.Arrange(Sub() foo.VoidMethod()).OccursAtLeast(1)
-            Mock.Arrange(Sub() foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1)
+        Mock.Arrange(Sub() foo.VoidMethod()).OccursAtLeast(1)
+        Mock.Arrange(Sub() foo.ExecuteVoidMethod()).CallOriginal().OccursAtLeast(1)
 
-            ' Act
-            foo.ExecuteVoidMethod()
+        ' Act
+        foo.ExecuteVoidMethod()
 
-            ' Assert
-            Mock.Assert(foo)
-        End Sub
+        ' Assert
+        Mock.Assert(foo)
+    End Sub
   {{endregion}}
 
 First, we create the mock with `Behavior.Strict`. Then, we arrange the methods that should be invoked  during the test execution. Finally, we assert against them.

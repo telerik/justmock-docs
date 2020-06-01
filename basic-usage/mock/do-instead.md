@@ -45,49 +45,49 @@ Let's see how to replace a method behavior, verify its call and its return value
 
   {{region DoInstead#AssertDoInstead}}
     [TestMethod]
-        public void ShouldAssertIfItsCalledAndReturnArgument()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldAssertIfItsCalledAndReturnArgument()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            bool called = false;
+        bool called = false;
 
-            Mock.Arrange(() => foo.Execute(Arg.IsAny<string>()))
-                      .DoInstead(() => { called = true; })
-                      .Returns((string s) => s);
+        Mock.Arrange(() => foo.Execute(Arg.IsAny<string>()))
+                  .DoInstead(() => { called = true; })
+                  .Returns((string s) => s);
 
-            // Act
-            var actual = string.Empty;
-            actual = foo.Execute("bar");
+        // Act
+        var actual = string.Empty;
+        actual = foo.Execute("bar");
 
-            // Assert
-            Assert.AreEqual("bar", actual);
-            Assert.IsTrue(called);    
-        }
+        // Assert
+        Assert.AreEqual("bar", actual);
+        Assert.IsTrue(called);    
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoInstead#AssertDoInstead}}
     <TestMethod()>
-        Public Sub ShouldAssertIfItsCalledAndReturnArgument()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertIfItsCalledAndReturnArgument()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Dim called As Boolean = False
+        Dim called As Boolean = False
 
-            Mock.Arrange(Function() foo.Execute(Arg.AnyString)).
-                DoInstead(Sub() called = True).
-                Returns(Function(s As String) s)
+        Mock.Arrange(Function() foo.Execute(Arg.AnyString)).
+            DoInstead(Sub() called = True).
+            Returns(Function(s As String) s)
 
-            ' Act
-            Dim actual = String.Empty
-            actual = foo.Execute("bar")
+        ' Act
+        Dim actual = String.Empty
+        actual = foo.Execute("bar")
 
-            ' Assert
-            Assert.AreEqual("bar", actual)
-            Assert.IsTrue(called)
-        End Sub
+        ' Assert
+        Assert.AreEqual("bar", actual)
+        Assert.IsTrue(called)
+    End Sub
   {{endregion}}
 
 First, we arrange with `DoInstead` to execute `called = true;` instead of the actual implementation of `foo.Execute` method. Also, we set up that the call should return the passed argument directly. We act by calling the `foo.Execute` method with argument "bar" and then verify that the method actually returns what we expect.
@@ -100,43 +100,43 @@ You can assert `DoInstead` for more than one argument in the method. Follows an 
 
   {{region DoInstead#AssertDoInsteadSeveralArguments}}
     [TestMethod]
-        public void ShouldReturnSumOfArguments()
-        {
-            // Arrange
-            int expected = 0;
+    public void ShouldReturnSumOfArguments()
+    {
+        // Arrange
+        int expected = 0;
 
-            var foo = Mock.Create<IFoo>();
-            Mock.Arrange(() => foo.Submit(Arg.IsAny<int>(), Arg.IsAny<int>(), Arg.IsAny<int>(), Arg.IsAny<int>()))
-                .DoInstead((int arg1, int arg2, int arg3, int arg4) => { expected = arg1 + arg2 + arg3 + arg4; });
+        var foo = Mock.Create<IFoo>();
+        Mock.Arrange(() => foo.Submit(Arg.IsAny<int>(), Arg.IsAny<int>(), Arg.IsAny<int>(), Arg.IsAny<int>()))
+            .DoInstead((int arg1, int arg2, int arg3, int arg4) => { expected = arg1 + arg2 + arg3 + arg4; });
 
-            // Act
-            foo.Submit(10, 10, 10, 10);
+        // Act
+        foo.Submit(10, 10, 10, 10);
 
-            // Assert
-            Assert.AreEqual(40, expected);
-        }
+        // Assert
+        Assert.AreEqual(40, expected);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoInstead#AssertDoInsteadSeveralArguments}}
     <TestMethod()>
-        Public Sub ShouldReturnSumOfArguments()
-            ' Arrange
-            Dim expected As Integer = 0
+    Public Sub ShouldReturnSumOfArguments()
+        ' Arrange
+        Dim expected As Integer = 0
 
-            Dim foo = Mock.Create(Of IFoo)()
-            Mock.Arrange(Function() foo.Submit(Arg.AnyInt, Arg.AnyInt, Arg.AnyInt, Arg.AnyInt)).
-                DoInstead(Function(arg1 As Integer, arg2 As Integer, arg3 As Integer, arg4 As Integer)
-                              expected = arg1 + arg2 + arg3 + arg4
-                          End Function)
+        Dim foo = Mock.Create(Of IFoo)()
+        Mock.Arrange(Function() foo.Submit(Arg.AnyInt, Arg.AnyInt, Arg.AnyInt, Arg.AnyInt)).
+            DoInstead(Function(arg1 As Integer, arg2 As Integer, arg3 As Integer, arg4 As Integer)
+                          expected = arg1 + arg2 + arg3 + arg4
+                      End Function)
 
-            ' Act
-            foo.Submit(10, 10, 10, 10)
+        ' Act
+        foo.Submit(10, 10, 10, 10)
 
-            ' Assert
-            Assert.AreEqual(40, expected)
-        End Sub
+        ' Assert
+        Assert.AreEqual(40, expected)
+    End Sub
   {{endregion}}
 
 Here we replace the actual implementation of the `Submit` method and return the sum of the specified arguments.
@@ -149,41 +149,41 @@ Here we replace the actual implementation of the `Submit` method and return the 
 
   {{region DoInstead#AssertDoInsteadOnPropertySet}}
     [TestMethod]
-        public void ShouldCheckIfPropertySetIsCalledWithZero()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>(Behavior.Strict);
+    public void ShouldCheckIfPropertySetIsCalledWithZero()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>(Behavior.Strict);
 
-            bool expected = false;
-            
-            Mock.ArrangeSet(() => { foo.Bar = 1; }).DoInstead(() => expected = true);
+        bool expected = false;
+        
+        Mock.ArrangeSet(() => { foo.Bar = 1; }).DoInstead(() => expected = true);
 
-            // Act
-            foo.Bar = 1;
+        // Act
+        foo.Bar = 1;
 
-            // Assert
-            Assert.IsTrue(expected);    
-        }
+        // Assert
+        Assert.IsTrue(expected);    
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoInstead#AssertDoInsteadOnPropertySet}}
     <TestMethod()>
-        Public Sub ShouldCheckIfPropertySetIsCalledWithZero()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)(Behavior.Strict)
+    Public Sub ShouldCheckIfPropertySetIsCalledWithZero()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)(Behavior.Strict)
 
-            Dim expected As Boolean = False
+        Dim expected As Boolean = False
 
-            Mock.ArrangeSet(Sub() foo.Bar = 0).DoInstead(Sub() expected = True)
+        Mock.ArrangeSet(Sub() foo.Bar = 0).DoInstead(Sub() expected = True)
 
-            ' Act
-            foo.Bar = 0
+        ' Act
+        foo.Bar = 0
 
-            ' Assert
-            Assert.IsTrue(expected)
-        End Sub
+        ' Assert
+        Assert.IsTrue(expected)
+    End Sub
   {{endregion}}
 
 First, we arrange with `DoInstead` to execute `expected = true;` instead of the actual implementation of `foo.Bar` property setter. We act by setting `foo.Bar` to `1` and verify that `expected` is true.
@@ -231,48 +231,48 @@ Now, in `DoInstead`, we will use the integer value passed to `Echo` to replace t
 
   {{region DoInstead#ParametersUsed}}
     [TestMethod]
-        public void ShouldUseParametersPassedToOriginalCall()
-        {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+    public void ShouldUseParametersPassedToOriginalCall()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
 
-            int expected = 4;
-            int actual = 0;
-            
-            Mock.Arrange(() => foo.Echo(Arg.AnyInt)).DoInstead((int a) =>
-            {
-                actual = a;
-            });
-            
-            // Act
-            foo.Echo(expected);
-            
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        int expected = 4;
+        int actual = 0;
+        
+        Mock.Arrange(() => foo.Echo(Arg.AnyInt)).DoInstead((int a) =>
+        {
+            actual = a;
+        });
+        
+        // Act
+        foo.Echo(expected);
+        
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoInstead#ParametersUsed}}
     <TestMethod()>
-        Public Sub ShouldUseParametersPassedToOriginalCall()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldUseParametersPassedToOriginalCall()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Dim expected As Integer = 4
-            Dim actual As Integer = 0
+        Dim expected As Integer = 4
+        Dim actual As Integer = 0
 
-            Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).DoInstead(Function(a As Integer)
-                                                                        actual = a
-                                                                    End Function)
+        Mock.Arrange(Function() foo.Echo(Arg.AnyInt)).DoInstead(Function(a As Integer)
+                                                                    actual = a
+                                                                End Function)
 
-            ' Act
-            foo.Echo(expected)
+        ' Act
+        foo.Echo(expected)
 
-            ' Assert
-            Assert.AreEqual(expected, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 In order to parameterise the `DoInstead` call to apply the `Echo` method, simply use an action in the body accepting `int` to access parameters passed to `Echo`. In the example we replace the actual implementation with `actual = a;`. We act by calling `foo.Echo( expected );` and verify the result.
@@ -283,50 +283,50 @@ Additionaly, you can test actions passed to the `DoInstead` call. Look at the fo
 
   {{region DoInstead#ActionUsed}}
     [TestMethod]
-        public void ShouldUseActionInDoInsteadCall()
+    public void ShouldUseActionInDoInsteadCall()
+    {
+        // Arrange
+        var foo = Mock.Create<Foo>();
+
+        int expected = 4;
+        int actual = 0;
+
+        Mock.Arrange(() => foo.Bar(Arg.IsAny<Action>())).DoInstead((Action action) => action());
+
+        // Act
+        foo.Bar(new Action(() =>
         {
-            // Arrange
-            var foo = Mock.Create<Foo>();
+            actual = expected;
+        }));
 
-            int expected = 4;
-            int actual = 0;
-
-            Mock.Arrange(() => foo.Bar(Arg.IsAny<Action>())).DoInstead((Action action) => action());
-
-            // Act
-            foo.Bar(new Action(() =>
-            {
-                actual = expected;
-            }));
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoInstead#ActionUsed}}
     <TestMethod()>
-        Public Sub ShouldUseActionInDoInsteadCall()
-            ' Arrange
-            Dim foo = Mock.Create(Of Foo)()
+    Public Sub ShouldUseActionInDoInsteadCall()
+        ' Arrange
+        Dim foo = Mock.Create(Of Foo)()
 
-            Dim expected As Integer = 4
-            Dim actual As Integer = 0
+        Dim expected As Integer = 4
+        Dim actual As Integer = 0
 
-            Mock.Arrange(Sub() foo.Bar(Arg.IsAny(Of Action))).DoInstead(Function(action As Action)
-                                                                            action()
-                                                                        End Function)
+        Mock.Arrange(Sub() foo.Bar(Arg.IsAny(Of Action))).DoInstead(Function(action As Action)
+                                                                        action()
+                                                                    End Function)
 
-            ' Act
-            foo.Bar(New Action(Function()
-                                   actual = expected
-                               End Function))
+        ' Act
+        foo.Bar(New Action(Function()
+                                actual = expected
+                            End Function))
 
-            ' Assert
-            Assert.AreEqual(expected, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(expected, actual)
+    End Sub
   {{endregion}}
 
 We act by calling `foo.Bar` with new `Action`, changing the `actual` variable. In `DoInstead` we just execute the action. Finally, we verify that our expectations are met, namely `actual` and `expected` variables have the same value.
@@ -361,48 +361,48 @@ The idea behind this method is to have one parameter (`arg1`) the value of which
 
   {{region DoInstead#AssertDoInsteadRefParam}}
     [TestMethod]
-        public void ShouldTakeOutValueFromDoInsteadWhenDefinedWithCustomDelegate()
+    public void ShouldTakeOutValueFromDoInsteadWhenDefinedWithCustomDelegate()
+    {
+        // Arrange
+        int refArg = 1;
+
+        var mock = Mock.Create<DoInsteadWithCustomDelegate>();
+
+        Mock.Arrange(() => mock.AddTo(10, ref refArg)).DoInstead(new RefAction<int, int>((int arg1, ref int arg2) =>
         {
-            // Arrange
-            int refArg = 1;
+            arg2 += arg1;
+        })); 
 
-            var mock = Mock.Create<DoInsteadWithCustomDelegate>();
+        // Act
+        mock.AddTo(10, ref refArg);
 
-            Mock.Arrange(() => mock.AddTo(10, ref refArg)).DoInstead(new RefAction<int, int>((int arg1, ref int arg2) =>
-            {
-                arg2 += arg1;
-            })); 
-
-            // Act
-            mock.AddTo(10, ref refArg);
-
-            // Assert
-            Assert.AreEqual(11, refArg);
-        }
+        // Assert
+        Assert.AreEqual(11, refArg);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region DoInstead#AssertDoInsteadRefParam}}
     <TestMethod()>
-        Public Sub ShouldTakeOutValueFromDoInsteadWhenDefinedWithCustomDelegate()
-            ' Arrange
-            Dim refArg As Integer = 1
+    Public Sub ShouldTakeOutValueFromDoInsteadWhenDefinedWithCustomDelegate()
+        ' Arrange
+        Dim refArg As Integer = 1
 
-            Dim DoInsteadWithCustomDelegateMock = Mock.Create(Of DoInsteadWithCustomDelegate)()
+        Dim DoInsteadWithCustomDelegateMock = Mock.Create(Of DoInsteadWithCustomDelegate)()
 
 
-            Mock.Arrange(Sub() DoInsteadWithCustomDelegateMock.AddTo(10, refArg)) _
-                .DoInstead(New RefAction(Of Integer, Integer)(Sub(arg As Integer, ByRef arg2 As Integer)
-                                                                  arg2 += arg
-                                                              End Sub))
+        Mock.Arrange(Sub() DoInsteadWithCustomDelegateMock.AddTo(10, refArg)) _
+            .DoInstead(New RefAction(Of Integer, Integer)(Sub(arg As Integer, ByRef arg2 As Integer)
+                                                              arg2 += arg
+                                                          End Sub))
 
-            ' Act
-            DoInsteadWithCustomDelegateMock.AddTo(10, refArg)
+        ' Act
+        DoInsteadWithCustomDelegateMock.AddTo(10, refArg)
 
-            ' Assert
-            Assert.AreEqual(11, refArg)
-        End Sub
+        ' Assert
+        Assert.AreEqual(11, refArg)
+    End Sub
   {{endregion}}
 
 And here is the delegate we referenced in the `DoInstead` call:

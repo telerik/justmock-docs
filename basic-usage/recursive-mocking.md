@@ -64,47 +64,47 @@ Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a
 
   {{region RecursiveMocks#AssertNestedVeriables}}
     [TestMethod]
-        public void ShouldAssertNestedVeriables()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldAssertNestedVeriables()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            string ping = "ping";
+        string ping = "ping";
 
-            Mock.Arrange(() => foo.Do(ping)).Returns("ack");
-            Mock.Arrange(() => foo.Bar.Do(ping)).Returns("ack2");
+        Mock.Arrange(() => foo.Do(ping)).Returns("ack");
+        Mock.Arrange(() => foo.Bar.Do(ping)).Returns("ack2");
 
-            // Act
-            var actualFooDo = foo.Do(ping);
-            var actualFooBarDo = foo.Bar.Do(ping);
+        // Act
+        var actualFooDo = foo.Do(ping);
+        var actualFooBarDo = foo.Bar.Do(ping);
 
-            // Assert
-            Assert.AreEqual("ack", actualFooDo);
-            Assert.AreEqual("ack2", actualFooBarDo);
-        }
+        // Assert
+        Assert.AreEqual("ack", actualFooDo);
+        Assert.AreEqual("ack2", actualFooBarDo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region RecursiveMocks#AssertNestedVeriables}}
     <TestMethod()>
-        Public Sub ShouldAssertNestedVeriables()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertNestedVeriables()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Dim ping As String = "ping"
+        Dim ping As String = "ping"
 
-            Mock.Arrange(Function() foo.Do(ping)).Returns("ack")
-            Mock.Arrange(Function() foo.Bar.Do(ping)).Returns("ack2")
+        Mock.Arrange(Function() foo.Do(ping)).Returns("ack")
+        Mock.Arrange(Function() foo.Bar.Do(ping)).Returns("ack2")
 
-            ' Act
-            Dim actualFooDo = foo.Do(ping)
-            Dim actualFooBarDo = foo.Bar.Do(ping)
+        ' Act
+        Dim actualFooDo = foo.Do(ping)
+        Dim actualFooBarDo = foo.Bar.Do(ping)
 
-            ' Assert
-            Assert.AreEqual("ack", actualFooDo)
-            Assert.AreEqual("ack2", actualFooBarDo)
-        End Sub
+        ' Assert
+        Assert.AreEqual("ack", actualFooDo)
+        Assert.AreEqual("ack2", actualFooBarDo)
+    End Sub
   {{endregion}}
 
 However, if `foo.Bar` is not arranged, it will still be instantiated. You can verify this by the following example:
@@ -113,27 +113,27 @@ However, if `foo.Bar` is not arranged, it will still be instantiated. You can ve
 
   {{region RecursiveMocks#AssertNotInstantiated}}
     [TestMethod]
-        public void ShouldNotInstantiateFooBar()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldNotInstantiateFooBar()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            // Assert
-            Assert.IsNotNull(foo.Bar);
-        }
+        // Assert
+        Assert.IsNotNull(foo.Bar);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region RecursiveMocks#AssertNotInstantiated}}
     <TestMethod()>
-        Public Sub ShouldNotInstantiateFooBar()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldNotInstantiateFooBar()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            ' Assert
-            Assert.IsNotNull(foo.Bar)
-        End Sub
+        ' Assert
+        Assert.IsNotNull(foo.Bar)
+    End Sub
   {{endregion}}
 
 
@@ -144,36 +144,36 @@ The following example shows how to assert nested property get calls.
 
   {{region RecursiveMocks#AssertNestedPropertyGetSetups}}
     [TestMethod]
-        public void ShouldAssertNestedPropertyGet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
-            Mock.Arrange(() => foo.Bar.Value).Returns(10);
+    public void ShouldAssertNestedPropertyGet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
+        Mock.Arrange(() => foo.Bar.Value).Returns(10);
 
-            // Act
-            var actual = foo.Bar.Value;
+        // Act
+        var actual = foo.Bar.Value;
 
-            // Assert
-            Assert.AreEqual(10, actual);
-        }
+        // Assert
+        Assert.AreEqual(10, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region RecursiveMocks#AssertNestedPropertyGetSetups}}
     <TestMethod()>
-        Public Sub ShouldAssertNestedPropertyGet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertNestedPropertyGet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Bar.Value).Returns(10)
+        Mock.Arrange(Function() foo.Bar.Value).Returns(10)
 
-            ' Act
-            Dim actual = foo.Bar.Value
+        ' Act
+        Dim actual = foo.Bar.Value
 
-            ' Assert
-            Assert.AreEqual(10, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(10, actual)
+    End Sub
   {{endregion}}
 
 Here we arrange `foo.Bar.Value` to return `10`.
@@ -184,35 +184,35 @@ You can also arrange property set. Here is an example:
 
   {{region RecursiveMocks#AssertNestedPropertySetSetups}}
     [TestMethod]
-        [ExpectedException(typeof(StrictMockException))]
-        public void ShouldAssertNestedPropertySet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void ShouldAssertNestedPropertySet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>(Behavior.Strict);
 
-            Mock.ArrangeSet(() => { foo.Bar.Value = 5; }).DoNothing();
+        Mock.ArrangeSet(() => { foo.Bar.Value = 5; }).DoNothing();
 
-            // Act
-            foo.Bar.Value = 5;
-            foo.Bar.Value = 10; // This line will throw an exception.
-        }
+        // Act
+        foo.Bar.Value = 5;
+        foo.Bar.Value = 10; // This line will throw an exception.
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region RecursiveMocks#AssertNestedPropertySetSetups}}
     <TestMethod()>
-        <ExpectedException(GetType(StrictMockException))>
-        Public Sub ShouldAssertNestedPropertySet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)(Behavior.Strict)
+    <ExpectedException(GetType(StrictMockException))>
+    Public Sub ShouldAssertNestedPropertySet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)(Behavior.Strict)
 
-            Mock.ArrangeSet(Function() foo.Bar.Value = 5).DoNothing()
+        Mock.ArrangeSet(Function() foo.Bar.Value = 5).DoNothing()
 
-            ' Act
-            foo.Bar.Value = 5
-            foo.Bar.Value = 10 ' This line will throws an exception.
-        End Sub
+        ' Act
+        foo.Bar.Value = 5
+        foo.Bar.Value = 10 ' This line will throws an exception.
+    End Sub
   {{endregion}}
 
 We use `Bahavior.Strict` to enable only arranged calls and to reject any other calls. Only setting `foo.Bar.Value` to `5` is allowed and as we set it to `10`, an exception will be thrown. After assertion we actually set it to `5` and if we verify `foo` at that point an exception won't be thrown.
@@ -224,43 +224,43 @@ We can call properties recursively, or we can do it with methods as well.
 
   {{region RecursiveMocks#AssertNestedPropertyHavingMethods}}
     [TestMethod]
-        public void NestedPropertyAndMethodCalls()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void NestedPropertyAndMethodCalls()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Bar.Do("x")).Returns("xit");
-            Mock.Arrange(() => foo.Bar.Baz.Do("y")).Returns("yit");
+        Mock.Arrange(() => foo.Bar.Do("x")).Returns("xit");
+        Mock.Arrange(() => foo.Bar.Baz.Do("y")).Returns("yit");
 
-            // Act
-            var actualFooBarDo = foo.Bar.Do("x");
-            var actualFooBarBazDo = foo.Bar.Baz.Do("y");
+        // Act
+        var actualFooBarDo = foo.Bar.Do("x");
+        var actualFooBarBazDo = foo.Bar.Baz.Do("y");
 
-            // Assert
-            Assert.AreEqual("xit", actualFooBarDo);
-            Assert.AreEqual("yit", actualFooBarBazDo);
-        }
+        // Assert
+        Assert.AreEqual("xit", actualFooBarDo);
+        Assert.AreEqual("yit", actualFooBarBazDo);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region RecursiveMocks#AssertNestedPropertyHavingMethods}}
     <TestMethod()>
-        Public Sub ShouldAssertNestedPropertyHavingMethods()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertNestedPropertyHavingMethods()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Bar.Do("x")).Returns("xit")
-            Mock.Arrange(Function() foo.Bar.Baz.Do("y")).Returns("yit")
+        Mock.Arrange(Function() foo.Bar.Do("x")).Returns("xit")
+        Mock.Arrange(Function() foo.Bar.Baz.Do("y")).Returns("yit")
 
-            ' Act
-            Dim actualFooBarDo = foo.Bar.Do("x")
-            Dim actualFooBarBazDo = foo.Bar.Baz.Do("y")
+        ' Act
+        Dim actualFooBarDo = foo.Bar.Do("x")
+        Dim actualFooBarBazDo = foo.Bar.Baz.Do("y")
 
-            ' Assert
-            Assert.AreEqual("xit", actualFooBarDo)
-            Assert.AreEqual("yit", actualFooBarBazDo)
-        End Sub
+        ' Assert
+        Assert.AreEqual("xit", actualFooBarDo)
+        Assert.AreEqual("yit", actualFooBarBazDo)
+    End Sub
   {{endregion}}
 
 In this arrangement we specify that when calling `foo.Bar.Do` and `foo.Bar.Baz.Do` methods `"xit"` and `"yit"` should be returned respectively.

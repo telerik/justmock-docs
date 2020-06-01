@@ -67,50 +67,50 @@ An example of how to use the `Raises` method to fire an event and pass event arg
 
   {{region Raises#CustomEventOnMethodCallFirst}}
     [TestMethod]
-        public void ShouldRaiseCustomEventOnMethodCall()
-        {
-            string actual = string.Empty;
-            bool isCalled = false;
+    public void ShouldRaiseCustomEventOnMethodCall()
+    {
+        string actual = string.Empty;
+        bool isCalled = false;
 
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.RaiseMethod()).Raises(() => foo.CustomEvent += null, "ping", true);
-            foo.CustomEvent += (s, c) => { actual = s; isCalled = c; };
+        Mock.Arrange(() => foo.RaiseMethod()).Raises(() => foo.CustomEvent += null, "ping", true);
+        foo.CustomEvent += (s, c) => { actual = s; isCalled = c; };
 
-            // Act
-            foo.RaiseMethod();
+        // Act
+        foo.RaiseMethod();
 
-            // Assert
-            Assert.AreEqual("ping", actual);
-            Assert.IsTrue(isCalled);
-        }
+        // Assert
+        Assert.AreEqual("ping", actual);
+        Assert.IsTrue(isCalled);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#CustomEventOnMethodCallFirst}}
     <TestMethod>
-        Public Sub ShouldRaiseCustomEventOnMethodCall()
-            Dim actual As String = String.Empty
-            Dim isCalled As Boolean = False
+    Public Sub ShouldRaiseCustomEventOnMethodCall()
+        Dim actual As String = String.Empty
+        Dim isCalled As Boolean = False
 
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Sub() foo.RaiseMethod()).Raises(Sub() AddHandler foo.CustomEvent, Nothing, "ping", True)
-            AddHandler foo.CustomEvent, Sub(s, c)
-                                            actual = s
-                                            isCalled = c
-                                        End Sub
-            
-            ' Act
-            foo.RaiseMethod()
+        Mock.Arrange(Sub() foo.RaiseMethod()).Raises(Sub() AddHandler foo.CustomEvent, Nothing, "ping", True)
+        AddHandler foo.CustomEvent, Sub(s, c)
+                                        actual = s
+                                        isCalled = c
+                                    End Sub
+        
+        ' Act
+        foo.RaiseMethod()
 
-            ' Assert
-            Assert.AreEqual("ping", actual)
-            Assert.IsTrue(isCalled)
-        End Sub
+        ' Assert
+        Assert.AreEqual("ping", actual)
+        Assert.IsTrue(isCalled)
+    End Sub
   {{endregion}}
 
 Once the `foo.RaiseMethod()` is called the `CustomEvent` is raised with parameters "ping" and true.
@@ -121,47 +121,47 @@ Here is an another example for firing an event and passing event arguments once 
 
   {{region Raises#CustomEventOnMethodCallSecond}}
     [TestMethod]
-        public void ShouldRaiseCustomEventForFuncCalls()
-        {
-            bool echoed = false;
+    public void ShouldRaiseCustomEventForFuncCalls()
+    {
+        bool echoed = false;
 
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Echo("string")).Raises(() => foo.EchoEvent += null, true).Returns("bar");
-            foo.EchoEvent += (c) => { echoed = c; };
+        Mock.Arrange(() => foo.Echo("string")).Raises(() => foo.EchoEvent += null, true).Returns("bar");
+        foo.EchoEvent += (c) => { echoed = c; };
 
-            // Act
-            var actual = foo.Echo("string");
+        // Act
+        var actual = foo.Echo("string");
 
-            // Assert
-            Assert.AreEqual(foo.Echo("string"), "bar");
-            Assert.IsTrue(echoed);
-        }
+        // Assert
+        Assert.AreEqual(foo.Echo("string"), "bar");
+        Assert.IsTrue(echoed);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#CustomEventOnMethodCallSecond}}
     <TestMethod> _
-        Public Sub ShouldRaiseCustomEventForFuncCalls()
-            Dim echoed As Boolean = False
+    Public Sub ShouldRaiseCustomEventForFuncCalls()
+        Dim echoed As Boolean = False
 
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Echo("string")).Raises(Sub() AddHandler foo.EchoEvent, Nothing, True).Returns("bar")
-            AddHandler foo.EchoEvent, Sub(c)
-                                          echoed = c
-                                      End Sub
+        Mock.Arrange(Function() foo.Echo("string")).Raises(Sub() AddHandler foo.EchoEvent, Nothing, True).Returns("bar")
+        AddHandler foo.EchoEvent, Sub(c)
+                                        echoed = c
+                                    End Sub
 
-            ' Act
-            Dim actual = foo.Echo("string")
+        ' Act
+        Dim actual = foo.Echo("string")
 
-            ' Assert
-            Assert.AreEqual(foo.Echo("string"), "bar")
-            Assert.IsTrue(echoed)
-        End Sub
+        ' Assert
+        Assert.AreEqual(foo.Echo("string"), "bar")
+        Assert.IsTrue(echoed)
+    End Sub
   {{endregion}}
 
 Once `foo.Echo()` is called with argument `"string"` the `EchoEvent` is raised with parameter `true`, `echoed` will be set to `true` as we attached the delegate specified above. In addition, the `Echo` method will return the string "bar" and we can verify that.
@@ -172,57 +172,57 @@ You can subscribe for an event more than once. Look at the following example:
 
   {{region Raises#CustomEventOnMethodCallThird}}
     [TestMethod]
-        public void ShouldAssertMultipleEventSubscription()
-        {
-            bool echoed1 = false;
-            bool echoed2 = false;
+    public void ShouldAssertMultipleEventSubscription()
+    {
+        bool echoed1 = false;
+        bool echoed2 = false;
 
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Execute()).Raises(() => foo.EchoEvent += null, true);
+        Mock.Arrange(() => foo.Execute()).Raises(() => foo.EchoEvent += null, true);
 
-            // Subscribing for the event
-            foo.EchoEvent += c => { echoed1 = c; };
-            foo.EchoEvent += c => { echoed2 = c; };
+        // Subscribing for the event
+        foo.EchoEvent += c => { echoed1 = c; };
+        foo.EchoEvent += c => { echoed2 = c; };
 
-            // Act
-            foo.Execute();
+        // Act
+        foo.Execute();
 
-            // Assert
-            Assert.IsTrue(echoed1);
-            Assert.IsTrue(echoed2);
-        }
+        // Assert
+        Assert.IsTrue(echoed1);
+        Assert.IsTrue(echoed2);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#CustomEventOnMethodCallThird}}
     <TestMethod> _
-        Public Sub ShouldAssertMultipleEventSubscription()
-            Dim echoed1 As Boolean = False
-            Dim echoed2 As Boolean = False
+    Public Sub ShouldAssertMultipleEventSubscription()
+        Dim echoed1 As Boolean = False
+        Dim echoed2 As Boolean = False
 
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Sub() foo.Execute()).Raises(Sub() AddHandler foo.EchoEvent, Nothing, True)
+        Mock.Arrange(Sub() foo.Execute()).Raises(Sub() AddHandler foo.EchoEvent, Nothing, True)
 
-            ' Subscribing for the event
-            AddHandler foo.EchoEvent, Sub(c)
-                                          echoed1 = c
-                                      End Sub
-            AddHandler foo.EchoEvent, Sub(c)
-                                          echoed2 = c
-                                      End Sub
+        ' Subscribing for the event
+        AddHandler foo.EchoEvent, Sub(c)
+                                        echoed1 = c
+                                    End Sub
+        AddHandler foo.EchoEvent, Sub(c)
+                                        echoed2 = c
+                                    End Sub
 
-            ' Act
-            foo.Execute()
+        ' Act
+        foo.Execute()
 
-            ' Assert
-            Assert.IsTrue(echoed1)
-            Assert.IsTrue(echoed2)
-        End Sub
+        ' Assert
+        Assert.IsTrue(echoed1)
+        Assert.IsTrue(echoed2)
+    End Sub
   {{endregion}}
 
 Both `echoed1` and `echoed2` will be set to `true`.
@@ -235,47 +235,47 @@ In this example we will use the same interface and will arrange that the `Execut
 
   {{region Raises#FireCustomEventWhenExpectationsMet}}
     [TestMethod]
-        public void FireCustomEventWhenExpectationIsMet()
-        {
-            bool isCalled = false;
+    public void FireCustomEventWhenExpectationIsMet()
+    {
+        bool isCalled = false;
 
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Execute(Arg.Matches<string>((s) => string.IsNullOrEmpty(s))))
-                .Raises(() => foo.ExecuteEvent += null);
+        Mock.Arrange(() => foo.Execute(Arg.Matches<string>((s) => string.IsNullOrEmpty(s))))
+            .Raises(() => foo.ExecuteEvent += null);
 
-            foo.ExecuteEvent += delegate { isCalled = true; };
+        foo.ExecuteEvent += delegate { isCalled = true; };
 
-            // Act
-            foo.Execute(string.Empty);
+        // Act
+        foo.Execute(string.Empty);
 
-            // Assert
-            Assert.IsTrue(isCalled);
-        }
+        // Assert
+        Assert.IsTrue(isCalled);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#FireCustomEventWhenExpectationsMet}}
     <TestMethod>
-        Public Sub FireCustomEventWhenExpectationIsMet()
-            Dim isCalled As Boolean = False
+    Public Sub FireCustomEventWhenExpectationIsMet()
+        Dim isCalled As Boolean = False
 
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Sub() foo.Execute(Arg.Matches(Of String)(Function(s) String.IsNullOrEmpty(s)))) _
-                .Raises(Sub() AddHandler foo.ExecuteEvent, Nothing)
+        Mock.Arrange(Sub() foo.Execute(Arg.Matches(Of String)(Function(s) String.IsNullOrEmpty(s)))) _
+            .Raises(Sub() AddHandler foo.ExecuteEvent, Nothing)
 
-            AddHandler foo.ExecuteEvent, Sub() isCalled = True
+        AddHandler foo.ExecuteEvent, Sub() isCalled = True
 
-            ' Act
-            foo.Execute(String.Empty)
+        ' Act
+        foo.Execute(String.Empty)
 
-            ' Assert
-            Assert.IsTrue(isCalled)
-        End Sub
+        ' Assert
+        Assert.IsTrue(isCalled)
+    End Sub
   {{endregion}}
 
 The `ExecuteEvent` is fired only when `foo.Execute` is called with empty string.
@@ -347,48 +347,48 @@ In the first example we arrange that an event must be raised when method is call
 
   {{region Raises#FireEventWithLambdaInEventArgsFirst}}
     [TestMethod]
-        public void FireEventWithLambdaInEventArgs()
-        {
-            FooArgs args = null;
+    public void FireEventWithLambdaInEventArgs()
+    {
+        FooArgs args = null;
 
-            // Arrange
-            var executor = Mock.Create<IExecutor<int>>();
+        // Arrange
+        var executor = Mock.Create<IExecutor<int>>();
 
-            Mock.Arrange(() => executor.Execute(Arg.IsAny<string>(), Arg.IsAny<int>(), Arg.IsAny<bool>()))
-                .Raises(() => executor.Done += null, (string s, int i, bool b) => new FooArgs { Value = s + i + b });
+        Mock.Arrange(() => executor.Execute(Arg.IsAny<string>(), Arg.IsAny<int>(), Arg.IsAny<bool>()))
+            .Raises(() => executor.Done += null, (string s, int i, bool b) => new FooArgs { Value = s + i + b });
 
-            executor.Done += (sender, e) => args = e;
+        executor.Done += (sender, e) => args = e;
 
-            // Act
-            executor.Execute("done", 3, true);
+        // Act
+        executor.Execute("done", 3, true);
 
-            // Assert
-            Assert.AreEqual(args.Value, "done3True");
-        }
+        // Assert
+        Assert.AreEqual(args.Value, "done3True");
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#FireEventWithLambdaInEventArgsFirst}}
     <TestMethod> _
-        Public Sub FireEventWithLambdaInEventArgs()
-            Dim args As FooArgs = Nothing
+    Public Sub FireEventWithLambdaInEventArgs()
+        Dim args As FooArgs = Nothing
 
-            ' Arrange
-            Dim executor = Mock.Create(Of IExecutor(Of Integer))()
+        ' Arrange
+        Dim executor = Mock.Create(Of IExecutor(Of Integer))()
 
-            Mock.Arrange(Sub() executor.Execute(Arg.IsAny(Of String)(), Arg.IsAny(Of Integer)(), Arg.IsAny(Of Boolean)())) _
-                .Raises(Sub() AddHandler executor.Done, Nothing, Function(s As String, i As Integer, b As Boolean) _
-                                                                     New FooArgs() With {.Value = s + i.ToString() + b.ToString()})
+        Mock.Arrange(Sub() executor.Execute(Arg.IsAny(Of String)(), Arg.IsAny(Of Integer)(), Arg.IsAny(Of Boolean)())) _
+            .Raises(Sub() AddHandler executor.Done, Nothing, Function(s As String, i As Integer, b As Boolean) _
+                                                                    New FooArgs() With {.Value = s + i.ToString() + b.ToString()})
 
-            AddHandler executor.Done, Sub(sender, e) args = e
+        AddHandler executor.Done, Sub(sender, e) args = e
 
-            ' Act
-            executor.Execute("done", 3, True)
+        ' Act
+        executor.Execute("done", 3, True)
 
-            ' Assert
-            Assert.AreEqual(args.Value, "done3True")
-        End Sub
+        ' Assert
+        Assert.AreEqual(args.Value, "done3True")
+    End Sub
   {{endregion}}
 
 When the `executor.Execute` method is called, an event is fired with `Value` property that equals to the concatenation of the string representations of the passed arguments.
@@ -399,44 +399,44 @@ And again, you can set a return value for the method as well. Lambda expressions
 
   {{region Raises#FireEventWithLambdaInEventArgsSecond}}
     [TestMethod]
-        public void FireEventWithLambdaInEventArgs2()
-        {
-            FooArgs args = null;
+    public void FireEventWithLambdaInEventArgs2()
+    {
+        FooArgs args = null;
 
-            // Arrange
-            var executor = Mock.Create<IExecutor<int>>();
+        // Arrange
+        var executor = Mock.Create<IExecutor<int>>();
 
-            Mock.Arrange(() => executor.Echo(Arg.IsAny<string>()))
-                .Raises(() => executor.Done += null, (string s) => new FooArgs { Value = s })
-                .Returns((string s) => s);
+        Mock.Arrange(() => executor.Echo(Arg.IsAny<string>()))
+            .Raises(() => executor.Done += null, (string s) => new FooArgs { Value = s })
+            .Returns((string s) => s);
 
-            executor.Done += (sender, e) => args = e;
+        executor.Done += (sender, e) => args = e;
 
-            // Assert
-            Assert.AreEqual(executor.Echo("echo"), args.Value);
-        }
+        // Assert
+        Assert.AreEqual(executor.Echo("echo"), args.Value);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#FireEventWithLambdaInEventArgsSecond}}
     <TestMethod> _
-        Public Sub FireEventWithLambdaInEventArgs2()
-            Dim args As FooArgs = Nothing
+    Public Sub FireEventWithLambdaInEventArgs2()
+        Dim args As FooArgs = Nothing
 
-            ' Arrange
-            Dim executor = Mock.Create(Of IExecutor(Of Integer))()
+        ' Arrange
+        Dim executor = Mock.Create(Of IExecutor(Of Integer))()
 
-            Mock.Arrange(Function() executor.Echo(Arg.IsAny(Of String)())) _
-                .Raises(Sub() AddHandler executor.Done, Nothing, Function(s As String) New FooArgs() With { _
-                .Value = s _
-            }).Returns(Function(s As String) s)
+        Mock.Arrange(Function() executor.Echo(Arg.IsAny(Of String)())) _
+            .Raises(Sub() AddHandler executor.Done, Nothing, Function(s As String) New FooArgs() With { _
+            .Value = s _
+        }).Returns(Function(s As String) s)
 
-            AddHandler executor.Done, Sub(sender, e) args = e
+        AddHandler executor.Done, Sub(sender, e) args = e
 
-            ' Assert
-            Assert.AreEqual(executor.Echo("echo"), args.Value)
-        End Sub
+        ' Assert
+        Assert.AreEqual(executor.Echo("echo"), args.Value)
+    End Sub
   {{endregion}}
 
 While we specify that the return value is the passed arguments, we can assert that `args.Value` and the result of the method call will both result in the argument we have passed.
@@ -563,64 +563,64 @@ Now we want to arrange that the `CustomEvent` is fired a few moments after the v
 
   {{region Raises#WaitForSpecificTime}}
     [TestMethod]
-        public void ShouldWaitForSpecificDurationBeforeRasingTheEvent()
-        {
-            string userName = string.Empty;
-            string password = string.Empty;
+    public void ShouldWaitForSpecificDurationBeforeRasingTheEvent()
+    {
+        string userName = string.Empty;
+        string password = string.Empty;
 
-            // Arrange
-            var mockLogger = Mock.Create<ILogger>();
+        // Arrange
+        var mockLogger = Mock.Create<ILogger>();
 
-            Mock.Arrange(() => mockLogger.LogMessage(userName)).OccursOnce();
+        Mock.Arrange(() => mockLogger.LogMessage(userName)).OccursOnce();
 
-            var mockValidator = Mock.Create<IUserValidationService>();
+        var mockValidator = Mock.Create<IUserValidationService>();
 
-            Mock.Arrange(() => mockValidator.ValidateUser(userName, password))
-                .Raises(() => mockValidator.CustomEvent += null, userName, Wait.For(2))
-                .Returns(true);
+        Mock.Arrange(() => mockValidator.ValidateUser(userName, password))
+            .Raises(() => mockValidator.CustomEvent += null, userName, Wait.For(2))
+            .Returns(true);
 
-            // Act
-            var login = new Login(mockValidator, mockLogger);
+        // Act
+        var login = new Login(mockValidator, mockLogger);
 
-            // Assert
-            Assert.AreEqual(true, login.LoginUser(userName, password));
+        // Assert
+        Assert.AreEqual(true, login.LoginUser(userName, password));
 
-            Mock.Assert(mockLogger);
-            Mock.Assert(mockValidator);
+        Mock.Assert(mockLogger);
+        Mock.Assert(mockValidator);
 
-            Assert.IsTrue(login.ElapsedTime.Seconds >= 1);
-        }
+        Assert.IsTrue(login.ElapsedTime.Seconds >= 1);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region Raises#WaitForSpecificTime}}
     <TestMethod> _
-        Public Sub ShouldWaitForSpecificDurationBeforeRasingTheEvent()
-            Dim userName As String = String.Empty
-            Dim password As String = String.Empty
+    Public Sub ShouldWaitForSpecificDurationBeforeRasingTheEvent()
+        Dim userName As String = String.Empty
+        Dim password As String = String.Empty
 
-            ' Arrange
-            Dim mockLogger = Mock.Create(Of ILogger)()
+        ' Arrange
+        Dim mockLogger = Mock.Create(Of ILogger)()
 
-            Mock.Arrange(Sub() mockLogger.LogMessage(userName)).OccursOnce()
+        Mock.Arrange(Sub() mockLogger.LogMessage(userName)).OccursOnce()
 
-            Dim mockValidator = Mock.Create(Of IUserValidationService)()
+        Dim mockValidator = Mock.Create(Of IUserValidationService)()
 
-            Mock.Arrange(Function() mockValidator.ValidateUser(userName, password)) _
-                .Raises(Sub() AddHandler mockValidator.CustomEvent, Nothing, userName, Wait.[For](2)).Returns(True)
+        Mock.Arrange(Function() mockValidator.ValidateUser(userName, password)) _
+            .Raises(Sub() AddHandler mockValidator.CustomEvent, Nothing, userName, Wait.[For](2)).Returns(True)
 
-            ' Act
-            Dim login = New Login(mockValidator, mockLogger)
+        ' Act
+        Dim login = New Login(mockValidator, mockLogger)
 
-            ' Assert
-            Assert.AreEqual(True, login.LoginUser(userName, password))
+        ' Assert
+        Assert.AreEqual(True, login.LoginUser(userName, password))
 
-            Mock.Assert(mockLogger)
-            Mock.Assert(mockValidator)
+        Mock.Assert(mockLogger)
+        Mock.Assert(mockValidator)
 
-            Assert.IsTrue(login.ElapsedTime.Seconds >= 1)
-        End Sub
+        Assert.IsTrue(login.ElapsedTime.Seconds >= 1)
+    End Sub
   {{endregion}}
 
 We first create the `ILogger` and the `IUserValidationService` instances we need. We arrange that the `ILogger.LogMessage` method will occur only once. Furthermore, we arrange that when the `IUserValidationService.ValidateUser` method is called the `CustomEvent` will be fired in 2 seconds time. We are able to validate this using an `ElapsedTime` variable in the `IUserValidationService` which indicates the time gap between the validation and the time when the `CustomEvent` has been fired.

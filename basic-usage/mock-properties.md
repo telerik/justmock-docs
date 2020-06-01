@@ -41,44 +41,44 @@ Let's consider the following example:
 
   {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
     [TestMethod]
-        public void ShouldFakePropertyGet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldFakePropertyGet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.Arrange(() => foo.Value).Returns(25);
+        Mock.Arrange(() => foo.Value).Returns(25);
 
-            // Act
-            var actual = foo.Value;
+        // Act
+        var actual = foo.Value;
 
-            // Assert
-            Assert.AreEqual(25, actual);
-        }
+        // Assert
+        Assert.AreEqual(25, actual);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
     <TestMethod()>
-        Public Sub ShouldFakePropertyGet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldFakePropertyGet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.Arrange(Function() foo.Value).Returns(25)
+        Mock.Arrange(Function() foo.Value).Returns(25)
 
-            ' Act
-            Dim actual As Integer = foo.Value
+        ' Act
+        Dim actual As Integer = foo.Value
 
-            ' Assert
-            Assert.AreEqual(25, actual)
-        End Sub
+        ' Assert
+        Assert.AreEqual(25, actual)
+    End Sub
   {{endregion}}
 
 Here we test that a call to `foo.Value` property returns the value we arranged.
 
 Follows an example, showing mocking property in F#:
-
-	#### __[F#]__
+  
+  #### __[F#]__
 
   {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
 	[<Test()>]
@@ -103,41 +103,41 @@ Property set mocking is useful when you want to make sure or to verify that a pa
 
   {{region MockingProperties#MockingPropertySetCalls}}
     [TestMethod]
-        [ExpectedException(typeof(StrictMockException))]
-        public void ShouldThrowExceptionOnTheThirdPropertySetCall()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void ShouldThrowExceptionOnTheThirdPropertySetCall()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>(Behavior.Strict);
 
-            Mock.ArrangeSet(() => foo.Value = Arg.Matches<int>(x => x > 3));
+        Mock.ArrangeSet(() => foo.Value = Arg.Matches<int>(x => x > 3));
 
-            // Act
-            foo.Value = 4;
-            foo.Value = 5;
+        // Act
+        foo.Value = 4;
+        foo.Value = 5;
 
-            // throws MockException because matching criteria is not met
-            foo.Value = 3;
-        }
+        // throws MockException because matching criteria is not met
+        foo.Value = 3;
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingProperties#MockingPropertySetCalls}}
     <TestMethod()>
-        <ExpectedException(GetType(StrictMockException))>
-        Public Sub ShouldThrowExceptionOnTheThirdPropertySetCall()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)(Behavior.Strict)
+    <ExpectedException(GetType(StrictMockException))>
+    Public Sub ShouldThrowExceptionOnTheThirdPropertySetCall()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)(Behavior.Strict)
 
-            Mock.ArrangeSet(Sub() foo.Value = Arg.Matches(Of Integer)(Function(x) x > 3))
+        Mock.ArrangeSet(Sub() foo.Value = Arg.Matches(Of Integer)(Function(x) x > 3))
 
-            ' Act
-            foo.Value = 4
-            foo.Value = 5
+        ' Act
+        foo.Value = 4
+        foo.Value = 5
 
-            ' throws MockException because matching criteria is not met
-            foo.Value = 3
-        End Sub
+        ' throws MockException because matching criteria is not met
+        foo.Value = 3
+    End Sub
   {{endregion}}
 
 With the matcher we set a requirement that the `foo.Value` property should have values larger than 3. When we set the value to a number less than 3, a `MockException` is thrown.
@@ -151,37 +151,37 @@ Accordingly, we can do:
 
   {{region MockingProperties#MockingPropertySetCallsLoosely}}
     [TestMethod]
-        public void ShouldAssertPropertySet()
-        {
-            // Arrange
-            var foo = Mock.Create<IFoo>();
+    public void ShouldAssertPropertySet()
+    {
+        // Arrange
+        var foo = Mock.Create<IFoo>();
 
-            Mock.ArrangeSet(() => foo.Value = 1);
+        Mock.ArrangeSet(() => foo.Value = 1);
 
-            // Act
-            foo.Value = 1;
+        // Act
+        foo.Value = 1;
 
-            // Assert
-            Mock.AssertSet(() => foo.Value = 1);
-        }
+        // Assert
+        Mock.AssertSet(() => foo.Value = 1);
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingProperties#MockingPropertySetCallsLoosely}}
     <TestMethod()>
-        Public Sub ShouldAssertPropertySet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IFoo)()
+    Public Sub ShouldAssertPropertySet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IFoo)()
 
-            Mock.ArrangeSet(Sub() foo.Value = 1)
+        Mock.ArrangeSet(Sub() foo.Value = 1)
 
-            ' Act
-            foo.Value = 1
+        ' Act
+        foo.Value = 1
 
-            ' Assert
-            Mock.AssertSet(Sub() foo.Value = 1)
-        End Sub
+        ' Assert
+        Mock.AssertSet(Sub() foo.Value = 1)
+    End Sub
   {{endregion}}
 
 Here we make sure `foo.Value` was actually set to `1`.  Refer to [Do Instead]({%slug justmock/basic-usage/mock/do-instead%}) for an example that shows how to use `DoInstead` on property set. 
@@ -234,14 +234,14 @@ Let's arrange that different values should be returned for different indexes.
 	
 	  {{region }}
 	    Mock.Arrange(() => indexedFoo[0]).Returns("ping");
-	                  Mock.Arrange(() => indexedFoo[1]).Returns("pong");
+      Mock.Arrange(() => indexedFoo[1]).Returns("pong");
 	  {{endregion}}
 	
 	  #### __[VB]__
 	
 	  {{region }}
 	    Mock.Arrange(Function() IndexedFoo(0)).Returns("ping")
-	                  Mock.Arrange(Function() IndexedFoo(1)).Returns("pong")
+      Mock.Arrange(Function() IndexedFoo(1)).Returns("pong")
 	  {{endregion}}
 
 
@@ -251,14 +251,14 @@ Let's arrange that different values should be returned for different indexes.
 	
 	  {{region }}
 	    string actualFirst = indexedFoo[0];
-	                  string actualSec = indexedFoo[1];
+      string actualSec = indexedFoo[1];
 	  {{endregion}}
 	
 	  #### __[VB]__
 	
 	  {{region }}
 	    Dim actualFirst As String = IndexedFoo(0)
-	                  Dim actualSec As String = IndexedFoo(1)
+      Dim actualSec As String = IndexedFoo(1)
 	  {{endregion}}
 
 
@@ -268,14 +268,14 @@ Let's arrange that different values should be returned for different indexes.
 	
 	  {{region }}
 	    Assert.AreEqual("ping", actualFirst);
-	                  Assert.AreEqual("pong", actualSec);
+      Assert.AreEqual("pong", actualSec);
 	  {{endregion}}
 	
 	  #### __[VB]__
 	
 	  {{region }}
 	    Assert.AreEqual("ping", actualFirst)
-	                  Assert.AreEqual("pong", actualSec)
+      Assert.AreEqual("pong", actualSec)
 	  {{endregion}}
 
 
@@ -287,39 +287,39 @@ Make sure that a specific index is set to a particular value.
 
   {{region MockingProperties#ShouldAssertIndexedSet}}
     [TestMethod]
-        [ExpectedException(typeof(StrictMockException))]
-        public void ShouldThrowExceptionForNotArrangedPropertySet()
-        {
-            // Arrange
-            var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void ShouldThrowExceptionForNotArrangedPropertySet()
+    {
+        // Arrange
+        var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
 
-            Mock.ArrangeSet(() => { foo[0] = "foo"; });
+        Mock.ArrangeSet(() => { foo[0] = "foo"; });
 
-            // Act
-            foo[0] = "foo";
+        // Act
+        foo[0] = "foo";
 
-            // this throws an exception
-            foo[0] = "bar";
-        }
+        // this throws an exception
+        foo[0] = "bar";
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingProperties#ShouldAssertIndexedSet}}
     <TestMethod()>
-        <ExpectedException(GetType(StrictMockException))>
-        Public Sub ShouldThrowExceptionForNotArrangedPropertySet()
-            ' Arrange
-            Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
+    <ExpectedException(GetType(StrictMockException))>
+    Public Sub ShouldThrowExceptionForNotArrangedPropertySet()
+        ' Arrange
+        Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
 
-            Mock.ArrangeSet(Sub() foo(0) = "foo")
+        Mock.ArrangeSet(Sub() foo(0) = "foo")
 
-            ' Act
-            foo(0) = "foo"
+        ' Act
+        foo(0) = "foo"
 
-            ' this throws an exception
-            foo(0) = "bar"
-        End Sub
+        ' this throws an exception
+        foo(0) = "bar"
+    End Sub
   {{endregion}}
 
 
@@ -335,43 +335,43 @@ Make sure that a specific index is set to a value matching a particular critera.
 
   {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
     [TestMethod]
-        [ExpectedException(typeof(StrictMockException))]
-        public void ShouldAssertIndexedSetWithMatcher()
-        {
-            // Arrange
-            var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
+    [ExpectedException(typeof(StrictMockException))]
+    public void ShouldAssertIndexedSetWithMatcher()
+    {
+        // Arrange
+        var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
 
-            Mock.ArrangeSet(() => { foo[0] = Arg.Matches<string>(x => x.Equals("ping")); });
-            Mock.ArrangeSet(() => { foo[1] = Arg.IsAny<string>(); });
+        Mock.ArrangeSet(() => { foo[0] = Arg.Matches<string>(x => x.Equals("ping")); });
+        Mock.ArrangeSet(() => { foo[1] = Arg.IsAny<string>(); });
 
-            // Act
-            foo[0] = "ping";
-            foo[1] = "pong";
+        // Act
+        foo[0] = "ping";
+        foo[1] = "pong";
 
-            // line does not satisfy the matching criteria and throws a MockException
-            foo[0] = "bar";
-        }
+        // line does not satisfy the matching criteria and throws a MockException
+        foo[0] = "bar";
+    }
   {{endregion}}
 
   #### __[VB]__
 
   {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
     <TestMethod()>
-        <ExpectedException(GetType(StrictMockException))>
-        Public Sub ShouldAssertIndexedSetWithMatcher()
-            ' Arrange
-            Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
+    <ExpectedException(GetType(StrictMockException))>
+    Public Sub ShouldAssertIndexedSetWithMatcher()
+        ' Arrange
+        Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
 
-            Mock.ArrangeSet(Sub() foo(0) = Arg.Matches(Of String)(Function(x) x.Equals("ping")))
-            Mock.ArrangeSet(Sub() foo(1) = "pong")
+        Mock.ArrangeSet(Sub() foo(0) = Arg.Matches(Of String)(Function(x) x.Equals("ping")))
+        Mock.ArrangeSet(Sub() foo(1) = "pong")
 
-            ' Act
-            foo(0) = "ping"
-            foo(1) = "pong"
+        ' Act
+        foo(0) = "ping"
+        foo(1) = "pong"
 
-            ' line does not satisfy the matching criteria and throws a MockException
-            foo(0) = "bar"
-        End Sub
+        ' line does not satisfy the matching criteria and throws a MockException
+        foo(0) = "bar"
+    End Sub
   {{endregion}}
 
 
