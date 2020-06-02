@@ -11,12 +11,12 @@ position: 0
 
 # Installation and Setup
 
-This topic outlines the steps required to install __Telerik® JustMock__ and __Telerik® JustMock Lite__.
+This topic outlines the steps required to install [Telerik JustMock](https://www.telerik.com/products/mocking.aspx) and [Telerik JustMock Lite](https://www.telerik.com/justmock/free-mocking).
 
 ## Installing JustMock
 
 1. Download the JustMock installer from www.telerik.com:
-	* If this is your first time here and you want to try JustMock, download the trial installer file from here: [Download a Free Trial](https://www.telerik.com/download-trial-file/v2-b/justmock-b). Keep in mind that this will require to either log in or creatе a new Telerik account.
+	* If this is your first time here and you want to try JustMock, download the trial installer file from here: [Download JustMock](https://www.telerik.com/download-trial-file/v2-b/justmock-b). Keep in mind that this will require to either log in or creatе a new Telerik account.
 	* If you are a licensed JustMock user, log in your Telerik account and navigate to the [Downloads section](https://www.telerik.com/account/my-downloads).
 
 1. Run the installer and follow the steps. Configure the default installation folder. 
