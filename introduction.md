@@ -11,11 +11,63 @@ previous_url: basic-usage.html, basic-usage
 
 # Introduction
 
-__Telerik® JustMock__ is an easy to use mocking tool designed to help you create better unit tests, faster than ever. JustMock makes it easier for you to create mock objects and set expectations independently of external dependencies like databases, web service calls, or proprietary code.
+Telerik JustMock is an easy to use mocking tool designed to help you create better unit tests, faster than ever. JustMock makes it easier for you to create mock objects and set expectations independently of external dependencies like databases, web service calls, or proprietary code.
 
 The JustMock API is completely [AAA]({%slug justmock/basic-usage/arrange-act-assert%}) (Arrange/Act/Assert) oriented thus helping you keep your unit tests well structured, clean and readable. No matter whether you try to mock an interface, a sealed class or a static class, the pattern you use is the same.
 
-> __JustMock Lite__ is also available from [www.nuget.org](https://www.nuget.org/). You can use the nuget package manager console from within Visual Studio to install JustMock Lite. The command for installing JustMock Lite can be found on this page: [https://nuget.org/List/Packages/JustMock](https://nuget.org/List/Packages/JustMock).
+To read more please visit the [Telerik JustMock](https://www.telerik.com/products/mocking.aspx) product overview page.
+
+<style>
+/* JustMock download trial button */
+div#justmock_trial {
+	text-align: center !important;
+}
+
+div#justmock_trial .justmock_download_btn {	
+	color: #fff;
+	background-color: #e74b3c;
+	padding:.44em .9em .52em;
+	font-size: 20px;
+	font-weight:400;
+	letter-spacing:-.025em;
+	position:relative;
+	display:inline-block;
+	line-height:1.2;
+	-webkit-transition:color .2s ease,background-color .2s ease;
+	transition:color .2s ease,background-color .2s ease;
+	border-radius:2px;
+	-webkit-appearance:none;
+	font-family:Metric,Arial,Gadget,sans-serif;
+	text-align:center	
+}
+</style>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+	  var mac = navigator.userAgent.match(/(Mac)/i);
+	  var $btnWin = $(".js-btnWin");
+	  var $btnOSX = $(".js-btnOSX");
+
+	  if (mac) {
+		$btnOSX.show();
+		$btnWin.hide();
+	  } else {
+		$btnOSX.hide();
+		$btnWin.show();
+	  }
+  });
+
+</script>
+
+<div id="justmock_trial">
+<br />
+<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="justmock_download_btn js-btnWin" style="display: none">Download Free Trial</a>
+<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="justmock_download_btn js-btnOSX" style="display: none">Download Free Trial</a>
+</div>
+
+> __JustMock Lite__ is the free [open source](https://github.com/telerik/JustMockLite) version of JustMock and it is available from [www.nuget.org](https://nuget.org/List/Packages/JustMock).
+For more informaiton about differences between the two versions in regard to supported features visit the [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%}) comparison article.
 
 ## What Is Mocking and Why Do I Need It?
 [Mocking](https://en.wikipedia.org/wiki/Mock_object) is a concept in unit testing where real objects are substituted with fake objects that imitate the behavior of the real ones. Mocking is done so that a test can focus on the code being tested and not on the behavior or state of external dependencies. 
@@ -52,32 +104,44 @@ Unlike other mocking frameworks, JustMock lets you mock:
 * __Clean Arrange/Act/Assert syntax__ - keep your unit tests clean and readable 
 * __Strongly typed fluent interface__ - no magic strings, compile time checks, refactoring support 
 * __Loose mocks, Partial mocking, Recursive/nested mocking, Sequential mocking__
-* __Hybrid mode__ - use profiler only when necessary (i.e. mocking final, sealed and static) 
 * __Fast and lightweight__ - custom dynamic proxy library meets mocking needs only
 * __Support for Visual Studio__ - JustMock supports Visual Studio 2019, 2017, 2015, and older
 * __Support of Microsoft SharePoint and Microsoft Entity Framework mocking__
-* __Support for code coverage tools, profilers, unit testing add-ins, build tools__
+* __Support for CI/CD, build tools, code coverage tools, profilers, unit testing add-ins and other__
 	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/continuous-integration/tfs-azure/azure-devops%})
-	* Integration in the TFS Code Activity Workflow - integrate JustMock in Team Foundation Server 2010, TFS 2012 or TFS 2013. [ Read how to integrate JustMock with TFS 2010 and TFS 2012 ]({%slug justmock/integration/tfs-2010%}), or [ with TFS 2013 ]({%slug justmock/integration/tfs-2013%}). 
-	* [MSBuild](https://msdn.microsoft.com/en-us/library/wea2sca5(VS.90).aspx) - integrate JustMock with an MSBuild build task. [ Read how to integrate JustMock with MSBuild ]({%slug justmock/integration/msbuild-tasks%}). 
-	* [NAnt](http://nant.sourceforge.net/) - integrate JustMock with an NAnt build task. [ Read how to integrate JustMock with NAnt ]({%slug justmock/integration/nant%}). 
-	* [CruiseControl.NET](http://cruisecontrol.sourceforge.net/) - integrate JustMock along in CruiseControl.NET build. [ Read how to integrate JustMock with ccnet ]({%slug justmock/integration/cruise-control-.net%}). 
+	* [MSBuild](https://msdn.microsoft.com/en-us/library/wea2sca5(VS.90).aspx) - integrate JustMock with an MSBuild build task. [ Read how to integrate JustMock with MSBuild ]({%slug justmock/integration/msbuild-tasks%}).
 	* [Jenkins CI](https://jenkins-ci.org/) - integrate JustMock along in Jenkins build. [ Read how to integrate JustMock with Jenkins CI ]({%slug justmock/integration/jenkins-ci%}). 
 	* [TeamCity](https://www.jetbrains.com/teamcity/) - integrate JustMock in TeamCity build. [ Read how to integrate JustMock with TeamCity ]({%slug justmock/integration/teamcity%}). 
-	* [TestDriven.NET](https://testdriven.net/) - Run tests, which use JustMock to mock final, static, sealed, etc members with TestDriven.NET 
 	* [NCover](https://www.ncover.com/) - JustMock supports NCover 1.3.3, 1.5.8 and 3.4.6. 
 	* [JetBrains dotTrace](https://www.ncover.com/) - JustMock supports JetBrains dotTrace version 3.1 and above. 
 	* [PostSharp](http://www.sharpcrafters.com/) - for version 2.1.2.8 and above 
 
+## Getting Started with Telerik JustMock
 
-> After the JustMock installation you can find a Getting Started Guide and example projects in the installation folder. Have a look at the example projects which provide a hands-on approach of all the features described here.
+To learn how to install and work with Telerik JustMock, visit the following resources:
 
-For full release notes history check [this](https://www.telerik.com/products/mocking/whats-new/release-history.aspx ) link.
+* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
+* [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project %})
+* [JustMock API Basics]({%slug justmock/basic-usage/mock%})
 
-## Arrange/Act/Assert vs Record/Replay
-The Arrange/Act/Assert pattern is a more logical and clean approach to unit testing than the legacy Record/Replay. With AAA, you group your testing actions by function, making it clear what part of your test is involved in setup versus verification. The pattern can be applied to all unit testing, but it is especially useful when mocking is involved.
-Record/Replay is an older pattern and it is similar to using GOTO statements in your unit tests. This makes the pattern more difficult to follow and clearly less ideal from a programming perspective. Therefore, JustMock is focused on supporting the AAA pattern.
-Read more about AAA in the [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%}) topic.
+## Free Version
+The Telerik JustMock is a free open source mocking framework. Feel free to review the Telerik JustMock Lite [License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-free-edition) to get acquainted with the full terms of use.
+
+## Trial Version and Commercial License
+
+The Telerik JustMock is a commercial mocking framework. You are welcome to explore its full functionality and get technical support from the team when you register for a free 30-day trial. To use it commercially, you need to [purchase a license](https://www.telerik.com/purchase/individual-justmock.aspx). Feel free to review the Telerik JustMock [License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-dlw-s) to get acquainted with the full terms of use.
+
+## Support Options
+
+For any issues you might encounter while working with Telerik JustMock or JustMock Lite, use any of the available support channels:
+
+* License holders and active trialists can take advantage of our outstanding customer support delivered by the developers building the library. To submit a support ticket, use the [dedicated support system](https://www.telerik.com/account/support-tickets?pid=743).
+* Our [forums](https://www.telerik.com/forums/justmock) are part of the free support you can get from the community and from the team on all kinds of general issues.
+* Our [feedback portal](https://feedback.telerik.com/justmock) provides information on the features/bugs in discussion and also the planned ones for release.
+
+## Learning Resources 
+
+* [Learning Resources](https://www.telerik.com/support/justmock)
 
 ## See Also
 
