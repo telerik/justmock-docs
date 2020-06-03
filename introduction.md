@@ -143,6 +143,9 @@ For any issues you might encounter while working with Telerik JustMock or JustMo
 
 * [Learning Resources](https://www.telerik.com/support/justmock)
 
+## Next Steps
+* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
+
 ## See Also
 
  * [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
