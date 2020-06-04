@@ -9,7 +9,7 @@ position: 0
 previous_url: basic-usage.html, basic-usage
 ---
 
-# Introduction
+# Welcome to Telerik JustMock
 
 Telerik JustMock is an easy to use mocking tool designed to help you create better unit tests, faster than ever. JustMock makes it easier for you to create mock objects and set expectations independently of external dependencies like databases, web service calls, or proprietary code.
 
