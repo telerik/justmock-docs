@@ -156,12 +156,12 @@ We have the `IDataProvider` interface which we extend with the `GetScope` extens
 	[TestMethod]
 	public void ShouldAssertInterfaceExtensionMethodCall()
 	{
-	    var libararies = Mock.Create<DataProvider>();
+	    var libraries = Mock.Create<DataProvider>();
 	    var objectScope = Mock.Create<IObjectScope>();
 	
-	    Mock.Arrange(() => libararies.GetScope()).Returns(objectScope);
+	    Mock.Arrange(() => libraries.GetScope()).Returns(objectScope);
 	
-	    var ret = libararies.GetScope();
+	    var ret = libraries.GetScope();
 	
 	    Assert.IsTrue(ret.Equals(objectScope));
 	}
