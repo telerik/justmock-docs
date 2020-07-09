@@ -115,10 +115,10 @@ Provided that the `InternalsVisibleTo` attribute is included in the `AssemblyInf
 Here we verify that the mock is created and its constructor is called. Thus, `foo.Builder` will be assigned.
 
 The key to be used in the `InternalsVisibleTo` attribute is as follows:
-* __For strong-named assemblies:__
-[assembly: InternalsVisibleTo("Telerik.JustMock, PublicKey=0024000004800000940000000602000000240000525341310004000001000100098b1434e598c656b22eb59000b0bf73310cb8488a6b63db1d35457f2f939f927414921a769821f371c31a8c1d4b73f8e934e2a0769de4d874e0a517d3d7b9c36cd0ffcea2142f60974c6eb00801de4543ef7e93f79687b040d967bb6bd55ca093711b013967a096d524a9cadf94e3b748ebdae7947ea6de6622eabf6548448e")]
-* __For non strong-named assemblies:__
-[assembly: InternalsVisibleTo("Telerik.JustMock")]
+* __For projects different from Silverlight:__
+InternalMocking#Key
+* __For Silverlight projects:__
+InternalMocking#KeySilverlight
 
 ## Create Mock With Internal Constructor
 You can mock class that exposes internal constructor in the same way you mock public types.
