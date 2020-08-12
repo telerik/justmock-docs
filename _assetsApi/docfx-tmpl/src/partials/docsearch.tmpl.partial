@@ -30,7 +30,8 @@
          var gcsKey = 'AIzaSyC8edQ_EPDSw2G4lsc7HhAfJ6e-aWhQ4bY';
          isKbPage =  false ;
          siteHasKbPortal = '';
-         hasApiReference =  true ;
+         hasApiReference =  true;
+         showSearchPopup = false;
       </script>
       <script type="text/javascript" src="/devtools/justmock/assets/search-results.js"></script>
    </div>
