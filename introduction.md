@@ -113,7 +113,8 @@ Unlike other mocking frameworks, JustMock lets you mock:
 	* [Jenkins CI](https://jenkins-ci.org/) - integrate JustMock along in Jenkins build. [ Read how to integrate JustMock with Jenkins CI ]({%slug justmock/integration/jenkins-ci%}). 
 	* [TeamCity](https://www.jetbrains.com/teamcity/) - integrate JustMock in TeamCity build. [ Read how to integrate JustMock with TeamCity ]({%slug justmock/integration/teamcity%}). 
 	* [NCover](https://www.ncover.com/) - JustMock supports NCover 1.3.3, 1.5.8 and 3.4.6. 
-	* [JetBrains dotTrace](https://www.ncover.com/) - JustMock supports JetBrains dotTrace version 3.1 and above. 
+    * [JetBrains dotCover](https://www.jetbrains.com/dotcover/) - JustMock supports JetBrains dotCover version 3.1 and above. 
+	* [JetBrains dotTrace](https://www.jetbrains.com/profiler/) - JustMock supports JetBrains dotTrace version 3.1 and above. 
 	* [PostSharp](http://www.sharpcrafters.com/) - for version 2.1.2.8 and above 
 
 ## Getting Started with Telerik JustMock
