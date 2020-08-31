@@ -30,7 +30,7 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 
 1. Using the default *JustMock Test Project* template, you can start writing JustMock tests right away. 
 	
-	>tip See an example how to use JustMock in [JustMock API Basics]({%slug justmock/basic-usage/mock%}) 
+	> See an example how to use JustMock in [JustMock API Basics]({%slug justmock/basic-usage/mock%})
 
 ## Add JustMock to a Test Project
 
