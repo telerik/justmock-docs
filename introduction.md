@@ -126,7 +126,7 @@ To learn how to install and work with Telerik JustMock, visit the following reso
 * [JustMock API Basics]({%slug justmock/basic-usage/mock%})
 
 ## Free Version
-The Telerik JustMock is a free open source mocking framework. Feel free to review the Telerik JustMock Lite [License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-free-edition) to get acquainted with the full terms of use.
+The Telerik JustMock Lite is a free open source mocking framework. Feel free to review the Telerik JustMock Lite [License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-free-edition) to get acquainted with the full terms of use.
 
 ## Trial Version and Commercial License
 
