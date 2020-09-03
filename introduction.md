@@ -19,11 +19,11 @@ To read more please visit the [Telerik JustMock](https://www.telerik.com/product
 
 <style>
 /* JustMock download trial button */
-div#justmock_trial {
-	text-align: center !important;
+div#trial_button {
+    text-align: center !important;
 }
 
-div#justmock_trial .justmock_download_btn {	
+div#trial_button .trialLink {	
 	color: #fff;
 	background-color: #e74b3c;
 	padding:.44em .9em .52em;
@@ -42,28 +42,9 @@ div#justmock_trial .justmock_download_btn {
 }
 </style>
 
-<script type="text/javascript">
-
-  $(document).ready(function(){
-	  var mac = navigator.userAgent.match(/(Mac)/i);
-	  var $btnWin = $(".js-btnWin");
-	  var $btnOSX = $(".js-btnOSX");
-
-	  if (mac) {
-		$btnOSX.show();
-		$btnWin.hide();
-	  } else {
-		$btnOSX.hide();
-		$btnWin.show();
-	  }
-  });
-
-</script>
-
-<div id="justmock_trial">
+<div id="trial_button">
 <br />
-<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="justmock_download_btn js-btnWin" style="display: none">Download Free Trial</a>
-<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="justmock_download_btn js-btnOSX" style="display: none">Download Free Trial</a>
+<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="trialLink">Download Free Trial</a>
 </div>
 
 > __JustMock Lite__ is the free [open source](https://github.com/telerik/JustMockLite) version of JustMock and it is available from [www.nuget.org](https://nuget.org/List/Packages/JustMock).
