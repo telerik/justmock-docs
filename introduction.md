@@ -125,16 +125,9 @@ To learn how to install and work with Telerik JustMock, visit the following reso
 * [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project %})
 * [JustMock API Basics]({%slug justmock/basic-usage/mock%})
 
-## Free Version
-The Telerik JustMock Lite is a free open source mocking framework. Feel free to review the Telerik JustMock Lite [License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-free-edition) to get acquainted with the full terms of use.
-
-## Trial Version and Commercial License
-
-The Telerik JustMock is a commercial mocking framework. You are welcome to explore its full functionality and get technical support from the team when you register for a free 30-day trial. To use it commercially, you need to [purchase a license](https://www.telerik.com/purchase/individual-justmock.aspx). Feel free to review the Telerik JustMock [License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-dlw-s) to get acquainted with the full terms of use.
-
 ## Support Options
 
-For any issues you might encounter while working with Telerik JustMock or JustMock Lite, use any of the available support channels:
+For any issues you might encounter while working with Telerik JustMock, use any of the available support channels:
 
 * License holders and active trialists can take advantage of our outstanding customer support delivered by the developers building the library. To submit a support ticket, use the [dedicated support system](https://www.telerik.com/account/support-tickets?pid=743).
 * Our [forums](https://www.telerik.com/forums/justmock) are part of the free support you can get from the community and from the team on all kinds of general issues.
@@ -153,6 +146,6 @@ For any issues you might encounter while working with Telerik JustMock or JustMo
 
  * [Using Telerik JustMock in your test project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
 
- * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})
-
  * [Quick Start]({%slug justmock/getting-started/quick-start%})
+ 
+ * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})
