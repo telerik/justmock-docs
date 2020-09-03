@@ -47,9 +47,6 @@ div#trial_button .trialLink {
 <a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="trialLink">Download Free Trial</a>
 </div>
 
-> __JustMock Lite__ is the free [open source](https://github.com/telerik/JustMockLite) version of JustMock and it is available from [www.nuget.org](https://nuget.org/List/Packages/JustMock).
-For more informaiton about differences between the two versions in regard to supported features visit the [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%}) comparison article.
-
 ## What Is Mocking and Why Do I Need It?
 [Mocking](https://en.wikipedia.org/wiki/Mock_object) is a concept in unit testing where real objects are substituted with fake objects that imitate the behavior of the real ones. Mocking is done so that a test can focus on the code being tested and not on the behavior or state of external dependencies. 
 
