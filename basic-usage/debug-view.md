@@ -67,7 +67,15 @@ As the logs can be rather long, you can copy them from the Visual Studio's Text 
 
 ## Debug Window (Beta)
 
-JustMock extension for Visual Studio 2017 (and above) makes mock debugging even more convenient by adding tool window for visualizing trace messages and arranged method mocks. It can be opened from main menu __View > Other Windows > JustMock Debug Window__ or extension menu - __JustMock > Show Debug Window__. The debug window consist of two pains which are active only while debugging:
+JustMock extension for Visual Studio 2017 (and above) makes mock debugging even more convenient by adding tool window for visualizing trace messages and arranged method mocks. It can be opened from main menu __View > Other Windows > JustMock Debug Window__ or extension menu - __JustMock > Debug Window > Show__. There is also an option to enable or disable debug window by using the corresponding command in the extension menu.
+
+![Debug Window Menu](images/DebugWindow_Menu.png)
+
+> **Important**
+>
+>Enabling or disabling the debug window will be persisted and will be applied not only on the current instance of Visual Studio but also on all future ones.
+
+The debug window consist of two pains which are active only while debugging:
 
 * __Debug Trace__
 
