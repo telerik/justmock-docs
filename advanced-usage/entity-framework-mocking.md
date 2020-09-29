@@ -11,11 +11,15 @@ position: 15
 
 # Entity Framework Mocking
 
-With __Microsof tEntity Framework__ you develop data access application by using a conceptual application model instead of relational storage schema.
+__Telerik® JustMock__ allows you to perform unit testing in conjunctions with the Microsoft Entity Framework.
 
-__Telerik® JustMock__ can be used in conjunction with Microsoft Entity Framework, with the [Telerik.JustMock.EntityFramework](https://github.com/tailsu/Telerik.JustMock.EntityFramework) package. With it, you can easily create in-memory mocks of the DbSet and DbContext types. It also provides some additional mocking amenities for JustMock.
+## Introduction
 
-In this topic we will cover some scenarios in unit testing Microsoft EntityF ramework. In the examples below the `DbContext` class is used, along with the following methods:
+With __Microsoft Entity Framework__, you develop data access applications by using a conceptual application model instead of a relational storage schema.
+
+__JustMock__ supports the Microsoft Entity Framework thanks to the [Telerik.JustMock.EntityFramework](https://github.com/tailsu/Telerik.JustMock.EntityFramework) package. This package allows you to easily create in-memory mocks of the DbSet and DbContext types. It also provides additional mocking amenities for JustMock.
+
+In this topic, we will cover some scenarios in unit testing Microsoft Entity Framework. In the examples below, we use the `DbContext` class along with the following methods:
 
   #### __[C#]__
 
@@ -47,7 +51,9 @@ In this topic we will cover some scenarios in unit testing Microsoft EntityF ram
 
 ## Returning A Fake Collection
 
-First we need a method that returns a fake collection of `Dinner`s. We will use the example below:
+The following steps demonstrate how to return a fake collection:
+
+1. Create a method that returns a fake collection of `Dinner`s. For this example, we use the code below:
 
   #### __[C#]__
 
@@ -63,7 +69,13 @@ First we need a method that returns a fake collection of `Dinner`s. We will use 
 	}
   {{endregion}}
 
-After creating a new instance of the `NerdDinners` class, we will __Arrange__ that a call to `nerdDinners.Dinners()` method, will return our fake collection. Then, in the __Act__, we call the `nerdDinners.Dinners()` and search for a `dinner` with a certain `DinnerID`. Finally we __Assert__ that there is only one item in our collection and this item has `DinnerID` equal to one.
+1. Create a new instance of the `NerdDinners` class.
+
+1. __Arrange__ that a call to the `nerdDinners.Dinners()` method will return our fake collection.
+
+1. Call the `nerdDinners.Dinners()` and search for a `dinner` with a certain `DinnerID` in the __Act__.
+
+1. __Assert__ that there is only one item in our collection and this item has `DinnerID` equal to one.
 
 > **Important**
 >
@@ -92,7 +104,7 @@ After creating a new instance of the `NerdDinners` class, we will __Arrange__ th
 	}
   {{endregion}}
 
-## Returning A Fake Collection With Future Mocking
+## Returning A Fake Collection with Future Mocking
 
 In this example we will return the same fake collection.
 
