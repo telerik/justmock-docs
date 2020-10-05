@@ -11,11 +11,11 @@ position: 13
 
 # Mocking Non-public Members and Types
 
-This article provides various examples that demonstrate how to mock non-public members and types with Telerik JustMock.
+This article provides various examples that demonstrate how to mock non-public members and types with __Telerik® JustMock__.
 
 ## Introduction
 
-You can use __Telerik® JustMock__ to mock non-public members and types in elevated mode. That is useful when you want to isolate calls to non-public members and types, such as:
+You can use JustMock to mock non-public members and types in elevated mode. That is useful when you want to isolate calls to non-public members and types, such as:
 
 * private calls, methods, and interfaces
 * private static methods and properties
