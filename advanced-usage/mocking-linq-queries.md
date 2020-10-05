@@ -11,12 +11,15 @@ position: 12
 
 # Mocking LINQ Queries
 
-With __Telerik® JustMock__ you can mock LINQ queries with custom select.
+This article provides practical examples that demonstrate how to mock LINQ queries with __Telerik® JustMock__ and custom select.
 
 > This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
+If you need a complete Visual Studio project that demonstrates how to mock LINQ queries, refer to our demo. The default installation directory is C:\Program Files (x86)\Progress\Telerik JustMock\Examples.
 
-In the further examples we will use the following method and sample classes to test:
+## Prerequisites
+
+In the further examples, we will use the following method and sample classes to test:
 
   #### __[C#]__
 
@@ -109,7 +112,7 @@ In the further examples we will use the following method and sample classes to t
 
 ## Asserting Custom Select Query
 
-In the following example we mock `simple.Products` to return a custom collection. After that a LINQ query is executed against the collection to obtain a specifically desired value:
+In the following example, we mock `simple.Products` to return a custom collection. After that, a LINQ query is executed against the collection to obtain a specifically desired value:
 
   #### __[C#]__
 
@@ -179,7 +182,7 @@ Furthermore, you can use Join operations to create associations between sequence
 
 ## Asserting Enumerable Source
 
-With JustMock you can also mock enumerable source. Let's add the following method and a class:
+With JustMock, you can also mock an enumerable source. Let's add the following method and a class:
 
   #### __[C#]__
 
@@ -246,4 +249,4 @@ You can also mock parameters when using the > LINQ expressions. Let's walk throu
   {{endregion}}
  
 
-In this example we first define that the product collection should be a specific list of products. We then use LINQ to select a specific instance from the `simple.Products` collection. For that instance we want to mock the call to the `GetId()` method in order to return a different id. Finally, we retrieve the target product and verify that the returned id and the expected id are the same.
+In this example, we first define that the product collection must be a specific list of products. We then use LINQ to select a specific instance from the `simple.Products` collection. For that instance, we want to mock the call to the `GetId()` method in order to return a different id. Finally, we retrieve the target product and verify that the returned id and the expected id are the same.

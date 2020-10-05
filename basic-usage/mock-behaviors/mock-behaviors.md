@@ -11,7 +11,7 @@ position: 0
 
 # Mock Behaviors
 
-With __Telerik®  JustMock__ you can choose between four different mock behaviors:
+This article provides a quick overview of the four mock behaviors in __Telerik® JustMock__. For more details about each mock behavior, follow the links below.
 
 __RecursiveLoose Behavior__
 

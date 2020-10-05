@@ -11,11 +11,11 @@ position: 8
 
 # Future Mocking
 
-Future Mocking allows you to mock members without passing the dependency through a constructor or calling a method. You can apply future mocking automatically based on an expectation rather than applying it to every instance explicitly. You will find this handy especially in cases when you have to mock third party controls and tools where you have little control over the way in which they are created.
+Future Mocking allows you to mock members without passing the dependency through a constructor or calling a method. You can apply future mocking automatically based on an expectation rather than applying it to every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
 
 ## Ignore instance for an expectation explicitly
 
-By default all mocks are tied to an instance and this is the expected behavior. For instance in the following sample we have created an object of type `UserData` which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the `fakeUsed` instance of the `UserData` class. But note that the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
+By default, all mocks are tied to an instance and this is the expected behavior. The instance that we created in the following sample is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the `fakeUsed` instance of the `UserData` class. But note that the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
 
   #### __[C#]__
 
@@ -97,7 +97,7 @@ If we want to apply future mocking and assure that all `UserData` instances use 
 
 When `IgnoreInstance` is applied, the `ReturnFive()` method will work according to the expectation you have set in `Mock.Arrange`.
 
-When setting future expectations you can also use the [Fluent Mocking]({%slug justmock/basic-usage/fluent-mocking%}) API as in this example:
+When setting future expectations, you can also use the [Fluent Mocking]({%slug justmock/basic-usage/fluent-mocking%}) API as in this example:
 
   #### __[C#]__
 
@@ -193,7 +193,7 @@ Now we can use `IgnoreInctance` in the exact same way:
 
 ## Using IgnoreInstance for Collections
 
-There is an example where we want to __Arrange__ a property to return fake collection. To demonstrate this, we will use the `Foo` class below.
+In the following example, we want to __Arrange__ a property to return a fake collection. To demonstrate this, we will use the `Foo` class below.
 
   #### __[C#]__
 
@@ -316,7 +316,7 @@ This is how the test will look like:
     End Sub
   {{endregion}}
 
-You can see that the test logic is the same as in the previous tests with the only difference that you are returning a collection this time.
+You can see that the test logic is the same as in the previous tests, with the only difference that you are returning a collection this time.
 
 ## Future Constructor Mocking
 
@@ -385,7 +385,7 @@ This will apply __DoNothing__ to the constructor of every new instance of type `
 
 ## Mocking the New Operator
 
-With JustMock you can arrange a return value for a new object creation. Let's assume we have the following class:
+With JustMock, you can arrange a return value for a new object creation. Let's assume we have the following class:
 
   #### __[C#]__
 
@@ -481,7 +481,7 @@ Future mocking across all threads is an unsafe operation because it may compromi
 
 ## Advanced Example
 
-Let's see a UI example where we have a form. Based on some action against the form, it raises an event which needs to be handled in a specific way, therefore in the unit test we want to assert the expected value of the handler execution.
+Let's see a UI example where we have a form. Based on some action against the form, it raises an event that needs to be handled in a specific way, therefore in the unit test we want to assert the expected value of the handler execution.
 
   #### __[C#]__
 
@@ -506,7 +506,7 @@ Let's see a UI example where we have a form. Based on some action against the fo
     End Sub
   {{endregion}}
 
-Imagine that we have defined an `EntryService` the purpose of which is to save some entries to a database when the user has made any changes. For instance, we can have a button on the form and when the user is finished editing the entries pressing this button will trigger a call to the following method:
+Imagine that we have defined an `EntryService` the purpose of which is to save some entries to a database when the user has made any changes. For instance, we can have a button on the form, and when the user finishes editing the entries, pressing this button will trigger a call to the following method:
 
   #### __[C#]__
 
@@ -555,7 +555,7 @@ Here is the handler for the `service.Saved` event:
     End Sub
   {{endregion}}
 
-Next, is a simple test using [MSpec](https://codebetter.com/aaronjensen/2008/05/08/introducing-machine-specifications-or-mspec-for-short/) where we have created an event handler which will receive as an argument the value which was passed to the `service.Save` call in the `SaveToDatabase` method.
+Next, is a simple test using [MSpec](https://codebetter.com/aaronjensen/2008/05/08/introducing-machine-specifications-or-mspec-for-short/) where we have created an event handler that will receive as an argument the value that was passed to the `service.Save` call in the `SaveToDatabase` method.
 
   #### __[C#]__
   
