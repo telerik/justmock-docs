@@ -17,36 +17,6 @@ The JustMock API is completely [AAA]({%slug justmock/basic-usage/arrange-act-ass
 
 To read more please visit the [Telerik JustMock](https://www.telerik.com/products/mocking.aspx) product overview page.
 
-<style>
-/* JustMock download trial button */
-div#trial_button {
-    text-align: center !important;
-}
-
-div#trial_button .trialLink {	
-	color: #fff;
-	background-color: #e74b3c;
-	padding:.44em .9em .52em;
-	font-size: 20px;
-	font-weight:400;
-	letter-spacing:-.025em;
-	position:relative;
-	display:inline-block;
-	line-height:1.2;
-	-webkit-transition:color .2s ease,background-color .2s ease;
-	transition:color .2s ease,background-color .2s ease;
-	border-radius:2px;
-	-webkit-appearance:none;
-	font-family:Metric,Arial,Gadget,sans-serif;
-	text-align:center	
-}
-</style>
-
-<div id="trial_button">
-<br />
-<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="trialLink">Download Free Trial</a>
-</div>
-
 ## What Is Mocking and Why Do I Need It?
 [Mocking](https://en.wikipedia.org/wiki/Mock_object) is a concept in unit testing where real objects are substituted with fake objects that imitate the behavior of the real ones. Mocking is done so that a test can focus on the code being tested and not on the behavior or state of external dependencies. 
 
