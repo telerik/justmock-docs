@@ -22,7 +22,7 @@ There are two possible ways to enable waving filter:
 
 ## File format
 
-Supported format is JSON, parse failures are logged (see [Profiler Log And Trace](advanced-usage-profiler-log-and-trace.html) article), and the configuration is rejected.
+Supported format is JSON, parse failures are logged (see [Profiler Log And Trace](profiler-log-and-trace.html) article), and the configuration is rejected.
 
 ### Structure
 
@@ -70,15 +70,15 @@ Filter entries can have additional evaluation parameters, which are objects with
 
 Available options are:
 
-* {__"name"__: "accessibility", __"value"__: "public" | "private"} applied to member entry
+* {__"name"__: "accessibility", __"value"__: "public" | "private"} - can be applied to the member entrtries only, where "public" refers to the public members, and "private" - to all others
 
-### Sample configuration
+## Example
 
 The configuration sample below allows instrumentation of all methods matching to the following conditions:
 
 * are belong to type from __mscorlib__ assembly
-* are not belong to __System.DateTime__ type
 * are belong to __System.String__ type and are public properties (names are starting with get_)
+* are not belong to __System.DateTime__ type
 
 Configuration file looks as following:
 
@@ -122,7 +122,7 @@ Configuration file looks as following:
 }
 ```
 
-### Setting up environment
+## Setting up environment
 
 One of the possible solutions is to use .runsettings (can be used command line or inside Visual Studio), here is the sample:
 
