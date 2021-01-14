@@ -56,7 +56,7 @@ Unlike other mocking frameworks, JustMock lets you mock:
 * __Support for Visual Studio__ - JustMock supports Visual Studio 2019, 2017, 2015, and older
 * __Support of Microsoft SharePoint and Microsoft Entity Framework mocking__
 * __Support for CI/CD, build tools, code coverage tools, profilers, unit testing add-ins and other__
-	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/continuous-integration/tfs-azure/azure-devops%})
+	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/integration/azure-devops%})
 	* [MSBuild](https://msdn.microsoft.com/en-us/library/wea2sca5(VS.90).aspx) - integrate JustMock with an MSBuild build task. [ Read how to integrate JustMock with MSBuild ]({%slug justmock/integration/msbuild-tasks%}).
 	* [Jenkins CI](https://jenkins-ci.org/) - integrate JustMock along in Jenkins build. [ Read how to integrate JustMock with Jenkins CI ]({%slug justmock/integration/jenkins-ci%}). 
 	* [TeamCity](https://www.jetbrains.com/teamcity/) - integrate JustMock in TeamCity build. [ Read how to integrate JustMock with TeamCity ]({%slug justmock/integration/teamcity%}). 
