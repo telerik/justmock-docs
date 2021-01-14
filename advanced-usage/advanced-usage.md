@@ -42,7 +42,7 @@ If you are not using any of the Advanced features described in this section, you
 
 Here is a quick example:
 
-{{region AdvancedFeatures#DisableProfiler}}
+{{region AdvancedFeatures-DisableProfiler}}
 	[TestInitialize]
 	public void Setup()
 	{
