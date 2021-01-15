@@ -1,87 +1,97 @@
 ---
-title: Profiler Weaving Optimizations
-page_title: Profiler Weaving Optimizations | JustMock Documentation
-description: Profiler Weaving Optimizations
+title: Performance Optimizations
+page_title: Performance Optimizations | JustMock Documentation
+description: Performance Optimizations
 previous_url: /advanced-usage-profiler-weaving-optimizations.html
 slug: justmock/advanced-usage/profiler-weaving-optimizations
-tags: weaving,profiler,performance
+tags: weaving,profiler,performance, optimize
 published: True
 position: 23
 ---
 
-# Profiler Weaving Optimizations
+# Performance Optimizations
 
-JustMock profiler has a built-in capability to filter CLR weaving (instrumentation) based on a given assembly, class and/or method. This will help you in minimizing time for instrumentation and improve overall performance of the test runner.
+To allow advanced mocking, **JustMock** needs to insert an additional code to the different members prior the CLR compiles them to machine code. This action is called instrumentation (code weaving) and inevitably affects the performance of executing unit tests. To improve the execution time, **JustMock** allows you to configure what should be instrumented. This article describes how you can enable such optimizations.
 
 ## Enabling
 
 There are two possible ways to enable waving filter:
 
-* preferred one, set environment variable __JUSTMOCK_CONFIG_PATH__ with full path to configuration file
-* fallback one, place a file named __config.json__ in the same directory where the profiler resides
+* The suggested approach is to set environment variable **JUSTMOCK_CONFIG_PATH** with full path to the configuration file.
+- In case this is not possible in a specific setup, place a file that contains the settings in the same directory where the profiler resides. This file must be named **config.json**.
 
-## File format
 
-Supported format is JSON, parse failures are logged (see [Profiler Log And Trace](profiler-log-and-trace.html) article), and the configuration is rejected.
+## File Format
+
+Supported format is JSON. When the file cannot be parsed, failures are logged (see [Profiler Log And Trace](profiler-log-and-trace.html) article), and the configuration is rejected.
 
 ### Structure
 
-The weaving configuration is represented by the key of the root object named __weavingFilter__. This key itself is an object, containing the following key-value pairs:
+The weaving configuration is represented by the key of the root object named `weavingFilter`. This key itself is an object, containing the following key-value pairs:
 
-* __defaultAction__ string (mandatory), see Action constants below
-* __entries__ array (mandatory), contains objects, see Filter entry below
+* `defaultAction` string (mandatory)—Its value should be one of the  [Action Constants](#action-constants).
+* `entries` array (mandatory)—Contains objects, representing the entries the filter applies to. See [Filter Entry](#filter-entry) section below.
 
-### Filter entry
+### Filter Entry
 
-Each entry is an object with the following common key-value pairs:
+Each entry inside the `entries` array is an object with the following key-value pairs:
 
-* __scope__ string (mandatory), see Scope constants below
-* __pattern__ string (mandatory), regular expression to match the scope of the filter entry
-* __action__ string (mandatory), see Action constants below
-* __supplements__ array (optional), contains supplement entry objects, see Remarks
-* __options__ array (optional), contains objects used as parameters in the evaluation, see Remarks
+* `scope` string (mandatory)—Its value should be one of the [Scope constants](#scope-constants).
+* `pattern` string (mandatory)—Regular expression to match the scope of the filter entry.
+* `action` string (mandatory)—Its value should be one of the [Action Constants](#action-constants).
+* `supplements` array (optional)—Contains supplementary entry objects. The supplements are used to describe child members of an entry, see [Supplements](#supplements).
+* `options` array (optional)—Contains objects used as parameters in the evaluation, see [Options](#options).
 
-### Action constants
+### Action Constants
 
-Used for defining action key values in the entry objects, possible values are:
+Used for defining values for the `action` key in the filter entry objects. The possible values are:
 
-* __"include"__
-* __"exclude"__
+* `"include"`
+* `"exclude"`
 
-### Scope constants
+### Scope Constants
 
-Used for defining the target scope of the filtering, further used as type possible values are:
+Used for defining the target scope of the filtering. The possible values are:
 
-* __"module"__ applies to assembly
-* __"type"__ applies to type
-* __"member"__ applies to member (method or property)
+* `"module"`—Applies to assembly.
+* `"type"`—Applies to type.
+* `"member"`—Applies to member (method or property).
 
-### Remarks
-
-Supplements of a given entry can have supplements of the other types, the following rules applied:
-
-* module entry can have only type supplements
-* type entry can have only member supplements
-
+### Options
 Filter entries can have additional evaluation parameters, which are objects with the following keys:
 
-* __name__ string (mandatory), contains the unique name
-* __value__ string, number or Boolean, depending of the option
+* `name` string (mandatory)—Contains the unique entry name.
+* `value` string, number or Boolean—Its value depends on the value of the `name` key.
 
-Available options are:
+**Available options**
 
-* {__"name"__: "accessibility", __"value"__: "public" | "private"} - can be applied to the member entrtries only, where "public" refers to the public members, and "private" - to all others
+At this point, a single option is available that allows you specify the accessibility of a member entry.
+```
+  {
+    "name": "accessibility",
+    "value": "public" | "private"
+  }
+```
+This option can be applied to the **member entries only**, where `"public"` refers to the public members, and `"private"` - to all others.
+
+### Supplements
+
+The `supplements` key describes child members of another entry. The supplements can be used when you need to specify a type from an assembly, or a member of a type.
+
+Supplements of a given entry can have supplements of the other types. The following rules apply:
+
+* Module entry can have only type supplements.
+* Type entry can have only member supplements.
 
 ## Example
 
 The configuration sample below allows instrumentation of all methods matching to the following conditions:
 
-* are belong to type from __mscorlib__ assembly
-* are belong to __System.String__ type and are public properties (names are starting with get_)
-* are not belong to __System.DateTime__ type
+* Belong to type from __mscorlib__ assembly.
+* Belong to __System.String__ type and are public properties (names are starting with *get_*).
+* Do not belong to __System.DateTime__ type.
 
-Configuration file looks as following:
-
+The settings file for a similar setup would look like the following example:
 ```
 {
   "weavingFilter": {
@@ -124,7 +134,11 @@ Configuration file looks as following:
 
 ## Setting up environment
 
-One of the possible solutions is to use .runsettings (can be used command line or inside Visual Studio), here is the sample:
+To setup your environment to use the performance optimizations discussed in this topic, you need to pass the path to the configuration file through the **JUSTMOCK_CONFIG_PATH** environment variable.
+
+The options that you can use to achieve that vary depending on the specific setup you might have.
+In command line or inside Visual Studio, you can use the *.runsettings* file to specify the path. The next examples shows how you can set the variable in *.runsettings*:
+
 
 ```
 <RunSettings>
