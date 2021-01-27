@@ -140,6 +140,7 @@ Let's extend the previous example. Here, in our LINQ query, we don't get directl
   #### __[C#]__
 
   {{region LINQ#Example2}}
+  
     [TestMethod]
 	public void ShouldAssertProjectionWhenCombinedWithWhere()
 	{
@@ -229,9 +230,9 @@ We arrange `dataContext.Products` to return the collection defined in the `GetFa
   {{endregion}}
 
 
-## Asserting When Expression > Is Passed in as a Parameter
+## Asserting When Conditional Expression Is Passed in as a Parameter
 
-You can also mock parameters when using the > LINQ expressions. Let's walk through an example:
+You can also mock parameters when using the LINQ expressions. Let's walk through an example demosntrating how to mock the behavior of the `==` expression:
 
   #### __[C#]__
 
