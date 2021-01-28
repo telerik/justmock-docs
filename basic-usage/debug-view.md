@@ -75,7 +75,7 @@ JustMock extension for Visual Studio 2017 (and above) makes mock debugging even 
 >
 >Enabling or disabling the debug window will be persisted and will be applied not only on the current instance of Visual Studio but also on all future ones.
 
-The debug window consist of two pains which are active only while debugging:
+The debug window consist of two panes which are active only while debugging:
 
 * __Debug Trace__
 
