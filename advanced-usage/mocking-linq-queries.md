@@ -232,7 +232,7 @@ We arrange `dataContext.Products` to return the collection defined in the `GetFa
 
 ## Asserting When Conditional Expression Is Passed in as a Parameter
 
-You can also mock parameters when using the LINQ expressions. Let's walk through an example demosntrating how to mock the behavior of the `==` expression:
+You can also mock parameters when using the LINQ expressions. Let's walk through an example demonstrating how to mock the behavior of the `==` expression:
 
   #### __[C#]__
 
