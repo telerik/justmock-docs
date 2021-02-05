@@ -84,7 +84,7 @@ In this example we arrange the `Bar` property get to return `10` when called. By
 
 ## Assert Method Call with Matcher
 
-A common case is to mock a method call to return a custom value in conjunction with a matcher.
+A common case is to mock a method call to return a custom value in conjunction with a [matcher]({%slug justmock/basic-usage/matchers%}).
 
   #### __[C#]__
 
@@ -220,7 +220,7 @@ Follows an example, showing mocking method in F#:
 
 We arrange the `Echo` method to return `10` and expect that it will actually be called in our test. After acting by calling the method, we verify the arrangement. Furthermore, you can assert that `result` has the value of `10`.
 
-Refer to for more information about using matchers.
+>note Refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic for more information about using matchers.
 
 ## Executing Mocked Method In Same Test Method
 
@@ -291,7 +291,7 @@ In this example, `Echo` is called on a new `Foo` instance, instead of a mocked o
 
  * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
 
- * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})[](b9461116-b200-4739-aff1-af8458c7095e)
+ * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
 
  * [Must Be Called]({%slug justmock/basic-usage/mock/must-be-called%})
 
