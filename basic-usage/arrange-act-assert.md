@@ -19,7 +19,18 @@ It is a best practice to author your tests in more natural and convenient way. T
 * __Act__ – perform the actual work of the test.
 * __Assert__ – verify the result.
 
-Lets illustrate this with an example. We will test our warehouse to ensure that it returns correct results when an order is placed.
+
+## Benefits of Using Arrange Act Assert
+
+* Clearly separates what is being tested from the setup and verification steps.
+* Clarifies and focuses attention on a historically successful and generally necessary set of test steps.
+* Makes some test smells more obvious:
+    * Assertions intermixed with "Act" code.
+    * Test methods that try to test too many different things at once.
+
+## Arrange/Act/Assert with JustMock
+
+Lets illustrate the benefits of the pattern with an example. We will test our warehouse to ensure that it returns correct results when an order is placed.
 
 >The classes used for the next example are defined in the [Testing Your Application with JustMock]({%slug justmock/getting-started/quick-start%}) article.
 
@@ -53,7 +64,7 @@ Now let’s mock the warehouse:
     Dim warehouse = Mock.Create(Of IWarehouse)()
   {{endregion}}
 
-We want to ensure that when an order of 2 cameras is placed the warehouse returns that it has availability in the inventory.
+We want to ensure that when an order of 2 cameras is placed, the warehouse returns that it has enough quantity of the product.
 
   #### __[C#]__
 
@@ -67,8 +78,10 @@ We want to ensure that when an order of 2 cameras is placed the warehouse return
     Mock.Arrange(Function() warehouse.HasInventory("Camera", 2)).Returns(true)
   {{endregion}}
 
+>note You can also check the [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%}) topic that demonstrates how you can arrange mock objects in more complex scenarios.
+
 That’s it. We set up the testing objects for our test. Now let’s act.
-Further, you can also check [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%}).
+
 
 ## Act
 
@@ -86,11 +99,11 @@ Fill our order from the warehouse.
     order.Fill(warehouse)
   {{endregion}}
 
-Next we need to ensure that our order was actually filled meaning that the warehouse really had inventory of 2 cameras.
+Once we have executed the desired action, we need to ensure that it has been completed successfully and our order was actually filled, meaning that the warehouse really had inventory of 2 cameras.
 
 ## Assert 
 
-We will use the __Assert__ class from Microsoft.VisualStudio.TestTools.UnitTesting namespace (found in Microsoft.VisualStudio.QualityTools.UnitTestFramework assembly – automatically added as a reference from Visual Studio while creating a Test Project) to ensure that the IsFilled property of the order is set to true.
+We will use the __Assert__ class from Microsoft.VisualStudio.TestTools.UnitTesting namespace (found in Microsoft.VisualStudio.QualityTools.UnitTestFramework assembly – automatically added as a reference from Visual Studio while creating a Test Project) to ensure that the `IsFilled` property of the order is set to `true`.
 
   #### __[C#]__
 
@@ -110,7 +123,7 @@ With this simple example we illustrated the use of the AAA pattern and showed ho
 
 Now let's take it a little further and verify not only the final result, but also the interaction while executing the test.
 
-We arranged that when the warehouse’s HasInventory method is called with specific parameters, it should return true, but we never ensured that this method is actually called. Let's change the `Arrange` method and mark that `warehouse.HasInventory` must be called.
+We arranged that when the warehouse’s `HasInventory` method is called with specific parameters, it should return `true`, but we never ensured that this method is actually called. Let's change the `Arrange` method and mark that `warehouse.HasInventory` must be called.
 
   #### __[C#]__
 
@@ -293,16 +306,10 @@ Here we have defined the `IUserValidationService` and the `IShoppingCartService`
 
 In the arrange phase we defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.
 
-> **Note**
+>note **Note**
 >
 > Refer to the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic to learn more about asserting occurrence. The example also uses the [Returns]({%slug justmock/basic-usage/mock/returns%}) option in order to ignore the actual call and return a custom value.
 
-## Benefits of Using Arrange Act Assert
-* Clearly separates what is being tested from the setup and verification steps.
-* Clarifies and focuses attention on a historically successful and generally necessary set of test steps.
-* Makes some test smells more obvious:
-* Assertions intermixed with "Act" code.
-* Test methods that try to test too many different things at once.
 
 ## See Also
 
