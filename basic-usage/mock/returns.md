@@ -220,7 +220,7 @@ Follows an example, showing mocking method in F#:
 
 We arrange the `Echo` method to return `10` and expect that it will actually be called in our test. After acting by calling the method, we verify the arrangement. Furthermore, you can assert that `result` has the value of `10`.
 
->note Refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic for more information about using matchers.
+> Refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic for more information about using matchers.
 
 ## Executing Mocked Method In Same Test Method
 
