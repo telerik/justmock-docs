@@ -32,7 +32,7 @@ It is a best practice to author your tests in more natural and convenient way. T
 
 Lets illustrate the benefits of the pattern with an example. We will test our warehouse to ensure that it returns correct results when an order is placed.
 
->The classes used for the next example are defined in the [Testing Your Application with JustMock]({%slug justmock/getting-started/quick-start%}) article.
+>The classes used for the next example are defined in the [Testing Your Application with JustMock](../getting-started/quick-start) article.
 
 ## Arrange
 
@@ -78,7 +78,7 @@ We want to ensure that when an order of 2 cameras is placed, the warehouse retur
     Mock.Arrange(Function() warehouse.HasInventory("Camera", 2)).Returns(true)
   {{endregion}}
 
->note You can also check the [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%}) topic that demonstrates how you can arrange mock objects in more complex scenarios.
+>note You can also check the [Create Mocks By Example](./create-mocks-by-example) topic that demonstrates how you can arrange mock objects in more complex scenarios.
 
 That’s it. We set up the testing objects for our test. Now let’s act.
 
@@ -306,9 +306,7 @@ Here we have defined the `IUserValidationService` and the `IShoppingCartService`
 
 In the arrange phase we defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.
 
->note **Note**
->
-> Refer to the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic to learn more about asserting occurrence. The example also uses the [Returns]({%slug justmock/basic-usage/mock/returns%}) option in order to ignore the actual call and return a custom value.
+>noteRefer to the [Asserting Occurrence](./asserting-occurrence) topic to learn more about asserting occurrence. The example also uses the [Returns](./mock/returns) option in order to ignore the actual call and return a custom value.
 
 
 ## See Also
