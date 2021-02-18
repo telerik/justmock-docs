@@ -134,7 +134,7 @@ There are a number of additional handy methods that you can use to make your tes
 
 ### DoInstead
 
-You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) method when you want to change the behavior of a method when it is called by replacing it with a custom action. Let's use the example from above to illustrate to use of `DoInstead`.
+You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) method when you want to change the behavior of a method when it is called by replacing it with a custom action. To illustrate how you can use the `DoInstead` method, we will use the HasInventory method of the IWarehouse interface defined in the beginning of this topic. In the next example, we arrange that when the warehouse’s `HasInventory` method is called with parameters "Camera" and 2, we will execute the action "__() => called = true__" instead of calling the actual implementation of the method.
 
   #### __[C#]__
 
@@ -177,7 +177,6 @@ You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) metho
     End Sub
   {{endregion}}
 
-Put simple – we arrange that when the warehouse’s `HasInventory` method is called with parameters "Camera" and 2 we will execute the action "__() => called = true__" instead of calling the actual method.
 
 ### CallOriginal
 
@@ -262,10 +261,10 @@ The [Throws]({%slug justmock/basic-usage/mock/throws%}) method is used when you 
         var order = new Order("Camera", 0);
         var warehouse = Mock.Create<Iwarehouse>();
 
-        // Set up that the ware house has inventory of any products with any quantities.
+        // Set up that the warehouse has inventory of any products with any quantities.
         Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
 
-        // Set up that call to warehouse.Remove with zero quantity is invalid and throws an exception.
+        // Set up that call to warehouse. Remove with zero quantity is invalid and throws an exception.
         Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.Matches<int>(x => x == 0)))
                     .Throws(new InvalidOperationException());
 
