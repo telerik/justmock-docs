@@ -305,7 +305,12 @@ With `Throws` you can force a member to throw exception so you can ensure your a
     Mock.ArrangeSet(() => orderMock.IsCompleted = Arg.AnyBool).Throws(new InvalidOperationException());
 {{endregion}}
 
-# See Also
+
+# Next Steps
+
+As a next step we recommend you to check the [Assert and Verification]({%slug justmock/getting-started/basics/assert%}) article to get a better understanding of the API JustMock provides for verifying the arranged behavior.
+
+## See Also
 
  * [Matchers]({%slug justmock/basic-usage/matchers%})
  

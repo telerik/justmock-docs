@@ -127,12 +127,12 @@ Another option that you can use is to create a collection of products and ensure
 {{endregion}}
 
 
-## Next Step
+# Next Steps
 
-Now that you know how a simple public class with public members can be tested using **JustMock**, go ahead and check the next topic of the Getting Started series to learn about the numerous features and scenarios you can easily setup and test.
+Now that you know how a simple public class with public members can be tested using **JustMock**, go ahead and check the next topic of the Getting Started series to learn about the numerous features and scenarios you can easily setup and test. In the [Create Mock Instances]({%slug justmock/getting-started/basics/create%}) topic, you will learn how to obtain mocked instances of different implementations.
 
 
-# See Also
+## See Also
 
  * [Call Original]({%slug justmock/basic-usage/mock/call-original%})
 

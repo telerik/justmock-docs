@@ -13,7 +13,7 @@ position: 4
 
 This topic will guide you through several simple steps to enable easier testing of your applications by using __Telerik® JustMock__. You will understand a simple principle called Arrange/Act/Assert and get familiar with core methods and properties from the framework, which are used in the most common testing scenarios.
 
->Make sure to go through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. [JustMock API Basics]({%slug justmock/basic-usage/mock%}) contains basic examples that this article extends.
+>Make sure to go through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. The [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) section contains basic examples that this article extends.
 
 To illustrate the use of JustMock in the next examples, we will use a sample warehouse and a dependent order object. The warehouse holds inventories of different products. An order contains a product and a quantity. 
 
@@ -128,7 +128,7 @@ It is used in all samples shown in this documentation. Refer to the [Arrange Act
 
 ## Methods
 
->Get familiar with the JustMock basics such as how to create mock instance with `Mock.Create<>`, how to arrange with `Mock.Arrange` and how to assert with `Mock.Assert` in [Step 3 - JustMock API Basics]({%slug justmock/basic-usage/mock%}). 
+>Get familiar with the JustMock basics such as how to create mock instance with `Mock.Create<>`, how to arrange with `Mock.Arrange` and how to assert with `Mock.Assert` in the [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) section. 
 
 There are a number of additional handy methods that you can use to make your tests more complete and easy to write.
 

@@ -163,6 +163,10 @@ To see `PrivateAccessor` in action, let’s say that we would like to test that 
     Assert.AreEqual(0, orderMock.Products.Count);
 {{endregion}}
 
+# Next Steps
+
+The [Mock System API]({%slug justmock/getting-started/basics/system-api%}) topic will provide you with more details on how you can arrange members defined inside the .NET.
+
 ## See Also
 
 * [Private Accessor]({%slug justmock/advanced-usage/private-accessor%})

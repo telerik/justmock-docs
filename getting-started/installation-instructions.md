@@ -50,7 +50,7 @@ If you want to suggest a new feature or vote for a popular one, please visit [Ju
 ## Next Steps
 
 * [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
-* [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+* [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
 ## See Also
 

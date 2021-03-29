@@ -174,8 +174,11 @@ To mock `PrintOrder` you would again need only to arrange your expectations with
     Assert.AreEqual(expected, actual);
 {{endregion}}
 
+# Next Steps
 
-# See Also
+Take a look at the [Mock Non-Public API]({%slug justmock/getting-started/basics/non-public%}) article that shows how you can setup private and internal implementations in your tests.
+
+## See Also
 
  * [Call Original]({%slug justmock/basic-usage/mock/call-original%})
 

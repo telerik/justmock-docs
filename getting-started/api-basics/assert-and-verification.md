@@ -106,3 +106,12 @@ In addition to the behavior of the class members, you can also assert a property
     Mock.AssertSet(() => order.IsCompleted = true);
 {{endregion}}
 
+# Next Steps
+
+As a next step we recommend you to check the [Mock Static or Extension Members]({%slug justmock/getting-started/basics/static%}) article that shows how you can test any static implementation.
+
+## See Also
+
+* [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
+
+* [Asserting Occurence]({%slug justmock/basic-usage/asserting-occurrence%})

@@ -103,7 +103,12 @@ In the sample setup used in this topic, the Order class doesn't provide a defaul
     Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, "test product", 1);
 {{endregion}}
 
-# See Also
+
+# Next Steps
+
+Check the [Arrange]({%slug justmock/getting-started/basics/arrange%}) topic to learn more on how you can setup the desired behavior of different members.
+
+## See Also
 
  * [Automocking]({%slug justmock/basic-usage/automocking%})
 

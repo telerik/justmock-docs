@@ -42,4 +42,4 @@ When a strict mock is created, you are only allowed to call arranged methods. Ev
 
  * [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
 
- * [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
