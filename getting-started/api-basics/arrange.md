@@ -51,7 +51,7 @@ For the examples in this topic, we will use the already familiar from the previo
 
 {{endregion}}
 
->The examples in this topic use actual values for the arrange of the methods for simplicity. However, JustMock enables you to ignore the actual values and pass an expression that satisfies the argument type or the expected value range. For more details on the topic, refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) article.
+>The examples in this topic use actual values for the arrange of the methods for simplicity. However, **JustMock** enables you to ignore the actual values and pass an expression that satisfies the argument type or the expected value range. For more details on the topic, refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) article.
 
 ## Returns
 
@@ -169,6 +169,28 @@ This method marks a member that it must be called at least once during the execu
 
 >Note that verifying that the `Remove` method has been actually called is done through **`Mock.Assert`**. You can learn more about the assertion functionalities of JustMock in the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) help topic.
 
+## Matchers
+
+Matchers let you ignore passing actual values as arguments used in mocks. Instead, they give you the possibility to pass just an expression that satisfies the argument type or expected value range. For example, if a method accepts string as a first parameter, you don’t need to pass a specific string like "Camera", instead you can use `Arg.IsAny<string>()`. 
+
+There are 3 types of matchers supported in JustMock:
+
+1. **Arg.IsAny<[Type]>()**: Can be used to arrange a call that matches any value of the specified type.
+1. **Arg.IsInRange([FromValue : int], [ToValue : int], [RangeKind])**: Lets you arrange a call that matches a specific range of values. The range can be inclusive or exclusive.
+1. **Arg.Matches&lt;T&gt;(Expression&lt;Predicate&lt;T&gt;&gt; expression)**: Allows you to specify your own matching expression.
+
+**Example 6** shows a simple usage of the matchers - it demonstrates how you can arrange the behavior of a method no matter of the specific argument values passed to it.
+
+#### [C#] Example 6: Arrange method using Matchers 
+
+{{region justmock-getting-started-basics-arrange_5}}
+    
+    // The HasInventory method will always return true when invoked with any string and any int values for its parameters.
+    Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true); 
+{{endregion}}
+
+>For more details and examples of how you can use matchers, refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic.
+
 ## Raise
 
 The `Raise` method enables you to raise an event so that you can ensure that the event is working as expected and the logic properly handles it. 
@@ -177,7 +199,7 @@ To demonstrate the usage of the `Raise` and `Raises` options, we will use a slig
 
 #### [C#] Sample setup with events
 
-{{region justmock-getting-started-basics-arrange_6}}
+{{region justmock-getting-started-basics-arrange_7}}
 
     public class Order
     {
@@ -252,11 +274,11 @@ To demonstrate the usage of the `Raise` and `Raises` options, we will use a slig
     }
 {{endregion}}
 
-If you take a deeper look into the implementation above, you will notice that the `TimedOut` event is fired only when the HasTimedOut property is set to true. This property is internal so that it can be changed only by project members and not from outside. So, how we can verify that everything goes as expected? **Example 6** shows a test verifying that the product is cleared from the order when it has been timed out.
+If you take a deeper look into the implementation above, you will notice that the `TimedOut` event is fired only when the HasTimedOut property is set to true. This property is internal so that it can be changed only by project members and not from outside. So, how we can verify that everything goes as expected? **Example 7** shows a test verifying that the product is cleared from the order when it has been timed out.
 
-#### [C#] Example 6: Raise an event
+#### [C#] Example 7: Raise an event
 
-{{region justmock-getting-started-basics-arrange_7}}
+{{region justmock-getting-started-basics-arrange_8}}
 
     Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, "test product", 1);
     
@@ -271,11 +293,11 @@ If you take a deeper look into the implementation above, you will notice that th
 
 ## Raises
 
-The `Raises` option allows you to configure that when a member is invoked, it will raise a specific event. With the last sample setup, we can use `Raises` to ensure that an order won't be marked as timed out and its product won't be removed in case it is currently being completed. **Example 7** shows how you can implement the test for this case.
+The `Raises` option allows you to configure that when a member is invoked, it will raise a specific event. With the last sample setup, we can use `Raises` to ensure that an order won't be marked as timed out and its product won't be removed in case it is currently being completed. **Example 8** shows how you can implement the test for this case.
 
-#### [C#] Example 7: Raise an event when a method is called
+#### [C#] Example 8: Raise an event when a method is called
 
-{{region justmock-getting-started-basics-arrange_8}}
+{{region justmock-getting-started-basics-arrange_9}}
 
     Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, "test product", 1);
     IWarehouse warehouseMock = Mock.Create<IWarehouse>();
@@ -295,11 +317,11 @@ The `Raises` option allows you to configure that when a member is invoked, it wi
 
 ## Throws
 
-With `Throws` you can force a member to throw exception so you can ensure your app can properly handle the error. **Example 8** shows how you can arrange the `IsCompleted` property to always throw an `InvalidOperationException` when its setter is invoked.
+With `Throws` you can force a member to throw exception so you can ensure your app can properly handle the error. **Example 9** shows how you can arrange the `IsCompleted` property to always throw an `InvalidOperationException` when its setter is invoked.
 
-#### [C#] Example 8: Force a property setter to throw exception
+#### [C#] Example 9: Force a property setter to throw exception
 
-{{region justmock-getting-started-basics-arrange_9}}
+{{region justmock-getting-started-basics-arrange_10}}
 
     Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, "test product", 1);
     Mock.ArrangeSet(() => orderMock.IsCompleted = Arg.AnyBool).Throws(new InvalidOperationException());

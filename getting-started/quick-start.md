@@ -5,7 +5,7 @@ description: Quick Start
 previous_url: /getting-started-quick-start.html
 slug: justmock/getting-started/quick-start
 tags: quick,start
-published: True
+published: False
 position: 4
 ---
 

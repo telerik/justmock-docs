@@ -61,7 +61,6 @@ If you want to apply JustMock to an existing unit test project, you need to add 
 ## Next Steps
 
 * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
-* [Test Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
 
 ## See Also
 

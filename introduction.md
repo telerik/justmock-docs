@@ -94,6 +94,6 @@ For any issues you might encounter while working with Telerik JustMock, use any 
 
  * [Using Telerik JustMock in your test project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
 
- * [Quick Start]({%slug justmock/getting-started/quick-start%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
  
  * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})

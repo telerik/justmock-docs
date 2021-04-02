@@ -30,9 +30,112 @@ It is a best practice to author your tests in more natural and convenient way. T
 
 ## Arrange/Act/Assert with JustMock
 
-Lets illustrate the benefits of the pattern with an example. We will test our warehouse to ensure that it returns correct results when an order is placed.
+Lets illustrate the benefits of the pattern with an example. We will use a sample warehouse and a dependent order object. The warehouse holds inventories of different products. An order contains a product and quantity. 
 
->The classes used for the next example are defined in the [Testing Your Application with JustMock](../getting-started/quick-start) article.
+The warehouse interface and the order class look like this:
+
+  #### __[C#]__
+
+  {{region QuickStart#SampleCS}}
+    public delegate void ProductRemoveEventHandler(string productName, int quantity);
+
+    public interface Iwarehouse
+    {
+        event ProductRemoveEventHandler ProductRemoved;
+
+        string Manager { get; set; }
+
+        bool HasInventory(string productName, int quantity);
+        void Remove(string productName, int quantity);
+    }
+
+    public class Order
+    {
+        public Order(string productName, int quantity)
+        {
+            this.ProductName = productName;
+            this.Quantity = quantity;
+        }
+
+        public string ProductName { get; private set; }
+        public int Quantity { get; private set; }
+        public bool IsFilled { get; private set; }
+
+        public void Fill(Iwarehouse warehouse)
+        {
+            if (warehouse.HasInventory(this.ProductName, this.Quantity))
+            {
+                warehouse.Remove(this.ProductName, this.Quantity);
+            }
+        }
+
+        public virtual string Receipt(DateTime orderDate)
+        {
+            return string.Format("Ordered {0} {1} on {2}", this.Quantity, this.ProductName, orderDate.ToString("d"));
+        }
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region QuickStart#SampleVB}}
+    Public Delegate Sub ProductRemovedEventHandler(productName As String, quantity As Integer)
+
+    Public Interface IWarehouse
+        Event ProductRemoved As ProductRemovedEventHandler
+
+        Property Manager() As String
+
+        Function HasInventory(productName As String, quantity As Integer) As Boolean
+        Sub Remove(productName As String, quantity As Integer)
+    End Interface
+
+    Public Class Order
+        Public Sub New(productName As String, quantity As Integer)
+            Me.ProductName = productName
+            Me.Quantity = quantity
+        End Sub
+
+        Public Property ProductName() As String
+            Get
+                Return m_ProductName
+            End Get
+            Private Set(value As String)
+                m_ProductName = value
+            End Set
+        End Property
+        Private m_ProductName As String
+        Public Property Quantity() As Integer
+            Get
+                Return m_Quantity
+            End Get
+            Private Set(value As Integer)
+                m_Quantity = value
+            End Set
+        End Property
+        Private m_Quantity As Integer
+        Public Property IsFilled() As Boolean
+            Get
+                Return m_IsFilled
+            End Get
+            Private Set(value As Boolean)
+                m_IsFilled = value
+            End Set
+        End Property
+        Private m_IsFilled As Boolean
+
+        Public Sub Fill(warehouse As IWarehouse)
+            If warehouse.HasInventory(Me.ProductName, Me.Quantity) Then
+                warehouse.Remove(Me.ProductName, Me.Quantity)
+                IsFilled = True
+            End If
+        End Sub
+
+        Public Overridable Function Receipt(orderDate As DateTime) As String
+            Return String.Format("Ordered {0} {1} on {2}", Me.Quantity, Me.ProductName, orderDate.ToString("d"))
+        End Function
+    End Class
+  {{endregion}}
 
 ## Arrange
 
@@ -311,6 +414,6 @@ In the arrange phase we defined that the `ValidateUser` call should be made only
 
 ## See Also
 
- * [Testing Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
  * [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%})
