@@ -48,6 +48,7 @@ When setting that a specific method must be called, or a set of methods should b
     }
 {{endregion}}
 
+
 **Example 1** shows how you can set up a test verifying that the `Complete` method is first invoked, followed by `HasInventory` and `Remove` is last in the chain:
 
 #### [C#] Example 1: Verify the order of invocation for several methods
@@ -106,7 +107,7 @@ In addition to the behavior of the class members, you can also assert a property
     Mock.AssertSet(() => order.IsCompleted = true);
 {{endregion}}
 
-# Next Steps
+## Next Steps
 
 As a next step we recommend you to check the [Mock Static or Extension Members]({%slug justmock/getting-started/basics/static%}) article that shows how you can test any static implementation.
 

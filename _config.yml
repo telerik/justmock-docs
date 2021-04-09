@@ -10,7 +10,7 @@ navigation:
         position: 1
     getting-started/api-basics:
         title: JustMock API Basics
-        position: 3
+        position: 4
     licensing:
         title: Licensing
         position: 2

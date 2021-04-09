@@ -49,6 +49,7 @@ To illustrate that case, we will use a slightly extended version of the example 
 
 {{endregion}}
 
+
 What would you need to do in order to verify that the `Complete` method of the `Order` class properly sets the `IsCompleted` property? Let’s take a closer look - our target method depends on an instance implementing `IWarehouse` that has some products currently present and internally invokes other two methods - `HasInventory` and `Remove`. Testing this case without using a mocking framework will force you to find a specific instance of a warehouse and control its data so that the `Complete` method of `Order` can perform the needed actions. 
 
 **JustMock** enables you to create instances of abstract classes and interfaces without providing their exact implementations. You have also control over how they should be mocked. **Example 1** demonstrates how you can use the `**Mock.Create()**` method to get an instance representing `IWarehouse`.
@@ -82,13 +83,13 @@ What would you need to do in order to verify that the `Complete` method of the `
 
 When using the default constructor, the `Create()` method generates an instance of the mocked class or interface using the **RecursiveLoose** behavior. The following list will give you a brief overview of the different mock behaviors you can use. 
 
-- **RecursiveLoose behavior**: Generate **empty stubs** for all members and dependencies. Even if nothing is arranged, the mocks with Behavior.RecursiveLoose never return null. This is the default behavior. [Read more...]({%slug justmock/basic-usage/mock-behaviors/recursiveloose%})
+- **RecursiveLoose behavior**: Generate **empty stubs** for all members and dependencies. Even if nothing is arranged, the mocks with Behavior.RecursiveLoose never return null. This is the default behavior. Read more in the [Behaviors|RecursiveLoose]({%slug justmock/basic-usage/mock-behaviors/recursiveloose%}) article.
 
-* **Loose behavior**: When nothing arranged, **the members return the default** value of their return type - null for reference types and the default value for value types. [Read more...]({%slug justmock/basic-usage/mock-behaviors/loose%})
+* **Loose behavior**: When nothing arranged, **the members return the default** value of their return type - null for reference types and the default value for value types. Read more in the [Behaviors|Loose]({%slug justmock/basic-usage/mock-behaviors/loose%}) article
 
 - **CallOriginal behavior**: All members **follow the original implementation** of the mocked instance. [Read more...]({%slug justmock/basic-usage/mock-behaviors/calloriginal%})
 
-- **Strict behavior**: Allows you call **only arranged methods**. Every call to other members results in MockException. [Read more...]({%slug justmock/basic-usage/mock-behaviors/strict%})
+- **Strict behavior**: Allows you to call **only arranged methods**. Every call to other members results in MockException. Read more in the [Behaviors|Strict]({%slug justmock/basic-usage/mock-behaviors/strict%}) article
 
 ## Create mock of a type using non-default constructor
 
@@ -104,7 +105,7 @@ In the sample setup used in this topic, the Order class doesn't provide a defaul
 {{endregion}}
 
 
-# Next Steps
+## Next Steps
 
 Check the [Arrange]({%slug justmock/getting-started/basics/arrange%}) topic to learn more on how you can setup the desired behavior of different members.
 

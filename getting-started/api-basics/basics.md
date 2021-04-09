@@ -67,6 +67,7 @@ To start from the basics, in the first example we will show you how to mock the 
 
 {{endregion}}
 
+
 Let’s first verify that the `Complete` method of the `Order` class properly sets the `IsCompleted` property to avoid duplication. Our target method depends on the products currently present in the `Products` collection and internally invokes other two methods - `HasInventory` and `Remove`. To test the code without mocking, you would need to setup a `Warehouse` object with a collection keeping the products and maintain that collection during the execution of the different tests. You would have to call the `Complete` method using specific arguments for the different cases. 
 
 With **JustMock**, you can directly control the behavior of the methods and ignore the specific data preserved in `Warehouse`. **Example 1** shows how you can setup the `HasInventory` method to always return `true` and ignore the logic of `Remove`. The demonstrated setup enables you to focus on the logic and ignore the specific data or requirements for the logic to operate.
@@ -75,6 +76,7 @@ With **JustMock**, you can directly control the behavior of the methods and igno
 
 {{region justmock-getting-started-basics-first-step_1}}
 
+    [TestMethod]
     public void Order_IsCompleted_WhenWarehouseHasInventory()
     {
         Order order = new Order("testProduct", 10);
@@ -91,6 +93,7 @@ With **JustMock**, you can directly control the behavior of the methods and igno
         Assert.IsTrue(order.IsCompleted);
     }
 {{endregion}}
+
 
 Another option that you can use is to create a collection of products and ensure the `Products` property uses it instead of messing up the real data.
 
@@ -127,7 +130,7 @@ Another option that you can use is to create a collection of products and ensure
 {{endregion}}
 
 
-# Next Steps
+## Next Steps
 
 Now that you know how a simple public class with public members can be tested using **JustMock**, go ahead and check the next topic of the Getting Started series to learn about the numerous features and scenarios you can easily setup and test. In the [Create Mock Instances]({%slug justmock/getting-started/basics/create%}) topic, you will learn how to obtain mocked instances of different implementations.
 

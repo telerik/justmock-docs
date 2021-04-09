@@ -6,7 +6,7 @@ previous_url: /getting-started-using-telerik-justmock-in-your-test-project.html
 slug: justmock/getting-started/using-telerik-justmock-in-your-test-project
 tags: using,telerik,justmock,in,your,test,project
 published: True
-position: 2
+position: 3
 ---
 
 # Add Telerik JustMock to Your Test Project

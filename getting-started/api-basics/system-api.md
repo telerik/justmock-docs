@@ -61,6 +61,7 @@ The following `Order` class uses a `DateTime` value to construct the receipt for
 
 {{endregion}}
 
+
 This is one of the hardest to test scenarios as the `DateTime` values can contain seconds or milliseconds that can also frequently change. Furthermore, using `DateTime.Now` in an internal logic guarantees that a test won’t be stable enough if you depend on that particular value as `DateTime.Now` will return different result when the order is created and when you try to verify the value. 
 
 **JustMock** gives you a way to control how the `DateTime` (or any other class) should behave. **Example 1** shows you a test ensuring that the receipt is properly generated. The invocation of `DateTime.Now` is arranged to always return the same value no matter who calls the property getter.
@@ -81,6 +82,7 @@ This is one of the hardest to test scenarios as the `DateTime` values can contai
      
     Assert.AreEqual(expected, receipt);
 {{endregion}}
+
 
 Using that approach, you can mock the behavior of any method or property defined in the framework. For more examples on the topic, refer to the [MsCorlib Mocking]({%slug justmock/advanced-usage/mscorlib-mocking%}) article.
 
