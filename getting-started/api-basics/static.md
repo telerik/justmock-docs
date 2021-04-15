@@ -137,7 +137,7 @@ Mocking static methods is also similar to how you mock instance methods. Just us
 
 ## Mock Extension Method
 
-The extension methods in .NET are also defined as static ones. To demonstrate how you can mock extension methods, we will use the following a sample implementation extending the functionality of the `Order` class.
+Extension methods in .NET are also defined as static ones. To demonstrate how you can mock extension methods, we will use the following sample implementation extending the functionality of the `Order` class.
 
 #### [C#] Sample static class
 

@@ -90,7 +90,7 @@ In addition to the behavior of the class members, you can also assert a property
 
 {{region justmock-getting-started-basics-assert_1}}
 
-    // Create a mock object that you can setup.
+    // Create a mock object that you can set up.
     // Using Behavior.CallOriginal ensures that all members that are not arranged will follow their original implementation.
     Order order = Mock.Create<Order>(Behavior.CallOriginal, "testProduct", 10);
     IWarehouse warehouse = Mock.Create<IWarehouse>();

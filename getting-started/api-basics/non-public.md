@@ -112,7 +112,7 @@ To illustrate its usage, we will be using the following sample setup that takes 
 {{endregion}}
 
 
-With the implementation above, testing that the gifts distribution is correctly performed in scenario without using mocks would require us to investigate the implementation of the `IsEligibleForGift` method and setup our order in a way that ensures the method will return `true`. With **JustMock** you can skip these details and just define the value you need to be returned so that the execution of the logic can continue in the desired way.
+With the implementation above, testing that the gifts distribution is correctly performed without using mocks would require us to investigate the implementation of the `IsEligibleForGift` method and setup our order in a way that ensures the method will return `true`. With **JustMock** you can skip these details and just define the value you need to be returned so that the execution of the logic can continue in the desired way.
 
 #### [C#] Example 1: Arrange private field
 
@@ -142,7 +142,7 @@ With `Mock.NonPublic` you can use the same familiar approach for arranging the g
 
 **JustMock** gives you the ability to easily invoke private members from your tests as well. To achieve that, you will need to use the **`PrivateAccessor`** class. It represents a wrapper for objects that allows you invoke their private or internal members without using complex queries to select them. While `PrivateAccessor` uses the .NET Reflection API internally, it exposes convenient and easy to read methods that hide the complexity of the reflection in a single line of code.
 
-To see `PrivateAccessor` in action, let’s say that we would like to test that invoking the `Complete` method from our sample setup doesn’t add gifts to orders that have been already processed. An order is considered processed when its `isCompleted` field is set to `true`. There is also exposed a method changing the status and we can use it to avoid additional unneeded processing.
+To see `PrivateAccessor` in action, let’s say that we would like to test that invoking the `Complete` method from our sample setup doesn’t add gifts to orders that are already processed. An order is considered processed when its `isCompleted` field is set to `true`. There is also a method changing the status and we can use it to avoid additional unneeded processing.
 
 
 #### [C#] Example 2: Call a private method and obtain the value of a private field

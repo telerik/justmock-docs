@@ -10,7 +10,7 @@ position: 6
 
 # Mock System API
 
-**JustMock** enables you to not only mock the implementations inside your app but allows you to mock the APIs provided by the .NET. You can control the behavior and arrange the members of the framework classes using the already familiar approaches without needing any additional setup.
+**JustMock** enables you to not only mock the implementations inside your app but also allows you to mock the APIs provided by the .NET. You can control the behavior and arrange the members of the framework classes using the already familiar approaches without needing any additional setup.
 
 You can mock any class or member – no matter whether you need a mock for `DateTime`, `Stream`, `File`, `String`, dictionaries, collections or any other framework implementation – with **JustMock** you can customize it.
 

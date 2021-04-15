@@ -10,7 +10,7 @@ position: 1
 
 # Create Mock Instances
 
-The [Mock the behavior of a public method]({%slug justmock/getting-started/basics/basics%}) topic demonstrated how to mock the behavior of a method using a simple regular instance of the tested object. Coding using the best practices always involves creating abstract classes or interfaces. This topic shows you how you can test a functionality dependent on abstract classes or interfaces without caring about the specific implementations of the dependency. 
+The [Mock the behavior of a public method]({%slug justmock/getting-started/basics/basics%}) topic demonstrated how to mock the behavior of a method using a plain object instance of the tested object. Coding using the best practices always involves creating abstract classes or interfaces. This topic shows you how you can test a functionality dependent on abstract classes or interfaces without caring about the specific implementations of the dependency. 
 
 To illustrate that case, we will use a slightly extended version of the example with orders and a warehouse. Now, we will define the warehouse as an interface and will enable a product to be delivered from multiple warehouses.
 
@@ -52,7 +52,7 @@ To illustrate that case, we will use a slightly extended version of the example 
 
 What would you need to do in order to verify that the `Complete` method of the `Order` class properly sets the `IsCompleted` property? Let’s take a closer look - our target method depends on an instance implementing `IWarehouse` that has some products currently present and internally invokes other two methods - `HasInventory` and `Remove`. Testing this case without using a mocking framework will force you to find a specific instance of a warehouse and control its data so that the `Complete` method of `Order` can perform the needed actions. 
 
-**JustMock** enables you to create instances of abstract classes and interfaces without providing their exact implementations. You have also control over how they should be mocked. **Example 1** demonstrates how you can use the `**Mock.Create()**` method to get an instance representing `IWarehouse`.
+**JustMock** enables you to create instances of abstract classes and interfaces without providing their exact implementations. You also have control over how they should be mocked. **Example 1** demonstrates how you can use the `**Mock.Create()**` method to get an instance representing `IWarehouse`.
 
 #### [C#] Example 1: Create mock from an interface
 
@@ -81,7 +81,7 @@ What would you need to do in order to verify that the `Complete` method of the `
 {{endregion}}
 
 
-When using the default constructor, the `Create()` method generates an instance of the mocked class or interface using the **RecursiveLoose** behavior. The following list will give you a brief overview of the different mock behaviors you can use. 
+The parameterless overload of the `Create()` method generates an instance of the mocked class or interface using the **RecursiveLoose** behavior. The following list will give you a brief overview of the different mock behaviors you can use. 
 
 - **RecursiveLoose behavior**: Generate **empty stubs** for all members and dependencies. Even if nothing is arranged, the mocks with Behavior.RecursiveLoose never return null. This is the default behavior. Read more in the [Behaviors|RecursiveLoose]({%slug justmock/basic-usage/mock-behaviors/recursiveloose%}) article.
 

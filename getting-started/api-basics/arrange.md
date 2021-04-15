@@ -1,7 +1,7 @@
 ---
 title: Arrange Mocks
 page_title: Arrange Mocks | JustMock Documentation
-description: Learn how to setup the desired behavior of a mocked object using JustMock and its Arrange method.
+description: Learn how to set up the desired behavior of a mocked object using JustMock and its Arrange method.
 slug: justmock/getting-started/basics/arrange
 tags: mock, test, method, property, setup, behavior, arrange, return
 published: True
@@ -10,9 +10,9 @@ position: 2
 
 # Arrange Mocks
 
-Arranging a mock is the phase that is used to setup the behavior of the mocked objects. The previous topics slightly touched the arranging of a mock to show you complete examples. This article describes the different options and approaches you can use to arrange how the mocked members should behave.
+Arranging a mock is the phase that is used to set up the behavior of the mocked objects. The previous topics slightly touched the arranging of a mock to show you complete examples. This article describes the different options and approaches you can use to arrange how the mocked members should behave.
 
-**JustMock** exposes a rich set of options for defining the behavior of your mocks. To setup a behavior, you should first invoke the **`Arrange()`** method. It accepts a lambda function or an action describing the member you would like to mock and returns a [`CommonExpectation`](https://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Expectations.CommonExpectation-1.html) object that allows you set different behaviors and expectations. 
+**JustMock** exposes a rich set of options for defining the behavior of your mocks. To set up a behavior, you should first invoke the **`Arrange()`** method. It accepts a lambda function or an action describing the member you would like to mock and returns a [`CommonExpectation`](https://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Expectations.CommonExpectation-1.html) object that allows you set different behaviors and expectations. 
 
 For the examples in this topic, we will use the already familiar from the previous topics scenario with a warehouse and orders:
 
@@ -69,7 +69,7 @@ If you check the implementation of the `Complete` method from our sample setup, 
     // Get an instance of the interface dependency
     IWarehouse warehouse = Mock.Create<IWarehouse>();
      
-    // Setup the warehouse - the HasInventory method called with the specified parameters will always return true.
+    // Set up the warehouse - the HasInventory method called with the specified parameters will always return true.
     Mock.Arrange(() => warehouse.HasInventory(order.ProductName, order.Quantity)).Returns(true);
 
 {{endregion}}
@@ -88,7 +88,7 @@ The `CallOriginal` method specifies that the original implementation must be exe
     // Get an instance of the interface dependency
     IWarehouse warehouse = Mock.Create<IWarehouse>();
      
-    // Setup the warehouse - the HasInventory method called with the specified parameters will always return true.
+    // Set up the warehouse - the HasInventory method called with the specified parameters will always return true.
     Mock.Arrange(() => warehouse.HasInventory(order.ProductName, order.Quantity)).Returns(true);
      
     // Define that the Complete method should execute its original implementation when called
@@ -135,7 +135,7 @@ In the `Order` class, a good member to skip its execution is the `Remove` method
     // Get an instance of the interface dependency
     IWarehouse warehouse = Mock.Create<IWarehouse>();
      
-    // Setup the warehouse - the HasInventory method called with the specified parameters will always return true.
+    // Set up the warehouse - the HasInventory method called with the specified parameters will always return true.
     Mock.Arrange(() => warehouse.HasInventory(order.ProductName, order.Quantity)).Returns(true);
      
     // We are not maintaining a collection of products, so there isn't anything to remove.

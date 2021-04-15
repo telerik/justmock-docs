@@ -8,7 +8,13 @@ published: True
 position: 0
 ---
 
-# Mock the Behavior of a Public Method
+# Basics of Mocking
+
+Mocking is a process used in unit testing when the unit being tested has external dependencies. The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. In mocking, the dependencies are replaced by closely controlled replacement objects that simulate the behavior of the real ones. **JustMock** creates and manages the lifetime of those replacement objects for you.
+
+In the topics of this Getting Started section, you will get familiar with the API of JustMock and will see example scenarios of its basic usage.
+
+## Mock the Behavior of a Public Method
 
 To start from the basics, in the first example we will show you how to mock the behavior of a public method for a specific instance. To demonstrate the case, we will use a sample setup representing an order and a warehouse keeping all the inventory for the different orders:
 
