@@ -211,4 +211,4 @@ First, we create the mock with `Behavior.Strict`. Then, we arrange the methods t
 
  * [CallOriginal]({%slug justmock/basic-usage/mock-behaviors/calloriginal%})
 
- * [Mock]({%slug justmock/basic-usage/mock%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})

@@ -71,7 +71,7 @@ To learn how to install and work with Telerik JustMock, visit the following reso
 
 * [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
 * [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project %})
-* [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+* [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
 ## Support Options
 
@@ -94,6 +94,6 @@ For any issues you might encounter while working with Telerik JustMock, use any 
 
  * [Using Telerik JustMock in your test project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
 
- * [Quick Start]({%slug justmock/getting-started/quick-start%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
  
  * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})

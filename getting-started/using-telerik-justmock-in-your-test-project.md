@@ -6,7 +6,7 @@ previous_url: /getting-started-using-telerik-justmock-in-your-test-project.html
 slug: justmock/getting-started/using-telerik-justmock-in-your-test-project
 tags: using,telerik,justmock,in,your,test,project
 published: True
-position: 2
+position: 3
 ---
 
 # Add Telerik JustMock to Your Test Project
@@ -30,7 +30,7 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 
 1. Using the default *JustMock Test Project* template, you can start writing JustMock tests right away. 
 	
-	> See an example how to use JustMock in [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+	> See an example how to use JustMock in [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
 ## Add JustMock to a Test Project
 
@@ -60,11 +60,10 @@ If you want to apply JustMock to an existing unit test project, you need to add 
 	
 ## Next Steps
 
-* [JustMock API Basics]({%slug justmock/basic-usage/mock%})
-* [Test Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
+* [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
 ## See Also
 
- * [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
  * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})
