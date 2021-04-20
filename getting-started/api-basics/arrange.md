@@ -274,6 +274,7 @@ To demonstrate the usage of the `Raise` and `Raises` options, we will use a slig
     }
 {{endregion}}
 
+
 If you take a deeper look into the implementation above, you will notice that the `TimedOut` event is fired only when the HasTimedOut property is set to true. This property is internal so that it can be changed only by project members and not from outside. So, how we can verify that everything goes as expected? **Example 7** shows a test verifying that the product is cleared from the order when it has been timed out.
 
 #### [C#] Example 7: Raise an event
