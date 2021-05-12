@@ -24,14 +24,14 @@ To start from the basics, in the first example we will show you how to mock the 
 
     public class Warehouse
     {
-        Dictionary<string, int> products;
+        public Dictionary<string, int> Products { get; set; }
 
         public bool HasInventory(string productName, int quantity)
         {
             int quantityInWarehouse;
-            if (products.TryGetValue(productName, out quantityInWarehouse))
+            if (this.Products.TryGetValue(productName, out quantityInWarehouse))
             {
-                if (quantityInWarehouse <= quantity)
+                if (quantityInWarehouse >= quantity)
                 {
                     return true;
                 }
@@ -44,10 +44,10 @@ To start from the basics, in the first example we will show you how to mock the 
         {
             if (this.HasInventory(productName, quantity))
             {
-                products[productName] -= quantity;
+                this.Products[productName] -= quantity;
             }
-        }   
-     }
+        }
+    }
 
     public class Order
     {
@@ -87,15 +87,15 @@ With **JustMock**, you can directly control the behavior of the methods and igno
     {
         Order order = new Order("testProduct", 10);
         Warehouse warehouse = new Warehouse();
-    
-        // Setup the warehouse - the HasInventory method called with the specified parameters will always return true.
+
+        // Setup the warehouse - the HasInventory method called with the specified parameters will always return true. 
         Mock.Arrange(() => warehouse.HasInventory(order.ProductName, order.Quantity)).Returns(true);
-    
-        // We are not maintaining a collection of products, so there isn't anything to remove.
+
+        // We are not maintaining a collection of products, so there isn't anything to remove. 
         Mock.Arrange(() => warehouse.Remove(order.ProductName, order.Quantity)).DoNothing();
-    
+
         order.Complete(warehouse);
-    
+
         Assert.IsTrue(order.IsCompleted);
     }
 {{endregion}}
@@ -124,12 +124,12 @@ Another option that you can use is to create a collection of products and ensure
     {
         Order order = new Order("shirt", 1);
         Warehouse warehouse = new Warehouse();
-    
-        // Setup the warehouse - the Products property will always return the test products.
+
+        // Setup the warehouse - the Products property will always return the test products. 
         Mock.Arrange(() => warehouse.Products).Returns(this.GetTestProducts());
-    
+
         order.Complete(warehouse);
-    
+
         Assert.IsTrue(order.IsCompleted);
     }
 
