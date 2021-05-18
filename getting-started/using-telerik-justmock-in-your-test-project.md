@@ -1,10 +1,10 @@
 ---
-title: Add Telerik JustMock to Your Test Project
+title: Add JustMock to Your Test Project
 page_title: Add Telerik JustMock in Your Test Project| JustMock Documentation
 description: Create a JustMock Test Project or add JustMock to your project and start using it.
 previous_url: /getting-started-using-telerik-justmock-in-your-test-project.html
 slug: justmock/getting-started/using-telerik-justmock-in-your-test-project
-tags: using,telerik,justmock,in,your,test,project
+tags: using,telerik,justmock,in,your,test,project, mock, reference
 published: True
 position: 3
 ---
@@ -23,7 +23,7 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 	**Figure 1: Add new project**  
 	![Add New Project to VS Solution](images/AddNewProject.png)
 
-1. Select the Test Project template or search for it by typing "JustMock test". After that select the Test Project template and click OK.
+1. Select the Test Project template or search for it by typing "JustMock test". Once you have selected the desired template, click OK.
 
 	**Figure 2: Choose the JustMock Test Project template**  
 	![JustMock Test Project Template](images/ProjectTemplate.png)
@@ -34,19 +34,22 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 
 ## Add JustMock to a Test Project
 
-If you want to apply JustMock to an existing unit test project, you need to add a reference to Telerik.JustMock.Dll. 
+If you want to use JustMock in an existing unit test project, you should add a reference to **Telerik.JustMock.dll**. 
 
-1. Right click on your test project and select Add Reference.
+>NuGet package is available for **JustMock Lite** only. If you prefer using it, check the [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) topic for details. 
+
+1. Right click on your test project and select *Add Reference*.
 
 	**Figure 3: Add reference to a project**  
 	![JustMock Test Project Template](images/AddReference.png)
 
-1. Go to the Browse tab and navigate to the Libraries folder in the JustMock installation directory (by default C:\Program Files (x86)\Progress\Telerik JustMock\Libraries). Select __Telerik.JustMock.dll__ and click OK.
+1. Go to the *Browse* tab and navigate to the *Libraries* folder in the JustMock installation directory (by default *C:\Program Files (x86)\Progress\Telerik JustMock\Libraries*). Select __Telerik.JustMock.dll__ and click OK.
+	
+> For **.NET Core** and **.NET 5**, the required assembly is located at *"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\netcoreapp2.0\"*
 
 	**Figure 4: Select Telerik.JustMock.dll reference**  
 	![JustMock Test Project Template](images/SelectReference.png)
-	
-> For .NET Core and .NET 5 the required Dll is located at "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\netcoreapp2.0\"
+
 
 1. Further, you will need to include the *Telerik.JustMock* namespace into your test project.
 
