@@ -1,7 +1,7 @@
 ---
 title: Installation and Setup
 page_title: Installation and Setup | JustMock Documentation
-description: Installation Instructions and Setup for Telerik JustMock
+description: Learn how you can install the different versions of the Telerik JustMock framework.
 previous_url: /getting-started-installation-instructions.html
 slug: justmock/getting-started/installation-instructions
 tags: installation,instructions
@@ -35,17 +35,26 @@ You can choose between the following approaches:
 
 	![JustMock Nugget](images/JustMockNugget.png)
 
-* You can download the __JustMock Lite__ installer from [JustMock Lite: Free Mocking Framework](https://www.telerik.com/justmock/free-mocking) page.  Keep in mind that this will require to either log in or creatе a new Telerik account.
+* You can download the __JustMock Lite__ installer from [JustMock Lite: Free Mocking Framework](https://www.telerik.com/justmock/free-mocking) page.  Keep in mind that this will require to either log in or create a new Telerik account.
 
 ## Resources and Documentation
 
-After installing JustMock, you can find example projects in the installation directory (by default C:\Program Files (x86)\Progress\Telerik JustMock). 
+- **Examples**
 
-The example projects provide a hands-on approach, unit testing JustMock itself. The documentation is also available in PDF format which you can download from your [Telerik account](https://www.telerik.com/account/my-downloads).
+    The example projects provide a hands-on approach, unit testing JustMock itself. After installing JustMock, you can find the sample projects in the installation directory (by default C:\Program Files (x86)\Progress\Telerik JustMock). 
 
-If you need additional assistance, take a look at our [online JustMock forums](https://www.telerik.com/forums/justmock) or [contact support](https://www.telerik.com/account/support-tickets?pid=743).
 
-If you want to suggest a new feature or vote for a popular one, please visit [JustMock Feedback Portal](https://feedback.telerik.com/justmock).
+- **Offline Documentation**
+
+    The documentation is also available in PDF format which you can download from your [Telerik account](https://www.telerik.com/account/my-downloads).
+
+- **Additional Assistance**
+
+    If you need additional assistance, take a look at our [online JustMock forums](https://www.telerik.com/forums/justmock) or [contact support](https://www.telerik.com/account/support-tickets?pid=743).
+
+- **Suggestions and Reports**
+
+    If you want to suggest a new feature or vote for a popular one, please visit [JustMock Feedback Portal](https://feedback.telerik.com/justmock).
 
 ## Next Steps
 
