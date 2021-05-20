@@ -193,7 +193,7 @@ Here is the example class we are going to use:
 
 > **Important**
 >
-> To use this kind of object mocking you first need to go to elevated mode by enabling TelerikJustMock from the menu.  [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To use this kind of object mocking you first need to go to elevated mode by enabling TelerikJustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 Note that here we are going to mock an instance of the `Foo` class in the same way as we did for `FooVirtual` while `Foo` does not need to have all its members declared as `virtual`.
 

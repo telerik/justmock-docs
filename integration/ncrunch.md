@@ -26,7 +26,7 @@ JustMock supports all of the listed options from the NCrunch Configuration Wizar
 
 > **Important**
 >
-> To use elevated mocking you first need to go to elevated mode by enabling TelerikJustMock from the menu. [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To use elevated mocking you first need to go to elevated mode by enabling TelerikJustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](../advanced-usage/advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 To use __NCrunch__ along with the JustMock profiler, you will need to: 
 

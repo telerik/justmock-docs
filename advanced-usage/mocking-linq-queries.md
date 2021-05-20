@@ -108,7 +108,7 @@ In the further examples, we will use the following method and sample classes to 
 
 > **Important**
 >
-> To mock LINQ queries you first need to go to elevated mode by enabling TelerikJustMock from the menu.  [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To mock LINQ queries you first need to go to elevated mode by enabling TelerikJustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 ## Asserting Custom Select Query
 

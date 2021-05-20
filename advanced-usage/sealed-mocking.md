@@ -108,7 +108,7 @@ In the examples in this article we will use the following sample classes and int
 
 > **Important**
 >
-> To use sealed mocking you first need to go to elevated mode by enabling JustMock from the menu.  [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To use sealed mocking you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 ## Assert Final Method Call on a Sealed Class
 

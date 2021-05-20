@@ -64,7 +64,7 @@ In the further examples we will use the following sample class to test:
 
 > **Important**
 >
-> To use partial mocking you first need to go to elevated mode by enabling TelerikJustMock from the menu. [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To use partial mocking you first need to go to elevated mode by enabling TelerikJustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 ## Partially Mock Instance Calls
 In the following example we use a non mocked instance, but we call a method which is arranged.
