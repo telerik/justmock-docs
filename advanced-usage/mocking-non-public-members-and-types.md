@@ -171,7 +171,7 @@ In the next examples, we will use the following sample class to test:
 
 > **Important**
 >
-> To mock non-public members and types, you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerikjustmock) topic.
+> To mock non-public members and types, you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 ## Step by Step Description
 
@@ -1085,7 +1085,7 @@ JustMock leverages .NET 4 and the [DLR](https://en.wikipedia.org/wiki/Dynamic_La
 
 Argument matchers are specified using `Arg.Expr`.
 
-When using dynamic expressions in Visual C# projects, you should reference the Microsoft.CSharp assembly.
+When using dynamic expressions in Visual C# projects, you should reference the [Microsoft.CSharp](https://www.nuget.org/packages/Microsoft.CSharp/) assembly.
 
   #### __[C#] Example 16: Using dynamic wrapper__
 
