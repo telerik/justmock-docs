@@ -1,5 +1,5 @@
 ---
-title: Recursive Mocking
+title: Mocking Chained Calls
 page_title: Recursive Mocking | JustMock Documentation
 description: Recursive Mocking
 previous_url: /basic-usage-recursive-mocking.html
@@ -57,8 +57,7 @@ In the next examples we will use the following sample code to test:
   {{endregion}}
 
 
-## Step by step example
-Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a particular string. `IFoo` contains an `IBar` which, in turn, also contains a `Do` method. `IBar.Do` method can be accessed via a recursive call to `IFoo.Bar`. To arrange the call directly from `IFoo`, we just need to chain it considering the fact that TelerikJustMock will automatically create the necessary mock for `IBar`.
+Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a particular string. `IFoo` contains an `IBar` which, in turn, also contains a `Do` method. `IBar.Do` method can be accessed via a recursive call to `IFoo.Bar`. To arrange the call directly from `IFoo`, we just need to chain it considering the fact that JustMock will **automatically** create the necessary mock for `IBar`.
 
   #### __[C#]__
 
@@ -107,7 +106,7 @@ Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a
     End Sub
   {{endregion}}
 
-However, if `foo.Bar` is not arranged, it will still be instantiated. You can verify this by the following example:
+Note: If `foo.Bar` is not arranged, it will still be instantiated. You can verify this by the following example:
 
   #### __[C#]__
 
@@ -138,7 +137,8 @@ However, if `foo.Bar` is not arranged, it will still be instantiated. You can ve
 
 
 ## Nested Property Calls
-The following example shows how to assert nested property get calls.
+
+The following example shows how to arrange the getter of a nested property.
 
   #### __[C#]__
 
@@ -178,7 +178,8 @@ The following example shows how to assert nested property get calls.
 
 Here we arrange `foo.Bar.Value` to return `10`.
 
-You can also arrange property set. Here is an example:
+You can also arrange the setter of a nested property. In the next example, you will see how to arrange a nested property setter in scenario with Strict behavior. When using that behavior, you are allowed to call only arranged members and all other calls throw exception. If you need more details on this setup, check the [Strict behavior]({%slug justmock/basic-usage/mock-behaviors/strict%}) topic.
+
 
   #### __[C#]__
 
@@ -211,14 +212,15 @@ You can also arrange property set. Here is an example:
 
         ' Act
         foo.Bar.Value = 5
-        foo.Bar.Value = 10 ' This line will throws an exception.
+        foo.Bar.Value = 10 ' This line will throw an exception.
     End Sub
   {{endregion}}
 
-We use `Bahavior.Strict` to enable only arranged calls and to reject any other calls. Only setting `foo.Bar.Value` to `5` is allowed and as we set it to `10`, an exception will be thrown. After assertion we actually set it to `5` and if we verify `foo` at that point an exception won't be thrown.
+We use `Bahavior.Strict` to enable only arranged calls and to reject any other calls. Only setting `foo.Bar.Value` to `5` is allowed and as we set it to `10`, an exception will be thrown. 
 
 ## Nested Property and Method Calls
-We can call properties recursively, or we can do it with methods as well.
+
+Similarly to the nested properties, you can also arrange nested methods.
 
   #### __[C#]__
 
@@ -263,5 +265,5 @@ We can call properties recursively, or we can do it with methods as well.
     End Sub
   {{endregion}}
 
-In this arrangement we specify that when calling `foo.Bar.Do` and `foo.Bar.Baz.Do` methods `"xit"` and `"yit"` should be returned respectively.
+In this arrangement we specify that when calling `foo.Bar.Do` and `foo.Bar.Baz.Do` methods, `"xit"` and `"yit"` should be returned respectively.
 
