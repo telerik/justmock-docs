@@ -25,22 +25,19 @@ The **JustMock Console** automatically prepares the environment so you can direc
 
 ### Manually
 
-If for any reason using __JustMock Console__ does not apply to your case, it is possible to set the __JustMock environment variables__ manually before running the tests:
+If for any reason using __JustMock Console__ does not apply to your case, it is possible to set the __JustMock environment variables__ manually before running the tests. The next list shows the required variables you should set:
+
+* `SET JUSTMOCK_INSTANCE=1`
+* `SET COR_ENABLE_PROFILING=1`
+* `SET COR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}`
+
+Once the environment variables are set, you will be able to run elevated JustMock tests through the __Command Prompt__, simply by following the standard steps for the chosen unit testing framework. The next example shows setting up the environment and running tests using VS 2019.
 
 ![Windows Batch Command 2](images/WindowsBatchCommand2.png)
 
 Execution command for VS 2019: 
 
-`SET JUSTMOCK_INSTANCE=1`
-
-`SET COR_ENABLE_PROFILING=1`
-
-`SET COR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}`
-
-`"C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
-
-As shown above, once the environment variables are set, you will be able to run elevated JustMock tests through the __Command Prompt__, simply by following the standard steps for the chosen unit testing framework. 
-           	
+`"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" "C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
 
 ### With **JustMock Runner**
 
