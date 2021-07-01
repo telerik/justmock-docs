@@ -1,6 +1,6 @@
 ---
-title: Windows Batch Command
-page_title: Windows Batch Command | JustMock Documentation
+title: Command Prompt
+page_title: Command Prompt | JustMock Documentation
 description: In this topic, you will learn how to execute Telerik® JustMock test DLLs with cmd.exe.
 slug: justmock/integration/windows-batch-command
 tags: windows,batch,command
@@ -9,17 +9,19 @@ position: 15
 previous_url: /scenarios/running-justmock-profiler-outside-visual-studio, /scenarios/running-justmock-profiler-outside-visual-studio.html, /integration-windows-batch-command.html, /integration-windows-batch-command
 ---
 
-# Windows Batch Command
+# Command Prompt
 
-You can execute test DLLs via the __Command Prompt(cmd.exe)__. This topic demonstrates how to execute __Telerik® JustMock__ test DLLs with __cmd.exe__.
+You can execute test DLLs via the __Command Prompt(cmd.exe)__. No matter of whether you have installed JustMock on a specific environment or not, you can run your elevated tests in a console. This article describes how you can run tests in cmd.exe with JustMock installation.
 
-##  How to Run Profiler-Enabled JustMock Tests in Command Prompt
+>If you would like to run elevated tests **without installing JustMock**, make sure to set the required environment variables for registering the profiler before proceeding with the current topic. The variables you should set are listed in the [Installation-Free Elevated Mocking]({%slug justmock/integration/installation-free-elevated-mocking%}) topic.
+
+## Run Profiler-Enabled JustMock Tests in Command Prompt
 
 The procedure of executing test DLLs in __Command Prompt__ is almost identical regardless of the different unit testing frameworks that you may use.
 
-To prepare your environment, you should set the __JustMock environment variables__. That can be done using one of the following approaches:
+To operate, JustMock needs to have specific variables registered in the environment. To prepare your environment, you should set the __JustMock environment variables__. That can be done using one of the following approaches:
 
-### With **JustMock Console**
+### With JustMock Console
     
 The **JustMock Console** automatically prepares the environment so you can directly execute your tests and it is **the suggested approach** for running tests in console. For detailed instructions on how to use it, check the [JustMock Console]({%slug justmock/integration/justmock-console%}) topic.
 
@@ -39,7 +41,7 @@ Execution command for VS 2019:
 
 `"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" "C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
 
-### With **JustMock Runner**
+### With JustMock Runner
 
 >important**JustMock Runner** is outdated and the section is for backward compatibility only.
 

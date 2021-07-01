@@ -25,51 +25,86 @@ There are limitations to using registry-free profiler activation:
 After you choose the required bitness of the profiler, you must commit the respective profiler DLLs into your source control repository. You can find the profiler DLLs in the JustMock installation folder. The usual locations are:
 
 * __32-bit profiler__ - C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll
-* __64-bit profiler__ - C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll
+* __64-bit profiler__ - C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll
 
 Commit one or both DLLs to your source control repository. __Do not rename them!__ If you need to use both, then commit them in separate folders. Your build system can then activate the profiler after checking it out from source control. The need to specify the full path to the profiler DLL means that you need to have a mechanism to resolve relative paths in source control to physical paths before trying to activate the profiler.
 
-## Installation-Free Integration with MSBuild
-
-The `<JustMockStart/>` MSBuild task has the attribute __ProfilerPath__, which must be set to the full path to the profiler DLL. Usually there is a build variable that holds the absolute path to the source code root folder. If we assume that variable is called $(SourceDir) then we can set the profiler path like so:
-            
-  {{region }}
-    <JustMockStart ProfilerPath="$(SourceDir)\path\to\Telerik.CodeWeaver.Profiler.dll" />
-  {{endregion}}
-
-## Installation-Free Integration with TFS Workflow Code Activities
-
-Before proceeding with the steps to enable installation-free integration with TFS, you must first execute the steps for integrating the JustMock Code Activity into your build workflow. Follow [this article]({%slug justmock/integration/tfs-2010%}) for detailed steps describing the Code Activity Workflow for TFS 2010 or TFS 2012, or check [this page]({%slug justmock/integration/tfs-2013%}) to integrate TelerikJustMock in TFS 2013.
-
-The __JustMockStart__ Code Activity has the __ProfilerPath__ property, which must be set to the full path to the profiler DLL. Usually there is a build variable that holds the absolute path to the source code root folder. If we assume that variable is called *SourcesDirectory* then we can set the profiler path like so:
-
-![Code Activity Profiler Path](images/CodeActivityProfilerPath.png)
-
-If you don't have a variable that holds the path to the sources, then you can create one by following these steps.
-
-1. Create a build variable called *SourcesDirectory* as shown on the following diagram:
-
-	![Code Activity Source Dir 0](images/CodeActivitySourceDir0.png)
-	
-	It should be of type String and scoped to "Compile, Test and Publish".
-
-1. When asked, specify String for the type of its generic argument:
-
-	![Code Activity Source Dir 2](images/CodeActivitySourceDir2.png)
-
-1. Configure the activity:
-
-	![Code Activity Source Dir 3](images/CodeActivitySourceDir3.png)
-
-	* Set the Name property to *WellKnownEnvironmentVariables.SourcesDirectory*
-	* Set the Result property to *SourcesDirectory*
 
 ## Installation-Free Integration through the Environment
 
-Installation-free integration in the general case by setting the `COR_PROFILER_PATH` environment variable to the full path to the profiler DLL.
+To enable JustMock to run in any environment without depending on installation, you should set the path to the profiler and enable the CLR to run that profiler. Both are achieved by setting environment variables.
 
-Execute the following shell command before executing JustMockRunner.exe or otherwise executing the command that runs the tests:
+### Registering the profiler
 
-`SET COR_PROFILER_PATH=C:\full\path\to\Telerik.CodeWeaver.Profiler.dll`
+JustMock enables you to set a path that can be used by both, x86 and x64 projects, or to set the paths for the two configurations separately. Following is a list of the variables available for setting that path:
 
-Substitute the path to the correct path. How you do that depends on the specific build system you're integrating with.
+
+<table>
+<thead>
+	<tr>
+		<th>.NET Framework variables</th>
+		<th>.NET Core variables</th>
+		<th>Description</th>
+		<th>Default path</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>COR_PROFILER_PATH</td>
+		<td></td>
+		<td>The path to the profiler assembly for x86 and x64 processes.</td>
+		<td>C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver</td>
+	</tr>
+	<tr>
+		<td>COR_PROFILER_PATH_32</td>
+		<td>CORECLR_PROFILER_PATH_32</td>
+		<td>The path to the profiler assembly for x86 processes</td>
+		<td>C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll</td>
+	</tr>
+	<tr>
+		<td>COR_PROFILER_PATH_64</td>
+		<td>CORECLR_PROFILER_PATH_64</td>
+		<td>The path to the profiler assembly for x64 processes</td>
+		<td>C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll</td>
+	</tr>
+</tbody>
+</table>
+
+>important**Note**: You should set either COR_PROFILER_PATH **or** the other variables for the platform you use. But not the two at the same time.
+
+After the path to the profiler is properly set up, you can enable the CLR to run that profiler.
+
+### Enabling the profiler
+
+Once you have the profiler set, you will need to enable that profiler before running the tests. This is done using the following variables and values:
+
+
+<table>
+<thead>
+	<tr>
+		<th>.NET Framework</th>
+		<th>.NET Core</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>
+    	    <p>JUSTMOCK_INSTANCE=1</p>
+    		<p>COR_ENABLE_PROFILING=1 </p>
+    		<p>COR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}</p>
+		</td>
+		<td>
+    	    <p>JUSTMOCK_INSTANCE=1</p>
+    		<p>CORECLR_ENABLE_PROFILING = 1</p>
+    		<p>CORECLR_PROFILER = {B7ABE522-A68F-44F2-925B-81E7488E9EC0}</p>
+		</td>
+	</tr>
+</tbody>
+</table>
+
+### Setting environment variables 
+
+How exactly the required variables are set depends on the environment you are working on. The following list contains topics describing how to set environment variables in different environments:
+
+- [Windows Command Prompt](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/set_1)
+- [Azure pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#set-variables-in-pipeline)
