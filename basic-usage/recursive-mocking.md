@@ -1,19 +1,19 @@
 ---
 title: Mocking Chained Calls
-page_title: Recursive Mocking | JustMock Documentation
-description: Recursive Mocking
+page_title: Mocking Chained Calls | JustMock Documentation
+description: Mocking Chained Calls
 previous_url: /basic-usage-recursive-mocking.html
 slug: justmock/basic-usage/recursive-mocking
-tags: recursive,mocking
+tags: recursive,mocking, mock, chain, nested, method, property
 published: True
 position: 11
 ---
 
-# Recursive Mocking
+# Mocking Chained Calls
 
-Recursive mocks enable you to mock members that are obtained as a result of "chained" calls on a mock. For example, recursive mocking is useful in the cases when you test code like this: `foo.Bar.Baz.Do("x")`.
+This feature enables you to mock members that are obtained as a result of "chained" calls on a mock. For example, mocking chained calls is useful in the cases when you test code like this: `foo.Bar.Baz.Do("x")`.
 
-In the next examples we will use the following sample code to test:
+In the next examples, we will use the following sample code to test:
 
 #### __[C#] Sample setup__
 
@@ -58,11 +58,11 @@ In the next examples we will use the following sample code to test:
     End Interface
   {{endregion}}
 
-## How to Use Recursive Mocking
+## How to Mock Chain of Method Calls
 
-Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a particular string. `IFoo` contains an `IBar` which, in turn, also contains a `Do` method. `IBar.Do` method can be accessed via a recursive call to `IFoo.Bar`. To arrange the call directly from `IFoo`, we just need to chain it considering the fact that JustMock will **automatically** create the necessary mock for `IBar`.
+Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a particular string. `IFoo` contains an `IBar` which, in turn, also contains a `Do` method. `IBar.Do` method can be accessed via a nested call to `IFoo.Bar`. To arrange the call directly from `IFoo`, we just need to chain it considering the fact that JustMock will **automatically** create the necessary mock for `IBar`.
 
-#### __[C#] Example 1: Recursive mocking example__
+#### __[C#] Example 1: Mocking chain of method calls example__
 
   {{region RecursiveMocks#AssertNestedVeriables}}
     
@@ -87,7 +87,7 @@ Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a
     }
   {{endregion}}
 
-#### __[VB] Example 1: Recursive mocking example__
+#### __[VB] Example 1: Mocking chain of method calls example__
 
   {{region RecursiveMocks#AssertNestedVeriables}}
   
