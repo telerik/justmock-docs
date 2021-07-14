@@ -11,7 +11,7 @@ position: 21
 
 # Extension Methods Mocking
 
-Mocking extension methods is one of the advanced features supported in __Telerik®  JustMock__. In this topic we will go through some examples that show how easy and straightforward it is to assert expectations related to extension methods in your tests.
+Mocking extension methods is one of the advanced features supported in __Telerik®  JustMock__. In this topic, we will go through some examples that show how easy and straightforward it is to assert expectations related to extension methods in your tests.
 
 > This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
@@ -54,6 +54,7 @@ To illustrate this in more examples we will use the following code:
     }
 {{endregion}}
 
+
 When you have to assert some expectations related to extension methods, you can use everything you already know. Let's go through a very simple example.
 
 #### __[C#] Example 1: Arrange extension method behavior__
@@ -66,17 +67,17 @@ When you have to assert some expectations related to extension methods, you can 
         var foo = new Foo();
     
         string expected = "bar";
-    
+        // Arrange that when the `Foo.Echo` extension method is called, the returned value should be a specific value ("bar").
         Mock.Arrange(() => foo.Echo(Arg.IsAny<string>())).Returns(expected);
     
+        // Call the extension method with another value
         string result = foo.Echo("hello");
     
+        // Assert that the correct value is returned
         Assert.AreEqual(expected, result);
     }
 {{endregion}}
 
-
-Here we have used an object of type `Foo`. We first arrange that when the `Foo.Echo` extension method is called, the returned value should be a specific value ("bar"). Then we act - we call the extension method with another value and finally assert that the correct value is returned.
 
 Next, we have a more complex sample where the extension method has more arguments.
 
@@ -104,7 +105,7 @@ Similarly, we arrange that when the `Echo` extension method is called, it should
 
 Another thing we can assert is the occurrence of the extension methods. Let's start with an example.
 
-#### __[C#] Example 3: Arrange extension method occurence__
+#### __[C#] Example 3: Arrange extension method occurrence__
 
 {{region ExtensionMethodsMocking#SampleCode4}}
 
