@@ -13,7 +13,6 @@ position: 14
 
 The built-in feature for creating mocks by specific arrangement saves time when it comes to tiresome set up of arrangements. This functionality allows you to create mocks of a certain class (the system under test) and to arrange their behavior at the same time through the **Mock.CreateLike** method. 
 
->noteThis feature is available in both - **JustMock** and **JustMock Lite**. In **JustMock**, with the profiler enabled, you can create arrangements that require elevated mocking.
 
 ## Using Mock.CreateLike
 
@@ -74,6 +73,7 @@ Let's take the following system under test for example:
         Private m_Name As String
     End Class
 {{endregion}}
+
 
 For simple tests with few arrangements, this provides only marginal benefit. The real benefit comes with complex tests with multiple arrangements, like the one demonstrated in **Example 1**.
 
@@ -231,6 +231,7 @@ The API is even more powerful and you can define all the arrangements from the a
     End Sub
 {{endregion}}
 
+
 The syntax reflects the hierarchical structure of the complex arrangement much better and makes trivial arrangements (like for the values of properties) easy.
 
 ## Using Matchers with Mock.CreateLike
@@ -280,6 +281,7 @@ When creating mocks with `Mock.CreateLike`, you can also use [argument matchers]
     End Sub
 {{endregion}}
 
+
  You can even **refer to the arguments** of the method when specifying its return value, like demonstrated in **Example 4**. In this example, the `Param._1` and `Param._2` bits are placeholders for the actual arguments passed to the arranged method. In other words, the arrangement means that `Object.Equals` will be called instead of `cmp.Equals`, and the parameters of `cmp.Equals` will be transferred as parameters of `Object.Equals`.
 
 >noteWhen you need to use argument matchers and the type you need is not present in the [Arg](https://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Arg.html).Any~ properties, you can also use a custom type by matching it using the `Arg.IsAny<T>()` method.
@@ -309,6 +311,7 @@ With `Mock.CreateLike` you can arrange return values. If you would like to set a
     End Interface
 {{endregion}}
 	
+	
 For simple cases, you can create a test like the one in Example 5.
 
 #### __[C#] Example 5: Arrange return values__
@@ -333,6 +336,7 @@ For simple cases, you can create a test like the one in Example 5.
         Assert.IsTrue(conn.Open(".\SQLEXPRESS"))
     End Sub
 {{endregion}}
+	
 	
 However, if you need to add expectations to `Open()`, you cannot with the above syntax. You should use `Mock.Arrange` to add them. 
 
