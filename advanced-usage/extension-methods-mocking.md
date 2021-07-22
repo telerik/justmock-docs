@@ -17,7 +17,7 @@ Mocking extension methods is one of the advanced features supported in __Telerik
 
 ## How To Mock Extension Methods?
 
-You can mock any extension method as you would do it with any other regular method. There is no need to add specific setup or use a dedicated API for extension methods. 
+You can mock any extension method as you would do it with any other instance method. There is no need to add specific setup or use a dedicated API for extension methods. The `Mock.Arrange()` method will help you set up the behavior or expectations you need. 
 
 To illustrate this in more examples we will use the following code:
 
@@ -101,6 +101,8 @@ Next, we have a more complex sample where the extension method has more argument
 
 Similarly, we arrange that when the `Echo` extension method is called, it should return the sum of its arguments if the second argument is equal to 10.
 
+>For more information on dealing with method parameters, check the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic.
+
 ## Assert Occurrences of Extension Methods
 
 Another thing we can assert is the occurrence of the extension methods. Let's start with an example.
@@ -126,11 +128,12 @@ Another thing we can assert is the occurrence of the extension methods. Let's st
 	}
 {{endregion}}
 
+
 The sample code arranges that the extension method should never occur as described in the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic. However, we then call the extension method and assert that an exception is thrown.
 
 ## Mock Interface Extension Method Calls
 
-This last section will show that we can easily mock interface extension method calls when needed. In the example, we will use the following classes:
+This section will show that we can easily mock interface extension method calls when needed. In the example, we will use the following classes:
 
 #### __[C#] Sample setup__
 
@@ -181,3 +184,9 @@ We have the `IDataProvider` interface which we extend with the `GetScope` extens
 
 
 Here we have arranged that the call to the `GetScope` method should return a specific mocked instance of the `IObjectScope` interface. We act and assert that the correct value is returned.
+
+## See Also
+
+* [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})
+* [Matchers]({%slug justmock/basic-usage/matchers%})
+* [Static Mocking]({%slug justmock/advanced-usage/static-mocking%})

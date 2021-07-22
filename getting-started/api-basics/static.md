@@ -160,7 +160,7 @@ Extension methods in .NET are also defined as static ones. To demonstrate how yo
 
 To mock `PrintOrder` you would again need only to arrange your expectations with `Mock.Arrange()`.
 
-#### [C#] Example 4: Mock a static method
+#### [C#] Example 4: Mock extension method
 
 {{region justmock-getting-started-basics-static_5}}
 
