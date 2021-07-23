@@ -45,7 +45,7 @@ If you want to use JustMock in an existing unit test project, you should add a r
 
 1. Go to the *Browse* tab and navigate to the *Libraries* folder in the JustMock installation directory (by default *C:\Program Files (x86)\Progress\Telerik JustMock\Libraries*). Select __Telerik.JustMock.dll__ and click OK.
 	
-> For **.NET Core** and **.NET 5**, the required assembly is located at *"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\netcoreapp2.0\"*
+	> For **.NET Core** and **.NET 5**, the required assembly is located at *"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\netcoreapp2.0\"*
 
 	**Figure 4: Select Telerik.JustMock.dll reference**  
 	![JustMock Test Project Template](images/SelectReference.png)
