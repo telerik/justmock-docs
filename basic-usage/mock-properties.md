@@ -227,88 +227,54 @@ Consider an interface with an indexer property.
     End Interface
 {{endregion}}
 
+**Example 4** shows how you can control the return value of an indexed property getter.
 
-Let's arrange that different values should be returned for different indexes.
-          
-1. Create a mock.
+#### __[C#] Example 4: Return different values for different indexes__
 
-    #### __[C#] Example 4: Create mock__
+{{region }}
+
+    // Create mock
+    var indexedFoo = Mock.Create<IIndexedFoo>();
+    
+    // Arrange that a call to index 0 should return ping, a call to index 1 should return pong.
+    Mock.Arrange(() => indexedFoo[0]).Returns("ping");
+    Mock.Arrange(() => indexedFoo[1]).Returns("pong");
+    
+    // Act
+    string actualFirst = indexedFoo[0];
+    string actualSec = indexedFoo[1];
+    
+    // Assert
+    Assert.AreEqual("ping", actualFirst);
+    Assert.AreEqual("pong", actualSec);
+{{endregion}}
 	
-    {{region }}
-    
-	    var indexedFoo = Mock.Create<IIndexedFoo>();
-	{{endregion}}
-	
-	  #### __[VB] Example 4: Create mock__
-	
-	  {{region }}
-	  
-	    Dim IndexedFoo = Mock.Create(Of IIndexedFoo)()
-	  {{endregion}}
+#### __[VB] Example 4: Create mock__
 
+{{region }}
 
-1. Arrange that a call to index 0 should return __ping__, a call to index 1 should return __pong__.     
-
-    #### __[C#] Example 5: Arrange indexed getter__
+    ' Create mock
+    Dim IndexedFoo = Mock.Create(Of IIndexedFoo)()
     
-    {{region }}
+    ' Arrange that a call to index 0 should return ping, a call to index 1 should return pong.
+    Mock.Arrange(Function() IndexedFoo(0)).Returns("ping")
+    Mock.Arrange(Function() IndexedFoo(1)).Returns("pong")
     
-        Mock.Arrange(() => indexedFoo[0]).Returns("ping");
-        Mock.Arrange(() => indexedFoo[1]).Returns("pong");
-    {{endregion}}
+    ' Act
+    Dim actualFirst As String = IndexedFoo(0)
+    Dim actualSec As String = IndexedFoo(1)
     
-    #### __[VB] Example 5: Arrange indexed getter__
-    
-    {{region }}
-    
-        Mock.Arrange(Function() IndexedFoo(0)).Returns("ping")
-        Mock.Arrange(Function() IndexedFoo(1)).Returns("pong")
-    {{endregion}}
-
-
-1. Execute the calls.
-              
-    #### __[C#] Example 6: Act__
-    
-    {{region }}
-    
-        string actualFirst = indexedFoo[0];
-        string actualSec = indexedFoo[1];
-    {{endregion}}
-    
-    #### __[VB] Example 6: Act__
-    
-    {{region }}
-    
-        Dim actualFirst As String = IndexedFoo(0)
-        Dim actualSec As String = IndexedFoo(1)
-    {{endregion}}
-
-
-1. Finally, do the assertion.
-
-    #### __[C#] Example 7: Assert__
-    
-    {{region }}
-    
-        Assert.AreEqual("ping", actualFirst);
-        Assert.AreEqual("pong", actualSec);
-    {{endregion}}
-    
-    #### __[VB] Example 7: Assert__
-    
-    {{region }}
-    
-        Assert.AreEqual("ping", actualFirst)
-        Assert.AreEqual("pong", actualSec)
-    {{endregion}}
+    ' Assert
+    Assert.AreEqual("ping", actualFirst)
+    Assert.AreEqual("pong", actualSec)
+{{endregion}}
 
 
 ### Assert Indexed Set
 
 Make sure that a specific index is set to a particular value.
         
-#### __[C#] Example 8: Arrange indexed setter__
+#### __[C#] Example 5: Arrange indexed setter__
 
 {{region MockingProperties#ShouldAssertIndexedSet}}
   
@@ -319,17 +285,18 @@ Make sure that a specific index is set to a particular value.
         // Arrange
         var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
 
+        // foo[0] can be only set to "foo".
         Mock.ArrangeSet(() => { foo[0] = "foo"; });
 
         // Act
         foo[0] = "foo";
 
-        // this throws an exception
+        // The following line does not satisfy the arranged criteria and throws a StrictMockException.
         foo[0] = "bar";
     }
 {{endregion}}
 
-#### __[VB] Example 8: Arrange indexed setter__
+#### __[VB] Example 5: Arrange indexed setter__
 
 {{region MockingProperties#ShouldAssertIndexedSet}}
 
@@ -339,12 +306,13 @@ Make sure that a specific index is set to a particular value.
         ' Arrange
         Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
 
+        ' foo[0] can be only set to "foo".
         Mock.ArrangeSet(Sub() foo(0) = "foo")
 
         ' Act
         foo(0) = "foo"
 
-        ' this throws an exception
+        ' The following line does not satisfy the arranged criteria and throws a StrictMockException.
         foo(0) = "bar"
     End Sub
 {{endregion}}
@@ -358,49 +326,54 @@ The code above throws an exception once the zero-indexed item of `foo` is set to
 Make sure that a specific index is set to a value matching a particular criteria.
         
 
-  #### __[C#] Example 9: Arrange indexed setter using matchers__
+#### __[C#] Example 6: Arrange indexed setter using matchers__
 
-  {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
-  
+{{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+    
     [TestMethod]
     [ExpectedException(typeof(StrictMockException))]
     public void ShouldAssertIndexedSetWithMatcher()
     {
         // Arrange
         var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
-
+    
+        // foo[0] can be only set to "ping".
         Mock.ArrangeSet(() => { foo[0] = Arg.Matches<string>(x => x.Equals("ping")); });
+        // foo[1] can be only set to any string.
         Mock.ArrangeSet(() => { foo[1] = Arg.IsAny<string>(); });
-
+    
         // Act
         foo[0] = "ping";
         foo[1] = "pong";
-
-        // line does not satisfy the matching criteria and throws a MockException
+    
+        // The following line does not satisfy the matching criteria and throws a MockException.
         foo[0] = "bar";
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB] Example 9: Arrange indexed setter using matchers__
+#### __[VB] Example 6: Arrange indexed setter using matchers__
 
-  {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+{{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+
     <TestMethod()>
     <ExpectedException(GetType(StrictMockException))>
     Public Sub ShouldAssertIndexedSetWithMatcher()
         ' Arrange
         Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
-
+        
+        ' foo[0] can be only set to "ping".
         Mock.ArrangeSet(Sub() foo(0) = Arg.Matches(Of String)(Function(x) x.Equals("ping")))
+        ' foo[1] can be only set to any string.
         Mock.ArrangeSet(Sub() foo(1) = "pong")
-
+    
         ' Act
         foo(0) = "ping"
         foo(1) = "pong"
-
-        ' line does not satisfy the matching criteria and throws a MockException
+    
+        ' The following line does not satisfy the matching criteria and throws a MockException
         foo(0) = "bar"
     End Sub
-  {{endregion}}
+{{endregion}}
 
 
 The first two set calls satisfy the requirements. However, the third call - `foo[0] = "bar"` throws an exception, because we arranged that the zero-indexed item can be set only to `"foo"`.
