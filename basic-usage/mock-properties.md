@@ -60,7 +60,7 @@ Let's consider the following example:
     }
 {{endregion}}
 
-  #### __[VB] Example 1: Arrange the return value of a getter__
+#### __[VB] Example 1: Arrange the return value of a getter__
 
 {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
 
@@ -78,6 +78,7 @@ Let's consider the following example:
         Assert.AreEqual(25, actual)
     End Sub
 {{endregion}}
+
 
 Here we test that a call to `foo.Value` property returns the value we arranged.
 
@@ -97,7 +98,8 @@ Follows an example, showing mocking property in F#:
 		Assert.AreEqual(monkey.Name, "Spike")
 {{endregion}}
 
-In the arrange section we specify that a call to `monkey.Name` should return "Spike".
+
+In the arrange section we change the behavior of the Name property get to specify that a call to `monkey.Name` should return "Spike".
 
 ## Property Setter
 
