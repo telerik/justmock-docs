@@ -12,34 +12,38 @@ position: 6
 # Mock Properties
 
 Mocking properties is similar to mocking methods, but there are a few cases that need special attention like mocking indexers and particular set operations.
-Consider the following `interface` for the examples in this article:
 
-  #### __[C#]__
 
-  {{region MockingProperties#IFooSUT}}
+To illustrate the usage of the functionality, we will be using the following interface definition:
+
+#### __[C#] Sample setup__
+
+{{region MockingProperties#IFooSUT}}
     public interface IFoo
     {
         int Value{get; set;}
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
-  {{region MockingProperties#IFooSUT}}
+{{region MockingProperties#IFooSUT}}
     Public Interface IFoo
         Property Value() As Integer
     End Interface
-  {{endregion}}
+{{endregion}}
 
 
-## Mock Property Get Calls
-The property get can be mocked like any other method call. We can arrange a return statement for a specific call (using Return), throw an exception (using Throw), raise an event when invoked (using Raise), etc.
+## Property Getter
+
+The property get can be mocked like any other method call. You can arrange a return statement for a specific call (using [Returns]({%slug justmock/basic-usage/mock/returns%})), throw an exception (using [Throws]({%slug justmock/basic-usage/mock/throws%})), raise an event when invoked (using [Raise]({%slug justmock/basic-usage/mock/raise%})), etc.
 
 Let's consider the following example:
 
-  #### __[C#]__
+#### __[C#] Example 1: Arrange the return value of a getter__
 
-  {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
+{{region MockingProperties#ShouldBeAbleToReturnForProperty}}
+
     [TestMethod]
     public void ShouldFakePropertyGet()
     {
@@ -54,11 +58,12 @@ Let's consider the following example:
         // Assert
         Assert.AreEqual(25, actual);
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 1: Arrange the return value of a getter__
 
-  {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
+{{region MockingProperties#ShouldBeAbleToReturnForProperty}}
+
     <TestMethod()>
     Public Sub ShouldFakePropertyGet()
         ' Arrange
@@ -72,15 +77,17 @@ Let's consider the following example:
         ' Assert
         Assert.AreEqual(25, actual)
     End Sub
-  {{endregion}}
+{{endregion}}
+
 
 Here we test that a call to `foo.Value` property returns the value we arranged.
 
 Follows an example, showing mocking property in F#:
   
-  #### __[F#]__
+#### __[F#] Example 1: Mock getter__
 
-  {{region MockingProperties#ShouldBeAbleToReturnForProperty}}
+{{region MockingProperties#ShouldBeAbleToReturnForProperty}}
+
 	[<Test()>]
 	member this.ShouldMockGetMemberThroughExpression() =
 	
@@ -89,19 +96,21 @@ Follows an example, showing mocking property in F#:
 		Mock.Arrange(monkey, fun ignore -> monkey.Name).Returns("Spike");  
 		
 		Assert.AreEqual(monkey.Name, "Spike")
-  {{endregion}}
+{{endregion}}
 
-In the arrange section we specify that a call to `monkey.Name` should return "Spike".
 
-## Mock Property Set Calls
+In the arrange section we change the behavior of the Name property get to specify that a call to `monkey.Name` should return "Spike".
 
-The set operation can be mocked for both indexers and normal properties. Set operations are mocked using a special set entry point which is:`Mock.ArrangeSet(lambda)`.
+## Property Setter
 
-Property set mocking is useful when you want to make sure or to verify that a particular property is set with an expected value. For this reason we use a strict mocking.
+The set operation can be mocked for both indexers and normal properties. Set operations are mocked using a special set entry point which is `Mock.ArrangeSet(lambda)`.
 
-  #### __[C#]__
+Property set mocking is useful when you want to make sure or to verify that a particular property is set with an expected value. For this reason, we use a [strict mocking]({%slug justmock/basic-usage/mock-behaviors/strict%}).
 
-  {{region MockingProperties#MockingPropertySetCalls}}
+#### __[C#] Example 2: Mock setter when mocking behavior is Strict__
+
+{{region MockingProperties#MockingPropertySetCalls}}
+
     [TestMethod]
     [ExpectedException(typeof(StrictMockException))]
     public void ShouldThrowExceptionOnTheThirdPropertySetCall()
@@ -118,11 +127,12 @@ Property set mocking is useful when you want to make sure or to verify that a pa
         // throws MockException because matching criteria is not met
         foo.Value = 3;
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 2: Mock setter when mocking behavior is Strict__
 
-  {{region MockingProperties#MockingPropertySetCalls}}
+{{region MockingProperties#MockingPropertySetCalls}}
+
     <TestMethod()>
     <ExpectedException(GetType(StrictMockException))>
     Public Sub ShouldThrowExceptionOnTheThirdPropertySetCall()
@@ -138,18 +148,21 @@ Property set mocking is useful when you want to make sure or to verify that a pa
         ' throws MockException because matching criteria is not met
         foo.Value = 3
     End Sub
-  {{endregion}}
+{{endregion}}
 
-With the matcher we set a requirement that the `foo.Value` property should have values larger than 3. When we set the value to a number less than 3, a `MockException` is thrown.
+With the `Arg.Matches<int>` matcher, we set a requirement that the `foo.Value` property should have values larger than 3. When we set the value to a number less than 3, a `MockException` is thrown.
 
-For asserting a property set in case of __loose mocking__, the following syntax is available:
-`Mock.AssertSet(lambda)`
+>For more details on how to work with arguments and matchers, check the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic.
+
+For asserting a property set in case of __[loose mocking]({%slug justmock/basic-usage/mock-behaviors/loose%})__, the following syntax is available:
+`Mock.AssertSet(lambda)`.
 
 Accordingly, we can do:
 
-  #### __[C#]__
+#### __[C#] Example 3: Mock setter when mocking behavior is Loose__
 
-  {{region MockingProperties#MockingPropertySetCallsLoosely}}
+{{region MockingProperties#MockingPropertySetCallsLoosely}}
+
     [TestMethod]
     public void ShouldAssertPropertySet()
     {
@@ -164,11 +177,12 @@ Accordingly, we can do:
         // Assert
         Mock.AssertSet(() => foo.Value = 1);
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 3: Mock setter when mocking behavior is Loose__
 
-  {{region MockingProperties#MockingPropertySetCallsLoosely}}
+{{region MockingProperties#MockingPropertySetCallsLoosely}}
+
     <TestMethod()>
     Public Sub ShouldAssertPropertySet()
         ' Arrange
@@ -182,110 +196,88 @@ Accordingly, we can do:
         ' Assert
         Mock.AssertSet(Sub() foo.Value = 1)
     End Sub
-  {{endregion}}
+{{endregion}}
 
-Here we make sure `foo.Value` was actually set to `1`.  Refer to [Do Instead]({%slug justmock/basic-usage/mock/do-instead%}) for an example that shows how to use `DoInstead` on property set. 
+Here we make sure `foo.Value` was actually set to `1`. 
+
+>Refer to [Do Instead]({%slug justmock/basic-usage/mock/do-instead%}) for an example that shows how to use `DoInstead` on property set. 
 
 
-## Mock Indexers
+## Indexers
 
 Indexers are special kind of properties that enable objects to be indexed in a similar manner to arrays.
         
 Consider an interface with an indexer property.
 
-  #### __[C#]__
+#### __[C#] Sample setup__
 
-  {{region MockingProperties#IIndexedFooSUT}}
+{{region MockingProperties#IIndexedFooSUT}}
     public interface IIndexedFoo
     {
         string this[int key] { get; set; }
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
-  {{region MockingProperties#IIndexedFooSUT}}
+{{region MockingProperties#IIndexedFooSUT}}
+
     Public Interface IIndexedFoo
         Default Property Item(key As Integer) As String
     End Interface
-  {{endregion}}
+{{endregion}}
 
+**Example 4** shows how you can control the return value of an indexer property getter.
 
-Let's arrange that different values should be returned for different indexes.
-          
-1. Create a mock.
+#### __[C#] Example 4: Return different values for different indexes__
 
-	  #### __[C#]__
+{{region }}
+
+    // Create mock
+    var indexedFoo = Mock.Create<IIndexedFoo>();
+    
+    // Arrange that a call to index 0 should return ping, a call to index 1 should return pong.
+    Mock.Arrange(() => indexedFoo[0]).Returns("ping");
+    Mock.Arrange(() => indexedFoo[1]).Returns("pong");
+    
+    // Act
+    string actualFirst = indexedFoo[0];
+    string actualSec = indexedFoo[1];
+    
+    // Assert
+    Assert.AreEqual("ping", actualFirst);
+    Assert.AreEqual("pong", actualSec);
+{{endregion}}
 	
-	  {{region }}
-	    var indexedFoo = Mock.Create<IIndexedFoo>();
-	  {{endregion}}
-	
-	  #### __[VB]__
-	
-	  {{region }}
-	    Dim IndexedFoo = Mock.Create(Of IIndexedFoo)()
-	  {{endregion}}
+#### __[VB] Example 4: Create mock__
+
+{{region }}
+
+    ' Create mock
+    Dim IndexedFoo = Mock.Create(Of IIndexedFoo)()
+    
+    ' Arrange that a call to index 0 should return ping, a call to index 1 should return pong.
+    Mock.Arrange(Function() IndexedFoo(0)).Returns("ping")
+    Mock.Arrange(Function() IndexedFoo(1)).Returns("pong")
+    
+    ' Act
+    Dim actualFirst As String = IndexedFoo(0)
+    Dim actualSec As String = IndexedFoo(1)
+    
+    ' Assert
+    Assert.AreEqual("ping", actualFirst)
+    Assert.AreEqual("pong", actualSec)
+{{endregion}}
 
 
-1. Arrange that a call to index 0 should return __ping__, a call to index 1 should return __pong__.     
-
-	  #### __[C#]__
-	
-	  {{region }}
-	    Mock.Arrange(() => indexedFoo[0]).Returns("ping");
-      Mock.Arrange(() => indexedFoo[1]).Returns("pong");
-	  {{endregion}}
-	
-	  #### __[VB]__
-	
-	  {{region }}
-	    Mock.Arrange(Function() IndexedFoo(0)).Returns("ping")
-      Mock.Arrange(Function() IndexedFoo(1)).Returns("pong")
-	  {{endregion}}
-
-
-1. Execute the calls.
-              
-	  #### __[C#]__
-	
-	  {{region }}
-	    string actualFirst = indexedFoo[0];
-      string actualSec = indexedFoo[1];
-	  {{endregion}}
-	
-	  #### __[VB]__
-	
-	  {{region }}
-	    Dim actualFirst As String = IndexedFoo(0)
-      Dim actualSec As String = IndexedFoo(1)
-	  {{endregion}}
-
-
-1. Finally, do the assertion.
-
-	  #### __[C#]__
-	
-	  {{region }}
-	    Assert.AreEqual("ping", actualFirst);
-      Assert.AreEqual("pong", actualSec);
-	  {{endregion}}
-	
-	  #### __[VB]__
-	
-	  {{region }}
-	    Assert.AreEqual("ping", actualFirst)
-      Assert.AreEqual("pong", actualSec)
-	  {{endregion}}
-
-
-## Assert Indexed Set
+### Assert Indexer Set
 
 Make sure that a specific index is set to a particular value.
         
-  #### __[C#]__
+#### __[C#] Example 5: Arrange indexer setter__
 
-  {{region MockingProperties#ShouldAssertIndexedSet}}
+{{region MockingProperties#ShouldAssertIndexedSet}}
+  
     [TestMethod]
     [ExpectedException(typeof(StrictMockException))]
     public void ShouldThrowExceptionForNotArrangedPropertySet()
@@ -293,86 +285,95 @@ Make sure that a specific index is set to a particular value.
         // Arrange
         var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
 
+        // foo[0] can be only set to "foo".
         Mock.ArrangeSet(() => { foo[0] = "foo"; });
 
         // Act
         foo[0] = "foo";
 
-        // this throws an exception
+        // The following line does not satisfy the arranged criteria and throws a StrictMockException.
         foo[0] = "bar";
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 5: Arrange indexer setter__
 
-  {{region MockingProperties#ShouldAssertIndexedSet}}
+{{region MockingProperties#ShouldAssertIndexedSet}}
+
     <TestMethod()>
     <ExpectedException(GetType(StrictMockException))>
     Public Sub ShouldThrowExceptionForNotArrangedPropertySet()
         ' Arrange
         Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
 
+        ' foo[0] can be only set to "foo".
         Mock.ArrangeSet(Sub() foo(0) = "foo")
 
         ' Act
         foo(0) = "foo"
 
-        ' this throws an exception
+        ' The following line does not satisfy the arranged criteria and throws a StrictMockException.
         foo(0) = "bar"
     End Sub
-  {{endregion}}
+{{endregion}}
 
 
 The code above throws an exception once the zero-indexed item of `foo` is set to a value different than the expected one - i.e. `foo`.
         
 
-## Assert Indexed Set with Matching Criteria
+### Assert Indexer Set with Matching Criteria
 
-Make sure that a specific index is set to a value matching a particular critera.
+Make sure that a specific index is set to a value matching a particular criteria.
         
 
-  #### __[C#]__
+#### __[C#] Example 6: Arrange indexer setter using matchers__
 
-  {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+{{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+    
     [TestMethod]
     [ExpectedException(typeof(StrictMockException))]
     public void ShouldAssertIndexedSetWithMatcher()
     {
         // Arrange
         var foo = Mock.Create<IIndexedFoo>(Behavior.Strict);
-
+    
+        // foo[0] can be only set to "ping".
         Mock.ArrangeSet(() => { foo[0] = Arg.Matches<string>(x => x.Equals("ping")); });
+        // foo[1] can be only set to any string.
         Mock.ArrangeSet(() => { foo[1] = Arg.IsAny<string>(); });
-
+    
         // Act
         foo[0] = "ping";
         foo[1] = "pong";
-
-        // line does not satisfy the matching criteria and throws a MockException
+    
+        // The following line does not satisfy the matching criteria and throws a MockException.
         foo[0] = "bar";
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 6: Arrange indexer setter using matchers__
 
-  {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+{{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
+
     <TestMethod()>
     <ExpectedException(GetType(StrictMockException))>
     Public Sub ShouldAssertIndexedSetWithMatcher()
         ' Arrange
         Dim foo = Mock.Create(Of IIndexedFoo)(Behavior.Strict)
-
+        
+        ' foo[0] can be only set to "ping".
         Mock.ArrangeSet(Sub() foo(0) = Arg.Matches(Of String)(Function(x) x.Equals("ping")))
+        ' foo[1] can be only set to any string.
         Mock.ArrangeSet(Sub() foo(1) = "pong")
-
+    
         ' Act
         foo(0) = "ping"
         foo(1) = "pong"
-
-        ' line does not satisfy the matching criteria and throws a MockException
+    
+        ' The following line does not satisfy the matching criteria and throws a MockException
         foo(0) = "bar"
     End Sub
-  {{endregion}}
+{{endregion}}
 
 
 The first two set calls satisfy the requirements. However, the third call - `foo[0] = "bar"` throws an exception, because we arranged that the zero-indexed item can be set only to `"foo"`.
