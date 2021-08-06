@@ -227,7 +227,7 @@ Consider an interface with an indexer property.
     End Interface
 {{endregion}}
 
-**Example 4** shows how you can control the return value of an indexed property getter.
+**Example 4** shows how you can control the return value of an indexer property getter.
 
 #### __[C#] Example 4: Return different values for different indexes__
 
@@ -270,11 +270,11 @@ Consider an interface with an indexer property.
 {{endregion}}
 
 
-### Assert Indexed Set
+### Assert Indexer Set
 
 Make sure that a specific index is set to a particular value.
         
-#### __[C#] Example 5: Arrange indexed setter__
+#### __[C#] Example 5: Arrange indexer setter__
 
 {{region MockingProperties#ShouldAssertIndexedSet}}
   
@@ -296,7 +296,7 @@ Make sure that a specific index is set to a particular value.
     }
 {{endregion}}
 
-#### __[VB] Example 5: Arrange indexed setter__
+#### __[VB] Example 5: Arrange indexer setter__
 
 {{region MockingProperties#ShouldAssertIndexedSet}}
 
@@ -321,12 +321,12 @@ Make sure that a specific index is set to a particular value.
 The code above throws an exception once the zero-indexed item of `foo` is set to a value different than the expected one - i.e. `foo`.
         
 
-### Assert Indexed Set with Matching Criteria
+### Assert Indexer Set with Matching Criteria
 
 Make sure that a specific index is set to a value matching a particular criteria.
         
 
-#### __[C#] Example 6: Arrange indexed setter using matchers__
+#### __[C#] Example 6: Arrange indexer setter using matchers__
 
 {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
     
@@ -351,7 +351,7 @@ Make sure that a specific index is set to a value matching a particular criteria
     }
 {{endregion}}
 
-#### __[VB] Example 6: Arrange indexed setter using matchers__
+#### __[VB] Example 6: Arrange indexer setter using matchers__
 
 {{region MockingProperties#SHouldAssertIndexedSetWithMatcher}}
 
