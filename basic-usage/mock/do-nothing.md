@@ -37,11 +37,11 @@ We will use the following interface for the examples in this article:
 {{endregion}}
 
 
-## Assert Void Call
+## Skip the Logic of a Method
 
 Before describing the usage of the `DoNothing` method, let's first see an example to illustrate it.
 
-#### __[C#] Example 1: Sample usage of DoNothing__
+#### __[C#] Example 1: Sample usage of DoNothing on a void method__
 
 {{region DoNothing#AssertDoNothingOnVoidCall}}
 
@@ -61,7 +61,7 @@ Before describing the usage of the `DoNothing` method, let's first see an exampl
     }
 {{endregion}}
 
-#### __[VB]__
+#### __[VB] Example 1: Sample usage of DoNothing on a void method__
 
 {{region DoNothing#AssertDoNothingOnVoidCall}}
 
@@ -80,38 +80,11 @@ Before describing the usage of the `DoNothing` method, let's first see an exampl
     End Sub
 {{endregion}}
 
-In the example, we mark `foo.VoidCall()` with `DoNothing` and `MustBeCalled`. In this way we indicate that a call to `foo.VoidCall` must be ignored, but still the method should be called during the execution of the test. We can achieve the same behavior without marking the call with `DoNothing`. Marking it explicitly improves the code readability. The `DoNothing` method makes no functional difference in the test execution, just a good practice to improve your code. The following two lines are functionally equivalent.
+In the example, we mark `foo.VoidCall()` with `DoNothing` and `MustBeCalled`. In this way, we indicate that a call to `foo.VoidCall` must be ignored and nothing should happen, but still the method should be called during the execution of the test.
 
-#### __[C#]__
+You can use `DoNothing` with **non-void calls** as well. For the example we will be using the following `Foo` class:
 
-{{region DoNothing#Example}}
-    [TestMethod]
-    public void ShouldShowHowDoNothingIsUsed()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
-
-        Mock.Arrange(() => foo.VoidCall()).MustBeCalled();
-        Mock.Arrange(() => foo.VoidCall()).DoNothing().MustBeCalled();
-    }
-{{endregion}}
-
-#### __[VB]__
-
-{{region DoNothing#Example}}
-    <TestMethod()>
-    Public Sub ShouldShowHowDoNothingIsUsed()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Function() foo.VoidCall()).MustBeCalled()
-        Mock.Arrange(Function() foo.VoidCall()).DoNothing().MustBeCalled()
-    End Sub
-{{endregion}}
-
-You can use `DoNothing` with non-void calls as well. For the example we will be using the following `Foo` class:
-
-#### __[C#]__
+#### __[C#] Sample setup__
 
 {{region DoNothing#FooSUT}}
     public class Foo
@@ -123,7 +96,7 @@ You can use `DoNothing` with non-void calls as well. For the example we will be 
     }
 {{endregion}}
 
-#### __[VB]__
+#### __[VB] Sample setup__
 
 {{region DoNothing#FooSUT}}
     Public Class Foo
@@ -134,7 +107,7 @@ You can use `DoNothing` with non-void calls as well. For the example we will be 
 {{endregion}}
 
 
-#### __[C#]__
+#### __[C#] Example 2: Sample usage of DoNothing with non-void method__
 
 {{region DoNothing#ExampleNonVoid}}
     [TestMethod]
@@ -150,7 +123,7 @@ You can use `DoNothing` with non-void calls as well. For the example we will be 
     }
 {{endregion}}
 
-#### __[VB]__
+#### __[VB] Example 2: Sample usage of DoNothing with non-void method__
 
 {{region DoNothing#ExampleNonVoid}}
     <TestMethod()>
@@ -165,40 +138,43 @@ You can use `DoNothing` with non-void calls as well. For the example we will be 
 {{endregion}}
 
 
-## Assert DoNothing on property set
+## Skip the Logic of a Property Setter
+
 `DoNothing` can be also used on a call to a property set.
 
-#### __[C#]__
+#### __[C#] Example 4: Usage of DoNothing on property setter__
 
-  {{region DoNothing#AssertDoNothingOnPropertySet}}
+{{region DoNothing#AssertDoNothingOnPropertySet}}
+
     [TestMethod]
     public void AssertDoNothingOnPropertySet()
     {
         // Arrange
         var foo = Mock.Create<IFoo>();
-
+    
         Mock.ArrangeSet(() => foo.Bar = 1).DoNothing().MustBeCalled();
-
+    
         // Act
         foo.Bar = 1;
-
+    
         // Assert
         Mock.Assert(foo);
     }
 {{endregion}}
 
-#### __[VB]__
+#### __[VB] Example 4: Usage of DoNothing on property setter__
 
 {{region DoNothing#AssertDoNothingOnPropertySet}}
+
     <TestMethod()>
     Public Sub DAssertDoNothingOnPropertySet()
         'Arrange
         Dim foo = Mock.Create(Of IFoo)()
         Mock.ArrangeSet(Sub() foo.Bar = 0).DoNothing().MustBeCalled()
-
+    
         'Act
         foo.Bar = 0
-
+    
         'Assert
         Mock.Assert(foo)
     End Sub
