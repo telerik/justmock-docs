@@ -20,7 +20,7 @@ navigation:
         position: 3
 
     advanced-usage:
-        title: Advanced Usage
+        title: Advanced Mocking
         position: 4
 
     scenarios:

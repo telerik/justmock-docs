@@ -1,5 +1,5 @@
 ---
-title: Future Mocking
+title: Future Instances
 page_title: Future Mocking | JustMock Documentation
 description: Future Mocking
 previous_url: /advanced-usage-future-mocking.html
@@ -15,7 +15,7 @@ Future Mocking allows you to mock members without passing the dependency through
 
 ## Ignore instance for an expectation explicitly
 
-By default, all mocks are tied to an instance and this is the expected behavior. The instance that we created in the following sample is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the `fakeUsed` instance of the `UserData` class. But note that the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
+By default, all mocks are tied to an instance and this is the expected behavior. The instance that we created in the following sample is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the `fakeUser` instance of the `UserData` class. But note that the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
 
   #### __[C#]__
 
@@ -32,11 +32,11 @@ By default, all mocks are tied to an instance and this is the expected behavior.
     public void ShouldArrangeReturnOnlyForSpecificInstance()
     {
         // Arrange
-        var fakeUsed = Mock.Create<UserData>();
-        Mock.Arrange(() => fakeUsed.ReturnFive()).Returns(7);
+        var fakeUser = Mock.Create<UserData>();
+        Mock.Arrange(() => fakeUser.ReturnFive()).Returns(7);
 
         // Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive());
+        Assert.AreEqual(7, fakeUser.ReturnFive());
         Assert.AreEqual(5, new UserData().ReturnFive());    
     }
   {{endregion}}
@@ -53,11 +53,11 @@ By default, all mocks are tied to an instance and this is the expected behavior.
     <TestMethod>
     Public Sub ShouldArrangeReturnOnlyForSpecificInstance()
         ' Arrange
-        Dim fakeUsed = Mock.Create(Of UserData)()
-        Mock.Arrange(Function() fakeUsed.ReturnFive()).Returns(7)
+        Dim fakeUser = Mock.Create(Of UserData)()
+        Mock.Arrange(Function() fakeUser.ReturnFive()).Returns(7)
 
         ' Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive())
+        Assert.AreEqual(7, fakeUser.ReturnFive())
         Assert.AreEqual(5, New UserData().ReturnFive())
     End Sub
   {{endregion}}
@@ -71,11 +71,11 @@ If we want to apply future mocking and assure that all `UserData` instances use 
     public void ShouldArrangeReturnForFutureUserDataInstances()
     {
         // Arrange
-        var fakeUsed = Mock.Create<UserData>();
-        Mock.Arrange(() => fakeUsed.ReturnFive()).IgnoreInstance().Returns(7);
+        var fakeUser = Mock.Create<UserData>();
+        Mock.Arrange(() => fakeUser.ReturnFive()).IgnoreInstance().Returns(7);
 
         // Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive());
+        Assert.AreEqual(7, fakeUser.ReturnFive());
         Assert.AreEqual(7, new UserData().ReturnFive());
     }
   {{endregion}}
@@ -86,11 +86,11 @@ If we want to apply future mocking and assure that all `UserData` instances use 
     <TestMethod>
     Public Sub ShouldArrangeReturnForFutureUserDataInstances()
         ' Arrange
-        Dim fakeUsed = Mock.Create(Of UserData)()
-        Mock.Arrange(Function() fakeUsed.ReturnFive()).IgnoreInstance().Returns(7)
+        Dim fakeUser = Mock.Create(Of UserData)()
+        Mock.Arrange(Function() fakeUser.ReturnFive()).IgnoreInstance().Returns(7)
 
         ' Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive())
+        Assert.AreEqual(7, fakeUser.ReturnFive())
         Assert.AreEqual(7, New UserData().ReturnFive())
     End Sub
   {{endregion}}
@@ -106,11 +106,11 @@ When setting future expectations, you can also use the [Fluent Mocking]({%slug j
     public void ShouldArrangeReturnForFutureUserDataInstances_Fluent()
     {
         // Arrange
-        var fakeUsed = Mock.Create<UserData>();
-        fakeUsed.Arrange(mock => mock.ReturnFive()).IgnoreInstance().Returns(7);
+        var fakeUser = Mock.Create<UserData>();
+        fakeUser.Arrange(mock => mock.ReturnFive()).IgnoreInstance().Returns(7);
 
         // Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive());
+        Assert.AreEqual(7, fakeUser.ReturnFive());
         Assert.AreEqual(7, new UserData().ReturnFive());
     }
   {{endregion}}
@@ -121,11 +121,11 @@ When setting future expectations, you can also use the [Fluent Mocking]({%slug j
     <TestMethod>
     Public Sub ShouldArrangeReturnForFutureUserDataInstances_Fluent()
         ' Arrange
-        Dim fakeUsed = Mock.Create(Of UserData)()
-        fakeUsed.Arrange(Function(x) x.ReturnFive()).IgnoreInstance().Returns(7)
+        Dim fakeUser = Mock.Create(Of UserData)()
+        fakeUser.Arrange(Function(x) x.ReturnFive()).IgnoreInstance().Returns(7)
 
         ' Assert
-        Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(7, fakeUsed.ReturnFive())
+        Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(7, fakeUser.ReturnFive())
         Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(7, New UserData().ReturnFive())
     End Sub
   {{endregion}}

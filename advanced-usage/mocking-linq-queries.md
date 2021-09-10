@@ -1,5 +1,5 @@
 ---
-title: Mocking LINQ Queries
+title: LINQ Queries
 page_title: Mocking LINQ Queries | JustMock Documentation
 description: Mocking LINQ Queries
 previous_url: /advanced-usage-mocking-linq-queries.html

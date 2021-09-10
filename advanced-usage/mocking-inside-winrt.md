@@ -1,5 +1,5 @@
 ---
-title: Mocking Inside WinRT
+title: Inside WinRT
 page_title: Mocking Inside WinRT | JustMock Documentation
 description: Mocking Inside WinRT
 previous_url: /advanced-usage-mocking-inside-winrt.html
