@@ -1,23 +1,24 @@
 ---
-title: Recursive Mocking
-page_title: Recursive Mocking | JustMock Documentation
-description: Recursive Mocking
+title: Mocking Chained Calls
+page_title: Mocking Chained Calls | JustMock Documentation
+description: Mocking Chained Calls
 previous_url: /basic-usage-recursive-mocking.html
 slug: justmock/basic-usage/recursive-mocking
-tags: recursive,mocking
+tags: recursive,mocking, mock, chain, nested, method, property
 published: True
 position: 11
 ---
 
-# Recursive Mocking
+# Mocking Chained Calls
 
-Recursive mocks enable you to mock members that are obtained as a result of "chained" calls on a mock. For example, recursive mocking is useful in the cases when you test code like this: `foo.Bar.Baz.Do("x")`.
+This feature enables you to mock members that are obtained as a result of "chained" calls on a mock. For example, mocking chained calls is useful in the cases when you test code like this: `foo.Bar.Baz.Do("x")`.
 
-In the next examples we will use the following sample code to test:
+In the next examples, we will use the following sample code to test:
 
-  #### __[C#]__
+#### __[C#] Sample setup__
 
   {{region RecursiveMocks#SampleCode}}
+  
     public interface IFoo
     {
         IBar Bar { get; set; }
@@ -37,9 +38,10 @@ In the next examples we will use the following sample code to test:
     }
   {{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
   {{region RecursiveMocks#SampleCode}}
+  
     Public Interface IFoo
         Property Bar() As IBar
         Function [Do](command As String) As String
@@ -56,37 +58,39 @@ In the next examples we will use the following sample code to test:
     End Interface
   {{endregion}}
 
+## How to Mock Chain of Method Calls
 
-## Step by step example
-Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a particular string. `IFoo` contains an `IBar` which, in turn, also contains a `Do` method. `IBar.Do` method can be accessed via a recursive call to `IFoo.Bar`. To arrange the call directly from `IFoo`, we just need to chain it considering the fact that TelerikJustMock will automatically create the necessary mock for `IBar`.
+Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a particular string. `IFoo` contains an `IBar` which, in turn, also contains a `Do` method. `IBar.Do` method can be accessed via a nested call to `IFoo.Bar`. To arrange the call directly from `IFoo`, we just need to chain it considering the fact that JustMock will **automatically** create the necessary mock for `IBar`.
 
-  #### __[C#]__
+#### __[C#] Example 1: Mocking chain of method calls example__
 
   {{region RecursiveMocks#AssertNestedVeriables}}
+    
     [TestMethod]
     public void ShouldAssertNestedVeriables()
     {
         // Arrange
         var foo = Mock.Create<IFoo>();
-
+    
         string ping = "ping";
-
+    
         Mock.Arrange(() => foo.Do(ping)).Returns("ack");
         Mock.Arrange(() => foo.Bar.Do(ping)).Returns("ack2");
-
+    
         // Act
         var actualFooDo = foo.Do(ping);
         var actualFooBarDo = foo.Bar.Do(ping);
-
+    
         // Assert
         Assert.AreEqual("ack", actualFooDo);
         Assert.AreEqual("ack2", actualFooBarDo);
     }
   {{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 1: Mocking chain of method calls example__
 
   {{region RecursiveMocks#AssertNestedVeriables}}
+  
     <TestMethod()>
     Public Sub ShouldAssertNestedVeriables()
         ' Arrange
@@ -107,11 +111,12 @@ Consider the above code. Let's arrange that a call to `IFoo.Do` method returns a
     End Sub
   {{endregion}}
 
-However, if `foo.Bar` is not arranged, it will still be instantiated. You can verify this by the following example:
+Note: If `foo.Bar` is not arranged, it will still be instantiated. **Example 2** shows how you can verify that.
 
-  #### __[C#]__
+#### __[C#] Example 2: Verifying object instantiation__
 
   {{region RecursiveMocks#AssertNotInstantiated}}
+  
     [TestMethod]
     public void ShouldNotInstantiateFooBar()
     {
@@ -123,9 +128,10 @@ However, if `foo.Bar` is not arranged, it will still be instantiated. You can ve
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 2: Verifying object instantiation__
 
   {{region RecursiveMocks#AssertNotInstantiated}}
+  
     <TestMethod()>
     Public Sub ShouldNotInstantiateFooBar()
         ' Arrange
@@ -138,11 +144,13 @@ However, if `foo.Bar` is not arranged, it will still be instantiated. You can ve
 
 
 ## Nested Property Calls
-The following example shows how to assert nested property get calls.
 
-  #### __[C#]__
+This section shows how to arrange the getter and setter of a nested property. All you need to do is to specify the property as you would do in real cases. JustMock will automatically setup all the requirements for the member like, for example, instantiating other objects in the chain.
+
+#### __[C#] Example 3: Arrange the getter of a nested property__
 
   {{region RecursiveMocks#AssertNestedPropertyGetSetups}}
+  
     [TestMethod]
     public void ShouldAssertNestedPropertyGet()
     {
@@ -158,9 +166,10 @@ The following example shows how to assert nested property get calls.
     }
   {{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 3: Arrange the getter of a nested property__
 
   {{region RecursiveMocks#AssertNestedPropertyGetSetups}}
+  
     <TestMethod()>
     Public Sub ShouldAssertNestedPropertyGet()
         ' Arrange
@@ -178,11 +187,13 @@ The following example shows how to assert nested property get calls.
 
 Here we arrange `foo.Bar.Value` to return `10`.
 
-You can also arrange property set. Here is an example:
+You can also arrange the setter of a nested property. In **Example 4**, you will see how to arrange a nested property setter in scenario with **Strict** behavior. When using that behavior, you are allowed to call only arranged members and all other calls throw exception. If you need more details on this setup, check the [Strict behavior]({%slug justmock/basic-usage/mock-behaviors/strict%}) topic.
 
-  #### __[C#]__
+
+#### __[C#] Example 4: Arrange the setter of a nested property__
 
   {{region RecursiveMocks#AssertNestedPropertySetSetups}}
+  
     [TestMethod]
     [ExpectedException(typeof(StrictMockException))]
     public void ShouldAssertNestedPropertySet()
@@ -194,13 +205,14 @@ You can also arrange property set. Here is an example:
 
         // Act
         foo.Bar.Value = 5;
-        foo.Bar.Value = 10; // This line will throw an exception.
+        foo.Bar.Value = 10; // This line will throw MockException. The mocking behavior is Strict and only foo.Bar.Value = 5 is arranged and allowed.
     }
   {{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 4: Arrange the setter of a nested property__
 
-  {{region RecursiveMocks#AssertNestedPropertySetSetups}}
+{{region RecursiveMocks#AssertNestedPropertySetSetups}}
+  
     <TestMethod()>
     <ExpectedException(GetType(StrictMockException))>
     Public Sub ShouldAssertNestedPropertySet()
@@ -211,40 +223,43 @@ You can also arrange property set. Here is an example:
 
         ' Act
         foo.Bar.Value = 5
-        foo.Bar.Value = 10 ' This line will throws an exception.
+        foo.Bar.Value = 10 ' This line will throw MockException. The mocking behavior is Strict and only foo.Bar.Value = 5 is arranged and allowed.
     End Sub
-  {{endregion}}
+{{endregion}}
 
-We use `Bahavior.Strict` to enable only arranged calls and to reject any other calls. Only setting `foo.Bar.Value` to `5` is allowed and as we set it to `10`, an exception will be thrown. After assertion we actually set it to `5` and if we verify `foo` at that point an exception won't be thrown.
+We use `Bahavior.Strict` to enable only arranged calls and to reject any other calls. Only setting `foo.Bar.Value` to `5` is allowed and as we set it to `10`, an exception will be thrown. 
 
-## Nested Property and Method Calls
-We can call properties recursively, or we can do it with methods as well.
+## Nested Method Calls
 
-  #### __[C#]__
+Similarly to the nested properties, you can also arrange nested methods.
 
-  {{region RecursiveMocks#AssertNestedPropertyHavingMethods}}
+#### __[C#] Example 5: Arrange the behavior of a nested method__
+
+{{region RecursiveMocks#AssertNestedPropertyHavingMethods}}
+  
     [TestMethod]
     public void NestedPropertyAndMethodCalls()
     {
         // Arrange
         var foo = Mock.Create<IFoo>();
-
+    
         Mock.Arrange(() => foo.Bar.Do("x")).Returns("xit");
         Mock.Arrange(() => foo.Bar.Baz.Do("y")).Returns("yit");
-
+    
         // Act
         var actualFooBarDo = foo.Bar.Do("x");
         var actualFooBarBazDo = foo.Bar.Baz.Do("y");
-
+    
         // Assert
         Assert.AreEqual("xit", actualFooBarDo);
         Assert.AreEqual("yit", actualFooBarBazDo);
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 5: Arrange the behavior of a nested method__
 
-  {{region RecursiveMocks#AssertNestedPropertyHavingMethods}}
+{{region RecursiveMocks#AssertNestedPropertyHavingMethods}}
+  
     <TestMethod()>
     Public Sub ShouldAssertNestedPropertyHavingMethods()
         ' Arrange
@@ -261,7 +276,7 @@ We can call properties recursively, or we can do it with methods as well.
         Assert.AreEqual("xit", actualFooBarDo)
         Assert.AreEqual("yit", actualFooBarBazDo)
     End Sub
-  {{endregion}}
+{{endregion}}
 
-In this arrangement we specify that when calling `foo.Bar.Do` and `foo.Bar.Baz.Do` methods `"xit"` and `"yit"` should be returned respectively.
+In this arrangement we specify that `foo.Bar.Do` should return `"xit"` when invoked and `foo.Bar.Baz.Do` will always return `"yit"`.
 

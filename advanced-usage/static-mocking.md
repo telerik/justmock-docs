@@ -498,7 +498,7 @@ After acting we verify against our expectations.
 
 ## Mocking Extension Methods
 
-An extension method is a new language feature of C# starting with the 3.0 specifications, as well as Visual Basic.NET starting with 9.0. Extension methods enable you to "add" methods to existing types without creating a new derived type, recompiling, or otherwise modifying the original type. Extension methods are a special kind of static methods, but they are called as if they were instance methods on the extended type.
+Extension methods enable you to "add" methods to existing types without creating a new derived type, recompiling, or otherwise modifying the original type. Extension methods are a special kind of static methods, but they are called as if they were instance methods on the extended type.
 
 Mocking extension method is similar to mocking any instance methods. The only difference is that we don’t need `Mock.Create<T>()` call to initialize the class for mocking as extension mocking is by default partial.
         

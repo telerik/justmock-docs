@@ -17,36 +17,6 @@ The JustMock API is completely [AAA]({%slug justmock/basic-usage/arrange-act-ass
 
 To read more please visit the [Telerik JustMock](https://www.telerik.com/products/mocking.aspx) product overview page.
 
-<style>
-/* JustMock download trial button */
-div#trial_button {
-    text-align: center !important;
-}
-
-div#trial_button .trialLink {	
-	color: #fff;
-	background-color: #e74b3c;
-	padding:.44em .9em .52em;
-	font-size: 20px;
-	font-weight:400;
-	letter-spacing:-.025em;
-	position:relative;
-	display:inline-block;
-	line-height:1.2;
-	-webkit-transition:color .2s ease,background-color .2s ease;
-	transition:color .2s ease,background-color .2s ease;
-	border-radius:2px;
-	-webkit-appearance:none;
-	font-family:Metric,Arial,Gadget,sans-serif;
-	text-align:center	
-}
-</style>
-
-<div id="trial_button">
-<br />
-<a href="https://www.telerik.com/download-trial-file/v2-b/justmock" class="trialLink">Download Free Trial</a>
-</div>
-
 ## What Is Mocking and Why Do I Need It?
 [Mocking](https://en.wikipedia.org/wiki/Mock_object) is a concept in unit testing where real objects are substituted with fake objects that imitate the behavior of the real ones. Mocking is done so that a test can focus on the code being tested and not on the behavior or state of external dependencies. 
 
@@ -86,7 +56,7 @@ Unlike other mocking frameworks, JustMock lets you mock:
 * __Support for Visual Studio__ - JustMock supports Visual Studio 2019, 2017, 2015, and older
 * __Support of Microsoft SharePoint and Microsoft Entity Framework mocking__
 * __Support for CI/CD, build tools, code coverage tools, profilers, unit testing add-ins and other__
-	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/continuous-integration/tfs-azure/azure-devops%})
+	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/integration/azure-devops%})
 	* [MSBuild](https://msdn.microsoft.com/en-us/library/wea2sca5(VS.90).aspx) - integrate JustMock with an MSBuild build task. [ Read how to integrate JustMock with MSBuild ]({%slug justmock/integration/msbuild-tasks%}).
 	* [Jenkins CI](https://jenkins-ci.org/) - integrate JustMock along in Jenkins build. [ Read how to integrate JustMock with Jenkins CI ]({%slug justmock/integration/jenkins-ci%}). 
 	* [TeamCity](https://www.jetbrains.com/teamcity/) - integrate JustMock in TeamCity build. [ Read how to integrate JustMock with TeamCity ]({%slug justmock/integration/teamcity%}). 
@@ -101,7 +71,7 @@ To learn how to install and work with Telerik JustMock, visit the following reso
 
 * [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
 * [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project %})
-* [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+* [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
 ## Support Options
 
@@ -124,6 +94,6 @@ For any issues you might encounter while working with Telerik JustMock, use any 
 
  * [Using Telerik JustMock in your test project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
 
- * [Quick Start]({%slug justmock/getting-started/quick-start%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
  
  * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})

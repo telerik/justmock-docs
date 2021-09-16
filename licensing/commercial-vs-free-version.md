@@ -49,6 +49,7 @@ The following table shows the differences between the commercial and free versio
 |[Private Accessor]({%slug justmock/advanced-usage/private-accessor%})| &#x2714; | - |
 |[Mocking DLL Imports]({%slug justmock/advanced-usage/mocking-dll-imports%})| &#x2714; | - |
 |[.Net Core Support]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
+|[.Net 5]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
 
 __Legend__
 

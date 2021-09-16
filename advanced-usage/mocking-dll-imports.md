@@ -100,7 +100,7 @@ In the next examples we will use the following sample class to test:
   {{endregion}}
 
 
-> To mock DLL imported members and types you first need to go to elevated mode by enabling JustMock from the menu.  [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To mock DLL imported members and types you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 
 ## Mocking the Standard DLL Import

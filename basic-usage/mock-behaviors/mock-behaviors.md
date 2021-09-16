@@ -11,7 +11,7 @@ position: 0
 
 # Mock Behaviors
 
-With __Telerik®  JustMock__ you can choose between four different mock behaviors:
+This article provides a quick overview of the four mock behaviors in __Telerik® JustMock__. For more details about each mock behavior, follow the links below.
 
 __RecursiveLoose Behavior__
 
@@ -42,4 +42,4 @@ When a strict mock is created, you are only allowed to call arranged methods. Ev
 
  * [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
 
- * [JustMock API Basics]({%slug justmock/basic-usage/mock%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})

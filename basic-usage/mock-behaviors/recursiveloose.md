@@ -13,7 +13,7 @@ position: 1
 
 __RecursiveLoose__ mocks will return new mocks (with `Behavior.RecursiveLoose`) for all members/functions of the mocked type. However, as there are types that cannot be mocked (`string`, `int`, etc.), __RecursiveLoose__ mocks will return default value for all value type members and empty, non-null stubs for `string`s. Also, a non-null empty collection will be returned for collection return types (e.g. array or `IEnumerable`) .
 
-__RecursiveLoose__ mocks are the same as [Loose mocks]({%slug justmock/basic-usage/mock-behaviors/loose%}), but with one difference: They will automatically generate empty stubs for all mock members, on all levels. This saves time in manually arranging or initializing all the mock prerequisites ([code examples](#examples)). Further, you can change the per-arranged behavior by defining new expectations, as described in the [JustMock API Basics]({%slug justmock/basic-usage/mock%}) article.
+__RecursiveLoose__ mocks are the same as [Loose mocks]({%slug justmock/basic-usage/mock-behaviors/loose%}), but with one difference: They will automatically generate empty stubs for all mock members, on all levels. This saves time in manually arranging or initializing all the mock prerequisites ([code examples](#examples)). Further, you can change the per-arranged behavior by defining new expectations, as described in the [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) articles.
 
 __RecursiveLoose__ is the default behavior when creating mocks.
 

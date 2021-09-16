@@ -5,7 +5,7 @@ description: Quick Start
 previous_url: /getting-started-quick-start.html
 slug: justmock/getting-started/quick-start
 tags: quick,start
-published: True
+published: False
 position: 4
 ---
 
@@ -13,7 +13,7 @@ position: 4
 
 This topic will guide you through several simple steps to enable easier testing of your applications by using __Telerik® JustMock__. You will understand a simple principle called Arrange/Act/Assert and get familiar with core methods and properties from the framework, which are used in the most common testing scenarios.
 
->Make sure to go through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. [JustMock API Basics]({%slug justmock/basic-usage/mock%}) contains basic examples that this article extends.
+>Make sure to go through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. The [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) section contains basic examples that this article extends.
 
 To illustrate the use of JustMock in the next examples, we will use a sample warehouse and a dependent order object. The warehouse holds inventories of different products. An order contains a product and a quantity. 
 
@@ -128,13 +128,13 @@ It is used in all samples shown in this documentation. Refer to the [Arrange Act
 
 ## Methods
 
->Get familiar with the JustMock basics such as how to create mock instance with `Mock.Create<>`, how to arrange with `Mock.Arrange` and how to assert with `Mock.Assert` in [Step 3 - JustMock API Basics]({%slug justmock/basic-usage/mock%}). 
+>Get familiar with the JustMock basics such as how to create mock instance with `Mock.Create<>`, how to arrange with `Mock.Arrange` and how to assert with `Mock.Assert` in the [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) section. 
 
 There are a number of additional handy methods that you can use to make your tests more complete and easy to write.
 
 ### DoInstead
 
-You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) method when you want to change the behavior of a method when it is called by replacing it with a custom action. Let's use the example from above to illustrate to use of `DoInstead`.
+You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) method when you want to change the behavior of a method when it is called by replacing it with a custom action. To illustrate how you can use the `DoInstead` method, we will use the HasInventory method of the IWarehouse interface defined in the beginning of this topic. In the next example, we arrange that when the warehouse’s `HasInventory` method is called with parameters "Camera" and 2, we will execute the action "__() => called = true__" instead of calling the actual implementation of the method.
 
   #### __[C#]__
 
@@ -177,7 +177,6 @@ You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) metho
     End Sub
   {{endregion}}
 
-Put simple – we arrange that when the warehouse’s `HasInventory` method is called with parameters "Camera" and 2 we will execute the action "__() => called = true__" instead of calling the actual method.
 
 ### CallOriginal
 
@@ -262,10 +261,10 @@ The [Throws]({%slug justmock/basic-usage/mock/throws%}) method is used when you 
         var order = new Order("Camera", 0);
         var warehouse = Mock.Create<Iwarehouse>();
 
-        // Set up that the ware house has inventory of any products with any quantities.
+        // Set up that the warehouse has inventory of any products with any quantities.
         Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
 
-        // Set up that call to warehouse.Remove with zero quantity is invalid and throws an exception.
+        // Set up that call to warehouse. Remove with zero quantity is invalid and throws an exception.
         Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.Matches<int>(x => x == 0)))
                     .Throws(new InvalidOperationException());
 

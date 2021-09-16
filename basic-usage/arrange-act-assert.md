@@ -19,9 +19,123 @@ It is a best practice to author your tests in more natural and convenient way. T
 * __Act__ – perform the actual work of the test.
 * __Assert__ – verify the result.
 
-Lets illustrate this with an example. We will test our warehouse to ensure that it returns correct results when an order is placed.
 
->The classes used for the next example are defined in the [Testing Your Application with JustMock]({%slug justmock/getting-started/quick-start%}) article.
+## Benefits of Using Arrange Act Assert
+
+* Clearly separates what is being tested from the setup and verification steps.
+* Clarifies and focuses attention on a historically successful and generally necessary set of test steps.
+* Makes some test smells more obvious:
+    * Assertions intermixed with "Act" code.
+    * Test methods that try to test too many different things at once.
+
+## Arrange/Act/Assert with JustMock
+
+Lets illustrate the benefits of the pattern with an example. We will use a sample warehouse and a dependent order object. The warehouse holds inventories of different products. An order contains a product and quantity. 
+
+The warehouse interface and the order class look like this:
+
+  #### __[C#]__
+
+  {{region QuickStart#SampleCS}}
+    public delegate void ProductRemoveEventHandler(string productName, int quantity);
+
+    public interface Iwarehouse
+    {
+        event ProductRemoveEventHandler ProductRemoved;
+
+        string Manager { get; set; }
+
+        bool HasInventory(string productName, int quantity);
+        void Remove(string productName, int quantity);
+    }
+
+    public class Order
+    {
+        public Order(string productName, int quantity)
+        {
+            this.ProductName = productName;
+            this.Quantity = quantity;
+        }
+
+        public string ProductName { get; private set; }
+        public int Quantity { get; private set; }
+        public bool IsFilled { get; private set; }
+
+        public void Fill(Iwarehouse warehouse)
+        {
+            if (warehouse.HasInventory(this.ProductName, this.Quantity))
+            {
+                warehouse.Remove(this.ProductName, this.Quantity);
+            }
+        }
+
+        public virtual string Receipt(DateTime orderDate)
+        {
+            return string.Format("Ordered {0} {1} on {2}", this.Quantity, this.ProductName, orderDate.ToString("d"));
+        }
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region QuickStart#SampleVB}}
+    Public Delegate Sub ProductRemovedEventHandler(productName As String, quantity As Integer)
+
+    Public Interface IWarehouse
+        Event ProductRemoved As ProductRemovedEventHandler
+
+        Property Manager() As String
+
+        Function HasInventory(productName As String, quantity As Integer) As Boolean
+        Sub Remove(productName As String, quantity As Integer)
+    End Interface
+
+    Public Class Order
+        Public Sub New(productName As String, quantity As Integer)
+            Me.ProductName = productName
+            Me.Quantity = quantity
+        End Sub
+
+        Public Property ProductName() As String
+            Get
+                Return m_ProductName
+            End Get
+            Private Set(value As String)
+                m_ProductName = value
+            End Set
+        End Property
+        Private m_ProductName As String
+        Public Property Quantity() As Integer
+            Get
+                Return m_Quantity
+            End Get
+            Private Set(value As Integer)
+                m_Quantity = value
+            End Set
+        End Property
+        Private m_Quantity As Integer
+        Public Property IsFilled() As Boolean
+            Get
+                Return m_IsFilled
+            End Get
+            Private Set(value As Boolean)
+                m_IsFilled = value
+            End Set
+        End Property
+        Private m_IsFilled As Boolean
+
+        Public Sub Fill(warehouse As IWarehouse)
+            If warehouse.HasInventory(Me.ProductName, Me.Quantity) Then
+                warehouse.Remove(Me.ProductName, Me.Quantity)
+                IsFilled = True
+            End If
+        End Sub
+
+        Public Overridable Function Receipt(orderDate As DateTime) As String
+            Return String.Format("Ordered {0} {1} on {2}", Me.Quantity, Me.ProductName, orderDate.ToString("d"))
+        End Function
+    End Class
+  {{endregion}}
 
 ## Arrange
 
@@ -53,7 +167,7 @@ Now let’s mock the warehouse:
     Dim warehouse = Mock.Create(Of IWarehouse)()
   {{endregion}}
 
-We want to ensure that when an order of 2 cameras is placed the warehouse returns that it has availability in the inventory.
+We want to ensure that when an order of 2 cameras is placed, the warehouse returns that it has enough quantity of the product.
 
   #### __[C#]__
 
@@ -67,8 +181,10 @@ We want to ensure that when an order of 2 cameras is placed the warehouse return
     Mock.Arrange(Function() warehouse.HasInventory("Camera", 2)).Returns(true)
   {{endregion}}
 
+>note You can also check the [Create Mocks By Example](./create-mocks-by-example) topic that demonstrates how you can arrange mock objects in more complex scenarios.
+
 That’s it. We set up the testing objects for our test. Now let’s act.
-Further, you can also check [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%}).
+
 
 ## Act
 
@@ -86,11 +202,11 @@ Fill our order from the warehouse.
     order.Fill(warehouse)
   {{endregion}}
 
-Next we need to ensure that our order was actually filled meaning that the warehouse really had inventory of 2 cameras.
+Once we have executed the desired action, we need to ensure that it has been completed successfully and our order was actually filled, meaning that the warehouse really had inventory of 2 cameras.
 
 ## Assert 
 
-We will use the __Assert__ class from Microsoft.VisualStudio.TestTools.UnitTesting namespace (found in Microsoft.VisualStudio.QualityTools.UnitTestFramework assembly – automatically added as a reference from Visual Studio while creating a Test Project) to ensure that the IsFilled property of the order is set to true.
+We will use the __Assert__ class from Microsoft.VisualStudio.TestTools.UnitTesting namespace (found in Microsoft.VisualStudio.QualityTools.UnitTestFramework assembly – automatically added as a reference from Visual Studio while creating a Test Project) to ensure that the `IsFilled` property of the order is set to `true`.
 
   #### __[C#]__
 
@@ -110,7 +226,7 @@ With this simple example we illustrated the use of the AAA pattern and showed ho
 
 Now let's take it a little further and verify not only the final result, but also the interaction while executing the test.
 
-We arranged that when the warehouse’s HasInventory method is called with specific parameters, it should return true, but we never ensured that this method is actually called. Let's change the `Arrange` method and mark that `warehouse.HasInventory` must be called.
+We arranged that when the warehouse’s `HasInventory` method is called with specific parameters, it should return `true`, but we never ensured that this method is actually called. Let's change the `Arrange` method and mark that `warehouse.HasInventory` must be called.
 
   #### __[C#]__
 
@@ -293,19 +409,11 @@ Here we have defined the `IUserValidationService` and the `IShoppingCartService`
 
 In the arrange phase we defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.
 
-> **Note**
->
-> Refer to the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic to learn more about asserting occurrence. The example also uses the [Returns]({%slug justmock/basic-usage/mock/returns%}) option in order to ignore the actual call and return a custom value.
+>noteRefer to the [Asserting Occurrence](./asserting-occurrence) topic to learn more about asserting occurrence. The example also uses the [Returns](./mock/returns) option in order to ignore the actual call and return a custom value.
 
-## Benefits of Using Arrange Act Assert
-* Clearly separates what is being tested from the setup and verification steps.
-* Clarifies and focuses attention on a historically successful and generally necessary set of test steps.
-* Makes some test smells more obvious:
-* Assertions intermixed with "Act" code.
-* Test methods that try to test too many different things at once.
 
 ## See Also
 
- * [Testing Your Application with JustMock]({%slug justmock/getting-started/quick-start%})
+ * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
  * [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%})

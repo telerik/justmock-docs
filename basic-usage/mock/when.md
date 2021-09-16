@@ -151,7 +151,7 @@ In the test, we will check if `GetResponse()` has been called once when `Method`
 ## See Also
 
 
- * [Mock]({%slug justmock/basic-usage/mock%})
+ * [Create Mock Instances]({%slug justmock/getting-started/basics/create%})
 
  * [Matchers]({%slug justmock/basic-usage/matchers%})
 

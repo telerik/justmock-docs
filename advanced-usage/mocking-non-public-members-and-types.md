@@ -1,24 +1,38 @@
 ---
 title: Mocking Non-public Members and Types
 page_title: Mocking Non-public Members and Types | JustMock Documentation
-description: Mocking Non-public Members and Types
+description: Learn how you can isolate non-public members and types by mocking them with JustMock.
 previous_url: /advanced-usage-mocking-non-public-members-and-types.html
 slug: justmock/advanced-usage/mocking-non-public-members-and-types
 tags: mocking,non-public,members,and,types
 published: True
-position: 13
+position: 1
 ---
 
 # Mocking Non-public Members and Types
 
-In elevated mode, you can use __Telerik® JustMock__ to mock non-public members and types. That is useful when you want to isolate calls to non-public members.
+This article provides various examples that demonstrate how to mock non-public members and types with __Telerik® JustMock__.
+
+## Introduction
+
+You can use JustMock to mock non-public members and types in elevated mode. That is useful when you want to isolate calls to non-public members and types, such as:
+
+* private calls, methods, and interfaces
+* private static methods and properties
+* protected members
+* internal classes
+* internal virtual methods and properties
 
 > This feature is available only in the commercial version of Telerik JustMock. 
 Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
 
-In the further examples we will use the following sample class to test:
+>note If you need a complete Visual Studio project that demonstrates how to mock non-public members and types, refer to the examples in the installation directory. The default installation directory is *C:\Program Files (x86)\Progress\Telerik JustMock\Examples*.
 
-  #### __[C#]__
+## Prerequisites
+
+In the next examples, we will use the following sample class to test:
+
+#### __[C#] Sample setup__
 
   {{region NonPublicMocking#SampleClass}}
     public class Foo
@@ -89,7 +103,7 @@ In the further examples we will use the following sample class to test:
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Sample setup__
 
   {{region NonPublicMocking#SampleClass}}
     Public Class Foo
@@ -157,15 +171,25 @@ In the further examples we will use the following sample class to test:
 
 > **Important**
 >
-> To mock non-public members and types you first need to go to elevated mode by enabling TelerikJustMock from the menu. [How to Enable/Disable](./advanced-usage#how-to-enabledisable-telerikjustmock)
+> To mock non-public members and types, you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
-## Step by step example
+## Step by Step Description
 
-First, create an instance of the type you want to test. To mock a non-public member use the `Mock.NonPublic` modifier and then add the arrange statement. In the arrange statement, first pass the target object to test, then the member name that you want to test as a `string` and eventually  the arguments to be passed in case you test a method.
+The following list describes the steps you should perform in order to mock a non-public member:
 
-  #### __[C#]__
+1. Create an instance of the type that you want to test.
+1. Use the `Mock.NonPublic` modifier to mock a non-public member.
+1. Add the arrange statement:
+    1. Pass the target object to test.
+    1. Pass the member name that you want to test as a `string`.
+    1. If you test a method, pass the arguments.
+
+**Example 1** shows how to set up that a call to the `DoPrivate` method of the `Foo` class must set a local variable `called`. This way you override the original method behavior with the one that you specify.
+
+  #### __[C#] Example 1: Change the behavior of a private method__
 
   {{region NonPublicMocking#StepByStep}}
+  
     [TestMethod]
     public void ShouldInvokeNonPublicMember()
     {
@@ -184,7 +208,7 @@ First, create an instance of the type you want to test. To mock a non-public mem
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 1: Change the behavior of a private method__
 
   {{region NonPublicMocking#StepByStep}}
     <TestMethod>
@@ -204,11 +228,11 @@ First, create an instance of the type you want to test. To mock a non-public mem
     End Sub
   {{endregion}}
 
-Here we setup that a call to the `DoPrivate` method of the `Foo` class should set a local variable `called`. Thus, we override the original method behavior with one that we specify.
 
-`Mock.NonPublic` can be also used to mock generic non-public methods. In addition to the non-generic method mock the generic type arguments has to be supplied in the arrangement, the code look as following:
 
-  #### __[C#]__
+`Mock.NonPublic` can be also used to mock generic non-public methods. In addition to the non-generic method mock, the generic type arguments must be supplied in the arrangement. 
+
+  #### __[C#] Example 2: Change the behavior of a generic non-public method__
 
   {{region NonPublicMocking#StepByStepGeneric}}
     [TestMethod]
@@ -229,7 +253,7 @@ Here we setup that a call to the `DoPrivate` method of the `Foo` class should se
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 2: Change the behavior of a generic non-public method__
 
   {{region NonPublicMocking#StepByStepGeneric}}
     <TestMethod>
@@ -249,12 +273,19 @@ Here we setup that a call to the `DoPrivate` method of the `Foo` class should se
     End Sub
   {{endregion}}
 
-## Mock Private Call with Matcher
-Arrange a call to a private method accepting an argument that matches any integer value.
 
-  #### __[C#]__
+## Private Members 
+
+### Private Methods with Parameters
+
+**Example 3** shows how you can arrange a call to a private method accepting an argument that matches any integer value. The example arranges the `PrivateEcho` to return `1` when called with any `int` parameter. In the acting phase, the `PrivateEcho` method is called with `5` as argument.
+
+>For more details on how to work with parameters when mocking, check the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic.
+
+  #### __[C#] Example 3: Change the behavior of a non-public method with parameter__
 
   {{region NonPublicMocking#ShouldMockPrivateCallsWithMatcherArgument}}
+  
     [TestMethod]
     public void ShouldInvokeNonPublicMemberWithMatcher()
     {
@@ -263,6 +294,7 @@ Arrange a call to a private method accepting an argument that matches any intege
         int expected = 1;
 
         // Arrange
+        // PrivateEcho will always return 1 when invoked with an int parameter
         Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", Arg.Expr.IsAny<int>()).Returns(expected);
 
         // Act
@@ -273,7 +305,7 @@ Arrange a call to a private method accepting an argument that matches any intege
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 3: Change the behavior of a non-public method with parameter__
 
   {{region NonPublicMocking#ShouldMockPrivateCallsWithMatcherArgument}}
     <TestMethod>
@@ -283,6 +315,7 @@ Arrange a call to a private method accepting an argument that matches any intege
         Dim expected As Integer = 1
 
         ' Arrange
+        ' PrivateEcho will always return 1 when invoked with an int parameter
         Mock.NonPublic.Arrange(Of Integer)(foo, "PrivateEcho", Arg.Expr.IsAny(Of Integer)()).Returns(expected)
 
         ' Act
@@ -293,75 +326,14 @@ Arrange a call to a private method accepting an argument that matches any intege
     End Sub
   {{endregion}}
 
-Here we specify that `PrivateEcho` method called with any `int` argument will return `1`. Acting is by calling it with `5` as argument. Finally, we verify that the return value is actually `1`.
+### Private Methods with Overloads
 
-##  Natural Mocking Using a Dynamic Wrapper
+In this section, you will find how to arrange a call to a *private method with two overloads*. The following class will be used as an example:
 
-JustMock leverages .NET 4 and the DLR to allow you to arrange non-public members as naturally as you can public members.
-
-In the example below, we wrap the mock instance in a dynamic object using Mock.NonPublic.Wrap(). The wrapper can be passed to Mock.NonPublic.Arrange and Mock.NonPublic.Assert together with an operation to specify what you want to arrange. We could also arrange the value of a property getter or the action of a property setter. Argument matchers are specified using Arg.Expr again.
-
-You need to reference the Microsoft.CSharp assembly when using dynamic expressions in Visual C# projects.
-
-  #### __[C#]__
-
-  {{region NonPublicMocking#StepByStepDynamic}}
-    [TestMethod]
-    public void ShouldInvokeNonPublicMemberDynamic()
-    {
-        Foo foo = new Foo();
-
-        // Arrange
-        dynamic fooAcc = Mock.NonPublic.Wrap(foo);
-        Mock.NonPublic.Arrange<int>(fooAcc.PrivateEcho(Arg.Expr.IsAny<int>())).Returns(10);
-        Mock.NonPublic.Arrange<string>(fooAcc.Value).Returns("foo");
-        Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce();
-
-        // Act
-        var actual = foo.Echo(5);
-        var value = foo.Value;
-        foo.Value = "abc";
-
-        // Assert
-        Assert.AreEqual(10, actual);
-        Assert.AreEqual("foo", value);
-        Mock.Assert(foo);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region NonPublicMocking#StepByStepDynamic}}
-    <TestMethod>
-    Public Sub ShouldInvokeNonPublicMemberDynamic()
-        Dim foo As New Foo()
-
-        ' Arrange
-        Dim fooAcc As Object = Mock.NonPublic.Wrap(foo)
-        Mock.NonPublic.Arrange(Of Integer)(fooAcc.PrivateEcho(Arg.Expr.IsAny(Of Integer)())).Returns(10)
-        Mock.NonPublic.Arrange(Of String)(fooAcc.Value).Returns("foo")
-        Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce()
-
-        ' Act
-        Dim actual As Integer = foo.Echo(5)
-        Dim value As String = foo.Value
-        foo.Value = "abc"
-
-        ' Assert
-        Assert.AreEqual(10, actual)
-        Assert.AreEqual("foo", value)
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
-
-
-## Mock Private Method with Overloads
-
-Here we arrange a call to a *private method with two overloads*. The following class will be used:
-
-  #### __[C#]__
+  #### __[C#] Sample setup__
 
   {{region NonPublicMocking#FooInternal}}
+  
     internal class FooInternal
     {
         private void pExecute(int arg1)
@@ -386,7 +358,7 @@ Here we arrange a call to a *private method with two overloads*. The following c
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Sample setup__
 
   {{region NonPublicMocking#FooInternal}}
     Friend Class FooInternal
@@ -411,7 +383,7 @@ End Class
 
 > **Important**
 >
-> To interact with non-public classes you will need to add the `InternalVisibleTo` property inside the  *AssemblyInfo.cs*  in your project, like this: 
+> To interact with non-public classes, you must add the `InternalVisibleTo` property inside the  *AssemblyInfo.cs*  in the project you need to test, like this: 
   #### __[C#]__
 
   {{region }}
@@ -419,9 +391,9 @@ End Class
   {{endregion}}
 
 
-We mock the `pExecute` method that accepts an *integer* value as argument. We arrange it to set a local boolean variable to `true` once it is called with `10` as argument. After that we act by calling `foo.Execute(10)` and verify that `called` is true.
+In the sample setup shown above, the `pExecute` method has two overloads - one without arguments and one accepting an integer value as an argument. The code in **Example 4** mocks the overload that accepts an *integer*. The behavior of the method is arranged to set a local boolean variable to `true` once it is called with `10` as argument. After that, it acts by calling `foo.Execute(10)` and verifies that `called` is `true`.
 
-  #### __[C#]__
+  #### __[C#] Example 4: Mock private method with overloads__
 
   {{region NonPublicMocking#PrivateMethodWithOverloads}}
     [TestMethod]
@@ -441,7 +413,7 @@ We mock the `pExecute` method that accepts an *integer* value as argument. We ar
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 4: Mock private method with overloads__
 
   {{region NonPublicMocking#PrivateMethodWithOverloads}}
     <TestMethod> _
@@ -461,14 +433,13 @@ We mock the `pExecute` method that accepts an *integer* value as argument. We ar
     End Sub
   {{endregion}}
 
+### Private Interface Implementation Method
 
-## Mock Private Interface Implementation Method
-
-This example shows how we can mock an explicit (not public) interface implementation method from current or base class.
+This section shows how you can mock an explicit (not public) interface implementation method from current or base class.
 
 The following classes will be used:
 
-  #### __[C#]__
+  #### __[C#] Sample setup__
 
   {{region NonPublicMocking#PrivateInterfaceMethod}}
     public interface IManager
@@ -490,7 +461,7 @@ The following classes will be used:
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Sample setup__
 
   {{region NonPublicMocking#PrivateInterfaceMethod}}
     Public Interface IManager
@@ -512,9 +483,9 @@ The following classes will be used:
     End Class
   {{endregion}}
 
-We can now mock the `IManager.Provider` call in this way:
+As you can see from the sample above, the `IManager` interface defines the `Provider` property, which is then implemented in `FooBase`. The concrete implementation we need to test, however, resides in the `Bar` class, which uses the `FooBase.Provider` property. In **Example 5** you will see how you can mock the `Provider` property.
 
-  #### __[C#]__
+  #### __[C#] Example 5: Mock the implementation of a private method defined in an interface__
 
   {{region NonPublicMocking#PrivateInterfaceMethod2}}
     [TestMethod]
@@ -531,7 +502,7 @@ We can now mock the `IManager.Provider` call in this way:
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 5: Mock the implementation of a private method defined in an interface__
 
   {{region NonPublicMocking#PrivateInterfaceMethod2}}
     <TestMethod> _
@@ -547,12 +518,13 @@ We can now mock the `IManager.Provider` call in this way:
     End Sub
   {{endregion}}
 
+## Internal Virtual Members
 
-## Mock Internal Virtual Method
+### Internal Virtual Method
 
-Arrange a call to an internal virtual method.
+Mocking internal virtual methods uses similar approach to mocking public members. To demonstrate how you can use **JustMock** to mock an internal virtual method, we will be using the `Do` method from the sample setup in the beginning of this topic.
 
-  #### __[C#]__
+  #### __[C#] Example 6: Mock internal virtual method__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualMethod}}
     [TestMethod]
@@ -573,7 +545,7 @@ Arrange a call to an internal virtual method.
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 6: Mock internal virtual method__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualMethod}}
     <TestMethod> _
@@ -593,13 +565,13 @@ Arrange a call to an internal virtual method.
     End Sub
   {{endregion}}
 
-Note that in the arrange statement we don't use a mock of `Foo`, but the actual instance.
+Note that, in the arrange statement, it is not used a mock of `Foo`, but the actual instance.
 
-## Mock Internal Virtual Property Get And Set
+### Internal Virtual Property Get And Set
 
-Arrange a call to an internal virtual property.
+Arranging an internal virtual property is also similar to arranging a public property.
 
-  #### __[C#]__
+  #### __[C#] Example 7: Mock internal virtual property get__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertyGet}}
     [TestMethod]
@@ -618,7 +590,7 @@ Arrange a call to an internal virtual property.
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 7: Mock internal virtual property get__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertyGet}}
     <TestMethod> _
@@ -636,11 +608,11 @@ Arrange a call to an internal virtual property.
     End Sub
   {{endregion}}
 
-Note that in the arrange statement we don't use a mock of `Foo`, but the actual instance.
+Note that, in the arrange statement, it is not used a mock of `Foo`, but the actual instance.
 
-Follows an example of mocking internal virtual property set. We override the actual implementation by arranging that the `foo.Value` must be called with certain value.
+The following code is an example of mocking internal virtual property set. The code overrides the actual implementation by arranging that the `foo.Value` must be called with a certain value.
 
-  #### __[C#]__
+  #### __[C#] Example 8: Mock internal virtual property set__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertySet}}
     [TestMethod]
@@ -658,7 +630,7 @@ Follows an example of mocking internal virtual property set. We override the act
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 8: Mock internal virtual property set__
 
   {{region NonPublicMocking#ShouldMockInternalVirtualPropertySet}}
     <TestMethod> _
@@ -675,13 +647,16 @@ Follows an example of mocking internal virtual property set. We override the act
     End Sub
   {{endregion}}
 
-## Mock Private Static Method
+## Private Static Members
 
-The following example shows how to mock a *private static method*. We use the following class:
+### Private Static Method
 
-  #### __[C#]__
+The following example shows how to mock a *private static method*. We use the following sample class:
+
+  #### __[C#] Sample setup__
 
   {{region NonPublicMocking#FooInternalStatic}}
+  
     internal class FooInternalStatic
     {
         private static int EchoPrivate(int arg1)
@@ -706,9 +681,10 @@ The following example shows how to mock a *private static method*. We use the fo
     }
   {{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
   {{region NonPublicMocking#FooInternalStatic}}
+  
     Friend Class FooInternalStatic
         Private Shared Function EchoPrivate(arg1 As Integer) As Integer
             Throw New NotImplementedException()
@@ -731,7 +707,7 @@ The following example shows how to mock a *private static method*. We use the fo
 
 > **Important**
 >
-> To interact with non-public classes you will need to add the `InternalVisibleTo` property inside the  *AssemblyInfo.cs*  in your project, like this: 
+> To interact with non-public classes, you should add the `InternalVisibleTo` property inside the  *AssemblyInfo.cs*  in the project you need to test, like this: 
   #### __[C#]__
 
   {{region }}
@@ -739,9 +715,9 @@ The following example shows how to mock a *private static method*. We use the fo
   {{endregion}}
 
 
-The method we arrange is `FooInternalStatic.EchoPrivate()`.
+The method arranged in **Example 9** is `FooInternalStatic.EchoPrivate()`.
 
-  #### __[C#]__
+  #### __[C#] Example 9: Mock private static method__
 
   {{region NonPublicMocking#PrivateStaticMethod}}
     [TestMethod]
@@ -758,7 +734,7 @@ The method we arrange is `FooInternalStatic.EchoPrivate()`.
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 9: Mock private static method__
 
   {{region NonPublicMocking#PrivateStaticMethod}}
     <TestMethod> _
@@ -774,13 +750,14 @@ The method we arrange is `FooInternalStatic.EchoPrivate()`.
     End Sub
   {{endregion}}
 
-We call the `Echo` method, but its implementation calls the `EchoPrivate` method, so our assertion passes.
+The code in **Example 9** calls the `Echo` method, but its implementation calls the `EchoPrivate` method, so the assertion passes.
 
-Like a non-public instance generic methods `Mock.NonPublic` can be used to mock non-public static generic ones, here is the sample test:
+Like with non-public instance generic methods, `Mock.NonPublic` can be used to mock non-public static generic ones. 
 
-  #### __[C#]__
+  #### __[C#] Example 10: Mock non-public static generic method__
 
   {{region NonPublicMocking#PrivateStaticGenericMethod}}
+  
     [TestMethod]
     public void ShouldMockPrivateStaticGenericMethod()
     {
@@ -795,7 +772,7 @@ Like a non-public instance generic methods `Mock.NonPublic` can be used to mock 
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 10: Mock non-public static generic method__
 
   {{region NonPublicMocking#PrivateStaticGenericMethod}}
     <TestMethod>
@@ -811,15 +788,16 @@ Like a non-public instance generic methods `Mock.NonPublic` can be used to mock 
     End Sub
   {{endregion}}
 
-## Mock Private Static Property
+### Private Static Property
 
-The following example shows how to mock the get function of a *private static property*. We use the *Foo* class from above.
+This section shows how to mock the get function of a *private static property*. The *Foo* class defined above is used as a sample setup.
 
-The property we arrange is `Foo.PrivateStaticProperty`. When called, it will return an expected integer value, different from the default:
+The property arranged in **Example 11** is `Foo.PrivateStaticProperty`. When called, it will return an expected integer value, different from the default one.
 
-  #### __[C#]__
+  #### __[C#] Example 11: Mock private static property__
 
   {{region NonPublicMocking#PrivateStaticProperty}}
+  
     [TestMethod]
     public void ShouldMockPrivateStaticProperty()
     {
@@ -838,7 +816,7 @@ The property we arrange is `Foo.PrivateStaticProperty`. When called, it will ret
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 11: Mock private static property__
 
   {{region NonPublicMocking#PrivateStaticProperty}}
     <TestMethod> _
@@ -858,13 +836,131 @@ The property we arrange is `Foo.PrivateStaticProperty`. When called, it will ret
     End Sub
   {{endregion}}
 
-To act, we call the `GetMyPrivateStaticProperty()` method, but its implementation returns the `PrivateStaticProperty`, so our assertion passes.
+To act, the code calls the `GetMyPrivateStaticProperty()` method, but its implementation returns the `PrivateStaticProperty`, so the assertion passes.
 
-## Mock Internal Class
+## Protected Members
 
-Let's see an example of how to mock an internal class from .NET framework. Consider the `System.Net.HttpRequestCreator` class which is internal, but has a public interface `System.Net.IWebRequestCreate`. Here we mock its `Create` method.
+To show how to mock a protected member, we will use the following class:
 
-  #### __[C#]__
+  #### __[C#] Sample setup__
+
+  {{region NonPublicMocking#PublicClassWithProtectedMembers}}
+  
+    public class FooWithProtectedMembers
+    {
+        protected virtual void Load()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual int IntValue
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public virtual void Init()
+        {
+            Load();
+        }
+    }
+  {{endregion}}
+
+  #### __[VB]__
+
+  {{region NonPublicMocking#PublicClassWithProtectedMembers}}
+  
+    Public Class FooWithProtectedMembers
+    Protected Overridable Sub Load()
+        Throw New NotImplementedException()
+    End Sub
+
+    Protected Overridable ReadOnly Property IntValue() As Integer
+        Get
+            Throw New NotImplementedException()
+        End Get
+    End Property
+
+    Public Overridable Sub Init()
+        Load()
+    End Sub
+End Class
+  {{endregion}}
+
+
+To mock protected members in JustMock, you can use the same method and logic, as for the rest non-public types, previously shown in this topic.
+
+First, we will arrange that our `IntValue()` method must never occur::
+
+  #### __[C#] Example 12: Arrange protected method__
+
+  {{region NonPublicMocking#FakingProtectedMembersTest1}}
+    [TestMethod]
+    public void ShouldAssertOccrenceForNonPublicFunction()
+    {
+        var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
+
+        Mock.NonPublic.Assert<int>(foo, "IntValue", Occurs.Never());
+    }
+  {{endregion}}
+
+  #### __[VB] Example 12: Arrange that a protected method must not be called__
+
+  {{region NonPublicMocking#FakingProtectedMembersTest1}}
+    <TestMethod> _
+    Public Sub ShouldAssertOccrenceForNonPublicFunction()
+        Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
+
+        Mock.NonPublic.Assert(Of Integer)(foo, "IntValue", Occurs.Never())
+    End Sub
+  {{endregion}}
+
+The second test will test if the protected `Load()` method is actually been called, when `Init()` is initiated.
+
+  #### __[C#] Example 13: Arrange that a protected method must be called at least once__
+
+  {{region NonPublicMocking#FakingProtectedMembersTest2}}
+  
+    [TestMethod]
+    public void ShouldMockProtectedVirtualMembers()
+    {
+        var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
+
+        Mock.NonPublic.Arrange(foo, "Load").MustBeCalled();
+
+        foo.Init();
+
+        Mock.Assert(foo);
+    }
+  {{endregion}}
+
+  #### __[VB] Example 13: Arrange that a protected method must be called at least once__
+
+  {{region NonPublicMocking#FakingProtectedMembersTest2}}
+    <TestMethod> _
+    Public Sub ShouldMockProtectedVirtualMembers()
+        Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
+
+        Mock.NonPublic.Arrange(foo, "Load").MustBeCalled()
+
+        foo.Init()
+
+        Mock.Assert(foo)
+    End Sub
+  {{endregion}}
+
+
+> **Important**
+>
+>  To mock a protected type, your assembly name must be fully qualified according to the framework design rules, i.e. `assembly name = namespace`. Note that you can't mock types from `mscorlib` in this way. 
+
+## Internal Class
+
+Let's see an example of how to mock an internal class from .NET. Consider the `System.Net.HttpRequestCreator` class, which is internal, but has a public interface `System.Net.IWebRequestCreate`. **Example 14** mocks its `Create` method.
+
+  #### __[C#] Example 14: Mock internal class__
 
   {{region NonPublicMocking#ShouldMockNonPublicClassFromFramework}}
     [TestMethod]
@@ -889,7 +985,7 @@ Let's see an example of how to mock an internal class from .NET framework. Consi
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 14: Mock internal class__
 
   {{region NonPublicMocking#ShouldMockNonPublicClassFromFramework}}
     <TestMethod> _
@@ -917,13 +1013,16 @@ Note the use of `Arg.Expr.IsAny<Uri>()` - as we mock a non-public call, we need 
 
 > **Important**
 >
->  To mock internal type, your assembly name must be fully qualified according to the framework design rules, i.e. `assembly name = namespace`. Note that you can't mock types from `mscorlib` in this way. We do a hierarchical search to find the proper qualified name as in the above example. `System.Net.HttpRequestCreator` is found in the `System` assembly, not in `System.Net`. 
+>  To mock an internal type, your assembly name must be fully qualified according to the framework design rules, i.e. `assembly name = namespace`. Note that you can't mock types from `mscorlib` in this way. JustMock does a hierarchical search to find the proper qualified name as in the above example. `System.Net.HttpRequestCreator` is found in the `System` assembly, not in `System.Net`. 
 
-With the next sample we can handle even more complex scenario - mock internal class by calling original constructor with arguments, then make a call to the original implementation from public interface. This time we will use another internal class `System.Net.WebSocketHttpRequestCreator` derived from public interface `System.Net.IWebRequestCreate`
+**Example 15** shows how you can handle an even more complex scenario - mock internal class by calling an original constructor with arguments, then make a call to the original implementation from a public interface. For the purpose of the example, it will be used another internal class - `System.Net.WebSocketHttpRequestCreator` - derived from the public interface `System.Net.IWebRequestCreate`.
 
-  #### __[C#]__
+The sample test verifies whether the call to `Create` method has been made and the returned `Web.WebRequest` object has an expected value for `RequestUri` property set.
+
+  #### __[C#] Example 15: Complex mocking of internal .NET class with constructor arguments__
 
   {{region NonPublicMocking#ShouldMockNonPublicClassFromFrameworkWithArgs}}
+  
     [TestMethod]
     public void ShouldMockInternaldotNETClassWithArgs()
     {
@@ -948,9 +1047,10 @@ With the next sample we can handle even more complex scenario - mock internal cl
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 15: Complex mocking of internal .NET class with constructor arguments__
 
   {{region NonPublicMocking#ShouldMockNonPublicClassFromFrameworkWithArgs}}
+  
     <TestMethod>
     Public Sub ShouldMockInternaldotNETClassWithArgs()
         ' Arrange
@@ -975,118 +1075,65 @@ With the next sample we can handle even more complex scenario - mock internal cl
     End Sub
   {{endregion}}
 
-The sample test verifies whether the call to `Create` method has been made and the returned `Web.WebRequest` object has an expected value for `RequestUri` property set.
+##  Mocking Using a Dynamic Wrapper
 
-## Mock Protected Member
+JustMock leverages .NET 4 and the [DLR](https://en.wikipedia.org/wiki/Dynamic_Language_Runtime) to allow you to wrap non-public implementations in `dynamic` objects and arrange them as naturally as you can do it with public members.
 
-To show how the mocking of protected members is being done, we will use the following class:
+**Example 16** shows how to wrap the mock instance in a dynamic object using `Mock.NonPublic.Wrap()`. The wrapper can be passed to `Mock.NonPublic.Arrange` and `Mock.NonPublic.Assert` together with an operation to specify what you want to arrange. You could also arrange:
+- the value of a property getter 
+- the action of a property setter
 
-  #### __[C#]__
+Argument matchers are specified using `Arg.Expr`.
 
-  {{region NonPublicMocking#PublicClassWithProtectedMembers}}
-    public class FooWithProtectedMembers
-    {
-        protected virtual void Load()
-        {
-            throw new NotImplementedException();
-        }
+When using dynamic expressions in Visual C# projects, you should reference the [Microsoft.CSharp](https://www.nuget.org/packages/Microsoft.CSharp/) assembly.
 
-        protected virtual int IntValue
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+  #### __[C#] Example 16: Using dynamic wrapper__
 
-        public virtual void Init()
-        {
-            Load();
-        }
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region NonPublicMocking#PublicClassWithProtectedMembers}}
-    Public Class FooWithProtectedMembers
-    Protected Overridable Sub Load()
-        Throw New NotImplementedException()
-    End Sub
-
-    Protected Overridable ReadOnly Property IntValue() As Integer
-        Get
-            Throw New NotImplementedException()
-        End Get
-    End Property
-
-    Public Overridable Sub Init()
-        Load()
-    End Sub
-End Class
-  {{endregion}}
-
-To mock protected members in JustMock, we use the same method and logic, as for the rest non-public types, shown above:
-
-First we will arrange that our `IntValue()` method should never occur, like this:
-
-  #### __[C#]__
-
-  {{region NonPublicMocking#FakingProtectedMembersTest1}}
+  {{region NonPublicMocking#StepByStepDynamic}}
     [TestMethod]
-    public void ShouldAssertOccrenceForNonPublicFunction()
+    public void ShouldInvokeNonPublicMemberDynamic()
     {
-        var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
+        Foo foo = new Foo();
 
-        Mock.NonPublic.Assert<int>(foo, "IntValue", Occurs.Never());
-    }
-  {{endregion}}
+        // Arrange
+        dynamic fooAcc = Mock.NonPublic.Wrap(foo);
+        Mock.NonPublic.Arrange<int>(fooAcc.PrivateEcho(Arg.Expr.IsAny<int>())).Returns(10);
+        Mock.NonPublic.Arrange<string>(fooAcc.Value).Returns("foo");
+        Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce();
 
-  #### __[VB]__
+        // Act
+        var actual = foo.Echo(5);
+        var value = foo.Value;
+        foo.Value = "abc";
 
-  {{region NonPublicMocking#FakingProtectedMembersTest1}}
-    <TestMethod> _
-    Public Sub ShouldAssertOccrenceForNonPublicFunction()
-        Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
-
-        Mock.NonPublic.Assert(Of Integer)(foo, "IntValue", Occurs.Never())
-    End Sub
-  {{endregion}}
-
-The second test will test if our protected `Load()` method is actually been called, when `Init()` is initiated.
-
-  #### __[C#]__
-
-  {{region NonPublicMocking#FakingProtectedMembersTest2}}
-    [TestMethod]
-    public void ShouldMockProtectedVirtualMembers()
-    {
-        var foo = Mock.Create<FooWithProtectedMembers>(Behavior.CallOriginal);
-
-        Mock.NonPublic.Arrange(foo, "Load").MustBeCalled();
-
-        foo.Init();
-
+        // Assert
+        Assert.AreEqual(10, actual);
+        Assert.AreEqual("foo", value);
         Mock.Assert(foo);
     }
   {{endregion}}
 
-  #### __[VB]__
+  #### __[VB] Example 16: Using dynamic wrapper__
 
-  {{region NonPublicMocking#FakingProtectedMembersTest2}}
-    <TestMethod> _
-    Public Sub ShouldMockProtectedVirtualMembers()
-        Dim foo = Mock.Create(Of FooWithProtectedMembers)(Behavior.CallOriginal)
+  {{region NonPublicMocking#StepByStepDynamic}}
+    <TestMethod>
+    Public Sub ShouldInvokeNonPublicMemberDynamic()
+        Dim foo As New Foo()
 
-        Mock.NonPublic.Arrange(foo, "Load").MustBeCalled()
+        ' Arrange
+        Dim fooAcc As Object = Mock.NonPublic.Wrap(foo)
+        Mock.NonPublic.Arrange(Of Integer)(fooAcc.PrivateEcho(Arg.Expr.IsAny(Of Integer)())).Returns(10)
+        Mock.NonPublic.Arrange(Of String)(fooAcc.Value).Returns("foo")
+        Mock.NonPublic.Arrange(fooAcc.Value = "abc").OccursOnce()
 
-        foo.Init()
+        ' Act
+        Dim actual As Integer = foo.Echo(5)
+        Dim value As String = foo.Value
+        foo.Value = "abc"
 
+        ' Assert
+        Assert.AreEqual(10, actual)
+        Assert.AreEqual("foo", value)
         Mock.Assert(foo)
     End Sub
   {{endregion}}
-
-
-> **Important**
->
->  To mock protected type, your assembly name must be fully qualified according to the framework design rules, i.e. `assembly name = namespace`. Note that you can't mock types from `mscorlib` in this way. 

@@ -8,7 +8,9 @@ navigation:
     getting-started:
         title: Getting Started
         position: 1
-
+    getting-started/api-basics:
+        title: JustMock API Basics
+        position: 4
     licensing:
         title: Licensing
         position: 2
@@ -52,6 +54,9 @@ navigation:
 ## The application virtual path
 baseurl: /devtools/justmock
 
+## Enable CTA Panel
+has_cta_panels: true
+
 ## Assign layout and category per different paths
 defaults:
 -
@@ -69,6 +74,7 @@ product: "Telerik JustMock"
 productName: "Telerik JustMock"
 platform: justmock
 api_reference_url: "api/"
+
 
 ff-sheet-id: f22ac032-a3ef-411e-af2e-6202e27709be
 
