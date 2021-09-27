@@ -15,8 +15,10 @@ The following table shows the differences between the commercial and free versio
 
 | Feature | Commercial Version | Free Version |
 | ------ | ------ | ------ |
+|[.Net Core Support]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
+|[.Net 5]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
 |[Debug View]({%slug justmock/basic-usage/debug-view%})| &#x2714; | &#x2714; |
-|[Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%})| &#x2714; | &#x2714; |
+|[Create and Arrange Mocks at the Same Time]({%slug justmock/basic-usage/create-mocks-by-example%})| &#x2714; | &#x2714; |
 |[Call Original]({%slug justmock/basic-usage/mock/call-original%})| &#x2714; | &#x2714; |
 |[Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})| &#x2714; | &#x2714; |
 |[Do Instead]({%slug justmock/basic-usage/mock/do-instead%})| &#x2714; | &#x2714; | 
@@ -36,20 +38,20 @@ The following table shows the differences between the commercial and free versio
 |[Automocking]({%slug justmock/basic-usage/automocking%})| &#x2714; | &#x2714; |
 |[SharePoint Mocking]({%slug justmock/advanced-usage/sharepoint-mocking%})| &#x2714; | - |
 |[Entity Framework Mocking]({%slug justmock/advanced-usage/entity-framework-mocking%})| &#x2714; | - |
-|[Final Mocking]({%slug justmock/advanced-usage/final-mocking%})| &#x2714; | - |
+|[Mock Non-Abstract and Non-Virtual Classes or Members]({%slug justmock/advanced-usage/concrete-mocking%})| &#x2714; | Only non-abstract classes can be mocked. |
 |[Elevated Silverlight Mocking]({%slug justmock/advanced-usage/silverlight-mocking%})| &#x2714; | - |
 |[Sealed Mocking]({%slug justmock/advanced-usage/sealed-mocking%})| &#x2714; | - |
 |[Static Mocking]({%slug justmock/advanced-usage/static-mocking%})| &#x2714; | - |
 |[Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})| &#x2714; | - |
+|[Mocking Local Functions]({%slug justmock/advanced-usage/mocking-local-functions%})| &#x2714; | - |
 |[Threadpool Mocking]({%slug justmock/advanced-usage/threadpool-mocking%})| &#x2714; | - |
 |[Extension Methods Mocking]({%slug justmock/advanced-usage/extension-methods-mocking%})| &#x2714; | - |
-|[MsCorlib Mocking]({%slug justmock/advanced-usage/mscorlib-mocking%})| &#x2714; | - |
+|[System API / MsCorlib Mocking]({%slug justmock/advanced-usage/mscorlib-mocking%})| &#x2714; | - |
 |[Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%})| &#x2714; | - |
 |[Mocking LINQ Queries]({%slug justmock/advanced-usage/mocking-linq-queries%})| &#x2714; | - |
 |[Private Accessor]({%slug justmock/advanced-usage/private-accessor%})| &#x2714; | - |
 |[Mocking DLL Imports]({%slug justmock/advanced-usage/mocking-dll-imports%})| &#x2714; | - |
-|[.Net Core Support]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
-|[.Net 5]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
+
 
 __Legend__
 

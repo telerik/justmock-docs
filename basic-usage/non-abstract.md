@@ -27,7 +27,7 @@ To show you how to mock a non-abstract class and its members, let's take the fol
             throw new NotImplementedException("Constructor");
         }
     
-        public virtual IList<int> GetOrders()
+        public virtual int GetNumberOfOrders()
         {
             throw new NotImplementedException();
         }
@@ -43,7 +43,7 @@ To show you how to mock a non-abstract class and its members, let's take the fol
             Throw New NotImplementedException("Constructor")
         End Sub
     
-        Public Overridable Function GetOrders() As IList(Of Integer)
+        Public Overridable Function GetNumberOfOrders() As IList(Of Integer)
             Throw New NotImplementedException()
         End Function
     End Class
@@ -63,10 +63,10 @@ Note, that we have declared a concrete class (`Customer`) which does not impleme
         // Create a mock of the object
         var customerMock = Mock.Create<Customer>();
         // Arrange your expectations
-        Mock.Arrange(() => customerMock.GetOrders()).CallOriginal().OccursOnce();
+        Mock.Arrange(() => customerMock.GetNumberOfOrders()).CallOriginal().OccursOnce();
     
         //Act
-        customerMock.GetOrders();
+        customerMock.GetNumberOfOrders();
     
         //Assert
         Mock.Assert(customerMock);
@@ -84,17 +84,17 @@ Note, that we have declared a concrete class (`Customer`) which does not impleme
         ' Create a mock of the object
         Dim customerMock = Mock.Create(Of Customer)()
         ' Arrange your expectations
-        Mock.Arrange(Function() customerMock.GetOrders()).CallOriginal().OccursOnce()
+        Mock.Arrange(Function() customerMock.GetNumberOfOrders()).CallOriginal().OccursOnce()
         
         ' Act
-        customerMock.GetOrders()
+        customerMock.GetNumberOfOrders()
         
         ' Assert
         Mock.Assert(customerMock)
     End Sub
 {{endregion}}
 
-Note that, in the [Arrange]({%slug justmock/basic-usage/arrange-act-assert%}) part of this example, we use the [CallOriginal]({%slug justmock/basic-usage/mock/call-original%}) and [Occurs]({%slug justmock/basic-usage/asserting-occurrence%}) methods. This example shows how JustMock allows us to add behavior checking - it will call the original `GetOrders()` method, verifying that the method call is made only once.
+Note that, in the [Arrange]({%slug justmock/basic-usage/arrange-act-assert%}) part of this example, we use the [CallOriginal]({%slug justmock/basic-usage/mock/call-original%}) and [Occurs]({%slug justmock/basic-usage/asserting-occurrence%}) methods. This example shows how JustMock allows us to add behavior checking - it will call the original `GetNumberOfOrders()` method, verifying that the method call is made only once.
 
 ## See Also 
 
