@@ -1,5 +1,5 @@
 ---
-title: DLL Imports
+title: Mocking DLL Imports
 page_title: Mocking DLL Imports | JustMock Documentation
 description: Mocking DLL Imports
 previous_url: /advanced-usage-mocking-dll-imports.html

@@ -1,5 +1,5 @@
 ---
-title: Delegates
+title: Mocking Delegates
 page_title: Mocking Delegates | JustMock Documentation
 description: Mocking Delegates
 previous_url: /advanced-usage-mocking-delegates.html

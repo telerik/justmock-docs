@@ -1,5 +1,5 @@
 ---
-title: SharePoint
+title: SharePoint Mocking
 page_title: SharePoint Mocking | JustMock Documentation
 description: SharePoint Mocking
 previous_url: /advanced-usage-sharepoint-mocking.html

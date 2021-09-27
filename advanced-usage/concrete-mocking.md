@@ -1,7 +1,7 @@
 ---
 title: Non-Abstract and Non-Virtual
 page_title: Mock Non-Abstract and Non-Virtual Classes or Members | JustMock Documentation
-description: ock Non-Abstract and Non-Virtual Classes or Members
+description: Mock Non-Abstract and Non-Virtual Classes or Members
 previous_url: /advanced-usage-concrete-mocking.html
 slug: justmock/advanced-usage/concrete-mocking
 tags: non-virtual,non-abstract, concrete, mocking
