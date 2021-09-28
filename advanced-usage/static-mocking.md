@@ -1,5 +1,5 @@
 ---
-title: Static Mocking
+title: Static
 page_title: Static Mocking | JustMock Documentation
 description: Static Mocking
 previous_url: /advanced-usage-static-mocking.html

@@ -1,5 +1,5 @@
 ---
-title: Concrete Mocking
+title: Concrete Implementations
 page_title: Concrete Mocking | JustMock Documentation
 description: Concrete Mocking
 previous_url: /advanced-usage-concrete-mocking.html

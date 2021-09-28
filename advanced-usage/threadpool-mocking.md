@@ -1,5 +1,5 @@
 ---
-title: Threadpool Mocking
+title: Threadpool
 page_title: Threadpool Mocking | JustMock Documentation
 description: Threadpool Mocking
 previous_url: /advanced-usage-threadpool-mocking.html

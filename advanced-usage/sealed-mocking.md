@@ -1,5 +1,5 @@
 ---
-title: Sealed Mocking
+title: Sealed
 page_title: Sealed Mocking | JustMock Documentation
 description: Sealed Mocking
 previous_url: /advanced-usage-sealed-mocking.html

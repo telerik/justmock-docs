@@ -1,5 +1,5 @@
 ---
-title: Partial Mocking
+title: Partial Mocks
 page_title: Partial Mocking | JustMock Documentation
 description: Partial Mocking
 previous_url: /advanced-usage-partial-mocking.html
