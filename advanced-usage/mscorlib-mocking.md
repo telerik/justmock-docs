@@ -1,7 +1,7 @@
 ---
-title: MsCorlib Mocking
-page_title: MsCorlib Mocking | JustMock Documentation
-description: MsCorlib Mocking
+title:  System API / MsCorLib
+page_title: System API / MsCorLib Mocking | JustMock Documentation
+description:  System API / MsCorLib Mocking
 previous_url: /advanced-usage-mscorlib-mocking.html
 slug: justmock/advanced-usage/mscorlib-mocking
 tags: mscorlib,mocking
@@ -9,7 +9,7 @@ published: True
 position: 14
 ---
 
-# MsCorlib Mocking
+#  System API / MsCorLib Mocking
 
 __Telerik® JustMock__ enables you to mock methods from the .NET Framework, i.e. from MsCorlib.
 Even more, with JustMock you are able to arrange against any MsCorlib member/function without any additional setups. This allows you to mock MsCorlib functions/members by directly arranging their behavior.

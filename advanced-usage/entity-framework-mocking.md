@@ -1,5 +1,5 @@
 ---
-title: Entity Framework Mocking
+title: Entity Framework
 page_title: Entity Framework Mocking | JustMock Documentation
 description: Entity Framework Mocking
 previous_url: /advanced-usage-entity-framework-mocking.html

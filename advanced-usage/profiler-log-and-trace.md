@@ -11,7 +11,7 @@ position: 22
 
 # Profiler Log And Trace
 
-In this article you will get familiar with Telerik JustMock Profiler built-in log and trace capabilities. Elevated mocking is strongly relies on profiler and sometimes it might be blocked by unexpected behavior which is hard to be troubleshooted. Here comes the profiler trace, it is really useful for finding where the problem comes from.
+In this article you will get familiar with Telerik JustMock Profiler built-in log and trace capabilities. Elevated mocking strongly relies on profiler and sometimes it might be blocked by unexpected behavior which is hard to troubleshoot. Here comes the profiler trace that can help you find where the problem comes from.
 
 ## Enabling the Profiler Log And Trace
 The log and trace functionality is controlled entirely via environment using dedicated variable __JUSTMOCK_LOG_LEVEL__. Possible values are: __TRACE__, __DEBUG__, __INFO__, __WARN__, __ERROR__, __CRITICAL__ and __OFF__. Values from __TRACE__ to __CRITICAL__ enable tracing with different verbosity level in descending order, while __OFF__ completely disables it. All traces are redirected to system debug output.

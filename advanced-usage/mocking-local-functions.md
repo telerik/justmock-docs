@@ -1,5 +1,5 @@
 ---
-title: Mocking Local Functions
+title: Local Functions
 page_title: Mocking Local Functions | JustMock Documentation
 description: Mocking Local Functions
 previous_url: /advanced-usage-mocking-local-functions.html

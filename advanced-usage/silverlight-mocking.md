@@ -1,5 +1,5 @@
 ---
-title: Silverlight Mocking
+title: Silverlight
 page_title: Silverlight Mocking | JustMock Documentation
 description: Silverlight Mocking
 previous_url: /advanced-usage-silverlight-mocking.html

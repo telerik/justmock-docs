@@ -16,11 +16,11 @@ navigation:
         position: 2
 
     basic-usage:
-        title: Basic Usage
+        title: Basic Mocking
         position: 3
 
     advanced-usage:
-        title: Advanced Usage
+        title: Advanced Mocking
         position: 4
 
     scenarios:
