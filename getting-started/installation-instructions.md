@@ -15,6 +15,10 @@ This topic outlines the steps required to install [Telerik JustMock](https://www
 
 ## Installing JustMock
 
+JustMock offers two installation methods&mdash;[using the MSI](#installing-justmock-from-msi-file) and using the [NuGet package](#installing-justmock-from-nuget-package).
+
+### Installing JustMock from MSI File
+
 1. Download the JustMock installer from www.telerik.com:
 	* If this is your first time here and you want to try JustMock, download the trial installer file from here: [Download JustMock](https://www.telerik.com/download-trial-file/v2-b/justmock-b). Keep in mind that this will require to either log in or create a new Telerik account.
 	* If you are a licensed JustMock user, log in your Telerik account and navigate to the [Downloads section](https://www.telerik.com/account/my-downloads).
@@ -27,13 +31,43 @@ This topic outlines the steps required to install [Telerik JustMock](https://www
 
 >If you encounter issues during the installation process, submit a support ticket in our [support ticketing system](https://www.telerik.com/account/support-tickets) with as much details as possible and we will assist you. 
 
+### Installing JustMock from NuGet Package
+
+To install the JustMock NuGet package, first add the Telerik NuGet server to the Visual Studio NuGet Package Manager:
+
+1. Open Visual Studio and go to **Tools** > **NuGet Package Manager** > **Package Manager Settings**.
+
+1. Select **Package Sources**, and then select the **+** button.
+
+1. In the **Name** field, enter `Telerik.com`.
+
+1. In the **Source** field, enter `https://nuget.telerik.com/nuget`, and then select **OK**.
+
+   >The improved Telerik NuGet v3 is now available for beta testing at https://nuget.telerik.com/v3/index.json. The new v3 API is faster, lighter, and reduces the number of requests from NuGet clients. You are welcome to try it.
+
+    ![Add NuGet Source](images/NugetPackageManagerSources.png)
+
+Once you have configured Visual Studio to access the Telerik NuGet server, add the JustMock NuGet package to the project:
+
+1. In Visual Studio, open the solution in which you will use mocking.
+
+1. Go to **Tools** > **NuGet Package Manager** > **Manage NuGet Packages for Solution...**.
+
+1. From the **Package source** drop-down, select `Telerik.com`.
+
+1. On the **Browse** tab, search for `JustMock`.
+
+1. Select the `JustMock.Commercial` package, select the desired project, and then select **Install**.
+
+    ![Install NuGet Package](images/ManagePackagesForSolution.png)
+
 ## Installing JustMock Lite
 
 You can choose between the following approaches:
 
 * __JustMock Lite__ is available from [www.nuget.org](https://www.nuget.org/). You can use the nuget package manager console from within Visual Studio to install JustMock Lite. The command for installing JustMock Lite can be found on this page: [https://nuget.org/List/Packages/JustMock](https://nuget.org/List/Packages/JustMock).
 
-	![JustMock Nugget](images/JustMockNugget.png)
+	![JustMock Lite Nugget](images/JustMockNugget.png)
 
 * You can download the __JustMock Lite__ installer from [JustMock Lite: Free Mocking Framework](https://www.telerik.com/justmock/free-mocking) page.  Keep in mind that this will require to either log in or create a new Telerik account.
 
