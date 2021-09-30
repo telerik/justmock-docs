@@ -35,7 +35,7 @@ JustMock offers two installation methods&mdash;[using the MSI](#installing-justm
 
 To install the JustMock NuGet package, first add the Telerik NuGet server to the Visual Studio NuGet Package Manager:
 
-1. Open Visual Studio 2019 and go to **Tools** > **NuGet Package Manager** > **Package Manager Settings**.
+1. Open Visual Studio and go to **Tools** > **NuGet Package Manager** > **Package Manager Settings**.
 
 1. Select **Package Sources**, and then select the **+** button.
 
@@ -67,7 +67,7 @@ You can choose between the following approaches:
 
 * __JustMock Lite__ is available from [www.nuget.org](https://www.nuget.org/). You can use the nuget package manager console from within Visual Studio to install JustMock Lite. The command for installing JustMock Lite can be found on this page: [https://nuget.org/List/Packages/JustMock](https://nuget.org/List/Packages/JustMock).
 
-	![JustMock Nugget](images/JustMockNugget.png)
+	![JustMock Lite Nugget](images/JustMockNugget.png)
 
 * You can download the __JustMock Lite__ installer from [JustMock Lite: Free Mocking Framework](https://www.telerik.com/justmock/free-mocking) page.  Keep in mind that this will require to either log in or create a new Telerik account.
 
