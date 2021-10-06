@@ -41,9 +41,9 @@ To install the JustMock NuGet package, first add the Telerik NuGet server to the
 
 1. In the **Name** field, enter `Telerik.com`.
 
-1. In the **Source** field, enter `https://nuget.telerik.com/nuget`, and then select **OK**.
+1. In the **Source** field, enter `https://nuget.telerik.com/v3/index.json`, and then select **OK**.
 
-   >The improved Telerik NuGet v3 is now available for beta testing at https://nuget.telerik.com/v3/index.json. The new v3 API is faster, lighter, and reduces the number of requests from NuGet clients. You are welcome to try it.
+    > The improved Telerik NuGet v3 is now available at https://nuget.telerik.com/v3/index.json. The new v3 API is faster, lighter, and reduces the number of requests from NuGet clients. The old https://nuget.telerik.com/nuget server will be deprecated and we encourage our clients to switch to the v3 API and use https://nuget.telerik.com/v3/index.json to access it.
 
     ![Add NuGet Source](images/NugetPackageManagerSources.png)
 

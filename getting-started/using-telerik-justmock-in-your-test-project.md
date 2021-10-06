@@ -36,7 +36,7 @@ This topic demonstrates how to use __Telerik® JustMock__ in a new test project 
 
 If you want to use JustMock in an existing unit test project, you should add a reference to **Telerik.JustMock.dll**. 
 
->NuGet package is available for **JustMock Lite** only. If you prefer using it, check the [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) topic for details. 
+>NuGet packages are available as well. If you prefer using them, check the [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) topic for details. 
 
 1. Right click on your test project and select *Add Reference*.
 
