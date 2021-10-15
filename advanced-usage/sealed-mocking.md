@@ -13,13 +13,13 @@ position: 3
 
 This functionality allows you to fake sealed classes and calls to their members, set expectations and verify results using the [AAA]({%slug justmock/basic-usage/arrange-act-assert%}) principle. Mocking sealed classes and calls to their methods/properties doesn't affect the way you write your tests, i.e. the same syntax is used for mocking non-sealed classes.
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
-
 >important **Important**
 >
-> To use sealed mocking, you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
+> To use sealed mocking, you first need to **go to elevated mode** by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
+>
+>This feature is available only in the **commercial** version of **Telerik JustMock**. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
 
-## Arrange Final Method Call on a Sealed Class
+## Arrange Method Call on a Sealed Class
 
 To demonstrate how you can mock the behavior of a method from a sealed class, let's take the following class as an example:
 
