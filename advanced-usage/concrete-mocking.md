@@ -11,11 +11,11 @@ position: 7
 
 # Mock Non-Abstract and Non-Virtual Classes or Members
 
-The advanced features supported in __Telerik® JustMock__ enables you to mock any class or member, including non-virtual and non-abstract implementations. The mocking of **non-abstract classes** is also available in the [free edition]({%slug justmock/basic-usage/non-abstract%}) but the commercial version also includes **mocking of non-abstract and non-virtual members** of classes. 
+The advanced features supported in __Telerik® JustMock__ enables you to mock any class or member, including non-virtual and non-abstract implementations. The mocking of **non-abstract classes** is also available in the [free edition]({%slug justmock/basic-usage/non-abstract%}) but it only supports mocking a concrete class with virtual methods. The commercial version also includes **mocking of non-abstract and non-virtual members** of classes. 
 
 >note The commercial edition allows you to mock concrete objects without having to change anything in their interface.
 
-> This is an Elevated Feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
+> This is an elevated feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
 
 Here is the example class we are going to use:
 
@@ -132,7 +132,7 @@ You can arrange the property get and set even when the property is not marked as
 
 **Example 2** defines that setting the final `customerMock.Name` property to any string value other than *"TestName"* will cause an exception of type `StrictMockException` to be thrown.
 
->note If you would like to learn more about mocking properties, check the [Mock Properties]({%slug justmock/basic-usage/mock-properties%}) help topic.
+>note If you would like to learn more about mocking properties, check the [Mock Properties](../basic-usage/mock-properties) help topic.
 
 #### __[C#] Example 2: Mock concrete implementation of property setter__
 
@@ -214,7 +214,7 @@ Note that here we are going to mock an instance of the `Customer` class in the s
     End Sub
 {{endregion}}
 
->note Generic methods and classes can also be mocked. Check the [Generics]({%slug justmock/basic-usage/generics%}) topic for more details on that functionality.
+>note Generic methods and classes can also be mocked. Check the [Generics](../basic-usage/generics) topic for more details on that functionality.
 
 ## Arrange Method Overloads
 
@@ -308,7 +308,7 @@ In this sections, you will find how to use the `Raises` method to fire a callbac
     End Sub
 {{endregion}}
 
->note More information on raising mocked events is available in the [Basic Usage | Raise]({%slug justmock/basic-usage/mock/raise%}) topic.
+>note More information on raising mocked events is available in the [Basic Usage | Raise](../basic-usage/mock/raise) topic. 
 
 ## See Also
 
