@@ -11,7 +11,7 @@ position: 14
 
 # System API / MsCorLib Mocking
 
-**JustMock** allows you to mock everything, including the .NET system types as part of mscorlib.dll or any other library or DLL. Even more, with JustMock you are able to arrange any System member/function without additional setups. 
+**Telerik® JustMock** allows you to mock everything, including the .NET system types as part of mscorlib.dll or any other library or DLL. Even more, with JustMock you are able to arrange any System member/function without additional setups. 
 > This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
 
@@ -130,7 +130,7 @@ In this case, the test will look like this:
 
 ## Mocking System.IO.FileInfo Class
 
-Using JustMock, you can mock virtually any MsCorlib type without any prerequisites. To demonstrate mocking of framework methods, we will take the [FileInfo](https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo) class and mock its `Delete` method.
+Using JustMock, you can mock virtually any System type from MsCorLib without any prerequisites. To demonstrate mocking of framework methods, we will take the [FileInfo](https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo) class and mock its `Delete` method.
 
 #### __[C#] Example 4: Mock FileInfo.Delete method__
 
