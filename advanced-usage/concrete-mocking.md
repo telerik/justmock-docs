@@ -11,7 +11,7 @@ position: 7
 
 # Mock Non-Abstract and Non-Virtual Classes or Members
 
-The advanced features supported in __Telerik® JustMock__ enables you to mock any class or member, including non-virtual and non-abstract implementations. The mocking of **non-abstract classes** is also available in the [free edition]({%slug justmock/basic-usage/non-abstract%}) but it only supports mocking a concrete class with virtual methods. The commercial version also includes **mocking of non-abstract and non-virtual members** of classes. 
+The advanced features supported in __Telerik® JustMock__ enables you to mock any class or member, including non-virtual and non-abstract implementations. The mocking of **non-abstract classes** is also available in the free edition but it only supports mocking a concrete class with virtual methods. The commercial version also includes **mocking of non-abstract and non-virtual members** of classes. 
 
 >note The commercial edition allows you to mock concrete objects without having to change anything in their interface.
 

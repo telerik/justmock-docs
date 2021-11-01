@@ -4,7 +4,7 @@ page_title: Mock Non-Abstract Classes | JustMock Documentation
 description: Mock Non-Abstract Classes
 slug: justmock/basic-usage/non-abstract
 tags: mock,class, non abstract
-published: True
+published: False
 position: 6
 ---
 
