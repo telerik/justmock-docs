@@ -1,5 +1,5 @@
 ---
-title: Ref Returns
+title: Mocking Ref Returns
 page_title: Mocking Ref Returns | JustMock Documentation
 description: Mocking Ref returns
 previous_url: /advanced-usage-ref-return-mocking.html

@@ -1,5 +1,5 @@
 ---
-title: Non-public Members and Types
+title: Mocking Non-public Members and Types
 page_title: Mocking Non-public Members and Types | JustMock Documentation
 description: Learn how you can isolate non-public members and types by mocking them with JustMock.
 previous_url: /advanced-usage-mocking-non-public-members-and-types.html

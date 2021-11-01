@@ -1,11 +1,11 @@
 ---
-title: Non-Virtual and Non-Abstract
+title: Final Mocking
 page_title: Final Mocking | JustMock Documentation
 description: Final Mocking
 previous_url: /advanced-usage-final-mocking.html
 slug: justmock/advanced-usage/final-mocking
 tags: final,mocking
-published: True
+published: False
 position: 1
 ---
 

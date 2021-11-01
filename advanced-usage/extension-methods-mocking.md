@@ -1,5 +1,5 @@
 ---
-title: Extension Methods
+title: Extension Methods Mocking
 page_title: Extension Methods Mocking | JustMock Documentation
 description: Extension Methods Mocking
 previous_url: /advanced-usage-extension-methods-mocking.html
