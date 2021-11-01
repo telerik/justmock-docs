@@ -315,4 +315,3 @@ In this sections, you will find how to use the `Raises` method to fire a callbac
  * [Mock Internal Types Via Proxy]({%slug justmock/basic-usage/mock-internal-types-via-proxy%})
  * [CallOriginal]({%slug justmock/basic-usage/mock/call-original%})
  * [Occurs]({%slug justmock/basic-usage/asserting-occurrence%})
- * [Basic Usage | Mock Non-Abstract Classes]({%slug justmock/basic-usage/non-abstract%})
