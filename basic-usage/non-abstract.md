@@ -10,7 +10,7 @@ position: 6
 
 # Mock Non-Abstract Classes 
 
-With JustMock Lite, you can mock non-abstract classes and their members. The API enables you to mock the concrete implementations in the same way as you would mock an interface or an abstract class.
+With JustMock Lite, you can mock non-abstract classes and their virtual members. The API enables you to mock the concrete implementations in the same way as you would mock an interface or an abstract class.
 
 >With the commercial version of JustMock, in addition to the non-abstract classes you can also mock non-abstract and non-virtual members. Check the [Advanced Mocking | Non-Abstract and Non-Virtual]({%slug justmock/advanced-usage/concrete-mocking%}) topic.
 
