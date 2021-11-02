@@ -1,25 +1,29 @@
 ---
-title: Future Mocking
-page_title: Future Mocking | JustMock Documentation
-description: Future Mocking
+title: Working with Instances
+page_title: Working with Instances | JustMock Documentation
+description: Working with Instances
 previous_url: /advanced-usage-future-mocking.html
 slug: justmock/advanced-usage/future-mocking
-tags: future,mocking
+tags: future,mocking, mock, instance, ignore, create
 published: True
 position: 8
 ---
 
-# Future Mocking
+# Working With Instances of Mocked Objects
 
-Future Mocking allows you to mock members without passing the dependency through a constructor or calling a method. You can apply future mocking automatically based on an expectation rather than applying it to every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
+With the advanced features of __Telerik® JustMock__ you can apply the arrangements you need and configure them to execute for **each instance** no matter where and when it is being created in the current context. With this feature, you don't need to arrange every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
 
-## Ignore instance for an expectation explicitly
+> This is an elevated feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
 
-By default, all mocks are tied to an instance and this is the expected behavior. The instance that we created in the following sample is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the `fakeUsed` instance of the `UserData` class. But note that the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
 
-  #### __[C#]__
+## Ignore Instance for an Expectation 
 
-  {{region FutureMocking#SampleCode1}}
+By default, all mocks are tied to an instance and this is the expected behavior. The instance that is created in **Example 1** is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the mocked instance(`userDataMock`) of the `UserData` class. With this setup, the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
+
+#### [C#] Sample setup
+
+{{region FutureMocking_sample1}}
+
     public class UserData
     {
         public int ReturnFive()
@@ -27,212 +31,235 @@ By default, all mocks are tied to an instance and this is the expected behavior.
             return 5;
         }
     }
+{{endregion}}
 
-    [TestMethod]
-    public void ShouldArrangeReturnOnlyForSpecificInstance()
-    {
-        // Arrange
-        var fakeUsed = Mock.Create<UserData>();
-        Mock.Arrange(() => fakeUsed.ReturnFive()).Returns(7);
+#### [VB] Sample setup
 
-        // Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive());
-        Assert.AreEqual(5, new UserData().ReturnFive());    
-    }
-  {{endregion}}
+{{region FutureMocking_sample1}}
 
-  #### __[VB]__
-
-  {{region FutureMocking#SampleCode1}}
     Public Class UserData
         Public Function ReturnFive() As Integer
             Return 5
         End Function
     End Class
+{{endregion}}
+
+
+#### __[C#] Example 1: Arrange method for specific instance__
+
+{{region FutureMocking#SampleCode1}}
+
+    [TestMethod]
+    public void ShouldArrangeReturnOnlyForSpecificInstance()
+    {
+        // Arrange
+        var userDataMock = Mock.Create<UserData>();
+        Mock.Arrange(() => userDataMock.ReturnFive()).Returns(7);
+
+        // Assert
+        Assert.AreEqual(7, userDataMock.ReturnFive());
+        Assert.AreEqual(5, new UserData().ReturnFive());    
+    }
+{{endregion}}
+
+#### __[VB] Example 1: Arrange method for specific instance__
+
+{{region FutureMocking#SampleCode1}}
 
     <TestMethod>
     Public Sub ShouldArrangeReturnOnlyForSpecificInstance()
         ' Arrange
-        Dim fakeUsed = Mock.Create(Of UserData)()
-        Mock.Arrange(Function() fakeUsed.ReturnFive()).Returns(7)
+        Dim userDataMock = Mock.Create(Of UserData)()
+        Mock.Arrange(Function() userDataMock.ReturnFive()).Returns(7)
 
         ' Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive())
+        Assert.AreEqual(7, userDataMock.ReturnFive())
         Assert.AreEqual(5, New UserData().ReturnFive())
     End Sub
-  {{endregion}}
+{{endregion}}
 
-If we want to apply future mocking and assure that all `UserData` instances use the same mocked version of the `ReturnFive()` method, we can call `IgnoreInstance()`.
+If you need to apply future mocking and assure that all `UserData` instances use the same mocked version of the `ReturnFive()` method, you can call `IgnoreInstance()`.
 
-  #### __[C#]__
+#### __[C#] Example 2: Arrange method for all object instances__
 
-  {{region FutureMocking#SampleCode2}}
+{{region FutureMocking#SampleCode2}}
+
     [TestMethod]
     public void ShouldArrangeReturnForFutureUserDataInstances()
     {
         // Arrange
-        var fakeUsed = Mock.Create<UserData>();
-        Mock.Arrange(() => fakeUsed.ReturnFive()).IgnoreInstance().Returns(7);
+        var userDataMock = Mock.Create<UserData>();
+        Mock.Arrange(() => userDataMock.ReturnFive()).IgnoreInstance().Returns(7);
 
         // Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive());
+        Assert.AreEqual(7, userDataMock.ReturnFive());
         Assert.AreEqual(7, new UserData().ReturnFive());
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 2: Arrange method for all object instances__
 
-  {{region FutureMocking#SampleCode2}}
+{{region FutureMocking#SampleCode2}}
+
     <TestMethod>
     Public Sub ShouldArrangeReturnForFutureUserDataInstances()
         ' Arrange
-        Dim fakeUsed = Mock.Create(Of UserData)()
-        Mock.Arrange(Function() fakeUsed.ReturnFive()).IgnoreInstance().Returns(7)
+        Dim userDataMock = Mock.Create(Of UserData)()
+        Mock.Arrange(Function() userDataMock.ReturnFive()).IgnoreInstance().Returns(7)
 
         ' Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive())
+        Assert.AreEqual(7, userDataMock.ReturnFive())
         Assert.AreEqual(7, New UserData().ReturnFive())
     End Sub
-  {{endregion}}
+{{endregion}}
 
 When `IgnoreInstance` is applied, the `ReturnFive()` method will work according to the expectation you have set in `Mock.Arrange`.
 
 When setting future expectations, you can also use the [Fluent Mocking]({%slug justmock/basic-usage/fluent-mocking%}) API as in this example:
 
-  #### __[C#]__
+#### __[C#] Example 3: Arrange method for all object instances using fluent syntax__
 
-  {{region FutureMocking#SampleCode2Fluent}}
+{{region FutureMocking#SampleCode2Fluent}}
+
     [TestMethod]
     public void ShouldArrangeReturnForFutureUserDataInstances_Fluent()
     {
         // Arrange
-        var fakeUsed = Mock.Create<UserData>();
-        fakeUsed.Arrange(mock => mock.ReturnFive()).IgnoreInstance().Returns(7);
+        var userDataMock = Mock.Create<UserData>();
+        userDataMock.Arrange(mock => mock.ReturnFive()).IgnoreInstance().Returns(7);
 
         // Assert
-        Assert.AreEqual(7, fakeUsed.ReturnFive());
+        Assert.AreEqual(7, userDataMock.ReturnFive());
         Assert.AreEqual(7, new UserData().ReturnFive());
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 3: Arrange method for all object instances using fluent syntax__
 
-  {{region FutureMocking#SampleCode2Fluent}}
+{{region FutureMocking#SampleCode2Fluent}}
+
     <TestMethod>
     Public Sub ShouldArrangeReturnForFutureUserDataInstances_Fluent()
         ' Arrange
-        Dim fakeUsed = Mock.Create(Of UserData)()
-        fakeUsed.Arrange(Function(x) x.ReturnFive()).IgnoreInstance().Returns(7)
+        Dim userDataMock = Mock.Create(Of UserData)()
+        userDataMock.Arrange(Function(x) x.ReturnFive()).IgnoreInstance().Returns(7)
 
         ' Assert
-        Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(7, fakeUsed.ReturnFive())
+        Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(7, userDataMock.ReturnFive())
         Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(7, New UserData().ReturnFive())
     End Sub
-  {{endregion}}
+{{endregion}}
 
 
-## Using IgnoreInstance for Virtual Methods
+### Using IgnoreInstance for Virtual Methods
 
-You can also apply `IgnoreInstance` to virtual methods. Imagine that we have a simple class `Calculus` which has a `virtual` method `Sum`:
+You can also apply `IgnoreInstance` to virtual methods. Imagine that we have a simple class `Calculator` which has a `virtual` method `Sum`:
 
-  #### __[C#]__
+#### __[C#] Sample setup__
 
-  {{region FutureMocking#VirtualMethods}}
-    public class Calculus
+{{region FutureMocking#VirtualMethods}}
+
+    public class Calculator
     {
         public virtual int Sum()
         {
             return 0;
         }
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
-  {{region FutureMocking#VirtualMethods}}
-    Public Class Calculus
+{{region FutureMocking#VirtualMethods}}
+
+    Public Class Calculator
         Public Overridable Function Sum() As Integer
             Return 0
         End Function
     End Class
-  {{endregion}}
+{{endregion}}
 
 Now we can use `IgnoreInctance` in the exact same way:
 
-  #### __[C#]__
+#### __[C#] Example 4: Ignore instance for virtual method__
 
-  {{region FutureMocking#VirtualMethods2}}
+{{region FutureMocking#VirtualMethods2}}
+
     [TestMethod]
     public void ShouldApplyIgnoreInstanceToVirtual()
     {
         //Arrange
-        var calculus = Mock.Create<Calculus>();
-        Mock.Arrange(() => calculus.Sum()).IgnoreInstance().Returns(10);
+        var calculator = Mock.Create<Calculator>();
+        Mock.Arrange(() => calculator.Sum()).IgnoreInstance().Returns(10);
 
         //Assert
-        Assert.AreEqual(10, calculus.Sum());
-        Assert.AreEqual(10, new Calculus().Sum());
+        Assert.AreEqual(10, calculator.Sum());
+        Assert.AreEqual(10, new Calculator().Sum());
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 4: Ignore instance for virtual method__
 
-  {{region FutureMocking#VirtualMethods2}}
+{{region FutureMocking#VirtualMethods2}}
+
     <TestMethod>
     Public Sub ShouldApplyIgnoreInstanceToVirtual()
         'Arrange
-        Dim calculus = Mock.Create(Of Calculus)()
-        Mock.Arrange(Function() calculus.Sum()).IgnoreInstance().Returns(10)
+        Dim calculator = Mock.Create(Of Calculator)()
+        Mock.Arrange(Function() calculator.Sum()).IgnoreInstance().Returns(10)
 
         'Assert
-        Assert.AreEqual(10, calculus.Sum())
-        Assert.AreEqual(10, New Calculus().Sum())
+        Assert.AreEqual(10, calculator.Sum())
+        Assert.AreEqual(10, New Calculator().Sum())
     End Sub
-  {{endregion}}
+{{endregion}}
+
+## Ignore Instance for Collections
 
 
-## Using IgnoreInstance for Collections
+This section shows how you can arrange a property to return a fake collection for each instance of the object. To demonstrate this, we will use the `Foo` class below.
 
-In the following example, we want to __Arrange__ a property to return a fake collection. To demonstrate this, we will use the `Foo` class below.
+#### __[C#] Sample setup__
 
-  #### __[C#]__
+{{region FutureMocking#SampleCode7}}
 
-  {{region FutureMocking#SampleCode7}}
     public class Foo
     {
         public Foo()
         {
         }
 
+        private List<object> collection;
         public List<object> RealCollection
         {
             get { return collection; }
         }
-        private List<object> collection;
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
-  {{region FutureMocking#SampleCode7}}
+{{region FutureMocking#SampleCode7}}
+
     Public Class Foo
         Public Sub New()
         End Sub
 
+        Private collection As List(Of Object)
         Public ReadOnly Property RealCollection() As List(Of Object)
             Get
                 Return collection
             End Get
         End Property
-        Private collection As List(Of Object)
     End Class
-  {{endregion}}
+{{endregion}}
 
-We will also use a public method that returns our fake collection.
+**Example 5** shows the creation of the fake collection that will be used in the test and how you can arrange the `Foo.RealCollection` property to always return that fake collection.
 
-  #### __[C#]__
+#### __[C#] Example 5: Construct fake collection and arrange property get to return it__
 
-  {{region FutureMocking#SampleCode7FakeCol}}
+{{region FutureMocking#SampleCode7Test}}
+
     public IList<object> FakeCollection()
     {
         List<object> resultCollection = new List<object>();
@@ -243,27 +270,7 @@ We will also use a public method that returns our fake collection.
 
         return resultCollection;
     }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region FutureMocking#SampleCode7FakeCol}}
-    Public Function FakeCollection() As IList(Of Object)
-        Dim resultCollection As New List(Of Object)()
-
-        resultCollection.Add("asd")
-        resultCollection.Add(123)
-        resultCollection.Add(True)
-
-        Return resultCollection
-    End Function
-  {{endregion}}
-
-This is how the test will look like:
-
-  #### __[C#]__
-
-  {{region FutureMocking#SampleCode7Test}}
+    
     [TestMethod]
     public void ShouldReturnFakeCollectionForFutureCall()
     {
@@ -287,11 +294,22 @@ This is how the test will look like:
         Assert.AreEqual(expectedCollection.Count, actualUnArrangedCollection.Count);
         Assert.AreEqual(expectedCollection.FirstOrDefault(), actualUnArrangedCollection.FirstOrDefault());
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 5: Construct fake collection and arrange property get to return it__
 
-  {{region FutureMocking#SampleCode7Test}}
+{{region FutureMocking#SampleCode7Test}}
+
+    Public Function FakeCollection() As IList(Of Object)
+        Dim resultCollection As New List(Of Object)()
+
+        resultCollection.Add("asd")
+        resultCollection.Add(123)
+        resultCollection.Add(True)
+
+        Return resultCollection
+    End Function
+
     <TestMethod>
     Public Sub ShouldReturnFakeCollectionForFutureCall()
         Dim fooMocked = Mock.Create(Of Foo)()
@@ -314,17 +332,18 @@ This is how the test will look like:
         Assert.AreEqual(expectedCollection.Count, actualUnArrangedCollection.Count)
         Assert.AreEqual(expectedCollection.FirstOrDefault(), actualUnArrangedCollection.FirstOrDefault())
     End Sub
-  {{endregion}}
+{{endregion}}
 
-You can see that the test logic is the same as in the previous tests, with the only difference that you are returning a collection this time.
+You can see that the test logic is the same as in the previous tests, with the only difference that a collection is being returned this time.
 
-## Future Constructor Mocking
+## Mocking the Creation of Objects
 
-With JustMock you are even able to future mock the constructor of an instance. Let`s assume we have the following class:
+With JustMock you are even able to mock the constructor of an instance. Let`s assume we have the following class:
 
-  #### __[C#]__
+#### __[C#] Sample setup__
 
-  {{region FutureMocking#SampleCodeFutureCtorMocking}}
+{{region FutureMocking#SampleCodeFutureCtorMocking}}
+
     public class FooWithNotImplementedConstructor
     {
         public FooWithNotImplementedConstructor()
@@ -332,23 +351,25 @@ With JustMock you are even able to future mock the constructor of an instance. L
             throw new NotImplementedException();
         }
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
-  {{region FutureMocking#SampleCodeFutureCtorMocking}}
+{{region FutureMocking#SampleCodeFutureCtorMocking}}
+
     Public Class FooWithNotImplementedConstructor
         Public Sub New()
             Throw New NotImplementedException()
         End Sub
     End Class
-  {{endregion}}
+{{endregion}}
 
-We can easily arrange its constructor like this:
+We can easily arrange its constructor like shown in **Example 6**.
 
-  #### __[C#]__
+#### __[C#] Example 6: Arrange the behavior of the constructor of an object__
 
-  {{region FutureMocking#SampleCodeFutureCtorMockingTest}}
+{{region FutureMocking#SampleCodeFutureCtorMockingTest}}
+
     [TestMethod]
     public void ShouldMockConstructorForFutureInstances()
     {
@@ -362,11 +383,12 @@ We can easily arrange its constructor like this:
         Assert.IsNotNull(myNewInstance);
         Assert.IsInstanceOfType(myNewInstance, typeof(FooWithNotImplementedConstructor));
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 6: Arrange the behavior of the constructor of an object__
 
-  {{region FutureMocking#SampleCodeFutureCtorMockingTest}}
+{{region FutureMocking#SampleCodeFutureCtorMockingTest}}
+
     <TestMethod>
     Public Sub ShouldMockConstructorForFutureInstances()
         ' Arrange
@@ -379,17 +401,18 @@ We can easily arrange its constructor like this:
         Assert.IsNotNull(myNewInstance)
         Assert.IsInstanceOfType(myNewInstance, GetType(FooWithNotImplementedConstructor))
     End Sub
-  {{endregion}}
+{{endregion}}
 
-This will apply __DoNothing__ to the constructor of every new instance of type `FooWithNotImplementedConstructor` called during the test method.
+This will apply __DoNothing__ to the constructor of each new instance of type `FooWithNotImplementedConstructor` called during the test method.
 
-## Mocking the New Operator
+### Arrange Return Value for Constructor
 
-With JustMock, you can arrange a return value for a new object creation. Let's assume we have the following class:
+You can arrange a return value for a new object creation. Let's assume we have the following class:
 
-  #### __[C#]__
+#### __[C#] Sample setup__
 
-  {{region FutureMocking#SampleCodeNewObjMocking}}
+{{region FutureMocking#SampleCodeNewObjMocking}}
+
     public class FooWithProp
     {
         public string MyProp { get; set; }
@@ -399,11 +422,12 @@ With JustMock, you can arrange a return value for a new object creation. Let's a
     {
         return new FooWithProp();
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Sample setup__
 
-  {{region FutureMocking#SampleCodeNewObjMocking}}
+{{region FutureMocking#SampleCodeNewObjMocking}}
+
     Public Class FooWithProp
         Public Property MyProp As String
     End Class
@@ -411,13 +435,14 @@ With JustMock, you can arrange a return value for a new object creation. Let's a
     Public Function GetNewInstance() As FooWithProp
         Return New FooWithProp()
     End Function
-  {{endregion}}
+{{endregion}}
 
-We can easily arrange each new instance of the `FooWithProp` class, to return a predefined object of the same type:
+You can easily arrange each new instance of the `FooWithProp` class, to return a predefined object of the same type:
 
-  #### __[C#]__
+#### __[C#] Example 7: Return a predefined object when constructor is invoked__
 
-  {{region FutureMocking#SampleCodeNewObjMockingTest}}
+{{region FutureMocking#SampleCodeNewObjMockingTest}}
+
     [TestMethod]
     public void ShouldReturnNewObjectForFutureInstances()
     {
@@ -436,11 +461,12 @@ We can easily arrange each new instance of the `FooWithProp` class, to return a 
         // Assert that the returned instance is equal to the predefined
         Assert.AreEqual("Test", myNewInstance.MyProp);
     }
-  {{endregion}}
+{{endregion}}
 
-  #### __[VB]__
+#### __[VB] Example 7: Return a predefined object when constructor is invoked__
 
-  {{region FutureMocking#SampleCodeNewObjMockingTest}}
+{{region FutureMocking#SampleCodeNewObjMockingTest}}
+
     <TestMethod>
     Public Sub ShouldReturnNewObjectForFutureInstances()
         ' Arrange
@@ -459,160 +485,28 @@ We can easily arrange each new instance of the `FooWithProp` class, to return a 
         ' Assert that the returned instance is equal to the predefined
         Assert.AreEqual("Test", myNewInstance.MyProp)
     End Sub
-  {{endregion}}
+{{endregion}}
 
 This will work for each new instance of the `FooWithProp` type outside the test method. Still, it applies only for code, executed under the test context.
 
-## Future Mocking Across Threads
+## Mocking All Instances Across Threads
 
-Future mocking across all threads is an unsafe operation because it may compromise the stability of the testing framework. Arrangements that ignore the instance are valid only for the current thread by default. To make an arrangement that ignores the instance valid on all threads, add the .OnAllThreads() clause to the arrangement: 
+Mocking across all threads is an unsafe operation because it may compromise the stability of the testing framework. Arrangements that ignore the instance are valid only for the current thread by default. To make an arrangement that ignores the instance and it is valid on all threads, add the `.OnAllThreads()` clause to the arrangement: 
 
-  #### __[C#]__
+#### __[C#] Example 8: Using OnAllThreads__
 
-  {{region }}
+{{region }}
+
     Mock.Arrange(() => new DBContext()).DoNothing().OnAllThreads();
-  {{endregion}}
+{{endregion}}
   
-  #### __[VB]__
-  
-  {{region }}
+#### __[VB] Example 8: Using OnAllThreads__
+
+{{region }}
+
     Mock.Arrange(Function() New DBContext()).DoNothing().OnAllThreads()
-  {{endregion}}
+{{endregion}}
 
-## Advanced Example
-
-Let's see a UI example where we have a form. Based on some action against the form, it raises an event that needs to be handled in a specific way, therefore in the unit test we want to assert the expected value of the handler execution.
-
-  #### __[C#]__
-
-  {{region FutureMocking#SampleCode3}}
-    public Form()
-    {
-      InitializeComponent();
-    
-      this.service = new EntryService();
-    
-      service.Saved += new EventHandler<EntrySavedEventArgs>(service_Saved);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region FutureMocking#SampleCode3}}
-    Public Sub New()
-        InitializeComponent()
-        Me.service = New EntryService()
-        service.Saved += New EventHandler(Of EntrySavedEventArgs)(service_Saved)
-    End Sub
-  {{endregion}}
-
-Imagine that we have defined an `EntryService` the purpose of which is to save some entries to a database when the user has made any changes. For instance, we can have a button on the form, and when the user finishes editing the entries, pressing this button will trigger a call to the following method:
-
-  #### __[C#]__
-
-  {{region FutureMocking#SampleCode4}}
-    public void SaveToDatabase(string value)
-    {
-      try
-      {
-        this.service.Save(value);
-      }
-      catch (DuplicateEntryException ex)
-      {
-        MessageBox.Show("Entry Duplicated " + ex.DuplicatedValue);
-      }
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region FutureMocking#SampleCode4}}
-    Public Sub SaveToDatabase(ByVal value As String)
-        Try
-            Me.service.Save(value)
-        Catch ex As DuplicateEntryException
-            MessageBox.Show("Entry Duplicated " & ex.DuplicatedValue)
-        End Try
-    End Sub
-  {{endregion}}
-
-Here is the handler for the `service.Saved` event:
-
-  #### __[C#]__	
-
-  {{region FutureMocking#SampleCode5}}
-    public void service_Saved(object sender, EntrySavedEventArgs e)
-    {
-      this.label1.Text = "Saved string : " + e.EntryValue;
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region FutureMocking#SampleCode5}}
-    Public Sub service_Saved(ByVal sender As Object, ByVal e As EntrySavedEventArgs)
-        Me.label1.Text = "Saved string : " & e.EntryValue
-    End Sub
-  {{endregion}}
-
-Next, is a simple test using [MSpec](https://codebetter.com/aaronjensen/2008/05/08/introducing-machine-specifications-or-mspec-for-short/) where we have created an event handler that will receive as an argument the value that was passed to the `service.Save` call in the `SaveToDatabase` method.
-
-  #### __[C#]__
-  
-  {{region FutureMocking#SampleCode6}}
-    [Subject(typeof(Form))]
-    public class when_save_to_database_is_invoked_on_form
-    {
-        Establish context = () =>
-        {
-            IEntryService serviceMock = Mock.Create<EntryService>();
-            Mock.Arrange(() => serviceMock.Save(valueToSave)).Raises(() => serviceMock.Saved += null, new EntrySavedEventArgs(valueToSave));
-        };
-    
-        private Because of = () =>
-        {
-            sut = new Form();
-            sut.SaveToDatabase(valueToSave);
-        };
-    
-        private It should_assert_that_label_contains_expected_valueToSave = () =>
-            sut.label1.Text.ShouldEqual("Saved string : " + valueToSave);
-    
-        static Form sut;
-        const string valueToSave = "Raise Event";
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region FutureMocking#SampleCode6}}
-    <Subject(GetType(Form))>
-    Public Class when_save_to_database_is_invoked_on_form
-        Private context As Establish = Function()
-                                          Dim serviceMock As IEntryService = Mock.Create(Of EntryService)()
-                                          Mock.Arrange(Function() serviceMock.Save(valueToSave)).Raises(Function() CSharpImpl.__Assign(serviceMock.Saved, Nothing), New EntrySavedEventArgs(valueToSave))
-                                      End Function
-
-        Private [of] As Because = Function()
-                                      sut = New Form()
-                                      sut.SaveToDatabase(valueToSave)
-                                  End Function
-
-        Private should_assert_that_label_contains_expected_valueToSave As It = Function() sut.label1.Text.ShouldEqual("Saved string : " & valueToSave)
-        Shared sut As Form
-        Const valueToSave As String = "Raise Event"
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-  {{endregion}}
-
-Here we can see that although no instance is supplied to the target UI class, JustMock picks up the intended setup from the context.
 
 ## See Also
 
