@@ -1,5 +1,5 @@
 ---
-title: Working with Instances
+title: Arrange All Instances of a Type
 page_title: Working with Instances | JustMock Documentation
 description: Working with Instances
 previous_url: /advanced-usage-future-mocking.html
@@ -11,14 +11,168 @@ position: 8
 
 # Working With Instances of Mocked Objects
 
-With the advanced features of __Telerik® JustMock__ you can apply the arrangements you need and configure them to execute for **each instance** no matter where and when it is being created in the current context. With this feature, you don't need to arrange every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
+__Telerik® JustMock__ enables you to apply the arrangements you need and configure them to execute for **each instance** no matter where and when it is being created in the current context. With this feature, you don't need to arrange every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
 
 > This is an elevated feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
 
+By default, all mocks are tied to an instance and this is the expected behavior. This topic describes the approaches you can use to change that behavior and apply the arrangements to all instances of a type.
+
+## Mock the Creation of a New Class Object
+
+Creation of a new class instance in the code under test is typically a great challenge when unit testing. With JustMock you are able to easily mock the constructor of an instance so that you can apply a specific behavior to it or alter its return value. Let`s assume we have the following class:
+
+#### __[C#] Sample setup__
+
+{{region FutureMocking#SampleCodeFutureCtorMocking}}
+
+    public class FooWithNotImplementedConstructor
+    {
+        public FooWithNotImplementedConstructor()
+        {
+            throw new NotImplementedException();
+        }
+    }
+{{endregion}}
+
+#### __[VB] Sample setup__
+
+{{region FutureMocking#SampleCodeFutureCtorMocking}}
+
+    Public Class FooWithNotImplementedConstructor
+        Public Sub New()
+            Throw New NotImplementedException()
+        End Sub
+    End Class
+{{endregion}}
+
+We can easily arrange its constructor like shown in **Example 1**.
+
+#### __[C#] Example 1: Arrange the behavior of the constructor of an object__
+
+{{region FutureMocking#SampleCodeFutureCtorMockingTest}}
+
+    [TestMethod]
+    public void ShouldMockConstructorForFutureInstances()
+    {
+        // Arrange
+        Mock.Arrange(() => new FooWithNotImplementedConstructor()).DoNothing(); // Directly arranging the constructor
+
+        // Act
+        var myNewInstance = new FooWithNotImplementedConstructor(); // This will not throw an exception
+
+        // Assert
+        Assert.IsNotNull(myNewInstance);
+        Assert.IsInstanceOfType(myNewInstance, typeof(FooWithNotImplementedConstructor));
+    }
+{{endregion}}
+
+#### __[VB] Example 1: Arrange the behavior of the constructor of an object__
+
+{{region FutureMocking#SampleCodeFutureCtorMockingTest}}
+
+    <TestMethod>
+    Public Sub ShouldMockConstructorForFutureInstances()
+        ' Arrange
+        Mock.Arrange(Function() New FooWithNotImplementedConstructor()).DoNothing() ' Directly arranging the constructor
+
+        ' Act
+        Dim myNewInstance = New FooWithNotImplementedConstructor() ' This will not throw an exception
+
+        ' Assert
+        Assert.IsNotNull(myNewInstance)
+        Assert.IsInstanceOfType(myNewInstance, GetType(FooWithNotImplementedConstructor))
+    End Sub
+{{endregion}}
+
+This will apply __DoNothing__ to the constructor of each new instance of type `FooWithNotImplementedConstructor` called during the test method.
+
+### Arrange Return Value for Constructor
+
+You can arrange a return value for a new object creation. Let's assume we have the following class:
+
+#### __[C#] Sample setup__
+
+{{region FutureMocking#SampleCodeNewObjMocking}}
+
+    public class FooWithProp
+    {
+        public string MyProp { get; set; }
+    }
+
+    public FooWithProp GetNewInstance()
+    {
+        return new FooWithProp();
+    }
+{{endregion}}
+
+#### __[VB] Sample setup__
+
+{{region FutureMocking#SampleCodeNewObjMocking}}
+
+    Public Class FooWithProp
+        Public Property MyProp As String
+    End Class
+
+    Public Function GetNewInstance() As FooWithProp
+        Return New FooWithProp()
+    End Function
+{{endregion}}
+
+You can easily arrange each new instance of the `FooWithProp` class, to return a predefined object of the same type:
+
+#### __[C#] Example 2: Return a predefined object when constructor is invoked__
+
+{{region FutureMocking#SampleCodeNewObjMockingTest}}
+
+    [TestMethod]
+    public void ShouldReturnNewObjectForFutureInstances()
+    {
+        // Arrange
+        var testObj = new FooWithProp() { MyProp = "Test" };
+
+        // Directly arranging the expression to return our predefined object
+        Mock.Arrange(() => new FooWithProp()).Returns(testObj); 
+
+        // Act
+        var myNewInstance = GetNewInstance();
+
+        // Assert
+        Assert.IsNotNull(myNewInstance);
+        Assert.IsInstanceOfType(myNewInstance, typeof(FooWithProp));
+        // Assert that the returned instance is equal to the predefined
+        Assert.AreEqual("Test", myNewInstance.MyProp);
+    }
+{{endregion}}
+
+#### __[VB] Example 2: Return a predefined object when constructor is invoked__
+
+{{region FutureMocking#SampleCodeNewObjMockingTest}}
+
+    <TestMethod>
+    Public Sub ShouldReturnNewObjectForFutureInstances()
+        ' Arrange
+        Dim testObj = New FooWithProp()
+        testObj.MyProp = "Test"
+
+        ' Directly arranging the expression to return our predefined object
+        Mock.Arrange(Function() New FooWithProp()).Returns(testObj)
+
+        ' Act
+        Dim myNewInstance = GetNewInstance()
+
+        ' Assert
+        Assert.IsNotNull(myNewInstance)
+        Assert.IsInstanceOfType(myNewInstance, GetType(FooWithProp))
+        ' Assert that the returned instance is equal to the predefined
+        Assert.AreEqual("Test", myNewInstance.MyProp)
+    End Sub
+{{endregion}}
+
+This will work for each new instance of the `FooWithProp` type outside the test method. Still, it applies only for code, executed under the test context.
 
 ## Ignore Instance for an Expectation 
 
-By default, all mocks are tied to an instance and this is the expected behavior. The instance that is created in **Example 1** is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the mocked instance(`userDataMock`) of the `UserData` class. With this setup, the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
+The instance that is created in **Example 3** is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the mocked instance(`userDataMock`) of the `UserData` class. With this setup, the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
 
 #### [C#] Sample setup
 
@@ -45,7 +199,7 @@ By default, all mocks are tied to an instance and this is the expected behavior.
 {{endregion}}
 
 
-#### __[C#] Example 1: Arrange method for specific instance__
+#### __[C#] Example 3: Arrange method for specific instance__
 
 {{region FutureMocking#SampleCode1}}
 
@@ -62,7 +216,7 @@ By default, all mocks are tied to an instance and this is the expected behavior.
     }
 {{endregion}}
 
-#### __[VB] Example 1: Arrange method for specific instance__
+#### __[VB] Example 3: Arrange method for specific instance__
 
 {{region FutureMocking#SampleCode1}}
 
@@ -80,7 +234,7 @@ By default, all mocks are tied to an instance and this is the expected behavior.
 
 If you need to apply future mocking and assure that all `UserData` instances use the same mocked version of the `ReturnFive()` method, you can call `IgnoreInstance()`.
 
-#### __[C#] Example 2: Arrange method for all object instances__
+#### __[C#] Example 4: Arrange method for all object instances__
 
 {{region FutureMocking#SampleCode2}}
 
@@ -97,7 +251,7 @@ If you need to apply future mocking and assure that all `UserData` instances use
     }
 {{endregion}}
 
-#### __[VB] Example 2: Arrange method for all object instances__
+#### __[VB] Example 4: Arrange method for all object instances__
 
 {{region FutureMocking#SampleCode2}}
 
@@ -117,7 +271,7 @@ When `IgnoreInstance` is applied, the `ReturnFive()` method will work according 
 
 When setting future expectations, you can also use the [Fluent Mocking]({%slug justmock/basic-usage/fluent-mocking%}) API as in this example:
 
-#### __[C#] Example 3: Arrange method for all object instances using fluent syntax__
+#### __[C#] Example 5: Arrange method for all object instances using fluent syntax__
 
 {{region FutureMocking#SampleCode2Fluent}}
 
@@ -134,7 +288,7 @@ When setting future expectations, you can also use the [Fluent Mocking]({%slug j
     }
 {{endregion}}
 
-#### __[VB] Example 3: Arrange method for all object instances using fluent syntax__
+#### __[VB] Example 5: Arrange method for all object instances using fluent syntax__
 
 {{region FutureMocking#SampleCode2Fluent}}
 
@@ -181,7 +335,7 @@ You can also apply `IgnoreInstance` to virtual methods. Imagine that we have a s
 
 Now we can use `IgnoreInctance` in the exact same way:
 
-#### __[C#] Example 4: Ignore instance for virtual method__
+#### __[C#] Example 6: Ignore instance for virtual method__
 
 {{region FutureMocking#VirtualMethods2}}
 
@@ -198,7 +352,7 @@ Now we can use `IgnoreInctance` in the exact same way:
     }
 {{endregion}}
 
-#### __[VB] Example 4: Ignore instance for virtual method__
+#### __[VB] Example 6: Ignore instance for virtual method__
 
 {{region FutureMocking#VirtualMethods2}}
 
@@ -254,9 +408,9 @@ This section shows how you can arrange a property to return a fake collection fo
     End Class
 {{endregion}}
 
-**Example 5** shows the creation of the fake collection that will be used in the test and how you can arrange the `Foo.RealCollection` property to always return that fake collection.
+**Example 7** shows the creation of the fake collection that will be used in the test and how you can arrange the `Foo.RealCollection` property to always return that fake collection.
 
-#### __[C#] Example 5: Construct fake collection and arrange property get to return it__
+#### __[C#] Example 7: Construct fake collection and arrange property get to return it__
 
 {{region FutureMocking#SampleCode7Test}}
 
@@ -296,7 +450,7 @@ This section shows how you can arrange a property to return a fake collection fo
     }
 {{endregion}}
 
-#### __[VB] Example 5: Construct fake collection and arrange property get to return it__
+#### __[VB] Example 7: Construct fake collection and arrange property get to return it__
 
 {{region FutureMocking#SampleCode7Test}}
 
@@ -336,159 +490,6 @@ This section shows how you can arrange a property to return a fake collection fo
 
 You can see that the test logic is the same as in the previous tests, with the only difference that a collection is being returned this time.
 
-## Mocking the Creation of Objects
-
-With JustMock you are even able to mock the constructor of an instance. Let`s assume we have the following class:
-
-#### __[C#] Sample setup__
-
-{{region FutureMocking#SampleCodeFutureCtorMocking}}
-
-    public class FooWithNotImplementedConstructor
-    {
-        public FooWithNotImplementedConstructor()
-        {
-            throw new NotImplementedException();
-        }
-    }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region FutureMocking#SampleCodeFutureCtorMocking}}
-
-    Public Class FooWithNotImplementedConstructor
-        Public Sub New()
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-{{endregion}}
-
-We can easily arrange its constructor like shown in **Example 6**.
-
-#### __[C#] Example 6: Arrange the behavior of the constructor of an object__
-
-{{region FutureMocking#SampleCodeFutureCtorMockingTest}}
-
-    [TestMethod]
-    public void ShouldMockConstructorForFutureInstances()
-    {
-        // Arrange
-        Mock.Arrange(() => new FooWithNotImplementedConstructor()).DoNothing(); // Directly arranging the constructor
-
-        // Act
-        var myNewInstance = new FooWithNotImplementedConstructor(); // This will not throw an exception
-
-        // Assert
-        Assert.IsNotNull(myNewInstance);
-        Assert.IsInstanceOfType(myNewInstance, typeof(FooWithNotImplementedConstructor));
-    }
-{{endregion}}
-
-#### __[VB] Example 6: Arrange the behavior of the constructor of an object__
-
-{{region FutureMocking#SampleCodeFutureCtorMockingTest}}
-
-    <TestMethod>
-    Public Sub ShouldMockConstructorForFutureInstances()
-        ' Arrange
-        Mock.Arrange(Function() New FooWithNotImplementedConstructor()).DoNothing() ' Directly arranging the constructor
-
-        ' Act
-        Dim myNewInstance = New FooWithNotImplementedConstructor() ' This will not throw an exception
-
-        ' Assert
-        Assert.IsNotNull(myNewInstance)
-        Assert.IsInstanceOfType(myNewInstance, GetType(FooWithNotImplementedConstructor))
-    End Sub
-{{endregion}}
-
-This will apply __DoNothing__ to the constructor of each new instance of type `FooWithNotImplementedConstructor` called during the test method.
-
-### Arrange Return Value for Constructor
-
-You can arrange a return value for a new object creation. Let's assume we have the following class:
-
-#### __[C#] Sample setup__
-
-{{region FutureMocking#SampleCodeNewObjMocking}}
-
-    public class FooWithProp
-    {
-        public string MyProp { get; set; }
-    }
-
-    public FooWithProp GetNewInstance()
-    {
-        return new FooWithProp();
-    }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region FutureMocking#SampleCodeNewObjMocking}}
-
-    Public Class FooWithProp
-        Public Property MyProp As String
-    End Class
-
-    Public Function GetNewInstance() As FooWithProp
-        Return New FooWithProp()
-    End Function
-{{endregion}}
-
-You can easily arrange each new instance of the `FooWithProp` class, to return a predefined object of the same type:
-
-#### __[C#] Example 7: Return a predefined object when constructor is invoked__
-
-{{region FutureMocking#SampleCodeNewObjMockingTest}}
-
-    [TestMethod]
-    public void ShouldReturnNewObjectForFutureInstances()
-    {
-        // Arrange
-        var testObj = new FooWithProp() { MyProp = "Test" };
-
-        // Directly arranging the expression to return our predefined object
-        Mock.Arrange(() => new FooWithProp()).Returns(testObj); 
-
-        // Act
-        var myNewInstance = GetNewInstance();
-
-        // Assert
-        Assert.IsNotNull(myNewInstance);
-        Assert.IsInstanceOfType(myNewInstance, typeof(FooWithProp));
-        // Assert that the returned instance is equal to the predefined
-        Assert.AreEqual("Test", myNewInstance.MyProp);
-    }
-{{endregion}}
-
-#### __[VB] Example 7: Return a predefined object when constructor is invoked__
-
-{{region FutureMocking#SampleCodeNewObjMockingTest}}
-
-    <TestMethod>
-    Public Sub ShouldReturnNewObjectForFutureInstances()
-        ' Arrange
-        Dim testObj = New FooWithProp()
-        testObj.MyProp = "Test"
-
-        ' Directly arranging the expression to return our predefined object
-        Mock.Arrange(Function() New FooWithProp()).Returns(testObj)
-
-        ' Act
-        Dim myNewInstance = GetNewInstance()
-
-        ' Assert
-        Assert.IsNotNull(myNewInstance)
-        Assert.IsInstanceOfType(myNewInstance, GetType(FooWithProp))
-        ' Assert that the returned instance is equal to the predefined
-        Assert.AreEqual("Test", myNewInstance.MyProp)
-    End Sub
-{{endregion}}
-
-This will work for each new instance of the `FooWithProp` type outside the test method. Still, it applies only for code, executed under the test context.
-
 ## Mocking All Instances Across Threads
 
 Mocking across all threads is an unsafe operation because it may compromise the stability of the testing framework. Arrangements that ignore the instance are valid only for the current thread by default. To make an arrangement that ignores the instance and it is valid on all threads, add the `.OnAllThreads()` clause to the arrangement: 
@@ -506,7 +507,6 @@ Mocking across all threads is an unsafe operation because it may compromise the 
 
     Mock.Arrange(Function() New DBContext()).DoNothing().OnAllThreads()
 {{endregion}}
-
 
 ## See Also
 
