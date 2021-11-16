@@ -8,48 +8,52 @@ navigation:
     getting-started:
         title: Getting Started
         position: 1
+        
     getting-started/api-basics:
         title: JustMock API Basics
         position: 4
+        
     licensing:
         title: Licensing
-        position: 2
-
+        position: 2  
+        
     basic-usage:
         title: Basic Mocking
-        position: 3
-
+        position: 3   
+        
+    basic-usage/mock-behaviors:
+        title: Mock Behaviors
+        position: 2
+        
+    basic-usage/mock:
+        title: Mock
+        position: 3    
+        
     advanced-usage:
         title: Advanced Usage
-        position: 4
-
+        position: 4    
+        
     scenarios:
         title: Scenarios
         position: 5
 
     integration:
-        title: Other Integrations
-        position: 8
-
-    continuous-integration:
-        title: Continuous Integration
+        title: Integrations
         position: 6
+
+    integration/continuous-integration:
+        title: Continuous Integration
+        position: 3
     
-    continuous-integration/tfs-azure:
+    integration/continuous-integration/tfs-azure:
         title: TFS and Azure Pipelines
         position: 1
 
-    code-coverage:
-        title: Code Coverage Integrations
-        position: 7
+    integration/code-coverage:
+        title: Code Coverage
+        position: 4
     
-    basic-usage/mock-behaviors:
-        title: Mock Behaviors
-        position: 2
 
-    basic-usage/mock:
-        title: Mock
-        position: 3
         
 ## The application virtual path
 baseurl: /devtools/justmock

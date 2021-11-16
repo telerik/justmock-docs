@@ -6,7 +6,7 @@ previous_url: /integration-postsharp.html
 slug: justmock/integration/postsharp
 tags: postsharp
 published: True
-position: 14
+position: 6
 ---
 
 # PostSharp

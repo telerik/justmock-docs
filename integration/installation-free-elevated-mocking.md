@@ -4,7 +4,7 @@ page_title: Installation-Free Elevated Mocking | JustMock Documentation
 description: Installation-free elevated mocking
 slug: justmock/integration/installation-free-elevated-mocking
 tags: installation-free,elevated,mocking
-published: True
+published: False
 position: 4
 previous_url: /integration-installation-free-elevated-mocking.html, /integration-installation-free-elevated-mocking
 ---
