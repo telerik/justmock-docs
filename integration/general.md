@@ -16,6 +16,8 @@ This topic describes the approaches you can use to notify the CLR that there is 
 -	Installation that adds a registry record for the profiler
 -	Setting environment variables to define the path to the profiler and enable it
 
+>If you have already registered the profiler, [JustMock Console]({%slug justmock/integration/justmock-console%}) can help you setting the variables and enable the profiler automatically for you when using the installation-free integration.
+
 ## Installing JustMock
 
 If you have installation of JustMock, you won’t need to perform any additional actions to run the profiler. The installation adds an entry in the registry that can be later accessed by the CLR while the latter loads. For more information on how to install JustMock on your machine, check the [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) topic.
@@ -59,7 +61,7 @@ JustMock enables you to set a path that can be used by both, x86 and x64 project
     <td>COR_PROFILER_PATH</td>
     <td>CORECLR_PROFILER_PATH</td>
     <td>The path to the profiler assembly for x86 and x64 processes.</td>
-    <td>C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver</td>
+    <td>Choose between the paths for x64 or x32 bit version of the profiler assembly, depending on the bitness of the test runner.</td>
   </tr>
   <tr>
     <td>COR_PROFILER_PATH_32</td>
@@ -130,7 +132,7 @@ If you prefer using NuGet packages, you still have access to the assemblies used
     <td>COR_PROFILER_PATH</td>
     <td>CORECLR_PROFILER_PATH</td>
     <td>The path to the profiler assembly for x86 and x64 processes.</td>
-    <td>Choose between the paths for x64 or x32 bit version of the profiler assembly, depending on the bitness of the test runner</td>
+    <td>Choose between the paths for x64 or x32 bit version of the profiler assembly, depending on the bitness of the test runner.</td>
   </tr>
   <tr>
     <td>COR_PROFILER_PATH_32</td>

@@ -27,11 +27,9 @@ The **JustMock Console** automatically prepares the environment so you can direc
 
 ### Manually
 
-If for any reason using __JustMock Console__ does not apply to your case, it is possible to set the __JustMock environment variables__ manually before running the tests. The next list shows the required variables you should set:
+If for any reason using __JustMock Console__ does not apply to your case, it is possible to set the __JustMock environment variables__ manually before running the tests. 
 
-* `SET JUSTMOCK_INSTANCE=1`
-* `SET COR_ENABLE_PROFILING=1`
-* `SET COR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}`
+>All the needed variables and the values you should pass to them are described in the [General Integration]({%slug justmock/integration/general%}) topic.
 
 Once the environment variables are set, you will be able to run elevated JustMock tests through the __Command Prompt__, simply by following the standard steps for the chosen unit testing framework. The next example shows setting up the environment and running tests using VS 2019.
 
