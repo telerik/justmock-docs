@@ -80,7 +80,6 @@ To give examples of how the __PrivateAccessor__ can be used within your tests, w
     End Class
 {{endregion}}
 
-
 ## Calling Private Methods
 
 To call non-public methods with __PrivateAccessor__, you must: 
@@ -347,6 +346,42 @@ Like a non-public generic instance methods, you can use __PrivateAccessor__ to c
     End Sub
 {{endregion}}
 
+## Working with *ref* and *out* Parameters
+
+With **PrivateAccessor**, you can also test non-public methods that use ref or out parameters. The following list summarizes the steps you need to perform:
+
+1. Create an instance of the class (mocked or not)
+1. Arrange the desired behavior using Mock.NonPublic.Arrange
+1. Create an **object[]** that will hold the parameter values for the method under test
+1. Invoke the method using PrivateAccessor
+1. Assert the desired result
+
+Let's take the following class as a sample:
+
+#### [C#] Sample setup
+
+{{region sample}}
+
+    public class Calculator
+    {
+        private void Sum(int a, int b, out int result)
+        {
+            result = a + b;
+        }
+    }
+{{endregion}}
+
+#### [VB] Sample setup
+
+{{region sample}}
+
+    Public Class Calculator
+        Private Sub Sum(ByVal a As Integer, ByVal b As Integer, <Out> ByRef result As Integer)
+            result = a + b
+        End Sub
+    End Class
+{{endregion}}
+
 ## Get or Set Private Properties
 
 To get or set the value of a non-public property, you should:
@@ -434,8 +469,6 @@ When you need to use a mocked instance:
         Assert.AreEqual(5, actual)
     End Sub
 {{endregion}}
-
-
 
 ## Throw the Original Exception When Calling Method
 
