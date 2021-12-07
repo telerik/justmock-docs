@@ -52,7 +52,7 @@ To illustrate that case, we will use a slightly extended version of the example 
 
 What would you need to do in order to verify that the `Complete` method of the `Order` class properly sets the `IsCompleted` property? Let’s take a closer look - our target method depends on an instance implementing `IWarehouse` that has some products currently present and internally invokes other two methods - `HasInventory` and `Remove`. Testing this case without using a mocking framework will force you to find a specific instance of a warehouse and control its data so that the `Complete` method of `Order` can perform the needed actions. 
 
-**JustMock** enables you to create instances of abstract classes and interfaces without providing their exact implementations. You also have control over how they should be mocked. **Example 1** demonstrates how you can use the `**Mock.Create()**` method to get an instance representing `IWarehouse`.
+**JustMock** enables you to create instances of abstract classes and interfaces without providing their exact implementations. You also have control over how they should be mocked. **Example 1** demonstrates how you can use the `Mock.Create()` method to get an instance representing `IWarehouse`.
 
 #### [C#] Example 1: Create mock from an interface
 
