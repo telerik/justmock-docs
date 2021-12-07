@@ -13,7 +13,7 @@ previous_url: /scenarios/running-justmock-profiler-outside-visual-studio, /scena
 
 You can execute test DLLs via the __Command Prompt(cmd.exe)__. No matter of whether you have installed JustMock on a specific environment or not, you can run your elevated tests in a console. This article describes how you can run tests in cmd.exe with JustMock installation.
 
->If you would like to run elevated tests **without installing JustMock**, make sure to set the required environment variables for registering the profiler before proceeding with the current topic. The variables you should set are listed in the [Installation-Free Elevated Mocking]({%slug justmock/integration/installation-free-elevated-mocking%}) topic.
+>If you would like to run elevated tests **without installing JustMock**, make sure to set the required environment variables for registering the profiler before proceeding with the current topic. The variables you should set are listed in the [General Integration]({%slug justmock/integration/general%}) topic.
 
 ## Run Profiler-Enabled JustMock Tests in Command Line
 
