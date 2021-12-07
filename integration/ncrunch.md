@@ -5,7 +5,7 @@ description: NCrunch integration with Telerik JustMock
 slug: justmock/integration/ncrunch
 tags: ncrunch
 published: True
-position: 11
+position: 7
 previous_url: /integration-ncrunch.html, /integration-ncrunch
 ---
 

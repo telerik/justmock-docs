@@ -1,53 +1,56 @@
 ---
-title: Windows Batch Command
-page_title: Windows Batch Command | JustMock Documentation
-description: Windows Batch Command integration with Telerik JustMock
+title: Command Line
+page_title: Command Line | JustMock Documentation
+description: In this topic, you will learn how to execute Telerik® JustMock test DLLs with cmd.exe.
 slug: justmock/integration/windows-batch-command
 tags: windows,batch,command
 published: True
-position: 15
+position: 5
 previous_url: /scenarios/running-justmock-profiler-outside-visual-studio, /scenarios/running-justmock-profiler-outside-visual-studio.html, /integration-windows-batch-command.html, /integration-windows-batch-command
 ---
 
-# Windows Batch Command
+# Command Line
 
-Another way to execute test DLLs is via the __Command Prompt(cmd.exe)__.
+You can execute test DLLs via the __Command Prompt(cmd.exe)__. No matter of whether you have installed JustMock on a specific environment or not, you can run your elevated tests in a console. This article describes how you can run tests in cmd.exe with JustMock installation.
 
-This topic demonstrates how to execute __Telerik® JustMock__ test DLLs with __cmd.exe__.
+>If you would like to run elevated tests **without installing JustMock**, make sure to set the required environment variables for registering the profiler before proceeding with the current topic. The variables you should set are listed in the [General Integration]({%slug justmock/integration/general%}) topic.
 
-##  How to Run Profiler Enabled JustMock Tests in Command Prompt
+## Run Profiler-Enabled JustMock Tests in Command Line
 
-The procedure of executing test DLLs in __Command Prompt__ is almost identical regardless of the different unit testing frameworks that you may use.
+The procedure of executing test DLLs in __Command Line__ is almost identical regardless of the different unit testing frameworks that you may use.
 
-Your first step will be setting the __JustMock environment variables__, for which there are two possible approaches. 
+To operate, JustMock needs to have specific variables registered in the environment. To prepare your environment, you should set the __JustMock environment variables__. That can be done using one of the following approaches:
 
-* __We recommend__ using __JustMock Runner__. It will automatically setup an appropriate environment for our product. 
+### With JustMock Console
+    
+The **JustMock Console** automatically prepares the environment so you can directly execute your tests and it is **the suggested approach** for running tests in console. For detailed instructions on how to use it, check the [JustMock Console]({%slug justmock/integration/justmock-console%}) topic.
 
-	__JustMockRunner.exe__ can be found in the JustMock installation directory under the Libraries folder (by default C:\Program Files (x86)\Progress\Telerik JustMock\Libraries). 
+### Manually
 
-	 Below you will find an example batch file, that will use __MSTest__ to run all the tests in Telerik.JustMock.Test.DLL (found in the Telerik.JustMock.CSExamples.VS2010.sln inside Telerik JustMock root folder). 
+If for any reason using __JustMock Console__ does not apply to your case, it is possible to set the __JustMock environment variables__ manually before running the tests. 
 
-	![Windows Batch Command 1](images/WindowsBatchCommand1.png)
+>All the needed variables and the values you should pass to them are described in the [General Integration]({%slug justmock/integration/general%}) topic.
 
- 	Execution command: 
+Once the environment variables are set, you will be able to run elevated JustMock tests through the __Command Prompt__, simply by following the standard steps for the chosen unit testing framework. The next example shows setting up the environment and running tests using VS 2019.
 
-	`"C:\Program Files (x86)\Telerik\JustMock\Libraries\JustMockRunner.exe" "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Telerik\JustMock\Examples\Telerik.JustMock.Tests\bin\Debug\Telerik.JustMock.Tests.dll"`
+![Windows Batch Command 2](images/WindowsBatchCommand2.png)
 
+Execution command for VS 2019: 
 
+`"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" "C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
 
-* If for any reason using __JustMock Runner__ does not apply to your case, it is possible to set the __JustMock environment variables__ manually before running the tests:
- 
-	![Windows Batch Command 2](images/WindowsBatchCommand2.png)
+### With JustMock Runner
 
-	Execution command: 
+>important**JustMock Runner** is outdated and the section is for backward compatibility only.
 
-	`SET JUSTMOCK_INSTANCE=1`
+__JustMock Runner__ will automatically setup an appropriate environment for the product so you don't need to do any additional settings. 
 
-	`SET COR_ENABLE_PROFILING=1`
+__JustMockRunner.exe__ can be found in the JustMock installation directory under the Libraries folder (by default *C:\Program Files (x86)\Progress\Telerik JustMock\Libraries*). 
 
-	`SET COR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}`
+ Below you will find an example batch file, that will use __MSTest__ to run all the tests in JustMock.ElevatedExamples.dll (found in the *Examples\CSExamples* folder inside Telerik JustMock root folder). 
 
-	`"C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Telerik\JustMock\Examples\Telerik.JustMock.Tests\bin\Debug\Telerik.JustMock.Tests.dll"`
+![Windows Batch Command 1](images/WindowsBatchCommand1.png)
 
-As shown above, once the environment variables are set, you will be able to run elevated JustMock tests through the __Command Prompt__, simply by following the standard steps for the chosen unit testing framework. 
-           	
+ Execution command for VS 2019: 
+
+`"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\JustMockRunner.exe" "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
