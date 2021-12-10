@@ -9,9 +9,9 @@ published: True
 position: 8
 ---
 
-# Working With Instances of Mocked Objects
+# Arrange All Instances of a Class
 
-__Telerik® JustMock__ enables you to apply the arrangements you need and configure them to execute for **each instance** no matter where and when it is being created in the current context. With this feature, you don't need to arrange every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
+__Telerik® JustMock__ enables you to create a single arrangement and apply it to **each class instance** no matter where and when it is being created in the current context. With this feature, you don't need to arrange every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
 
 > This is an elevated feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
 
