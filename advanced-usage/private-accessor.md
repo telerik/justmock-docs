@@ -15,73 +15,6 @@ The __Telerik JustMock PrivateAccessor__ feature allows you to call non-public m
 
 >For arranging the behavior of non-public members, refer to the [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%}) topic.
 
-## Prerequisites
-
-To give examples of how the __PrivateAccessor__ can be used within your tests, we will use the following sample class:
-
-#### __[C#] Sample setup__
-
-{{region PrivateAccessor#SampleClass}}
-
-    public class ClassWithNonPublicMembers
-    {
-        private int Prop { get; set; }
-    
-        private int MePrivate()
-        {
-            return 1000;
-        }
-    
-        private static int MeStaticPrivate()
-        {
-            return 2000;
-        }
-    
-        private T EchoPrivateGeneric<T>(T arg)
-        {
-            return arg;
-        }
-    
-        private static T EchoStaticPrivateGeneric<T>(T arg)
-        {
-            return arg;
-        }
-    }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region PrivateAccessor#SampleClass}}
-
-    Public Class ClassWithNonPublicMembers
-        Private Property Prop() As Integer
-            Get
-                Return m_Prop
-            End Get
-            Set(value As Integer)
-                m_Prop = Value
-            End Set
-        End Property
-        Private m_Prop As Integer
-    
-        Private Function MePrivate() As Integer
-            Return 1000
-        End Function
-    
-        Private Shared Function MeStaticPrivate() As Integer
-            Return 2000
-        End Function
-    
-        Private Function EchoPrivateGeneric(Of T)(ByVal arg As T) As T
-            Return arg
-        End Function
-    
-        Private Shared Function EchoStaticPrivateGeneric(Of T)(ByVal arg As T) As T
-            Return arg
-        End Function
-    End Class
-{{endregion}}
-
 ## Calling Private Methods
 
 To call non-public methods with __PrivateAccessor__, you must: 
@@ -99,7 +32,7 @@ Let's take the following class as a sample that we need to test:
 
     public class ClassWithNonPublicMembers
     {
-        private int MePrivate()
+        private int EchoPrivate()
         {
             return 1000;
         }
@@ -116,7 +49,7 @@ Let's take the following class as a sample that we need to test:
 {{region PrivateAccessor#Sample1}}
 
     Public Class ClassWithNonPublicMembers
-        Private Function MePrivate() As Integer
+        Private Function EchoPrivate() As Integer
             Return 1000
         End Function
     
@@ -135,7 +68,7 @@ Let's take the following class as a sample that we need to test:
     {
         // Act
         var inst = new PrivateAccessor(new ClassWithNonPublicMembers());
-        var actual = inst.CallMethod("MePrivate");
+        var actual = inst.CallMethod("EchoPrivate");
     
         // Assert
         Assert.AreEqual(1000, actual);
@@ -150,7 +83,7 @@ Let's take the following class as a sample that we need to test:
     Public Sub PrivateAccessor_ShouldCallMethod()
         ' Act
         Dim inst = New PrivateAccessor(New ClassWithNonPublicMembers())
-        Dim actual = inst.CallMethod("MePrivate")
+        Dim actual = inst.CallMethod("EchoPrivate")
     
         ' Assert
         Assert.AreEqual(1000, actual)
@@ -175,11 +108,11 @@ You can also invoke a non-public method from a mocked instance. The following st
         // Arrange
         var mockedClass = Mock.Create<ClassWithNonPublicMembers>(Behavior.CallOriginal);
     
-        Mock.NonPublic.Arrange<int>(mockedClass, "MePrivate").Returns(5);
+        Mock.NonPublic.Arrange<int>(mockedClass, "EchoPrivate").Returns(5);
     
         // Act
         var inst = new PrivateAccessor(mockedClass);
-        var actual = inst.CallMethod("MePrivate");
+        var actual = inst.CallMethod("EchoPrivate");
     
         // Assert
         Assert.AreEqual(5, actual);
@@ -195,11 +128,11 @@ You can also invoke a non-public method from a mocked instance. The following st
         ' Arrange
         Dim mockedClass = Mock.Create(Of ClassWithNonPublicMembers)(Behavior.CallOriginal)
     
-        Mock.NonPublic.Arrange(Of Integer)(mockedClass, "MePrivate").Returns(5)
+        Mock.NonPublic.Arrange(Of Integer)(mockedClass, "EchoPrivate").Returns(5)
     
         ' Act
         Dim inst = New PrivateAccessor(mockedClass)
-        Dim actual = inst.CallMethod("MePrivate")
+        Dim actual = inst.CallMethod("EchoPrivate")
     
         ' Assert
         Assert.AreEqual(5, actual)
@@ -266,7 +199,7 @@ Following is the sample class we will be using in the next examples:
 
     public class ClassWithNonPublicMembers
     {
-        private static int MeStaticPrivate()
+        private static int EchoStaticPrivate()
         {
             return 2000;
         }
@@ -283,7 +216,7 @@ Following is the sample class we will be using in the next examples:
 {{region PrivateAccessor#Sample}}
 
     Public Class ClassWithNonPublicMembers
-        Private Shared Function MeStaticPrivate() As Integer
+        Private Shared Function EchoStaticPrivate() As Integer
             Return 2000
         End Function
     
@@ -302,7 +235,7 @@ Following is the sample class we will be using in the next examples:
     {
         // Act
         var inst = PrivateAccessor.ForType(typeof(ClassWithNonPublicMembers));
-        var actual = inst.CallMethod("MeStaticPrivate");
+        var actual = inst.CallMethod("EchoStaticPrivate");
     
         // Assert
         Assert.AreEqual(2000, actual);
@@ -317,7 +250,7 @@ Following is the sample class we will be using in the next examples:
     Public Sub PrivateAccessor_ShouldCallStaticMethod()
         ' Act
         Dim inst = PrivateAccessor.ForType(GetType(ClassWithNonPublicMembers))
-        Dim actual = inst.CallMethod("MeStaticPrivate")
+        Dim actual = inst.CallMethod("EchoStaticPrivate")
     
         ' Assert
         Assert.AreEqual(2000, actual)
@@ -342,11 +275,11 @@ If you need to call non-public static methods from a mocked instance, you should
         // Arrange
         Mock.SetupStatic(typeof(ClassWithNonPublicMembers));
     
-        Mock.NonPublic.Arrange<int>(typeof(ClassWithNonPublicMembers), "MeStaticPrivate").Returns(5);
+        Mock.NonPublic.Arrange<int>(typeof(ClassWithNonPublicMembers), "EchoStaticPrivate").Returns(5);
     
         // Act
         var inst = PrivateAccessor.ForType(typeof(ClassWithNonPublicMembers));
-        var actual = inst.CallMethod("MeStaticPrivate");
+        var actual = inst.CallMethod("EchoStaticPrivate");
     
         // Assert
         Assert.AreEqual(5, actual);
@@ -362,11 +295,11 @@ If you need to call non-public static methods from a mocked instance, you should
         ' Arrange
         Dim mockedClass = Mock.Create(Of ClassWithNonPublicMembers)(Behavior.CallOriginal)
     
-        Mock.NonPublic.Arrange(Of Integer)(mockedClass, "MeStaticPrivate").IgnoreInstance().Returns(5)
+        Mock.NonPublic.Arrange(Of Integer)(mockedClass, "EchoStaticPrivate").IgnoreInstance().Returns(5)
     
         ' Act
         Dim inst = PrivateAccessor.ForType(GetType(ClassWithNonPublicMembers))
-        Dim actual = inst.CallMethod("MeStaticPrivate")
+        Dim actual = inst.CallMethod("EchoStaticPrivate")
     
         ' Assert
         Assert.AreEqual(5, actual)
@@ -494,6 +427,34 @@ And following is how you can arrange tests for the Sum method and its out parame
     }
 {{endregion}}
 
+#### [VB] Example 7: Arrange that a private method with out parameter should be called and verify the produced value
+
+{{region PrivateAccessor#TestMethodWithAnyOutParameter}}
+
+    <TestMethod>
+    Public Sub TestMethodWithAnyOutParameter()
+        ' Arrange
+        Dim calculator = New Calculator()
+        
+        ' Arrange that the Sum method must be called at least once during the test execution with any int values for its parameters.
+        Mock.NonPublic.Arrange(calculator, "Sum", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of Integer)(), Arg.Expr.Ref(Arg.Expr.IsAny(Of Integer)())).MustBeCalled()
+        
+        Dim privateAccessor As PrivateAccessor = New PrivateAccessor(calculator)
+        
+        ' This array corresponds to the parameters that are passed to the tested method.
+        Dim values = New Object() {8, 2, 0}
+        privateAccessor.CallMethod("Sum", values)
+        
+        ' Assert
+        ' Verify that the expectations set to the calculator object are met.
+        Mock.Assert(calculator)
+       
+        ' Check the value returned by the out parameter of the Sum method.
+        ' It is stored as the last item of the values array as it is the last argument in the method signature. 
+        Assert.AreEqual(10, values(2))
+    End Sub
+{{endregion}}
+
 #### [C#] Example 8: Arrange that a private method with out parameter should be called and its out parameter should hold specific value
 
 {{region PrivateAccessor#TestMethodWithSpecificValueForOutParameter}}
@@ -525,6 +486,36 @@ And following is how you can arrange tests for the Sum method and its out parame
 {{endregion}}
 
 
+#### [VB] Example 8: Arrange that a private method with out parameter should be called and its out parameter should hold specific value
+
+{{region PrivateAccessor#TestMethodWithSpecificValueForOutParameter}}
+
+    <TestMethod>
+    Public Sub TestMethodWithSpecificValueForOutParameter()
+        ' Arrange
+        Dim calculator = New Calculator()
+        
+        ' Arrange that the Sum method will output value of 22 and must be called at least once during the test execution.
+        Mock.NonPublic.Arrange(calculator, "Sum", Arg.Expr.AnyInt, Arg.Expr.AnyInt, Arg.Expr.Out(22)).MustBeCalled()
+        
+        Dim privateAccessor As PrivateAccessor = New PrivateAccessor(calculator)
+        
+        ' This array corresponds to the parameters that are passed to the tested method.
+        Dim values = New Object() {8, 2, 0}
+        
+        ' Act
+        privateAccessor.CallMethod("Sum", values)
+        
+        ' Assert
+        ' The last parameter of the method is its out parameter.
+        Assert.AreEqual(22, values(2))
+        
+        ' Verify that the expectations set to the calculator object are met.
+        Mock.Assert(calculator)
+    End Sub
+{{endregion}}
+
+
 
 As you can see in our sample setup above, the `Add` method accepts a parameter by reference and directly modifies it. Testing methods with `ref` parameters is pretty similar to how that is done for the ones with `out` arguments. The next examples illustrate that.
 
@@ -544,8 +535,8 @@ As you can see in our sample setup above, the `Add` method accepts a parameter b
     
         PrivateAccessor privateAccessor = new PrivateAccessor(calculator);
     
-        // This array corresponds to the parameters that are passed to the tested method.
         int input = 2;
+        // This array corresponds to the parameters that are passed to the tested method.
         var values = new object[] { input, 6 };
     
         // Act
@@ -558,6 +549,37 @@ As you can see in our sample setup above, the `Add` method accepts a parameter b
         // It is stored as the first item of the values array as it is the first argument in the method signature. 
         Assert.AreEqual(8, values[0]);
     }
+{{endregion}}
+
+
+#### [VB] Example 9: Arrange that a private method with ref parameter should be called and verify the produced value
+
+{{region PrivateAccessor#TestMethodWithAnyValueForRefParameter}}
+    
+    <TestMethod>
+    Public Sub TestMethodWithAnyRefParameter()
+        ' Arrange
+        Dim calculator = New Calculator()
+        
+        ' Arrange that the Add method must be called at least once during the test execution with any int values for its parameters.
+        Mock.NonPublic.Arrange(calculator, "Add", Arg.Expr.Ref(Arg.Expr.IsAny(Of Integer)()), Arg.Expr.IsAny(Of Integer)()).CallOriginal().MustBeCalled()
+        
+        Dim privateAccessor As PrivateAccessor = New PrivateAccessor(calculator)
+        
+        Dim input As Integer = 2
+        ' This array corresponds to the parameters that are passed to the tested method.
+        Dim values = New Object() {input, 6}
+        
+        ' Act
+        privateAccessor.CallMethod("Add", values)
+        
+        ' Assert
+        ' Verify that the expectations set to the calculator object are met.
+        Mock.Assert(calculator)
+        ' Check the value stored in the first argument of the Add method after its execution.
+        ' It is stored as the first item of the values array as it is the first argument in the method signature. 
+        Assert.AreEqual(8, values(0))
+    End Sub
 {{endregion}}
 
 ### Static Methods with ref and out Parameters
@@ -583,6 +605,21 @@ Let's consider we are having the following class to test:
             a = a + b;
         }
     }
+{{endregion}}
+
+#### [VB] Sample setup
+
+{{region PrivateAccessor#Sample4}}
+
+    Public Class Calculator
+        Private Shared Sub Sum(ByVal a As Integer, ByVal b As Integer, <Out> ByRef result As Integer)
+            result = a + b
+        End Sub
+    
+        Private Shared Sub Add(ByRef a As Integer, ByVal b As Integer)
+            a = a + b
+        End Sub
+    End Class
 {{endregion}}
 
 The following examples demonstrate how you can test its methods.
@@ -619,6 +656,37 @@ The following examples demonstrate how you can test its methods.
     }
 {{endregion}}
 
+#### [VB] Example 10: Test static method with out parameter
+
+{{region PrivateAccessor#TestStaticMethodWithOutParameter}}
+
+    <TestMethod>
+    Public Sub TestStaticMethodWithOutParameter()
+        ' Arrange
+        Dim calculator = New Calculator()
+        
+        ' Arrange that the Sum method must execute its original implementation and
+        ' it be called at least once during the test execution with any int values for its parameters.
+        Mock.NonPublic.Arrange(Of Calculator)("Sum", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of Integer)(), Arg.Expr.Ref(Arg.Expr.IsAny(Of Integer)())).CallOriginal().MustBeCalled()
+       
+        Dim privateAccessor As PrivateAccessor = PrivateAccessor.ForType(calculator.[GetType]())
+       
+        ' This array corresponds to the parameters that are passed to the tested method.       
+        Dim values = New Object() {8, 2, 0}
+        
+        ' Act
+        privateAccessor.CallMethod("Sum", values)
+        
+        ' Assert
+        ' Verify that the expectations set to the calculator object are met.
+        Mock.Assert(calculator)
+        
+        ' Check the value returned by the out parameter of the Sum method.
+        ' It is stored as the last item of the values array as it is the last argument in the method signature. 
+        Assert.AreEqual(10, values(2))
+    End Sub
+{{endregion}}
+
 #### [C#] Example 11: Test static method with ref parameter
 
 {{region PrivateAccessor#TestStaticMethodWithRefParameter}}
@@ -634,8 +702,8 @@ The following examples demonstrate how you can test its methods.
     
         PrivateAccessor privateAccessor = PrivateAccessor.ForType(calculator.GetType());
     
-        // This array corresponds to the parameters that are passed to the tested method.
         int input = 2;
+        // This array corresponds to the parameters that are passed to the tested method.
         var values = new object[] { input, 6 };
     
         // Act
@@ -644,10 +712,42 @@ The following examples demonstrate how you can test its methods.
         // Assert
         // Verify that the expectations set to the calculator object are met.
         Mock.Assert(calculator);
+        
         // Check the value stored in the first argument of the Add method after its execution.
         // It is stored as the first item of the values array as it is the first argument in the method signature. 
         Assert.AreEqual(8, values[0]);
     }
+{{endregion}}
+
+#### [VB] Example 11: Test static method with ref parameter
+
+{{region PrivateAccessor#TestStaticMethodWithRefParameter}}
+
+    <TestMethod>
+    Public Sub TestStaticMethodWithRefParameter()
+        ' Arrange
+        Dim calculator = New Calculator()
+        
+        ' Arrange that the Add method must be called at least once during the test execution with any int values for its parameters.
+        Mock.NonPublic.Arrange(calculator, "Add", Arg.Expr.Ref(Arg.Expr.IsAny(Of Integer)()), Arg.Expr.IsAny(Of Integer)()).CallOriginal().MustBeCalled()
+      
+        Dim privateAccessor As PrivateAccessor = PrivateAccessor.ForType(calculator.[GetType]())
+      
+        Dim input As Integer = 2
+        ' This array corresponds to the parameters that are passed to the tested method.
+        Dim values = New Object() {input, 6}
+        
+        ' Act
+        privateAccessor.CallMethod("Add", values)
+        
+        ' Assert
+        ' Verify that the expectations set to the calculator object are met.
+        Mock.Assert(calculator)
+        
+        ' Check the value stored in the first argument of the Add method after its execution.
+        ' It is stored as the first item of the values array as it is the first argument in the method signature. 
+        Assert.AreEqual(8, values(0))
+    End Sub
 {{endregion}}
 
 ## Private Async Methods
@@ -666,6 +766,18 @@ Invoking private async methods is also not an issue for the **PrivateAccessor** 
             return input * 2;
         }
     }
+{{endregion}}
+
+#### [VB] Sample setup
+
+{{region PrivateAccessor#Sample5}}
+
+    Public Class Calculator
+        Private Async Function PerformTimeConsumingCalculation(ByVal input As Integer) As Task(Of Integer)
+            Await Task.Delay(3000)
+            Return input * 2
+        End Function
+    End Class
 {{endregion}}
 
 #### [C#] Example 12: Arrange and execute private async method
@@ -694,6 +806,32 @@ Invoking private async methods is also not an issue for the **PrivateAccessor** 
         Assert.AreEqual(6, result);
     }
 
+{{endregion}}
+
+#### [VB] Example 12: Arrange and execute private async method
+
+{{region PrivateAccessor#TestMethodWithAnyOutParameter}}
+
+    <TestMethod>
+    Public Async Function TestAsync() As Task
+        ' Arrange
+        Dim calculator = New Calculator()
+        
+        ' Arrange that the PerformTimeConsumingCalculation method must be called at least once during the test execution with any int value for its parameter.
+        Mock.NonPublic.Arrange(Of Task(Of Integer))(calculator, "PerformTimeConsumingCalculation", Arg.Expr.IsAny(Of Integer)()).MustBeCalled()
+       
+        Dim privateAccessor As PrivateAccessor = New PrivateAccessor(calculator)
+       
+        ' Act
+        ' Make sure to await the async operation to complete
+        Dim result = Await (TryCast(privateAccessor.CallMethod("PerformTimeConsumingCalculation", 3), Task(Of Integer)))
+      
+        ' Assert
+        ' Verify that the expectations set to the calculator object are met.     
+        Mock.Assert(calculator)
+        ' Verify the result is correct.
+        Assert.AreEqual(6, result)
+    End Function
 {{endregion}}
 
 ## Get or Set Private Properties
@@ -879,13 +1017,38 @@ To show you the usage of this functionality, let's take the following class as a
         // Arrange that the getter of the indexer should always return "test" when the 0 element is accessed.
         Mock.NonPublic.Arrange<string>(collection, "get_Item", 0).Returns("test");
     
-        // Act
         PrivateAccessor privateAccessor = new PrivateAccessor(collection);
+       
+        // Act
         var result = privateAccessor.CallMethod("get_Item", 0);
                 
         // Assert
         Assert.AreEqual("test", result);
     }
+{{endregion}}
+
+#### [VB] Example 15: Arrange the getter of a private indexer
+
+{{region PrivateAccessor#CallPrivateIndexerGetter}}
+
+
+    <TestMethod>
+    Public Sub TestPrivateIndexerGetOperation()
+        ' Arrange
+        Dim array = New String(1) {"a", "b"}
+        Dim collection = New MyCollection(array)
+        
+        ' Arrange that the getter of the indexer should always return "test" when the 0 element is accessed.
+        Mock.NonPublic.Arrange(Of String)(collection, "get_Item", 0).Returns("test")
+      
+        Dim privateAccessor As PrivateAccessor = New PrivateAccessor(collection)
+        
+        ' Act     
+        Dim result = privateAccessor.CallMethod("get_Item", 0)
+        
+        ' Assert
+        Assert.AreEqual("test", result)
+    End Sub
 {{endregion}}
 
 #### [C#] Example 16: Arrange the setter of a private indexer
@@ -902,15 +1065,40 @@ To show you the usage of this functionality, let's take the following class as a
     
         // Arrange that the setter for any collection item should skip its original implementation and set calledItemSet to true instead.
         Mock.NonPublic.Arrange(collection, "set_Item", Arg.Expr.IsAny<int>(), Arg.Expr.IsAny<string>()).DoInstead(() => calledItemSet = true);
-    
-        // Act
+           
         PrivateAccessor privateAccessor = new PrivateAccessor(collection);
+
+        // Act
         var result = privateAccessor.CallMethod("set_Item", 0, "value");
     
         // Assert
         Assert.AreEqual(true, calledItemSet);
     }
 
+{{endregion}}
+
+#### [VB] Example 16: Arrange the setter of a private indexer
+
+{{region PrivateAccessor#CallPrivateIndexerSetter}}
+
+    <TestMethod>
+    Public Sub TestPrivateIndexerSetOperation()
+        ' Arrange
+        Dim calledItemSet As Boolean = False
+        Dim array = New String(1) {"a", "b"}
+        Dim collection = New MyCollection(array)
+        
+        ' Arrange that the setter for any collection item should skip its original implementation and set calledItemSet to true instead.
+        Mock.NonPublic.Arrange(collection, "set_Item", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of String)()).DoInstead(Function() (calledItemSet = True))
+        
+        Dim privateAccessor As PrivateAccessor = New PrivateAccessor(collection)
+        
+        ' Act
+        Dim result = privateAccessor.CallMethod("set_Item", 0, "value")
+        
+        ' Assert
+        Assert.AreEqual(True, calledItemSet)
+    End Sub
 {{endregion}}
 
 ## Throw the Original Exception When Calling Method
@@ -977,3 +1165,4 @@ And here is how a test for the ThrowsException method will look like:
 ## See Also
 
  * [Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})
+ * [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%})
