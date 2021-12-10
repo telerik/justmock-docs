@@ -1,7 +1,7 @@
 ---
 title: Arrange All Instances of a Type
-page_title: Working with Instances | JustMock Documentation
-description: Working with Instances
+page_title: Arrange All Instances of a Type | JustMock Documentation
+description: Arrange All Instances of a Type
 previous_url: /advanced-usage-future-mocking.html
 slug: justmock/advanced-usage/future-mocking
 tags: future,mocking, mock, instance, ignore, create
