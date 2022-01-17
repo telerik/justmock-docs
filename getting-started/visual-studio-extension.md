@@ -30,7 +30,7 @@ Opens the Profiler Runtime Options from where you can configure what exactly sho
 ### On Demand Instrumentation Enabled
 Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. Enabling this option will lead to significantly faster execution time.
 
->note This feature is still in Beta.
+> This feature is still in Beta.
 
 Because not all methods will be instrumented two functional breaking changes arise:
 
@@ -65,14 +65,14 @@ Opens the [JustMock Ideas and Feedback Portal](https://feedback.telerik.com/just
 
 Opens the Telerik JustMock Updater window.  Gives you the options to *Include internal builds when checking for updates* and *Check for JustMock updates when Visual Studio starts*.
 
-#### Figure 2: JustMock Updater
+#### Figure 3: JustMock Updater
 ![Updater Window](images/UpdaterWindow.png)
 
 ## Customer Experience and Improvement Program 
 
 Opens the Telerik JustMock customer experience and improvement program window, where you can enable or disable the anonymous reporting of the product usage.
 
-#### Figure 3: JustMock Customer Experience and Improvement Program 
+#### Figure 4: JustMock Customer Experience and Improvement Program 
 ![Analytics Window](images/AnalyticsWindow.png)
 
 
@@ -82,13 +82,13 @@ Opens the Telerik JustMock Update References window. Provides the ability to upd
 
 This window prompts automatically when a solution which contains JustMock references different from the currently installed JustMock version is loaded.
 
-#### Figure 4: Update JustMock References window ####
+#### Figure 5: Update JustMock References window ####
 
 ![Update Reference Window](images/UpdateReferenceWindow.png)
  
 The functionality to update references can also be used by right-clicking on the references field for a certain project. This way, you will be able to update only the JustMock references for that particular project: 
 
-#### Figure 5: Update JustMock References from the context menu
+#### Figure 6: Update JustMock References from the context menu
 
 ![Update References From The Context Menu](images/UpdateReferencesFromTheContextMenu.png)
 
