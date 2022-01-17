@@ -25,12 +25,12 @@ Enables or disables the JustMock profiler. The profiler is only needed when when
 You can enable the profiler using the shortcuts `Ctrl+Shift+[` and `Ctrl+Shift+]`.
 
 ## Profiler Options
-Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler.
+Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler. Here are the available options:
 
-Here are the available options:
+### On Demand Instrumentation Enabled
+Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. Enabling this option will lead to significantly faster execution time.
 
-### On Demand Instrumentation enabled
-Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. With other words, only when a mock object is created or when an arrangement is made. Enabling this option will lead to significantly faster execution time. This feature is still in Beta.
+>note This feature is still in Beta.
 
 Because not all methods will be instrumented two functional breaking changes arise:
 
@@ -51,7 +51,7 @@ Controls the test execution resolution of asynchronous test methods. Can be safe
 Opens the Telerik JustMock Configuration window, which is used to link JustMock with 3rd party profilers. For more information, navigate to [this]({%slug justmock/integration/codecoverage-tools%}) article.
 
 #### Figure 2: JustMock Configuration Window
-![JustMock Configuration Window](../integration/images/CodeCoverageTools1.png)
+![JustMock Configuration Window](../integration/code-coverage/images/CodeCoverageTools1.png)
 
 ## Documentation
 
