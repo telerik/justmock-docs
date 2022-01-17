@@ -19,7 +19,7 @@ The examples demonstrate integration with Visual Studio Code Coverage/IntelliTra
 
 The JustMock configuration tool is a stand-alone application which could be found in the JustMock root folder (ex: C:\Program Files (x86)\Progress\Telerik JustMock\Libraries). Navigate to the folder and run the __Telerik.JustMock.Configuration.exe__ file.
 
-![Code Coverage Tools 1](images/CodeCoverageTools1.png)
+![JustMock Configuration Window](images/CodeCoverageTools1.png)
 
 Once into the configuration window, you will be able to choose from one of the automatically detected profiler using tools and click on its checkbox to link it with the JustMock profiler *(you should notice the progress bar while the profilers are being linked)*. Once completed, a tick will remain against the name of the linked tool.
 

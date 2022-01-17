@@ -24,9 +24,34 @@ Enables or disables the JustMock profiler. The profiler is only needed when when
 
 You can enable the profiler using the shortcuts `Ctrl+Shift+[` and `Ctrl+Shift+]`.
 
-## Options...
+## Profiler Options
+Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler.
+
+Here are the available options:
+
+### On Demand Instrumentation enabled
+Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. With other words, only when a mock object is created or when an arrangement is made. Enabling this option will lead to significantly faster execution time. This feature is still in Beta.
+
+Because not all methods will be instrumented two functional breaking changes arise:
+
+1. Mocking of the [new operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/new-operator) won't work correctly in all scenarios. As a workaround use the IgnoreInstance method.
+2. Mocking property setter with ArrangeSet(Action) won't work correctly in all scenarios. As a workaround please use the ArrangeSet<PropertyOwnerType>(Action) overload.
+
+### Automatic Mock Repository Cleanup Enabled
+Controls whether a call to the Mock.Reset method is instrumented by the JustMock Profiler at the end of each method. The default value is true. It is safe to be disabled only when a call to Mock.Reset is added to all unit tests that use JustMock, otherwise a memory leak can occur for those unit tests. Disabling this option will lead to faster execution time. Use with caution.
+
+### DLLImport Method Instrumentation Enabled
+Controls whether methods marked with the [DLLImport](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-6.0) attribute can be mocked. Can be safely disabled if no DLLImport methods are mocked. Disabling this option will lead to faster execution time.
+
+### Asynchronous Test Context Resolution Enabled
+Controls the test execution resolution of asynchronous test methods. Can be safely disabled when only synchronous test methods are executed. Disabling this option will lead to slightly faster execution time.
+
+## Integrations
 
 Opens the Telerik JustMock Configuration window, which is used to link JustMock with 3rd party profilers. For more information, navigate to [this]({%slug justmock/integration/codecoverage-tools%}) article.
+
+#### Figure 2: JustMock Configuration Window
+![JustMock Configuration Window](../integration/images/CodeCoverageTools1.png)
 
 ## Documentation
 
