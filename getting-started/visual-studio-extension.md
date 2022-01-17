@@ -35,7 +35,7 @@ Controls whether the JustMock Profiler will insert the required code (code instr
 Because not all methods will be instrumented two functional breaking changes arise:
 
 1. Mocking of the [new operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/new-operator) won't work correctly in all scenarios. As a workaround use the IgnoreInstance method.
-2. Mocking property setter with ArrangeSet(Action) won't work correctly in all scenarios. As a workaround please use the ArrangeSet<PropertyOwnerType>(Action) overload.
+2. Mocking property setter with ArrangeSet(Action) won't work correctly in all scenarios. As a workaround please use the ArrangeSet&gt;PropertyOwnerType&lt;(Action) overload.
 
 ### Automatic Mock Repository Cleanup Enabled
 Controls whether a call to the Mock.Reset method is instrumented by the JustMock Profiler at the end of each method. The default value is true. It is safe to be disabled only when a call to Mock.Reset is added to all unit tests that use JustMock, otherwise a memory leak can occur for those unit tests. Disabling this option will lead to faster execution time. Use with caution.
