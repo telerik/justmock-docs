@@ -27,6 +27,10 @@ You can enable and disable the profiler using the `Ctrl+Shift+[` and `Ctrl+Shift
 ## Profiler Options
 Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler. Here are the available options:
 
+#### Figure 2: JustMock Menu in Visual Studio
+![JustMock Visual Studio Profiler Runtime Options](images/JustMockVSProfilerRuntimeOptions.png)
+
+
 ### On Demand Instrumentation Enabled
 Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. Enabling this option will lead to significantly faster execution time. Otherwise, the instrumentation will be done for each compiled method no matter if you intend to mock it or not, which of course causes the slowdown of the execution time.
 
@@ -50,7 +54,7 @@ Controls the test execution resolution of asynchronous test methods. Can be safe
 
 Opens the Telerik JustMock Configuration window, which is used to link JustMock with 3rd party profilers. For more information, navigate to [this]({%slug justmock/integration/codecoverage-tools%}) article.
 
-#### Figure 2: JustMock Configuration Window
+#### Figure 3: JustMock Configuration Window
 ![JustMock Configuration Window](../integration/code-coverage/images/CodeCoverageTools1.png)
 
 ## Documentation
@@ -65,14 +69,14 @@ Opens the [JustMock Ideas and Feedback Portal](https://feedback.telerik.com/just
 
 Opens the Telerik JustMock Updater window.  Gives you the options to *Include internal builds when checking for updates* and *Check for JustMock updates when Visual Studio starts*.
 
-#### Figure 3: JustMock Updater
+#### Figure 4: JustMock Updater
 ![Updater Window](images/UpdaterWindow.png)
 
 ## Customer Experience and Improvement Program 
 
 Opens the Telerik JustMock customer experience and improvement program window, where you can enable or disable the anonymous reporting of the product usage.
 
-#### Figure 4: JustMock Customer Experience and Improvement Program 
+#### Figure 5: JustMock Customer Experience and Improvement Program 
 ![Analytics Window](images/AnalyticsWindow.png)
 
 
@@ -82,7 +86,7 @@ Opens the Telerik JustMock Update References window. Provides the ability to upd
 
 This window prompts automatically when a solution which contains JustMock references different from the currently installed JustMock version is loaded.
 
-#### Figure 5: Update JustMock References window ####
+#### Figure 6: Update JustMock References window ####
 
 ![Update Reference Window](images/UpdateReferenceWindow.png)
  
