@@ -27,7 +27,7 @@ You can enable and disable the profiler using the `Ctrl+Shift+[` and `Ctrl+Shift
 ## Profiler Options
 Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler. Here are the available options:
 
-#### Figure 2: JustMock Menu in Visual Studio
+#### Figure 2: JustMock Profiler Options Visual Studio
 ![JustMock Visual Studio Profiler Runtime Options](images/JustMockVSProfilerRuntimeOptions.png)
 
 
