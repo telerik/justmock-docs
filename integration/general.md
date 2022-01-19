@@ -216,6 +216,37 @@ For scenarios without installation, you should set the environment variables des
     </table>
 
 
+## Profiler Performance Optimizations
+
+JustMock allows you to enable or disable any features that may impact the performance of the JustMock profiler when executing unit tests through setting environment variable. The value to enable a feature is 1 and to disable it is 0. This section will show the different options and its default values. For more information about the options itself please read the [Profiler Options]({%slug justmock/getting-started/visual-studio-extension%}#profiler-options)
+
+<table>
+    <thead>
+      <tr>
+        <th>Environment variable</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>JUSTMOCK_ONDEMAND_ENABLED</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>JUSTMOCK_AUTO_RESET_ENABLED</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>JUSTMOCK_DLL_IMPORT_ENABLED</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>JUSTMOCK_ASYNC_CONTEXT_ENABLED</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+    </table>
+
 ## See Also
 
 
