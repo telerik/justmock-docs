@@ -20,25 +20,25 @@ This article will walk you through the different settings the Visual Studio exte
 
 ## Enable/Disable Profiler
 
-Enables or disables the JustMock profiler. The profiler is only needed when when you want to use the [advanced features]({%slug justmock/advanced-usage%}) of JustMock. 
+Enables or disables the JustMock profiler. The profiler is only needed when you want to use the [advanced features]({%slug justmock/advanced-usage%}) of JustMock. 
 
-You can enable the profiler using the shortcuts `Ctrl+Shift+[` and `Ctrl+Shift+]`.
+You can enable and disable the profiler using the `Ctrl+Shift+[` and `Ctrl+Shift+]` shortcuts.
 
 ## Profiler Options
 Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler. Here are the available options:
 
 ### On Demand Instrumentation Enabled
-Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. Enabling this option will lead to significantly faster execution time.
+Controls whether the JustMock Profiler will insert the required code (code instrumentation) to work on demand. Enabling this option will lead to significantly faster execution time. Otherwise, the instrumentation will be done for each compiled method no matter if you intend to mock it or not, which of course causes the slowdown of the execution time.
 
 > This feature is still in Beta.
 
 Because not all methods will be instrumented two functional breaking changes arise:
 
-1. Mocking of the [new operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/new-operator) won't work correctly in all scenarios. As a workaround use the IgnoreInstance method.
-2. Mocking property setter with ArrangeSet(Action) won't work correctly in all scenarios. As a workaround please use the ArrangeSet&gt;PropertyOwnerType&lt;(Action) overload.
+1. Mocking of the [new operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/new-operator) won't work correctly in all scenarios. As a workaround use the [IgnoreInstance](https://docs.telerik.com/devtools/justmock/advanced-usage/future-mocking#ignore-instance-for-an-expectation) method.
+2. Mocking property setter with ArrangeSet(Action) won't work correctly in all scenarios. As a workaround please use the ArrangeSet&lt;PropertyOwnerType&gt;(Action) overload.
 
 ### Automatic Mock Repository Cleanup Enabled
-Controls whether a call to the Mock.Reset method is instrumented by the JustMock Profiler at the end of each method. The default value is true. It is safe to be disabled only when a call to Mock.Reset is added to all unit tests that use JustMock, otherwise a memory leak can occur for those unit tests. Disabling this option will lead to faster execution time. Use with caution.
+Controls whether a call to the Mock.Reset method is instrumented by the JustMock Profiler at the end of each method. The default value is true. It is safe to be disabled only when a call to Mock.Reset is added to all unit tests that use JustMock with the purpose to clean all mock objects from the mocks repository, otherwise a memory leak can occur for those unit tests. Disabling this option will lead to faster execution time. Use with caution.
 
 ### DLLImport Method Instrumentation Enabled
 Controls whether methods marked with the [DLLImport](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-6.0) attribute can be mocked. Can be safely disabled if no DLLImport methods are mocked. Disabling this option will lead to faster execution time.
