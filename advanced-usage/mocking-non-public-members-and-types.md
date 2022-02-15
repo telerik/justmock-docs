@@ -433,7 +433,7 @@ In the sample setup shown above, the `pExecute` method has two overloads - one w
     End Sub
   {{endregion}}
 
-### Private Interface Implementation Method
+### Private Implementation of an Interface Method
 
 This section shows how you can mock an explicit (not public) interface implementation method from current or base class.
 
