@@ -10,7 +10,7 @@ position: 1
 
 # Licensing
 
-Telerik JustMock offers commercial (JustMock) and free (JustMock Lite) versions. The commercial version also provides you with a **30-day trial** with a full-featured version of the tool — no restrictions! What’s more, you are eligible for complete technical support during your trial period in case you have any questions. To sign up for a free 30-day trial, go [here](https://www.telerik.com/products/mocking.aspx).
+Telerik JustMock offers commercial (JustMock) and free (JustMock Lite) versions. The commercial version also provides you with a **30-day trial** with a full-featured version of the tool - no restrictions! What's more, you are eligible for complete technical support during your trial period in case you have any questions. To sign up for a free 30-day trial, go [here](https://www.telerik.com/products/mocking.aspx).
 
 * To use all the features provided by the commercial version of Telerik JustMock, you need to purchase a license. The terms of use are fully described in the [Telerik JustMock License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-dlw-s).
 
@@ -24,7 +24,7 @@ Telerik JustMock offers commercial (JustMock) and free (JustMock Lite) versions.
 
 ## Commercial vs Free Version
 
-The following table shows the differences between the commercial and free version of __Telerik® JustMock__.
+The following table shows the differences between the commercial and free version of __TelerikÂ® JustMock__.
 
 | Feature | Commercial Version | Free Version |
 | ------ | ------ | ------ |
