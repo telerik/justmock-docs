@@ -96,4 +96,4 @@ For any issues you might encounter while working with Telerik JustMock, use any 
 
  * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
  
- * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})
+ * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)

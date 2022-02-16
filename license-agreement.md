@@ -30,6 +30,7 @@ The following table shows the differences between the commercial and free versio
 | ------ | ------ | ------ |
 |[.Net Core Support]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
 |[.Net 5]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
+|[.Net 6]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
 |[Debug View]({%slug justmock/basic-usage/debug-view%})| &#x2714; | &#x2714; |
 |[Create and Arrange Mocks at the Same Time]({%slug justmock/basic-usage/create-mocks-by-example%})| &#x2714; | &#x2714; |
 |[Call Original]({%slug justmock/basic-usage/mock/call-original%})| &#x2714; | &#x2714; |

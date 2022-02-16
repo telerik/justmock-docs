@@ -17,7 +17,7 @@ Having an Unit Test Library (Windows Store apps) project, you need to refer the 
 
 ## Non-Elevated Examples
 
-The next examples can be applied with both JustMock Lite and JustMock commercial ([Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})). For them, we will use the following system under test:
+The next examples can be applied with both JustMock Lite and JustMock commercial ([Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version). For them, we will use the following system under test:
 
   #### __[C#]__
 
@@ -130,7 +130,7 @@ Again, we create a mocked instance of the *IFoo* interface. Then, we arrange tha
         
 ## Elevated Examples
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 For the examples, we will use the following system under test:
 

@@ -13,7 +13,7 @@ position: 20
 
 Threadpool mocking is one of the advanced features supported in __Telerik® JustMock__. It allows you to access mocked objects inside another thread and work with them as expected.
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions.
 
 ## Mocking Inside a Thread
 

@@ -13,7 +13,7 @@ position: 18
 
 __Telerik® JustMock__ enables you to mock classes/members from Silverlight assemblies. With JustMock you can mock almost everything (from interfaces, virtual and abstract methods and properties to sealed classes, non-virtual methods and properties, static classes, methods and properties, etc.) right within the Silverlight project.
 
-As JustMock comes in two versions ([Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})), there are also number of possible ways to apply mocking inside/to your Silverlight tests/assemblies:
+As JustMock comes in two versions ([Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version), there are also number of possible ways to apply mocking inside/to your Silverlight tests/assemblies:
 
 > Since R3 2018 Silverlight is in maintanance mode meaning that it wont be included in the newer versions and if needed only critical problems will be fixed. Please submit a support ticket in our [support ticketing system](https://www.telerik.com/account/support-tickets) if you have any questions.
 
@@ -119,7 +119,7 @@ __Example: Arranging a void call that must be called__
 
 ## Mocking with Enabled Profiler inside Silverlight Projects
 
-> This is an Elevated Feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> This is an Elevated Feature. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 
 In this mode you are able to mock everything inside your Silverlight application, even sealed classes, non-virtual methods and properties, static classes, methods and properties and more.

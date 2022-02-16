@@ -21,7 +21,7 @@ JustMock supports all of the listed options from the NCrunch Configuration Wizar
 
 ## Setting up NCrunch for Running Elevated JustMock Tests
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions.
 
 
 > **Important**

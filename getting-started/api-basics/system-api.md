@@ -14,7 +14,7 @@ position: 6
 
 You can mock any class or member – no matter whether you need a mock for `DateTime`, `Stream`, `File`, `String`, dictionaries, collections or any other framework implementation – with **JustMock** you can customize it.
 
-> This feature is available only in the commercial version of JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
 The following `Order` class uses a `DateTime` value to construct the receipt for a specific order. This value is assigned when creating the order.
 

@@ -13,7 +13,7 @@ position: 8
 
 __Telerik® JustMock__ enables you to create a single arrangement and apply it to **each class instance** no matter where and when it is being created in the current context. With this feature, you don't need to arrange every instance explicitly. You will find this handy, especially in cases when you have to mock third party controls and tools where you have little control over how they are created.
 
-> This is an elevated feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
+> This is an elevated feature. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
 
 By default, all mocks are tied to an instance and this is the expected behavior. This topic describes the approaches you can use to change that behavior and apply the arrangements to all instances of a type.
 
