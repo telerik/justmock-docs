@@ -11,11 +11,7 @@ navigation:
         
     getting-started/api-basics:
         title: JustMock API Basics
-        position: 4
-        
-    licensing:
-        title: Licensing
-        position: 2  
+        position: 4          
         
     basic-usage:
         title: Basic Mocking
