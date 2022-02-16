@@ -16,7 +16,7 @@ Telerik JustMock offers commercial (JustMock) and free (JustMock Lite) versions.
 
 * JustMock Lite doesn't require subscription. The terms of use for this version are available in the [Telerik JustMock Free Edition License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-free-edition).
 
-* For more information on the specifics of Telerik JustMock depending on the license you have, refer to the [Commercial vs Free Version] section.
+* For more information on the specifics of Telerik JustMock depending on the license you have, refer to the [Commercial vs Free Version](#commercial-vs-free-version) section.
 
 * For more information about the available subscription plans, go to the [Telerik JustMock purchase page](https://www.telerik.com/purchase/individual-justmock.aspx).
 
