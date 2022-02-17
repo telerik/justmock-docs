@@ -15,7 +15,7 @@ The advanced features supported in __Telerik® JustMock__ enables you to mock an
 
 >note The commercial edition allows you to mock concrete objects without having to change anything in their interface.
 
-> This is an elevated feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
+> This is an elevated feature. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and the free versions of Telerik JustMock.
 
 Here is the example class we are going to use:
 

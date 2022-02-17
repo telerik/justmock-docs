@@ -101,4 +101,4 @@ You can choose between the following approaches:
 
  * [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
 
- * [Commercial vs Free Version]({%slug justmock/getting-started/commercial-vs-free-version%})
+ * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)

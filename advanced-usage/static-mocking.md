@@ -19,7 +19,7 @@ We can divide static mocking into the following major parts:
 * Static method mocking
 * Extension methods mocking
 
-> This is an Elevated Feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> This is an Elevated Feature. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 Further in this topic we will use the following sample code to illustrate how to mock static constructors, methods and properties.
 

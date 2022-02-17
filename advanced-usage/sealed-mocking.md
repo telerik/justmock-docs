@@ -17,7 +17,7 @@ This functionality allows you to fake sealed classes and calls to their members,
 >
 > To use sealed mocking, you first need to **go to elevated mode** by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 >
->This feature is available only in the **commercial** version of **Telerik JustMock**. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
+>This feature is available only in the **commercial** version of **Telerik JustMock**. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions.
 
 ## Arrange Method Call on a Sealed Class
 

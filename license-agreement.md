@@ -1,15 +1,28 @@
 ---
-title: Commercial vs Free Version
-page_title: Commercial vs Free Version | JustMock Documentation
-description: Lists the difference in the features between the Commercial and Free versions of Telerik JustMock 
-slug: justmock/getting-started/commercial-vs-free-version
-tags: commercial,vs,free,version
+title: Licensing
+page_title: Licensing | JustMock Documentation
+description: Telerik JustMock License Agreement
+slug: justmock/licensing/license-agreement
+tags: license-agreement
 published: True
-position: 4
-previous_url: getting-started-commercial-vs-free-version.html, getting-started-commercial-vs-free-version
+position: 1
 ---
 
-# Commercial vs Free Version
+# Licensing
+
+Telerik JustMock offers commercial (JustMock) and free (JustMock Lite) versions. The commercial version also provides you with a **30-day trial** with a full-featured version of the tool - no restrictions! What's more, you are eligible for complete technical support during your trial period in case you have any questions. To sign up for a free 30-day trial, go [here](https://www.telerik.com/products/mocking.aspx).
+
+* To use all the features provided by the commercial version of Telerik JustMock, you need to purchase a license. The terms of use are fully described in the [Telerik JustMock License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-dlw-s).
+
+* JustMock Lite doesn't require subscription. The terms of use for this version are available in the [Telerik JustMock Free Edition License Agreement](https://www.telerik.com/purchase/license-agreement/justmock-free-edition).
+
+* For more information on the specifics of Telerik JustMock depending on the license you have, refer to the [Commercial vs Free Version](#commercial-vs-free-version) section.
+
+* For more information about the available subscription plans, go to the [Telerik JustMock purchase page](https://www.telerik.com/purchase/individual-justmock.aspx).
+
+* For more information on the available commercial and free support channels, refer to the section on the [available Telerik JustMock support options]({%slug justmock/introduction%}#support-options).
+
+## Commercial vs Free Version
 
 The following table shows the differences between the commercial and free version of __Telerik® JustMock__.
 
@@ -17,6 +30,7 @@ The following table shows the differences between the commercial and free versio
 | ------ | ------ | ------ |
 |[.Net Core Support]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
 |[.Net 5]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
+|[.Net 6]({%slug justmock/getting-started/system-requirements%})| &#x2714; | &#x2714; |
 |[Debug View]({%slug justmock/basic-usage/debug-view%})| &#x2714; | &#x2714; |
 |[Create and Arrange Mocks at the Same Time]({%slug justmock/basic-usage/create-mocks-by-example%})| &#x2714; | &#x2714; |
 |[Call Original]({%slug justmock/basic-usage/mock/call-original%})| &#x2714; | &#x2714; |

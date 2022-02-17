@@ -15,7 +15,7 @@ Final mocking is one of the advanced features supported in __Telerik® JustMock_
 
 Faking final or virtual method/property calls doesn't affect the way you write your tests, i.e. the same syntax is used for mocking both final and non-final calls.
 
->This is an Elevated Feature. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
+>This is an Elevated Feature. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
 
 In the next examples we will use the following sample classes to test:

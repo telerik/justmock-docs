@@ -24,7 +24,7 @@ You can use JustMock to mock non-public members and types in elevated mode. That
 * internal virtual methods and properties
 
 > This feature is available only in the commercial version of Telerik JustMock. 
-Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions.
+Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions.
 
 >note If you need a complete Visual Studio project that demonstrates how to mock non-public members and types, refer to the examples in the installation directory. The default installation directory is *C:\Program Files (x86)\Progress\Telerik JustMock\Examples*.
 

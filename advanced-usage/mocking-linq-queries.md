@@ -13,7 +13,7 @@ position: 12
 
 This article provides practical examples that demonstrate how to mock LINQ queries with __Telerik® JustMock__ and custom select.
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/getting-started/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
 If you need a complete Visual Studio project that demonstrates how to mock LINQ queries, refer to our demo. The default installation directory is C:\Program Files (x86)\Progress\Telerik JustMock\Examples.
 
