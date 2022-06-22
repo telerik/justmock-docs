@@ -39,7 +39,7 @@ Go to your build pipepile and click on the "Add task" button and find the "Teler
 
 ![Add Telerik JustMock VSTest v.2 task to the build](images/Azure_Add_JustMock_Task.png)
 
-## Confuguring the Telerik JustMock VSTest v.2 task
+## Configuring the Telerik JustMock VSTest v.2 task
 
 The task is in essence a wrapper of the VSTest task and the configuration is the same. The only additional configuration is related to whether the build agent is hosted at the cloud or at on-premisses server.
 
