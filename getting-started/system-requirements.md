@@ -37,7 +37,7 @@ In order to use JustMock the following additional development tools must be inst
 
 | IDE			| Version							 |
 | ------------- | ---------------------------------- |
-| Visual Studio | 2019, 2017, 2015 |
+| Visual Studio | 2022, 2019, 2017, 2015 |
 
 ## Next Steps
 
