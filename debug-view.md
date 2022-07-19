@@ -25,8 +25,6 @@ __Debug View__ can be used only while debugging your test methods. To do so plac
 At first the fields will be empty. The information in them will be populated step by step, while debugging the test method.
 
 ![Debug View Enabling The Debug View](images/DebugView_EnablingTheDebugView.png)
-Expanding the __Debug View__, you will notice there are 4 fields:
-![Debug View Enabling The Debug View Expanded](images/DebugView_EnablingTheDebugViewExpanded.png)
 
 
 ## Inspecting the Current State
