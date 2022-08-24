@@ -6,6 +6,7 @@ previous_url: /basic-usage-debug-view.html
 slug: justmock/basic-usage/debug-view
 tags: debug,view,troubleshoot,test,trace
 published: True
+position: 5
 ---
 
 # Debugging Tests

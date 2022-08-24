@@ -23,9 +23,6 @@ navigation:
     advanced-usage:
         title: Advanced Usage
         position: 4
-    debug-view:
-        title: Debugging Tests
-        position: 5
     scenarios:
         title: Scenarios
         position: 6
