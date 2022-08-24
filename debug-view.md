@@ -1,21 +1,45 @@
 ---
-title: Debug View
-page_title: Debug View | JustMock Documentation
+title: Debugging Tests
+page_title: Debugging Tests | JustMock Documentation
 description: Debug View
 previous_url: /basic-usage-debug-view.html
 slug: justmock/basic-usage/debug-view
-tags: debug,view
+tags: debug,view,troubleshoot,test,trace
 published: True
-position: 15
 ---
 
 # Debugging Tests
 
-JustMock comes with built-in __Debug View__ that is really useful when it comes to debugging tests and finding where the unexpected behavior comes from. This article covers all of the __Debug View__'s functionalities. It also gives some good practices about where and what to look for in order to check the correctness of a certain test.
+JustMock comes with built-in __Debug View__ (API) and __Debug Window__ that are really useful when it comes to debugging tests and finding where the unexpected behavior comes from. This article covers the available functionalities and gives some good practices about where and what to look for in order to check the correctness of a certain test.
 
-## Enabling the Debug View
+## Debug Window
 
-__Debug View__ can be used only while debugging your test methods. To do so place a breakpoint at the start of the inspected test and run the debugger. When the breakpoint is hit, open the Watch window and add the __Debug View__ by writing: *DebugView.[property_name]* under the Name column. The properties you can use are:
+JustMock extension for Visual Studio 2017 (and above) makes mock debugging even more convenient by adding tool window for visualizing trace messages and arranged method mocks. It can be opened from main menu __View > Other Windows > JustMock Debug Window__ or extension menu - __JustMock > Debug Window > Show__. There is also an option to enable or disable debug window by using the corresponding command in the extension menu.
+
+![Debug Window Menu](images/DebugWindow_Menu.png)
+
+> **Important**
+>
+>Enabling or disabling the debug window will be persisted and will be applied not only on the current instance of Visual Studio but also on all future ones.
+
+The debug window consist of two panes which are active only while debugging:
+
+* __Debug Trace__
+
+This pane shows information about all the intercepted invocations in the test method. A sample output produced by sample unit test looks as following:
+
+![Debug Window Debug Trace Pane](images/DebugWindow_DebugTrace.png)
+
+* __Mock Repository__
+
+The pane shows basic information about particular method mock like name, declaring type and its invocations. The test method sample has the following repository view:
+
+![Debug Window Mock Repository Pane](images/DebugWindow_MockRepository.png)
+
+
+## Debug View
+
+__Debug View__ is an API can be used only while debugging your test methods to provide you with more information about their execution. To enable it, place a breakpoint at the start of the inspected test and run the debugger. When the breakpoint is hit, open the Watch window and add the __Debug View__ by writing: *DebugView.[property_name]* under the Name column. The properties you can use are:
 
 * __CurrentState__
 * __FullTrace__
@@ -27,7 +51,7 @@ At first the fields will be empty. The information in them will be populated ste
 ![Debug View Enabling The Debug View](images/DebugView_EnablingTheDebugView.png)
 
 
-## Inspecting the Current State
+### Inspecting the Current State
 
 The __CurrentState__ field lists all of the arrangements that have been made during the test execution, all of the invocations and the elevated mocking state. This field will be updated accordingly after every new arrangement or invocation in the test method. You can use the text visualizer to inspect the __CurrentState__ as shown below:
 ![Debug View Current State](images/DebugView_CurrentState.png)
@@ -38,7 +62,7 @@ In the Text Visualizer you will be able to see:
 * __Invocations__ - Shows all invocations with their arguments types and values. Another thing you can see is how many times certain invocation has been executed. 
 
 
-## Tracing the Test Execution
+### Tracing the Test Execution
 
 Tracing your test method gives more details about the intercepted invocations order. The JustMock __Debug View__ gathers information about all intercepted calls. It shows their stack traces, matching arguments, the chosen arrangement, calls made so far and the return value (for functions). In addition, when tracing is enabled, the debugger prints the tracing log in the Output window.
 
@@ -88,26 +112,3 @@ As the logs can be rather long, you can copy them from the Visual Studio's Text 
 
 ![Debug View Full Trace Text Editor View](images/DebugView_FullTraceTextEditorView.png)
 
-## Debug Window
-
-JustMock extension for Visual Studio 2017 (and above) makes mock debugging even more convenient by adding tool window for visualizing trace messages and arranged method mocks. It can be opened from main menu __View > Other Windows > JustMock Debug Window__ or extension menu - __JustMock > Debug Window > Show__. There is also an option to enable or disable debug window by using the corresponding command in the extension menu.
-
-![Debug Window Menu](images/DebugWindow_Menu.png)
-
-> **Important**
->
->Enabling or disabling the debug window will be persisted and will be applied not only on the current instance of Visual Studio but also on all future ones.
-
-The debug window consist of two panes which are active only while debugging:
-
-* __Debug Trace__
-
-This pane shows the same content as Full Trace, but it does not required any explicit activation. The sample output produced by the sample unit test looks as following:
-
-![Debug Window Debug Trace Pane](images/DebugWindow_DebugTrace.png)
-
-* __Mock Repository__
-
-The pane shows basic information about particular method mock like name, declaring type and its invocations. The test method sample has the following repository view:
-
-![Debug Window Mock Repository Pane](images/DebugWindow_MockRepository.png)
