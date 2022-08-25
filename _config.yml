@@ -8,47 +8,36 @@ navigation:
     getting-started:
         title: Getting Started
         position: 1
-        
     getting-started/api-basics:
         title: JustMock API Basics
-        position: 4          
-        
+        position: 4
     basic-usage:
         title: Basic Mocking
-        position: 3   
-        
+        position: 3
     basic-usage/mock-behaviors:
         title: Mock Behaviors
         position: 2
-        
     basic-usage/mock:
         title: Mock
-        position: 3    
-        
+        position: 3
     advanced-usage:
         title: Advanced Usage
-        position: 4    
-        
+        position: 4
     scenarios:
         title: Scenarios
-        position: 5
-
+        position: 6
     integration:
         title: Integrations
-        position: 6
-
+        position: 7
     integration/continuous-integration:
         title: Continuous Integration
-        position: 3
-    
+        position: 3    
     integration/continuous-integration/tfs-azure:
         title: TFS and Azure Pipelines
         position: 1
-
     integration/code-coverage:
         title: Code Coverage
-        position: 4
-    
+        position: 4   
 
         
 ## The application virtual path
