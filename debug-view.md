@@ -2,7 +2,7 @@
 title: Debugging Tests
 page_title: Debugging Tests | JustMock Documentation
 description: Debug View
-previous_url: /basic-usage/debug-view.html
+previous_url: /basic-usage/debug-view
 slug: justmock/basic-usage/debug-view
 tags: debug,view,troubleshoot,test,trace
 published: True
