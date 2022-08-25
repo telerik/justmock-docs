@@ -2,7 +2,7 @@
 title: Debugging Tests
 page_title: Debugging Tests | JustMock Documentation
 description: Debug View
-previous_url: /basic-usage-debug-view.html
+previous_url: /basic-usage/debug-view.html
 slug: justmock/basic-usage/debug-view
 tags: debug,view,troubleshoot,test,trace
 published: True
@@ -27,20 +27,20 @@ The debug window consist of two panes which are active only while debugging:
 
 * __Debug Trace__
 
-This pane shows information about all the intercepted invocations in the test method. A sample output produced by sample unit test looks as following:
+	This pane shows information about all the intercepted invocations in the test method. A sample output produced by sample unit test looks as following:
 
-![Debug Window Debug Trace Pane](images/DebugWindow_DebugTrace.png)
+	![Debug Window Debug Trace Pane](images/DebugWindow_DebugTrace.png)
 
 * __Mock Repository__
 
-The pane shows basic information about particular method mock like name, declaring type and its invocations. The test method sample has the following repository view:
+	The pane shows basic information about particular method mock like name, declaring type and its invocations. The test method sample has the following repository view:
 
-![Debug Window Mock Repository Pane](images/DebugWindow_MockRepository.png)
+	![Debug Window Mock Repository Pane](images/DebugWindow_MockRepository.png)
 
 
 ## Debug View
 
-__Debug View__ is an API can be used only while debugging your test methods to provide you with more information about their execution. To enable it, place a breakpoint at the start of the inspected test and run the debugger. When the breakpoint is hit, open the Watch window and add the __Debug View__ by writing: *DebugView.[property_name]* under the Name column. The properties you can use are:
+__Debug View__ is an API that can be used only while debugging your test methods to provide you with more information about their execution. To enable it, place a breakpoint at the start of the inspected test and run the debugger. When the breakpoint is hit, open the Watch window and add the __Debug View__ by writing: *DebugView.[property_name]* under the Name column. The properties you can use are:
 
 * __CurrentState__
 * __FullTrace__
