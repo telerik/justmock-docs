@@ -6,7 +6,7 @@ previous_url: /basic-usage-mock-throws.html
 slug: justmock/basic-usage/mock/throws
 tags: throws
 published: True
-position: 8
+position: 9
 ---
 
 # Throws

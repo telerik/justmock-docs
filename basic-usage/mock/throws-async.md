@@ -6,7 +6,7 @@ previous_url: /basic-usage-mock-throws-async.html
 slug: justmock/basic-usage/mock/throws-async
 tags: throws,async
 published: True
-position: 9
+position: 10
 ---
 
 # Throws Async
