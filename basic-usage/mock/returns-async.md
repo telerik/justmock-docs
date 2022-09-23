@@ -22,7 +22,7 @@ We will be using the following interface for the examples:
   {{region ReturnAsync#ITaskAsync}}
     public interface ITaskAsync
     {
-        public async Task<int> AsyncExecute(int value);
+        Task<int> AsyncExecute(int value);
     }
   {{endregion}}
 
