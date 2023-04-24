@@ -270,23 +270,6 @@ With `Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);` we setup that *a
 
 
 Once we set the M:Telerik.JustMock.Behavior to `Strict`, only calls setup through arrange are mocked. Other calls will throw a `MockException`.
-        
-Follows an example of mocking static method in F#:
-
-  #### __[F#]__
-
-  {{region StaticMocking#SetupStaticStrictMode}}
-    [<Test()>]
-		member this.ShouldMockStaticCall() =  
-	
-		Mock.SetupStatic<Foo>()
-	
-		Mock.Arrange(fun ignore -> Foo.EchoStatic()).Returns(1);
-	
-		Assert.AreEqual(1, Foo.EchoStatic())
-  {{endregion}}
-
-The static `EchoStatic` method is arranged to return `1`.
 
 ## Mocking Static Property Get
 

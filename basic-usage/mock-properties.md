@@ -82,25 +82,6 @@ Let's consider the following example:
 
 Here we test that a call to `foo.Value` property returns the value we arranged.
 
-Follows an example, showing mocking property in F#:
-  
-#### __[F#] Example 1: Mock getter__
-
-{{region MockingProperties#ShouldBeAbleToReturnForProperty}}
-
-	[<Test()>]
-	member this.ShouldMockGetMemberThroughExpression() =
-	
-		let monkey = Mock.Create<IMonkey>()
-		
-		Mock.Arrange(monkey, fun ignore -> monkey.Name).Returns("Spike");  
-		
-		Assert.AreEqual(monkey.Name, "Spike")
-{{endregion}}
-
-
-In the arrange section we change the behavior of the Name property get to specify that a call to `monkey.Name` should return "Spike".
-
 ## Property Setter
 
 The set operation can be mocked for both indexers and normal properties. Set operations are mocked using a special set entry point which is `Mock.ArrangeSet(lambda)`.
