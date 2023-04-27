@@ -141,24 +141,6 @@ Set up a call to a final method and assert its return value.
 
 Here we setup that a call to the final `foo.Echo` method with any `int` argument should return 10.
 
-Here is the same example in F#:
-
-
-  #### __[F#]__
-
-  {{region FinalMocking#FinalMethodSetup}}
-    [<Test()>]
-		member this.ShouldMockFinalMember() =  
-	
-		let foo = Mock.Create<Foo>()
-	
-		Mock.Arrange(foo, fun foo -> foo.Echo(Arg.AnyInt)).Returns(10);
-	
-		let ret = foo.Echo(1)
-	
-		Assert.AreEqual(10, ret)
-  {{endregion}}
-
 ## Assert Property Get
 
 Set up a call to a final property and assert its return value.

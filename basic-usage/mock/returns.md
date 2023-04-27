@@ -201,25 +201,6 @@ The following example mocks the `Execute` method so that it returns its second a
     End Sub
   {{endregion}}
 
-Follows an example, showing mocking method in F#:
-
-  #### __[F#]__
-
-  {{region Returns#AssertCallWithMatcherAndReturn}}
-    [<Test()>]
-	member this.ShouldMockMethodCallsWithReturn() =
-
-		let monkey = Mock.Create<IMonkey>()
-	
-		Mock.Arrange(monkey, fun ignore -> monkey.Echo()).Returns(10).MustBeCalled()  
-	
-		let result = monkey.Echo()
-	
-		Mock.Assert(monkey)
-  {{endregion}}
-
-We arrange the `Echo` method to return `10` and expect that it will actually be called in our test. After acting by calling the method, we verify the arrangement. Furthermore, you can assert that `result` has the value of `10`.
-
 > Refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic for more information about using matchers.
 
 ## Executing Mocked Method In Same Test Method
