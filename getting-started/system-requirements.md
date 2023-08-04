@@ -21,7 +21,7 @@ Telerik JustMock can be installed on any operating system that supports .NET 4.5
 | Windows | 10, 8, 8.1 |
 | Windows Server | 2019, 2016 |
 | Linux | Ubuntu 20.04 or later  |
-| macOs | 13.0  |
+| macOs | 13.0 or later |
 
 ## Development Environment for Windows
 
