@@ -41,21 +41,21 @@ In order to use JustMock the following additional development tools must be inst
 | ------------- | ---------------------------------- |
 | Visual Studio | 2022, 2019, 2017, 2015 |
 
-#### Detailed Instructions
+#### Configuration Instructions
 
 * [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
 * [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
-* [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
 
 ## Development Environment for Mac
 
 In order to use JustMock on macOS you must have .NET 5 or later installed.
 
-#### Detailed Instructions
+#### Configuration Instructions
 
 * [Mac Installation and Setup]({%slug justmock/getting-started/installation-instructions-mac%})
 
-
 ## See Also
 
+* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
+* [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
 * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)
