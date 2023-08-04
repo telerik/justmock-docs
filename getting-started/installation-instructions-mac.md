@@ -22,7 +22,7 @@ This topic outlines how to install [Telerik JustMock](https://www.telerik.com/pr
 
 	![Installer](images/Installer-Mac.png)
 
-1. The installer will deploy JustMocks binaries to **'/Library/JustMock/'** folder.
+1. The installer deploys JustMocks binaries to **'/Library/JustMock/'** folder.
 1. Next steps are to configure your IDE.
 
 >If you encounter issues during the installation process, submit a support ticket in our [support ticketing system](https://www.telerik.com/account/support-tickets) with as much details as possible and we will assist you. 
