@@ -1,9 +1,9 @@
 ---
-title: MacOs Installation and Setup 
-page_title: MacOs Installation and Setup | JustMock Documentation
+title: Mac Installation and Setup 
+page_title: Mac Installation and Setup | JustMock Documentation
 description: Learn how you can install the different versions of the Telerik JustMock framework.
 slug: justmock/getting-started/installation-instructions-mac
-tags: installation,instructions,macos
+tags: installation,instructions,mac
 published: True
 position: 7
 ---
@@ -48,11 +48,13 @@ To use the full spectrum of features you will need to set up Visual Studio for M
     | JUSTMOCK_INSTANCE        | 1 |
     | CORECLR_ENABLE_PROFILING | 1 |
     | CORECLR_PROFILER         | {B7ABE522-A68F-44F2-925B-81E7488E9EC0} |
-    | CORECLR_PROFILER_PATH    | /Library/JustMock/**<VERSION>**/Libraries/CodeWeaver/arm64/libTelerik.CodeWeaver.Profiler.dylib |
+    | CORECLR_PROFILER_PATH    | /Library/JustMock/**JM_VERSION**/Libraries/CodeWeaver/arm64/libTelerik.CodeWeaver.Profiler.dylib |
 
-    **_NOTE:_** Replace __**<VERSION>**__ with JustMock version you have downloaded.
+    **_NOTE:_** Replace **JM_VERSION** with JustMock version you have downloaded.
 
     Configure **Available for** to be __**All solutions**__
+
+    ![CustomMode](images/Custom-Mode-Mac.png.png)    
 
 1. Now you can debug your test by running them with the newly created mode.
     ![EditCustomMode](images/Run-Debug-Mode-Mac.png)
