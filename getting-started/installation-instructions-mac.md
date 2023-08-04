@@ -15,8 +15,8 @@ This topic outlines how to install [Telerik JustMock](https://www.telerik.com/pr
 ### Installing JustMock from Pkg File
 
 1. Download the JustMock installer from www.telerik.com:
-	* If this is your first time here and you want to try JustMock, download the trial installer file from here: [Download JustMock](https://www.telerik.com/account/downloads/product-download?product=JUSTMOCK). Keep in mind that this will require to either log in or create a new Telerik account.
-	* Note that there are separate installers for x64 and arm64 platforms. Chose the one corresponding to your device system architecture.
+	* If this is your first time here and you want to try JustMock, download the trial installer file from here: [Download JustMock](https://www.telerik.com/account/downloads/product-download?product=JUSTMOCK). Keep in mind that this will require you to either log in or create a new Telerik account.
+	* Note that there are separate installers for x64 and arm64 platforms. Choose the one corresponding to your device system architecture.
 
 1. Run the installer and follow the steps.
 
@@ -32,16 +32,16 @@ This topic outlines how to install [Telerik JustMock](https://www.telerik.com/pr
 To use the full spectrum of features you will need to set up Visual Studio for Mac to load JustMock profiler when tests are executed.
 
 1. Open Visual Studio for Mac and create a unit test project.
-1. Open **Tests** tab. Usually it is located in the right side panel bar.
+1. Open **Tests** tab. Usually it is located in the right-side panel bar.
 1. Right-click the root node and open **Run Test With** > **Edit Custom Modes...** menu.
 
 	![EditCustomMode](images/Edit-Custom-Modes-Mac.png)
 
 1. Click **Add** to create new mode.
 
-    Configre **Execution Mode** to be __**.Net Core Debugger**__
+    Configure **Execution Mode** to be __**.Net Core Debugger**__
 
-    Add following **Environment Varibales**:
+    Add following **Environment Variables**:
 
     |                          |   |
     |--------------------------|:--|
@@ -52,9 +52,9 @@ To use the full spectrum of features you will need to set up Visual Studio for M
 
     **_NOTE:_** Replace **JM_VERSION** with JustMock version you have downloaded.
 
-    Configure **Available for** to be __**All solutions**__
+    Configure **Available for** to be __**All solutions**__.
 
-    ![CustomMode](images/Custom-Mode-Mac.png.png)    
+    ![CustomMode](images/Custom-Mode-Mac.png)    
 
 1. Now you can debug your test by running them with the newly created mode.
     ![EditCustomMode](images/Run-Debug-Mode-Mac.png)
@@ -62,11 +62,6 @@ To use the full spectrum of features you will need to set up Visual Studio for M
 **_NOTE:_** If you want to run tests without debugger you can create similar mode as described above but set **Execution Mode** to __**Default**__.
 
 ## Resources and Documentation
-
-- **Examples**
-
-    The example projects provide a hands-on approach, unit testing JustMock itself. After installing JustMock, you can find the sample projects in the installation directory (by default C:\Program Files (x86)\Progress\Telerik JustMock). 
-
 
 - **Offline Documentation**
 
