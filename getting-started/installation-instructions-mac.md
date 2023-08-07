@@ -29,9 +29,18 @@ This topic outlines how to install [Telerik JustMock](https://www.telerik.com/pr
 
 ### Configure Visual Studio for Mac
 
-To use the full spectrum of features you will need to set up Visual Studio for Mac to load JustMock profiler when tests are executed.
+To use the full spectrum of features you will need to set up Visual Studio for Mac to reference Telerik.JustMock.dll assembly and to load JustMock profiler when tests are executed.
 
 1. Open Visual Studio for Mac and create a unit test project.
+1. Right-click on project dependencies and select 'Add Project Reference'
+
+	![AddProjectReference](images/Add-Project-Reference-Mac.png)
+
+1. Select '.NET Assembly' tab, go to **/Library/JustMock/JM_VERSION/Libraries/netcoreapp2.0** and select **Telerik.JustMock.dll**.
+    **_NOTE:_** Replace **JM_VERSION** with JustMock version you have downloaded.
+
+    ![ImportDll](images/Import-Dll-Mac.png)	
+
 1. Open **Tests** tab. Usually it is located in the right-side panel bar.
 1. Right-click the root node and open **Run Test With** > **Edit Custom Modes...** menu.
 
