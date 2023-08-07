@@ -37,6 +37,7 @@ To use the full spectrum of features you will need to set up Visual Studio for M
 	![AddProjectReference](images/Add-Project-Reference-Mac.png)
 
 1. Select '.NET Assembly' tab, go to **/Library/JustMock/JM_VERSION/Libraries/netcoreapp2.0** and select **Telerik.JustMock.dll**.
+    
     **_NOTE:_** Replace **JM_VERSION** with JustMock version you have downloaded.
 
     ![ImportDll](images/Import-Dll-Mac.png)	
