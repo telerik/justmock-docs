@@ -54,6 +54,14 @@ In order to use JustMock on macOS you must have .NET 5 or later installed.
 
 * [Mac Installation and Setup]({%slug justmock/getting-started/installation-instructions-mac%})
 
+## Runtime Environment for Ubuntu
+
+To run JustMock on Ubuntu you must have .NET 6 or later installed.
+
+#### Configuration Instructions
+
+* [Ubuntu Setup]({%slug justmock/getting-started/installation-instructions-ubuntu%})
+
 ## See Also
 
 * [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
