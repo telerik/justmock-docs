@@ -23,14 +23,18 @@ This topic outlines how to configure [Telerik JustMock](https://www.telerik.com/
 
 1. Open a terminal and execute following commands:
 
-    export JUSTMOCK_INSTANCE=1
-    export CORECLR_ENABLE_PROFILING=1
-    export CORECLR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}
-    export CORECLR_PROFILER_PATH="**<JM_FOLDER>**/CodeWeaver/64/libTelerik.CodeWeaver.Profiler.so"
+    **export JUSTMOCK_INSTANCE=1**
+
+    **export CORECLR_ENABLE_PROFILING=1**
+
+    **export CORECLR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}**
+
+    **export CORECLR_PROFILER_PATH="<JM_FOLDER>/CodeWeaver/64/libTelerik.CodeWeaver.Profiler.so"**
+
 
 1. Execute **dotnet test** command against the dll that contains your tests. If we assume the dll is named **Tests.dll** and you want to export the results to .trx file, then the command should look like:
 
-    dotnet test Tests.dll --logger trx
+    **dotnet test Tests.dll --logger trx**
 
 ## Resources and Documentation
 
