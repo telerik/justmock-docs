@@ -19,7 +19,7 @@ This topic outlines how to configure [Telerik JustMock](https://www.telerik.com/
 	* If this is your first time here and you want to try JustMock, download the trial installer file from here: [Download JustMock](https://www.telerik.com/account/downloads/product-download?product=JUSTMOCK). Keep in mind that this will require you to either log in or create a new Telerik account.
 	* Note that there are separate installers for x64 and arm64 platforms. Choose the one corresponding to your device system architecture.
 
-1. Unzip the archive to local folder. Lets assume the forlder is named **<JM_FOLDER>**.
+1. Unzip the archive to local folder. Lets assume the forlder is named **JM_FOLDER**.
 
 1. Open a terminal and execute following commands:
 
@@ -29,12 +29,14 @@ This topic outlines how to configure [Telerik JustMock](https://www.telerik.com/
 
     **export CORECLR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}**
 
-    **export CORECLR_PROFILER_PATH="<JM_FOLDER>/CodeWeaver/64/libTelerik.CodeWeaver.Profiler.so"**
+    **export CORECLR_PROFILER_PATH="JM_FOLDER/CodeWeaver/64/libTelerik.CodeWeaver.Profiler.so"**
+
 
 
 1. Execute **dotnet test** command against the dll that contains your tests. If we assume the dll is named **Tests.dll** and you want to export the results to .trx file, then the command should look like:
 
     **dotnet test Tests.dll --logger trx**
+
 
 ## Resources and Documentation
 
