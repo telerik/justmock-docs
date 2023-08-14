@@ -582,6 +582,7 @@ As you can see in our sample setup above, the `Add` method accepts a parameter b
     End Sub
 {{endregion}}
 
+<!-- 
 ### Static Methods with ref and out Parameters
 
 You can test static private methods as well. They should be arranged in the same way as the non-static ones and the only difference you should have in mind is that the creation of the PrivateAccessor object should be implemented using the `PrivateAccessor.ForType` method.
@@ -748,7 +749,8 @@ The following examples demonstrate how you can test its methods.
         ' It is stored as the first item of the values array as it is the first argument in the method signature. 
         Assert.AreEqual(8, values(0))
     End Sub
-{{endregion}}
+{{endregion}} 
+-->
 
 ## Private Async Methods
 
@@ -780,7 +782,7 @@ Invoking private async methods is also not an issue for the **PrivateAccessor** 
     End Class
 {{endregion}}
 
-#### [C#] Example 12: Arrange and execute private async method
+#### [C#] Example 10: Arrange and execute private async method
 
 {{region PrivateAccessor#TestMethodWithAnyOutParameter}}
 
@@ -791,7 +793,7 @@ Invoking private async methods is also not an issue for the **PrivateAccessor** 
         var calculator = new Calculator();
     
         // Arrange that the PerformTimeConsumingCalculation method must be called at least once during the test execution with any int value for its parameter.
-        Mock.NonPublic.Arrange<Task<int>>(calculator, "PerformTimeConsumingCalculation", Arg.Expr.IsAny<int>()).MustBeCalled();
+        Mock.NonPublic.Arrange<Task<int>>(calculator, "PerformTimeConsumingCalculation", Arg.Expr.IsAny<int>()).CallOriginal().MustBeCalled();
     
         PrivateAccessor privateAccessor = new PrivateAccessor(calculator);
     
@@ -808,7 +810,7 @@ Invoking private async methods is also not an issue for the **PrivateAccessor** 
 
 {{endregion}}
 
-#### [VB] Example 12: Arrange and execute private async method
+#### [VB] Example 10: Arrange and execute private async method
 
 {{region PrivateAccessor#TestMethodWithAnyOutParameter}}
 
@@ -818,7 +820,7 @@ Invoking private async methods is also not an issue for the **PrivateAccessor** 
         Dim calculator = New Calculator()
         
         ' Arrange that the PerformTimeConsumingCalculation method must be called at least once during the test execution with any int value for its parameter.
-        Mock.NonPublic.Arrange(Of Task(Of Integer))(calculator, "PerformTimeConsumingCalculation", Arg.Expr.IsAny(Of Integer)()).MustBeCalled()
+        Mock.NonPublic.Arrange(Of Task(Of Integer))(calculator, "PerformTimeConsumingCalculation", Arg.Expr.IsAny(Of Integer)()).CallOriginal().MustBeCalled()
        
         Dim privateAccessor As PrivateAccessor = New PrivateAccessor(calculator)
        
@@ -869,7 +871,7 @@ To get or set the value of a non-public property, you should:
     End Class
 {{endregion}}
 
-#### __[C#] Example 13: Set private property__
+#### __[C#] Example 11: Set private property__
 
 {{region PrivateAccessor#GetSetProperty}}
 
@@ -885,7 +887,7 @@ To get or set the value of a non-public property, you should:
     }
 {{endregion}}
 
-#### __[VB] Example 13: Set private property__
+#### __[VB] Example 11: Set private property__
 
 {{region PrivateAccessor#GetSetProperty}}
 
@@ -908,7 +910,7 @@ When you need to use a mocked instance:
 1.  Set the non-public property by giving its exact name
 1.  Finally, you can assert against its expected return value
 
-#### __[C#] Example 14: Arrange and get non-public property from a mocked instance__
+#### __[C#] Example 12: Arrange and get non-public property from a mocked instance__
 
 {{region PrivateAccessor#ShouldGetArrangedPrivateProperty}}
 
@@ -929,7 +931,7 @@ When you need to use a mocked instance:
     }
 {{endregion}}
 
-#### __[VB] Example 14: Arrange and get non-public property from a mocked instance__
+#### __[VB] Example 12: Arrange and get non-public property from a mocked instance__
 
 {{region PrivateAccessor#ShouldGetArrangedPrivateProperty}}
 
@@ -1003,7 +1005,7 @@ To show you the usage of this functionality, let's take the following class as a
 {{endregion}}
 
 
-#### [C#] Example 15: Arrange the getter of a private indexer
+#### [C#] Example 13: Arrange the getter of a private indexer
 
 {{region PrivateAccessor#CallPrivateIndexerGetter}}
 
@@ -1027,7 +1029,7 @@ To show you the usage of this functionality, let's take the following class as a
     }
 {{endregion}}
 
-#### [VB] Example 15: Arrange the getter of a private indexer
+#### [VB] Example 13: Arrange the getter of a private indexer
 
 {{region PrivateAccessor#CallPrivateIndexerGetter}}
 
@@ -1051,7 +1053,7 @@ To show you the usage of this functionality, let's take the following class as a
     End Sub
 {{endregion}}
 
-#### [C#] Example 16: Arrange the setter of a private indexer
+#### [C#] Example 14: Arrange the setter of a private indexer
 
 {{region PrivateAccessor#CallPrivateIndexerSetter}}
 
@@ -1077,7 +1079,7 @@ To show you the usage of this functionality, let's take the following class as a
 
 {{endregion}}
 
-#### [VB] Example 16: Arrange the setter of a private indexer
+#### [VB] Example 14: Arrange the setter of a private indexer
 
 {{region PrivateAccessor#CallPrivateIndexerSetter}}
 
@@ -1135,7 +1137,7 @@ To better illustrate the usage of this property consinder the following code sam
 
 And here is how a test for the ThrowsException method will look like:
  
-#### __[C#] Example 17: Throw the original exception using RethrowOriginalOnCallMethod__
+#### __[C#] Example 15: Throw the original exception using RethrowOriginalOnCallMethod__
 
 {{region PrivateAccessor#RethrowOriginalOnCallMethod_TestExample}}
 
@@ -1149,7 +1151,7 @@ And here is how a test for the ThrowsException method will look like:
     }
 {{endregion}}
 
-#### __[VB] Example 17: Throw the original exception using RethrowOriginalOnCallMethod__
+#### __[VB] Example 15: Throw the original exception using RethrowOriginalOnCallMethod__
 
 {{region PrivateAccessor#RethrowOriginalOnCallMethod_TestExample}}
 
