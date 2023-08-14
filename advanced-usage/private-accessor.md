@@ -408,7 +408,7 @@ And following is how you can arrange tests for the Sum method and its out parame
         var calculator = new Calculator();
     
         // Arrange that the Sum method must be called at least once during the test execution with any int values for its parameters.
-        Mock.NonPublic.Arrange(calculator, "Sum", Arg.Expr.IsAny<int>(), Arg.Expr.IsAny<int>(), Arg.Expr.Ref(Arg.Expr.IsAny<int>())).MustBeCalled();
+        Mock.NonPublic.Arrange(calculator, "Sum", Arg.Expr.IsAny<int>(), Arg.Expr.IsAny<int>(), Arg.Expr.Ref(Arg.Expr.IsAny<int>())).CallOriginal().MustBeCalled();
     
         PrivateAccessor privateAccessor = new PrivateAccessor(calculator);
     
@@ -437,7 +437,7 @@ And following is how you can arrange tests for the Sum method and its out parame
         Dim calculator = New Calculator()
         
         ' Arrange that the Sum method must be called at least once during the test execution with any int values for its parameters.
-        Mock.NonPublic.Arrange(calculator, "Sum", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of Integer)(), Arg.Expr.Ref(Arg.Expr.IsAny(Of Integer)())).MustBeCalled()
+        Mock.NonPublic.Arrange(calculator, "Sum", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of Integer)(), Arg.Expr.Ref(Arg.Expr.IsAny(Of Integer)())).CallOriginal().MustBeCalled()
         
         Dim privateAccessor As PrivateAccessor = New PrivateAccessor(calculator)
         
@@ -1091,7 +1091,7 @@ To show you the usage of this functionality, let's take the following class as a
         Dim collection = New MyCollection(array)
         
         ' Arrange that the setter for any collection item should skip its original implementation and set calledItemSet to true instead.
-        Mock.NonPublic.Arrange(collection, "set_Item", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of String)()).DoInstead(Function() (calledItemSet = True))
+        Mock.NonPublic.Arrange(collection, "set_Item", Arg.Expr.IsAny(Of Integer)(), Arg.Expr.IsAny(Of String)()).DoInstead(Sub() calledItemSet = True)
         
         Dim privateAccessor As PrivateAccessor = New PrivateAccessor(collection)
         
