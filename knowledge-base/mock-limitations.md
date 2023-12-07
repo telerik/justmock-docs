@@ -10,7 +10,7 @@ position: 0
 
 # Mock Limitations
 
- Following types are integral part of .net runtime and cannot be mocked by JustMock profiler:
+Following types are integral part of .net runtime and cannot be mocked by JustMock profiler:
  - System.Reflection.MemberInfo
  - System.Reflection.MethodBase
  - System.Reflection.MethodInfo
@@ -19,7 +19,7 @@ position: 0
  - System.Reflection.PropertyInfo
  - System.Reflection.EventInfo
  - System.WeakReference
- - System.WeakReference
+ - System.WeakReference<T>
  - System.IntPtr
  - System.Runtime.CompilerServices.CastHelpers
  - System.CannotUnloadAppDomainException
