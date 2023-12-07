@@ -3,7 +3,7 @@ title: Mock Limitations
 page_title: Mock Limitations | JustMock Documentation
 description: Types that cannot be mocked with JustMock
 slug: justmock/knoledgebase/limitations
-tags: knoledgebase, limitations
+tags: knowledgebase, limitations
 published: True
 position: 0
 ---
