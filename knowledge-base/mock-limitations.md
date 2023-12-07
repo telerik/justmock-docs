@@ -10,7 +10,7 @@ position: 0
 
 # Mock Limitations
 
-The mocking framework strongly relies on some system types, while others are integral part of the .NET runtime so following types cannot be mocked by the JustMock profiler:
+The mocking framework strongly relies on some system types, while others are integral part of the .NET runtime, so following types cannot be mocked by the JustMock profiler:
  - System.Reflection.MemberInfo
  - System.Reflection.MethodBase
  - System.Reflection.MethodInfo
