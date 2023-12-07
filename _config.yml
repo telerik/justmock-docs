@@ -37,7 +37,10 @@ navigation:
         position: 1
     integration/code-coverage:
         title: Code Coverage
-        position: 4   
+        position: 4
+    knowledge-base:
+        title: Knowledge Base
+        position: 8       
 
         
 ## The application virtual path
