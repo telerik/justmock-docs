@@ -9,9 +9,32 @@ position: 3
 previous_url: /integration-justmock-console-dotnet-tool, /integration-justmock-console-dotnet-tool.html
 ---
 
-# Installing and using JustMock Console .NET Tool
+# Description
 
-To install JustMock Console tool, you need to have the .NET SDK installed on your machine. Once you have the SDK, you can use the following command to install dotnet tool:
+JustMock Console has integration with [.NET Tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools) infrastructure. The tool is packed as nuget package (Telerik.JustMock.Console.<version>.nupkg
+), can be downloaded and installed on client machine using 'dotnet tool' command, and later can be invoked using 'dotnet justmock-console' command.
+
+We recommend using this flavor of JustMock console when working with CI/CD since it provides a standardized way to provision and run tests that require advanced features of JustMock.
+
+# Prerequisites
+
+To use the tool you need to have the .NET SDK installed on your machine and [Telerik NuGet](https://nuget.telerik.com/v3/index.json) feed properly configured as a package source.
+
+You can check current nuget sources with following command:
+
+```bat
+dotnet nuget list source
+```
+
+If [Telerik NuGet](https://nuget.telerik.com/v3/index.json) feed is not present in the list you can add it using following command:
+
+```bat
+dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik Nuget"
+```
+
+# Installing JustMock Console
+
+To install JustMock Console tool, you can use the following command:
 
 ```bat
 dotnet tool install --global Telerik.JustMock.Console [<version>]
@@ -19,40 +42,32 @@ dotnet tool install --global Telerik.JustMock.Console [<version>]
 
 The ***--global*** option specifies that the tool will be installed globally, meaning that it will be available for all users and projects on your machine. You can also install a tool locally for a specific project by using the ***--local*** option and specifying the project directory. Optionally you can supply a ***\<version\>***, this way you can choose a specific version for installation instead of the latest one. 
 
-> **Tip**
->
-> Before installing the JustMock Console tool ensure that [Telerik NuGet](https://nuget.telerik.com/v3/index.json) feed is properly configured as a package source, the command ***dotnet nuget list source*** can be used to list currently configured sources.
+# Using JustMock Console
+
+To use JustMock Console tool, you can simply invoke it by running 'dotnet justmock-console' from any command-line prompt.
+
+Here is an example for Linux:
+
+```bash
+dotnet justmock-console runadvanced -p "/full/path/to/libTelerik.CodeWeaver.Profiler.so" -c "dotnet" -a "test \"/path/to/JustMock.Tests\""
+```
+
+This will provision JustMock by using the profiler located in "/full/path/to/libTelerik.CodeWeaver.Profiler.so", then will build and run all tests located in "/path/to/JustMock.Tests".
+
+
+JustMock Console also provides a convenient way to enable integration with 3rd party profilers.
+Here is an example how to run tests and collect coverage with [dotnet-coverage](https://learn.microsoft.com/en-us/dotnet/core/additional-tools/dotnet-coverage):
+
+```bash
+dotnet dotnet-coverage collect dotnet justmock-console runadvanced -p \"/full/path/to/libTelerik.CodeWeaver.Profiler.so\" -l -c \"dotnet\" -a \"test --nobuild\"
+```
+
+This will provision JustMock by using the profiler located in "/full/path/to/libTelerik.CodeWeaver.Profiler.so", will build, run and analize code coverage for all tests located in "/path/to/JustMock.Tests".
+
+# Uninstalling JustMock Console
 
 To uninstall the tool, you can use the following command:
 
 ```bat
 dotnet tool uninstall --global Telerik.JustMock.Console
 ```
-
-This will remove the tool from your global tools directory. To uninstall a local tool, you can use the ***--local*** option and the project directory.
-
-To use JustMock Console tool, you can simply invoke it by its name from any command-line prompt.
-
-> **Tip**
->
-> You can use the **dotnet tool list** command to see all the tools that are installed on your machine, either globally or locally.
-
-# Installation free profiling
-
-JustMock Console .NET tool can be installed on supported platforms, so installation-free profiling is the preferred and commonly used approach. That requires at least the default profiler path command line option to be supplied.
-
-Here is an example for Linux:
-
-```bash
-justmock-console runadvanced -p "/full/path/to/libTelerik.CodeWeaver.Profiler.so" -c "dotnet" -a "test \"/path/to/JustMock.Tests\""
-```
-
-This will build all test projects and run all tests in elevated mode placed under the specific directory.
-
-JustMock Console also provides a convenient way to enable integration with 3rd party profilers:
-
-```bash
-dotnet dotnet-coverage collect dotnet justmock-console runadvanced -p \"/full/path/to/libTelerik.CodeWeaver.Profiler.so\" -l -c \"dotnet\" -a \"test --nobuild\"
-```
-
-The command line will run the tests and collect coverage with [dotnet-coverage](https://learn.microsoft.com/en-us/dotnet/core/additional-tools/dotnet-coverage)

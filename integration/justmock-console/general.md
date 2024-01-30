@@ -13,11 +13,11 @@ previous_url: /integration-justmock-console-general, /integration-justmock-conso
 
 JustMock Console is a command line tool for running tests using JustMock advanced features. It helps you run tests independently of the unit testing framework and integrate with other profilers loaded upon test execution.
 
-Depending on use case the tool can be used in two different ways:
+Depending on use case the tool can be distributed and used in two different ways:
 
- * [Command Line Tool for Windows]({%slug justmock/integration/justmock-console/windows%})
+ * [Command Line Tool for Windows]({%slug justmock/integration/justmock-console/windows%}). A standalone console application that is built for Wiindows only. In this flavour the application needs to be manually distrubited and then invoked as regular CLI application.
 
- * [.NET Tool]({%slug justmock/integration/justmock-console/dotnet-tool%})
+ * [.NET Tool]({%slug justmock/integration/justmock-console/dotnet-tool%}). Cross platform version of the tool that is integrated with .NET tools infrastructure. In this flavor the tool is distributed as a nuget package using **dotnet tool** command and can be invoked by using **dotnet** command.
 
 # Command Line options
 
@@ -25,7 +25,8 @@ The command line reference is common for Windows Command Line and .NET tools
 
 JustMock Console command has the following format:
 
-Telerik.JustMock.Console | justmock-console [verb] \<options\>
+**Telerik.JustMock.Console | justmock-console [verb] \<options\>**
+
 
 The current version of JustMock Console contains just a single verb (**runadvanced**) that can be omitted, but it is recommended to include the verb when using the tool. This way it will be easier to adopt new versions, that may have more verbs and functionality. Here are the command line options related to **runadvanced** verb:
 
