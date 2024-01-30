@@ -58,3 +58,7 @@ The same thing is applicable for .NET CLI as well.
 ```bat
 Telerik.JustMock.Console runadvanced --profiler-path-32 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --profiler-path-64 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\64\Telerik.CodeWeaver.Profiler.dll" --command "dotnet" --command-args "vstest \"C:\full\path\to\JustMock.Tests.dll\""
 ```
+
+# Command line options
+
+The full list of JustMock Console command line options can be found <a href="justmock/integration/justmock-console/general#command-line-options" target="_blank">here</a>.
