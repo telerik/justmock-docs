@@ -67,7 +67,7 @@ This will provision JustMock by using the profiler located in "/full/path/to/lib
 
 ## Command line options
 
-The full list of JustMock Console command line options can be found <a href="justmock/integration/justmock-console/general#command-line-options" target="_blank">here</a>.
+The full list of JustMock Console command line options can be found <a href="/justmock/integration/justmock-console/general#command-line-options" target="_blank">here</a>.
 
 
 # Uninstalling JustMock Console
