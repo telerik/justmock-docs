@@ -61,4 +61,4 @@ Telerik.JustMock.Console runadvanced --profiler-path-32 "C:\Program Files (x86)\
 
 # Command line options
 
-The full list of JustMock Console command line options can be found <a href="/justmock/integration/justmock-console/general#command-line-options" target="_blank">here</a>.
+The full list of JustMock Console command line options can be found <a href="/integration/justmock-console/general#command-line-options" target="_blank">here</a>.
