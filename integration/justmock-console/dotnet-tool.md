@@ -11,7 +11,7 @@ previous_url: /integration-justmock-console-dotnet-tool, /integration-justmock-c
 
 # Description
 
-JustMock Console has integration with the [.NET Tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools) infrastructure. The tool is packed as a NuGet package (Telerik.JustMock.Console.\<version\>.nupkg
+JustMock Console is integrated with the [.NET Tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools) infrastructure. The tool is packed as a NuGet package (Telerik.JustMock.Console.\<version\>.nupkg
 ), can be downloaded and installed on a client machine using the 'dotnet tool' command, and later can be invoked using the 'justmock-console' command.
 
 We recommend using this flavor of JustMock Console when working with CI/CD since it provides a standardized way of provisioning and running tests that require JustMock's advanced features.
