@@ -17,7 +17,7 @@ Depending on the use case the tool can be distributed and used in two different 
 
  * [Command Line Tool for Windows]({%slug justmock/integration/justmock-console/windows%}). A standalone console application that is built for Windows only. In this flavour the application needs to be manually distrubited and then invoked as a regular CLI application.
 
- * [.NET Tool]({%slug justmock/integration/justmock-console/dotnet-tool%}). A cross platform version of the tool that is integrated with the .NET tools infrastructure. In this flavor the tool is distributed as a NuGet package and can be invoked by using **dotnet** command.
+ * [.NET Tool]({%slug justmock/integration/justmock-console/dotnet-tool%}). A cross-platform version of the tool that is integrated with the .NET tools infrastructure. In this flavor the tool can be distributed using **dotnet tool** command and can be invoked by using **justmock-console** command.
 
 # Command Line options
 

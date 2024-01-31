@@ -12,7 +12,7 @@ previous_url: /integration-justmock-console-dotnet-tool, /integration-justmock-c
 # Description
 
 JustMock Console has integration with the [.NET Tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools) infrastructure. The tool is packed as a NuGet package (Telerik.JustMock.Console.\<version\>.nupkg
-), can be downloaded and installed on a client machine using the 'dotnet tool' command, and later can be invoked using the 'dotnet justmock-console' command.
+), can be downloaded and installed on a client machine using the 'dotnet tool' command, and later can be invoked using the 'justmock-console' command.
 
 We recommend using this flavor of JustMock Console when working with CI/CD since it provides a standardized way of provisioning and running tests that require JustMock's advanced features.
 
@@ -29,8 +29,11 @@ dotnet nuget list source
 If the [Telerik NuGet](https://nuget.telerik.com/v3/index.json) feed is not present in the list you can add it using following command:
 
 ```bat
-dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik Nuget"
+dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik NuGet" --username "api-key" --password <TELERIK_NUGET_API_KEY>
 ```
+
+Note: Check this [arcticle](https://docs.telerik.com/kendo-ui/intro/installation/nuget-keys) to learn more about Telerik NuGet API keys.
+
 
 # Installing JustMock Console
 
