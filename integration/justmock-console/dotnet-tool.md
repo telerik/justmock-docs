@@ -11,7 +11,7 @@ previous_url: /integration-justmock-console-dotnet-tool, /integration-justmock-c
 
 # Description
 
-JustMock Console has integration with the [.NET Tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools) infrastructure. The tool is packed as NuGet package (Telerik.JustMock.Console.<version>.nupkg
+JustMock Console has integration with the [.NET Tools](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools) infrastructure. The tool is packed as a NuGet package (Telerik.JustMock.Console.\<version\>.nupkg
 ), can be downloaded and installed on a client machine using the 'dotnet tool' command, and later can be invoked using the 'dotnet justmock-console' command.
 
 We recommend using this flavor of JustMock Console when working with CI/CD since it provides a standardized way of provisioning and running tests that require JustMock's advanced features.
@@ -49,7 +49,7 @@ To use JustMock Console tool, you can simply invoke it by running 'dotnet justmo
 Here is an example for Linux:
 
 ```bash
-dotnet justmock-console runadvanced -p "/full/path/to/libTelerik.CodeWeaver.Profiler.so" -c "dotnet" -a "test \"/path/to/JustMock.Tests\""
+justmock-console runadvanced -p "/full/path/to/libTelerik.CodeWeaver.Profiler.so" -c "dotnet" -a "test \"/path/to/JustMock.Tests\""
 ```
 
 This will provision JustMock by using the profiler located in "/full/path/to/libTelerik.CodeWeaver.Profiler.so", then will build and run all tests located in "/path/to/JustMock.Tests".
