@@ -32,7 +32,7 @@ If the [Telerik NuGet](https://nuget.telerik.com/v3/index.json) feed is not pres
 dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik NuGet" --username "api-key" --password <TELERIK_NUGET_API_KEY>
 ```
 
-Note: Check this [arcticle](https://docs.telerik.com/kendo-ui/intro/installation/nuget-keys) to learn more about Telerik NuGet API keys.
+Note: Check this [article](https://docs.telerik.com/kendo-ui/intro/installation/nuget-keys) to learn more about Telerik NuGet API keys.
 
 
 # Installing JustMock Console
