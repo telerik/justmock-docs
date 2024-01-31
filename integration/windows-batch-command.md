@@ -23,7 +23,7 @@ To operate, JustMock needs to have specific variables registered in the environm
 
 ### With JustMock Console
     
-The **JustMock Console** automatically prepares the environment so you can directly execute your tests and it is **the suggested approach** for running tests in console. For detailed instructions on how to use it, check the [JustMock Console]({%slug justmock/integration/justmock-console%}) topic.
+The **JustMock Console** automatically prepares the environment so you can directly execute your tests and it is **the suggested approach** for running tests in console. For detailed instructions on how to use it, check the [JustMock Console]({%slug justmock/integration/justmock-console/general%}) topic.
 
 ### Manually
 

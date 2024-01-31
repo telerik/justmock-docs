@@ -29,9 +29,12 @@ navigation:
     integration:
         title: Integrations
         position: 7
+    integration/justmock-console:
+        title: JustMock Console
+        position: 2
     integration/continuous-integration:
         title: Continuous Integration
-        position: 3    
+        position: 3
     integration/continuous-integration/tfs-azure:
         title: TFS and Azure Pipelines
         position: 1
@@ -40,9 +43,8 @@ navigation:
         position: 4
     knowledge-base:
         title: Knowledge Base
-        position: 8       
+        position: 8
 
-        
 ## The application virtual path
 baseurl: /devtools/justmock
 

@@ -16,7 +16,7 @@ This topic describes the approaches you can use to notify the CLR that there is 
 -	Installation that adds a registry record for the profiler
 -	Setting environment variables to define the path to the profiler and enable it
 
->If you have already registered the profiler, [JustMock Console]({%slug justmock/integration/justmock-console%}) can help you setting the variables and enable the profiler automatically for you when using the installation-free integration.
+>If you have already registered the profiler, [JustMock Console]({%slug justmock/integration/justmock-console/general%}) can help you setting the variables and enable the profiler automatically for you when using the installation-free integration.
 
 ## Installing JustMock
 
@@ -110,7 +110,7 @@ Once you have the profiler set, you will need to enable that profiler before run
 </tbody>
 </table>
 
->[JustMock Console]({%slug justmock/integration/justmock-console%}) can help you setting the variables and do that automatically for you.
+>[JustMock Console]({%slug justmock/integration/justmock-console/general%}) can help you setting the variables and do that automatically for you.
 
 ## Using the JustMock.Commercial NuGet Package
 
