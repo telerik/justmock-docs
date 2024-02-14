@@ -1,0 +1,5 @@
+apiRules:
+- exclude:
+    uidRegex: ^Telerik\.JustMock\.Core\.Castle.*
+- exclude:
+    uidRegex: ^Telerik\.JustMock\.AutoMock\.Ninject.*
