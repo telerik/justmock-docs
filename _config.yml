@@ -70,7 +70,7 @@ platform: justmock
 api_reference_url: "api/"
 
 
-ff-sheet-id: f22ac032-a3ef-411e-af2e-6202e27709be
+productCode: JUSTMOCK
 
 # The google services configuration
 google_tag_manager: GTM-6X92
