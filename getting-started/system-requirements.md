@@ -14,12 +14,12 @@ This topic describes the system requirements needed by __Telerik® JustMock__.
 
 ## Supported Operating Systems
 
-Telerik JustMock can be installed on any operating system that supports .NET 4.5 and above. The following list shows the supported OS:
+Telerik JustMock can be installed on any operating system that supports .NET Framework 4.7.2 or above, .NET Core 3.0 or above or .NET 5 or above. The following list shows the supported OS:
 
 | OS	  | Version |
 | ------- | --------|
-| Windows | 10, 8, 8.1 |
-| Windows Server | 2019, 2016 |
+| Windows | 10, 11 |
+| Windows Server | 2019, 2022 |
 | Ubuntu | 20.04 or later  |
 | macOS  | 13.0 or later |
 
@@ -29,17 +29,17 @@ In order to use JustMock the following additional development tools must be inst
 
 * .NET
 
-| Platform		 | Version						   |
-| -------------- | ------------------------------- |
-| .NET 	 | .NET 5, .NET 6  |
-| .NET Core 	 | .NET Core 3.0+, .NET Core 2.0+  |
-| .NET Framework | .NET 4.8, .NET 4.7+, .NET 4.6+, .NET 4.5+ |
+| Platform | Version |
+| -------- | ------- |
+| .NET 	 | .NET 5+, |
+| .NET Core 	 | .NET Core 3.0+, |
+| .NET Framework | .NET 4.7.2+ |
 
 * Microsoft Visual Studio - go to [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/) page to see the available download options.
 
-| IDE			| Version							 |
-| ------------- | ---------------------------------- |
-| Visual Studio | 2022, 2019, 2017, 2015 |
+| IDE | Version |
+| --- | ------- |
+| Visual Studio | 2019, 2022 |
 
 #### Configuration Instructions
 
