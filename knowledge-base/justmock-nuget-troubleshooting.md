@@ -10,7 +10,7 @@ res_type: kb
 
 ## Telerik NuGet Feed Troubleshooting
 
-This article summarizes the issues that may occur when you work with JustMock and the online [Telerik NuGet feed]({%slug justmock/getting-started/installation-instructions#installing-justmock-from-nuget-package%}), and their solutions.
+This article summarizes the issues that may occur when you work with JustMock and the online [Telerik NuGet feed]({%slug justmock/getting-started/installation-instructions%}#installing-justmock-from-nuget-package), and their solutions.
 
 Regardless of the cause for the issue, it is recommended that you start from the section on the commonly occurring issues.
 
