@@ -104,6 +104,6 @@ An attempt to use the [obsolete Telerik NuGet v2 feed](https://www.telerik.com/b
 
 `Failed to retrieve information about 'JustMock.Commercial' from remote source 'https://nuget.telerik.com/nuget/FindPackagesById()?id='JustMock.Commercial'&semVerLevel=2.0.0'.`
 
-The solution is to [use the Telerik NuGet v3 feed]({%slug justmock/getting-started/installation-instructions#installing-justmock-from-nuget-package%}).
+The solution is to [use the Telerik NuGet v3 feed]({%slug justmock/getting-started/installation-instructions%}#installing-justmock-from-nuget-package).
 
 Another possible reason for the same error is an incorrect NuGet feed URL.
