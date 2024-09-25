@@ -6,7 +6,7 @@ previous_url: /advanced-usage-sharepoint-mocking.html
 slug: justmock/advanced-usage/sharepoint-mocking
 tags: sharepoint,mocking
 published: True
-position: 19
+position: 18
 ---
 
 # SharePoint Mocking

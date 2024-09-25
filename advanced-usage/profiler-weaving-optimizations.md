@@ -6,7 +6,7 @@ previous_url: /advanced-usage-profiler-weaving-optimizations.html
 slug: justmock/advanced-usage/profiler-weaving-optimizations
 tags: weaving,profiler,performance, optimize
 published: True
-position: 23
+position: 22
 ---
 
 # Performance Optimizations

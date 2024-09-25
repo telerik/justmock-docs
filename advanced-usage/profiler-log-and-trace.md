@@ -6,7 +6,7 @@ previous_url: /advanced-usage-profiler-log-and-trace.html
 slug: justmock/advanced-usage/profiler-log-and-trace
 tags: log,trace,profiler
 published: True
-position: 22
+position: 21
 ---
 
 # Profiler Log And Trace
