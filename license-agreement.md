@@ -53,7 +53,6 @@ The following table shows the differences between the commercial and free versio
 |[SharePoint Mocking]({%slug justmock/advanced-usage/sharepoint-mocking%})| &#x2714; | - |
 |[Entity Framework Mocking]({%slug justmock/advanced-usage/entity-framework-mocking%})| &#x2714; | - |
 |[Mock Non-Abstract and Non-Virtual Classes or Members]({%slug justmock/advanced-usage/concrete-mocking%})| &#x2714; | Only non-abstract classes can be mocked. |
-|[Elevated Silverlight Mocking]({%slug justmock/advanced-usage/silverlight-mocking%})| &#x2714; | - |
 |[Sealed Mocking]({%slug justmock/advanced-usage/sealed-mocking%})| &#x2714; | - |
 |[Static Mocking]({%slug justmock/advanced-usage/static-mocking%})| &#x2714; | - |
 |[Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})| &#x2714; | - |
