@@ -6,7 +6,7 @@ previous_url: /advanced-usage-extension-methods-mocking.html
 slug: justmock/advanced-usage/extension-methods-mocking
 tags: extension,methods,mocking
 published: True
-position: 21
+position: 20
 ---
 
 # Extension Methods Mocking
