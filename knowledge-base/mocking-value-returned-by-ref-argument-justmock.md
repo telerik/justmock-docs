@@ -1,38 +1,67 @@
 ---
-title: How to Mock the Value Returned by a ByRef Argument in JustMock
-description: This article explains how to mock the value returned by a ByRef argument in JustMock. It provides step-by-step instructions and a code example.
+title: Mocking ByRef Arguments with Telerik JustMock
+description: Learn how to mock methods with ByRef arguments using Telerik JustMock, including setting up arrangements to overwrite the reference parameter's value.
 type: how-to
-page_title: Mocking the Value Returned by a ByRef Argument in JustMock
-slug: mocking-value-returned-by-ref-argument-justmock
-tags: justmock, mocking, ref argument, byref, how-to
+page_title: How to Mock ByRef Arguments in Methods with Telerik JustMock
+slug: mocking-byref-arguments-justmock
+tags: justmock, mocking, byref, arguments, unit-testing
 res_type: kb
+ticketid: 1642067
 ---
 
 ## Environment
 
-| Property | Value |
-| --- | --- |
 | Product | Progress® Telerik® JustMock |
+| ------- | --------------------------- |
 | Version | 2023.3.1011.155 |
 
 ## Description
+While attempting to mock a method that has a ByRef argument, the expectation is to have the ByRef argument receive a predefined value upon method execution. However, achieving this behavior might not be straightforward. This KB article demonstrates how to correctly mock a method with ByRef arguments using Telerik JustMock to ensure the ByRef parameter is overwritten as expected.
 
-I am trying to mock the value returned by a ByRef argument in JustMock. The documentation example for the `Matchers` page does not use `Arg.Ref`, which seems to be a mistake. The example is also irrelevant because the mock is based on an interface and there is no original behavior.
+Considering the following method under test:
 
-I have tried the following method under test:
+#### __[C#]__
+   
+    public class SomeDemoClass
+    {
+        public void SomeByRefParameter(string value, ref string @out)
+        {
+            out = "Nonsense";
+        }
+    }
 
-```vb
-Public Class SomeDemoClass
-    Public Sub SomeByRefParameter(value As String, ByRef out As String)
-        out = "Nonsense"
-    End Sub
-End Class
-```
+#### __[VB]__
+
+    Public Class SomeDemoClass
+        Public Sub SomeByRefParameter(value As String, ByRef out As String)
+            out = "Nonsense"
+        End Sub
+    End Class
+
 and the test:
 
-```vb
-<TestClass>
-Public Class UnitTest
+#### __[C#]__
+
+    [TestMethod]
+    public void ArgRefTest()
+    {
+        var classUnderTest = new SomeDemoClass();
+        string value = "Hello";
+        string expectedResult = "The value passed in parameter 'value' is 'Hello'";
+        string actualResult = null;
+
+        // Arrange
+        Mock.Arrange(() => classUnderTest.SomeByRefParameter(value, Arg.Ref(expectedResult).Value));
+
+        // Act
+        classUnderTest.SomeByRefParameter(value, actualResult);
+
+        // Assert
+        Assert.AreEqual(expectedResult, actualResult);
+    }
+
+### __[VB]__
+
     <TestMethod>
     Public Sub ArgRefTest()
         Dim classUnderTest = New SomeDemoClass()
@@ -49,21 +78,37 @@ Public Class UnitTest
         ' Assert
         Assert.AreEqual(expectedResult, actualResult)
     End Sub
-End Class
-```
-
-The expected result is that `actualResult` receives the value predefined in `expectedResult` when the method is called in the Act section. However, `actualResult` receives the original value instead.
-
-I need to know how to mock the value returned by the ByRef argument.
 
 ## Solution
+To mock a method that includes ByRef arguments and to ensure the ByRef parameter is appropriately overwritten, follow the steps outlined below. The key is to use the `DoInstead` arrangement clause effectively.
 
-To mock the value returned by a ByRef argument in JustMock, you can use the `DoInstead` arrangement clause. Here is an example code snippet:
+1. Use the `Mock.Arrange` method to set up the arrangement for the method. Utilize the `Arg.Ref` and `Arg.AnyString` matchers as needed to specify the conditions under which the arrangement applies.
 
-```vb
-<TestClass>
-Public Class UnitTest1
-    Friend Delegate Sub Overwrite(value As String, ByRef out As String)
+3. Within the `DoInstead` clause, specify the action that overwrites the ByRef argument with the desired value.
+
+Here is an example demonstrating how to apply these steps in a unit test with Telerik JustMock:
+
+#### __[C#]__
+
+    [TestMethod]
+    public void ArgRefTest()
+    {
+        var classUnderTest = new SomeDemoClass();
+        string value = "Hello";
+        string expectedResult = "The value passed in parameter 'value' is 'Hello'";
+        string actualResult = null;
+
+        // Arrange
+        Mock.Arrange(() => classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value))
+            .DoInstead((val, ref @out) => out = expectedResult);
+
+        // Act
+        classUnderTest.SomeByRefParameter(value, actualResult);
+
+        // Assert
+        Assert.AreEqual(expectedResult, actualResult);
+
+#### __[VB]__
 
     <TestMethod>
     Public Sub ArgRefTest()
@@ -73,8 +118,8 @@ Public Class UnitTest1
         Dim actualResult As String = Nothing
 
         ' Arrange
-        Dim overwrite As Overwrite = Sub(val, ByRef out) out = expectedResult
-        Mock.Arrange(Sub() classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value)).DoInstead(overwrite)
+        Mock.Arrange(Sub() classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value)) _
+            .DoInstead(Sub(val, ByRef out) out = expectedResult)
 
         ' Act
         classUnderTest.SomeByRefParameter(value, actualResult)
@@ -82,18 +127,10 @@ Public Class UnitTest1
         ' Assert
         Assert.AreEqual(expectedResult, actualResult)
     End Sub
-End Class
-```
 
-Please note that the value passed for the ByRef argument is used for matching, which determines whether to apply the arrangement or call the original code.
-
-## Notes
-
-- The example in the documentation will be fixed based on your feedback.
-- We appreciate your suggestion to add examples and downloadable code to the JustMock API documentation.
+In this code snippet, the `DoInstead` clause is used to overwrite the `ByRef` argument `out` with the `expectedResult` variable. The `Arg.Ref(Arg.AnyString).Value` matcher is employed to apply the arrangement regardless of the string value passed as an argument.
 
 ## See Also
 
-- [Matchers Documentation](https://docs.telerik.com/devtools/justmock/basic-usage/arranging-mocks/matchers)
-- [JustMock API](https://docs.telerik.com/devtools/justmock/api)
-
+- [Telerik JustMock Basic Usage - DoInstead](https://docs.telerik.com/devtools/justmock/basic-usage/mock/do-instead)
+- [Telerik JustMock Basic Usage - Using Matchers for ref Arguments (Arg.Ref())](https://docs.telerik.com/devtools/justmock/basic-usage/matchers#using-matchers-for-ref-arguments-argref)
