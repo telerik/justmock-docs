@@ -11,9 +11,9 @@ ticketid: 1642067
 
 ## Environment
 
-| Product | Progress® Telerik® JustMock |
+| Product | Version |
 | ------- | --------------------------- |
-| Version | 2023.3.1011.155 |
+| Progress® Telerik® JustMock | 2023.3.1011.155 |
 
 ## Description
 While attempting to mock a method that has a ByRef argument, the expectation is to have the ByRef argument receive a predefined value upon method execution. However, achieving this behavior might not be straightforward. This KB article demonstrates how to correctly mock a method with ByRef arguments using Telerik JustMock to ensure the ByRef parameter is overwritten as expected.
@@ -21,7 +21,9 @@ While attempting to mock a method that has a ByRef argument, the expectation is 
 Considering the following method under test:
 
 #### __[C#]__
-   
+
+{{region FixByRef#DemoClass}}
+
     public class SomeDemoClass
     {
         public void SomeByRefParameter(string value, ref string @out)
@@ -30,7 +32,11 @@ Considering the following method under test:
         }
     }
 
+{{endregion}}
+
 #### __[VB]__
+
+{{region FixByRef#DemoClass}}
 
     Public Class SomeDemoClass
         Public Sub SomeByRefParameter(value As String, ByRef out As String)
@@ -38,9 +44,13 @@ Considering the following method under test:
         End Sub
     End Class
 
+{{endregion}}
+
 and the test:
 
 #### __[C#]__
+
+{{region FixByRef#DemoTest}}
 
     [TestMethod]
     public void ArgRefTest()
@@ -60,8 +70,12 @@ and the test:
         Assert.AreEqual(expectedResult, actualResult);
     }
 
-### __[VB]__
+{{endregion}}
 
+#### __[VB]__
+
+{{region FixByRef#DemoTest}}
+  
     <TestMethod>
     Public Sub ArgRefTest()
         Dim classUnderTest = New SomeDemoClass()
@@ -79,6 +93,8 @@ and the test:
         Assert.AreEqual(expectedResult, actualResult)
     End Sub
 
+{{endregion}}
+
 ## Solution
 To mock a method that includes ByRef arguments and to ensure the ByRef parameter is appropriately overwritten, follow the steps outlined below. The key is to use the `DoInstead` arrangement clause effectively.
 
@@ -89,6 +105,8 @@ To mock a method that includes ByRef arguments and to ensure the ByRef parameter
 Here is an example demonstrating how to apply these steps in a unit test with Telerik JustMock:
 
 #### __[C#]__
+
+{{region FixByRef#SolutionTest}}
 
     [TestMethod]
     public void ArgRefTest()
@@ -107,9 +125,14 @@ Here is an example demonstrating how to apply these steps in a unit test with Te
 
         // Assert
         Assert.AreEqual(expectedResult, actualResult);
+    }
+
+{{endregion}}
 
 #### __[VB]__
 
+{{region FixByRef#SolutionTest}}
+ 
     <TestMethod>
     Public Sub ArgRefTest()
         Dim classUnderTest = New SomeDemoClass()
@@ -127,6 +150,8 @@ Here is an example demonstrating how to apply these steps in a unit test with Te
         ' Assert
         Assert.AreEqual(expectedResult, actualResult)
     End Sub
+
+{{endregion}}
 
 In this code snippet, the `DoInstead` clause is used to overwrite the `ByRef` argument `out` with the `expectedResult` variable. The `Arg.Ref(Arg.AnyString).Value` matcher is employed to apply the arrangement regardless of the string value passed as an argument.
 
