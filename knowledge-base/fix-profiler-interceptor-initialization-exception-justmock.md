@@ -11,18 +11,9 @@ ticketid: 1639876
 
 ## Environment
 
-<table>
-<tbody>
-<tr>
-<td>Product</td>
-<td>Progress® Telerik® JustMock</td>
-</tr>
-<tr>
-<td>Version</td>
-<td>2024.1.124.247</td>
-</tr>
-</tbody>
-</table>
+| Product | Version |
+| --- | --- |
+| Progress® Telerik® JustMock | 2024.1.124.247 |
 
 ## Description
 While using [JustMock](https://docs.telerik.com/devtools/justmock/introduction), an initialization exception is thrown with the message: "The type initializer for 'Telerik.JustMock.Core.ProfilerInterceptor' threw an exception." This issue indicates a version mismatch between the referenced `Telerik.JustMock.dll` and the `Telerik.CodeWeaver.Profiler.dll`.
