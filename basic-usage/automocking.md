@@ -27,12 +27,6 @@ The JustMock __MockingContainer__ uses the *Ninject* dependency injector to do t
 
 As *MockingContainer<T>* derives from *Ninject.StandardKernel*, you can configure it just as you would configure the Ninject dependency injector. Visit the [Ninject official page](https://www.ninject.org/) or the [Ninject wiki](https://github.com/ninject/ninject/wiki) in GitHub for further references.
 
-
-> You can also check these JustMock extensions:          
-> * [Mocking container that enables the composition of (heavyweight) MEF parts with mocked dependencies.](https://github.com/tailsu/Telerik.JustMock.Mef)
-> * [Mocking container that works through Unity to replace unregistered dependencies with mocks.](https://github.com/tailsu/Telerik.JustMock.Unity)
-
-
 ## Automocking Interfaces
 
 Assume that we have the following code, to be tested:
