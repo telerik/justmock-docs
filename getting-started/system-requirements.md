@@ -10,11 +10,11 @@ position: 1
 
 # System Requirements
 
-This topic describes the system requirements needed by __Telerik® JustMock__.
+This topic describes the system requirements needed by __Telerik JustMock__.
 
 ## Supported Operating Systems
 
-Telerik JustMock can be installed on any operating system that supports .NET Framework 4.7.2 or above, .NET Core 3.0 or above or .NET 5 or above. The following list shows the supported OS:
+The list below shows the operating systems supported by Telerik JustMock:
 
 | OS	  | Version |
 | ------- | --------|
@@ -23,47 +23,30 @@ Telerik JustMock can be installed on any operating system that supports .NET Fra
 | Ubuntu | 20.04 or later  |
 | macOS  | 13.0 or later |
 
-## Development Environment for Windows
+## Development Environment
 
-In order to use JustMock the following additional development tools must be installed beforehand:
+- To use **Telerik JustMock** on all supported operating systems, you must install a .NET SDK that is compatible with .NET Standard 2.1. On Windows, the product also supports legacy .NET Framework versions starting from 4.7.2 and above.
 
-* .NET
-
-| Platform | Version |
-| -------- | ------- |
-| .NET 	 | .NET 5+, |
-| .NET Core 	 | .NET Core 3.0+, |
+| Framework | Version |
+| --------- | ------- |
+| .NET | LTS/STS |
 | .NET Framework | .NET 4.7.2+ |
 
-* Microsoft Visual Studio - go to [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/) page to see the available download options.
+* On Windows, the installation of **Telerik JustMock** includes an extension for Microsoft Visual Studio. The supported versions are listed below. On other platforms, you can use your preferred IDE, but additional manual steps are required to run the tests.
 
 | IDE | Version |
 | --- | ------- |
 | Visual Studio | 2019, 2022 |
 
-#### Configuration Instructions
+## Next Steps
 
-* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
-* [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
-
-## Development Environment for Mac
-
-In order to use JustMock on macOS you must have .NET 5 or later installed.
-
-#### Configuration Instructions
-
-* [Mac Installation and Setup]({%slug justmock/getting-started/installation-instructions-mac%})
-
-## Runtime Environment for Ubuntu
-
-To run JustMock on Ubuntu you must have .NET 6 or later installed.
-
-#### Configuration Instructions
-
-* [Ubuntu Setup]({%slug justmock/getting-started/installation-instructions-ubuntu%})
+* Installation:
+    * [Windows]({%slug justmock/getting-started/installation/instructions-windows%})
+    * [macOS]({%slug justmock/getting-started/installation/instructions-macos%})
+    * [Ubuntu]({%slug justmock/getting-started/installation/instructions-ubuntu%})
+    * [Using NuGet package]({%slug justmock/getting-started/installation/instructions-nuget-package%})
 
 ## See Also
 
-* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
 * [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
 * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)

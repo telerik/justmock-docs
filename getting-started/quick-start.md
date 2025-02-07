@@ -6,14 +6,14 @@ previous_url: /getting-started-quick-start.html
 slug: justmock/getting-started/quick-start
 tags: quick,start
 published: False
-position: 4
+position: 5
 ---
 
 # Test Your Application with JustMock
 
 This topic will guide you through several simple steps to enable easier testing of your applications by using __Telerik® JustMock__. You will understand a simple principle called Arrange/Act/Assert and get familiar with core methods and properties from the framework, which are used in the most common testing scenarios.
 
->Make sure to go through [Installation and Setup]({%slug justmock/getting-started/installation-instructions%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. The [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) section contains basic examples that this article extends.
+>Make sure to go through [Installation on Windows]({%slug justmock/getting-started/installation/instructions-windows%}) and [Add JustMock in Your Test Project]({%slug justmock/getting-started/configuration/using-telerik-justmock-in-your-test-project%}) to setup your environment and project before proceeding further. The [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) section contains basic examples that this article extends.
 
 To illustrate the use of JustMock in the next examples, we will use a sample warehouse and a dependent order object. The warehouse holds inventories of different products. An order contains a product and a quantity. 
 

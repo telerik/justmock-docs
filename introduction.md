@@ -69,8 +69,13 @@ Unlike other mocking frameworks, JustMock lets you mock:
 
 To learn how to install and work with Telerik JustMock, visit the following resources:
 
-* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
-* [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project %})
+* [System Requirements]({%slug justmock/getting-started/system-requirements%})
+* Installation:
+	* [Windows]({%slug justmock/getting-started/installation/instructions-windows%})
+	* [macOS]({%slug justmock/getting-started/installation/instructions-macos%})
+	* [Ubuntu]({%slug justmock/getting-started/installation/instructions-ubuntu%})
+	* [Using NuGet package]({%slug justmock/getting-started/installation/instructions-nuget-package%})
+* [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/configuration/using-telerik-justmock-in-your-test-project %})
 * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
 ## Support Options
@@ -86,14 +91,10 @@ For any issues you might encounter while working with Telerik JustMock, use any 
 * [Learning Resources](https://www.telerik.com/support/justmock)
 
 ## Next Steps
-* [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
+
+* [System Requirements]({%slug justmock/getting-started/system-requirements%})
 
 ## See Also
 
- * [Installation and Setup]({%slug justmock/getting-started/installation-instructions%})
-
- * [Using Telerik JustMock in your test project]({%slug justmock/getting-started/using-telerik-justmock-in-your-test-project%})
-
- * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
- 
- * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)
+* [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
+* [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)
