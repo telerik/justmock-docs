@@ -9,6 +9,12 @@ res_type: kb
 ticketid: 1521224
 ---
 
+## Environment
+
+| Product | Version |
+| --- | --- |
+| Progress® Telerik® JustMock | 2021.2.511.1 |
+
 ## Description
 While using Progress® Telerik® JustMock, you might encounter an unexpected behavior where an assertion on a mock object incorrectly includes assertions for another mock object that is used as a return value in one of its arrangements. This can lead to confusion when assertions fail for the wrong reasons. 
 
@@ -16,12 +22,6 @@ This knowledge base article also answers the following questions:
 - How can I isolate mock assertions in JustMock?
 - What is the correct way to set up mock dependencies in JustMock?
 - How do I ensure accurate assertion behavior for mock objects in JustMock?
-
-## Environment
-
-| Product | Version |
-| --- | --- |
-| Progress® Telerik® JustMock | 2021.2.511.1 |
 
 ## Solution
 The behavior observed is due to JustMock's feature that automatically creates dependencies between mocks when one mock is returned as a result of another mock's arrangement. This can inadvertently cause assertions to validate all related mocks, not just the one explicitly specified. 
