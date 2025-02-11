@@ -8,8 +8,14 @@ navigation:
     getting-started:
         title: Getting Started
         position: 1
+    getting-started/installation:
+        title: Installation
+        position: 2
+    getting-started/configuration:
+        title: Configuration
+        position: 3
     getting-started/api-basics:
-        title: JustMock API Basics
+        title: API Basics
         position: 4
     basic-usage:
         title: Basic Mocking

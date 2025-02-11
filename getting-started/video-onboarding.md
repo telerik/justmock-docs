@@ -1,6 +1,6 @@
 ---
 title: Video Onboarding
-page_title: Video Onboarding
+page_title: Video Onboarding | JustMock Documentation
 description: "Get started with JustMock by following a step-by-step video tutorial that will take you through the installation process and demonstrate its basic and advanced features."
 slug: justmock/video-onboarding
 position: 6

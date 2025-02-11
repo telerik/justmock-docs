@@ -1,6 +1,6 @@
 ---
-title: Basics of Mocking 
-page_title: Basics of Mocking  | JustMock Documentation
+title: Mocking Basics
+page_title: Mocking Basics | JustMock Documentation
 description: Check out the sample example in this topic to get a better understanding of how you can start testing your system with JustMock.
 slug: justmock/getting-started/basics/basics
 tags: mock, test, method, property, behavior
@@ -8,7 +8,7 @@ published: True
 position: 0
 ---
 
-# Basics of Mocking
+# Mocking Basics
 
 Mocking is a process used in unit testing when the unit being tested has external dependencies. The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. In mocking, the dependencies are replaced by closely controlled replacement objects that simulate the behavior of the real ones. **JustMock** creates the replacement objects and manages their lifetime for you.
 

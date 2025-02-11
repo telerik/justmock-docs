@@ -11,9 +11,9 @@ ticketid: 1652919
 
 ## Environment
 
-| Product | Progress® Telerik® JustMock |
+| Product | Version |
 | --- | --- |
-| Version | 2024.3.805.336 |
+| Progress® Telerik® JustMock | 2024.3.805.336 |
 
 ## Description
 While attempting to run unit test coverage in JetBrains Rider IDE on macOS, an error occurs indicating that the Telerik.JustMock profiler must be enabled. The error message suggests that a third-party profiler is active and advises disabling it or configuring JustMock to link with the third-party profiler. This process involves ensuring the JustMock profiler can run alongside another profiler, like dotCover, which is embedded in Rider IDE.
