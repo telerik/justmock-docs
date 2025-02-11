@@ -51,5 +51,5 @@ Mock.Arrange(() => sqlConnection.BeginTransaction()).Returns(() => sqlTransactio
 ```
 
 ## See Also
-- [JustMock Documentation: Arrangement Fluent API](https://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Expectations.FuncExpectation-1.html#Telerik_JustMock_Expectations_FuncExpectation_1_Returns__0_)
-- [JustMock Documentation: Asserting Mocks](https://docs.telerik.com/devtools/justmock/basic-usage/asserting)
+- [JustMock Documentation: Arrangement Fluent API](https://docs.telerik.com/devtools/justmock/api/Telerik.JustMock.Expectations.FuncExpectation-1.html#Telerik_JustMock_Expectations_FuncExpectation_1_Returns_System_Func__0__)
+- [JustMock Documentation: Asserting Occurrence](https://docs.telerik.com/devtools/justmock/basic-usage/asserting-occurrence)
