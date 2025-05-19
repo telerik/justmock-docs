@@ -30,7 +30,7 @@ The list below shows the operating systems supported by Telerik JustMock:
 | Framework | Version |
 | --------- | ------- |
 | .NET | LTS/STS |
-| .NET Framework | .NET 4.7.2+ |
+| .NET Framework | .NET 4.7.2 or later |
 
 * On Windows, the installation of **Telerik JustMock** includes an extension for Microsoft Visual Studio. The supported versions are listed below. On other platforms, you can use your preferred IDE, but additional manual steps are required to run the tests.
 
@@ -49,4 +49,4 @@ The list below shows the operating systems supported by Telerik JustMock:
 ## See Also
 
 * [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
-* [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)
+* [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%})

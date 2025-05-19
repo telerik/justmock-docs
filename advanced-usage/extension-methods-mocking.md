@@ -13,7 +13,7 @@ position: 20
 
 Mocking extension methods is one of the advanced features supported in __Telerik®  JustMock__. In this topic, we will go through some examples that show how easy and straightforward it is to assert expectations related to extension methods in your tests.
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 ## How To Mock Extension Methods?
 

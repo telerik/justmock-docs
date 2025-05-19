@@ -15,7 +15,7 @@ Partial mocks allow you to mock some of the methods of a class while keeping the
 
 >note Partial mocking can be performed on both static and instance calls.
 
-> This is an elevated feature. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> This is an elevated feature. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 ## Prerequisites
 

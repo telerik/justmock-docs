@@ -17,7 +17,7 @@ To mock a local function, you need to provide the following information:
   1.	Name of the local function.
   2.	Containing method name and, if the method receives parameters, type parameters array.
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
 ## Basic Local Function Mocking
 

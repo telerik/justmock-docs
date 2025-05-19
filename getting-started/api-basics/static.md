@@ -14,7 +14,7 @@ Working with .NET applications enables you to use static classes, methods and pr
 
 Testing a non-static method (at least one that has a simple implementation without external dependencies) is straightforward. However, testing a static method is not an easy task at all. This article explains how you can overcome this challenge and test static classes and their members using **JustMock**.
 
-> Mocking static implementations is an **elevated feature**. Refer to the [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both versions of Telerik JustMock.
+> Mocking static implementations is an **elevated feature**. Refer to the [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both versions of Telerik JustMock.
 
 To better illustrate different cases, we will be using several examples classes representing an order. The order can contain different products and it might have a gift for the user if they purchased more items. Here is how the implementation looks like:
 

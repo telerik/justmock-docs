@@ -12,7 +12,7 @@ position: 14
 # System API / MsCorLib Mocking
 
 **Telerik® JustMock** allows you to mock everything, including the .NET system types as part of mscorlib.dll or any other library or DLL. Even more, with JustMock you are able to arrange any System member/function without additional setups. 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between the commercial and free versions of Telerik JustMock.
 
 
 ## Mocking System.DateTime Class

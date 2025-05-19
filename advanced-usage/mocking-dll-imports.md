@@ -13,7 +13,7 @@ position: 10
 
 In elevated mode, you can use __Telerik® JustMock__ to mock imported functions (decorated with the `[DLLImport()]` attribute).
 
-> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> This feature is available only in the commercial version of Telerik JustMock. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 
 In the next examples we will use the following sample class to test:
