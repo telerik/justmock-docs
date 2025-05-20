@@ -25,7 +25,7 @@ The list below shows the operating systems supported by Telerik JustMock:
 
 ## Development Environment
 
-- To use **Telerik JustMock** on all supported operating systems, you must install a .NET SDK that is compatible with .NET Standard 2.1. On Windows, the product also supports legacy .NET Framework versions starting from 4.7.2 and above.
+- To use **Telerik JustMock** on all supported operating systems, you must install a .NET SDK that is compatible with [.NET Standard 2.1](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-1#net-standard-versions). On Windows, the product also supports legacy .NET Framework versions starting from 4.7.2 and above.
 
 | Framework | Version |
 | --------- | ------- |
