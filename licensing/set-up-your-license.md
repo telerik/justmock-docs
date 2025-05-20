@@ -42,7 +42,7 @@ To activate the Telerik JustMock license:
     * For Windows: `%AppData%\Roaming\Telerik\telerik-license.txt`.
     * For macOS/Linux: `${HOME}/.telerik/telerik-license.txt`.
 
-    Before placing the `telerik-license.txt` file in your home directory, ensure the necessary folder structure exists. Create any required directories in your home folder if they don not already exist.
+    Before placing the `telerik-license.txt` file in your home directory, ensure the necessary folder structure exists. Create any required directories in your home folder if they do not already exist.
     
 ## Updating Your License Key
 
