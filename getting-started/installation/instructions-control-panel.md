@@ -9,7 +9,7 @@ position: 5
 
 # Installation using Progress Control Panel
 
-Progress Control Panel is a standalone desktop application for Windows that enables developers to install, monitor, and manage their Telerik products. In addition, the Control Panel automates the NuGet package source and sets up license keys for all Telerik product
+Progress Control Panel is a standalone desktop application for Windows that enables developers to install, monitor, and manage their Telerik products. In addition, the Control Panel automates the NuGet package source and license key sets up for all Telerik products.
 
 To install Telerik JustMock by using the Progress Control Panel:
 
