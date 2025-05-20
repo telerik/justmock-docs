@@ -16,12 +16,12 @@ This topic describes the system requirements needed by __Telerik JustMock__.
 
 The list below shows the operating systems supported by Telerik JustMock:
 
-| OS	  | Version |
-| ------- | --------|
-| Windows | 10, 11 |
-| Windows Server | 2019, 2022 |
-| Ubuntu | 20.04 or later  |
-| macOS  | 13.0 or later |
+| OS      | Version | Processor Architecture |
+| ------- | --------| ---------------------- | 
+| Windows | 10 or later | x86, x64 |
+| Windows Server | 2019 or later | x86, x64 |
+| Ubuntu | 22.04 or later  | x64 |
+| macOS  | 13.0 or later | x64, arm64 |
 
 ## Development Environment
 
