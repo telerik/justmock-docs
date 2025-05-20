@@ -59,4 +59,4 @@ This topic outlines the steps required to install [Telerik JustMock](https://www
 ## See Also
 
  * [Visual Studio Extension]({%slug justmock/getting-started/visual-studio-extension%})
- * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)
+ * [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%})

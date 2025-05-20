@@ -67,4 +67,4 @@ If you want to use JustMock in an existing unit test project, you should add a r
 
  * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
- * [Commercial vs Free Version]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version)
+ * [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%})

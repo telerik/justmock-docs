@@ -17,6 +17,9 @@ navigation:
     getting-started/api-basics:
         title: API Basics
         position: 4
+    licensing:
+        title: Licensing
+        position: 2
     basic-usage:
         title: Basic Mocking
         position: 3

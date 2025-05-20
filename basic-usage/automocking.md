@@ -320,7 +320,7 @@ This style of assertion let's you focus on the __arrange__, as a container of yo
 
 
 > __Elevated Feature.__
-> Refer to [this]({%slug justmock/licensing/license-agreement%}#commercial-vs-free-version) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
+> Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
 The functionality of the JustMocks profiler enabled automocking feature is rather the same as the conceptual design of the *automocking*, as a whole.
 
