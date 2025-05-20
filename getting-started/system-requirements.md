@@ -45,6 +45,7 @@ The list below shows the operating systems supported by Telerik JustMock:
     * [macOS]({%slug justmock/getting-started/installation/instructions-macos%})
     * [Ubuntu]({%slug justmock/getting-started/installation/instructions-ubuntu%})
     * [Using NuGet package]({%slug justmock/getting-started/installation/instructions-nuget-package%})
+    * [Using Telerik Control Panel]({%slug justmock/getting-started/installation/instructions-control-panel%})
 
 ## See Also
 
