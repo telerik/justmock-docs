@@ -75,6 +75,7 @@ To learn how to install and work with Telerik JustMock, visit the following reso
 	* [macOS]({%slug justmock/getting-started/installation/instructions-macos%})
 	* [Ubuntu]({%slug justmock/getting-started/installation/instructions-ubuntu%})
 	* [Using NuGet package]({%slug justmock/getting-started/installation/instructions-nuget-package%})
+	* [Using Telerik Control Panel]({%slug justmock/getting-started/installation/instructions-control-panel%})
 * [Add Telerik JustMock to Your Test Project]({%slug justmock/getting-started/configuration/using-telerik-justmock-in-your-test-project %})
 * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
 
