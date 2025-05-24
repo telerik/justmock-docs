@@ -46,7 +46,7 @@ To activate the Telerik JustMock license:
 
 > **Tip!**
 >
->For Windows users, make sure the location of `telerik-license.txt` should look like `C:\Users\[Your Windows account name]\AppData\Roaming\Telerik`
+>For Windows users, make sure the location of `telerik-license.txt` should look like `C:\Users\[Your Windows account name]\AppData\Roaming\Telerik\telerik-license.txt`
     
 ## Updating Your License Key
 
