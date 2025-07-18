@@ -115,16 +115,16 @@ With the first line we specify that when the __foo.Echo__ method is called with 
   {{endregion}}
 
 
-On the second line we specify the __RangeKind__ to be __Exclusive__ so calling the method with 6 or 10 doesn’t satisfy the condition because these values are excluded from the range.
+On the second line we specify the __RangeKind__ to be __Exclusive__ so calling the method with 0 or 5 doesn’t satisfy the condition because these values are excluded from the range.
 
-## Arg.Matches<T> (Expression<Predicate<T>> expression)
+## Arg.Matches\<T\> (Expression\<Predicate\<T\>\> expression)
 
 This is the most flexible matcher and it allows you to specify your own matching expression. Let's illustrate it with a simple example:
 
   #### __[C#]__
 
   {{region Matchers##ArgMatchesCS}}
-	Mock.Arrange(() => foo.Echo(Arg.Matches<int>( x => x < 10)).Returns(true);
+	Mock.Arrange(() => foo.Echo(Arg.Matches<int>( x => x < 10))).Returns(true);
   {{endregion}}
 
   #### __[VB]__
@@ -356,7 +356,7 @@ In the case when a specialization is used among with `Arg.IsAny<T>`, JustMock wi
 
 ## Using Matchers for ref Arguments (Arg.Ref())
 
->  __`Arg.Ref` is used only in C# assemblies, as for Visual Basic you can directly match `ByRef` arguments without it.__ 
+>  __The use of `Arg.Ref` in Visual Basic is optional, as you can directly match `ByRef` arguments without it.__ 
 
 With JustMock you are able to use matchers for functions that take ref arguments. For this purpose, you need to use the `Arg.Ref().Value` syntax. Check the next examples for further guidance:
 
@@ -394,7 +394,7 @@ With JustMock you are able to use matchers for functions that take ref arguments
           ' Arrange
           Dim foo = Mock.Create(Of IFoo)()
 
-          Mock.Arrange(Function() foo.Bar(5)).Returns(10)
+          Mock.Arrange(Function() foo.Bar(Arg.Ref(5).Value)).Returns(10)
 
           ' Act
           Dim actual As Integer = foo.Bar(myRefArg)
@@ -441,7 +441,7 @@ With JustMock you are able to use matchers for functions that take ref arguments
           ' Arrange
           Dim foo = Mock.Create(Of IFoo)()
 
-          Mock.Arrange(Function() foo.Bar(Arg.AnyInt)).Returns(10)
+          Mock.Arrange(Function() foo.Bar(Arg.Ref(Arg.AnyInt).Value)).Returns(10)
 
           ' Act
           Dim actual As Integer = foo.Bar(myRefArg)
@@ -488,7 +488,7 @@ With JustMock you are able to use matchers for functions that take ref arguments
           ' Arrange
           Dim foo = Mock.Create(Of IFoo)()
 
-          Mock.Arrange(Function() foo.Bar(Arg.Matches(Of Integer)(Function(x) x > 10))).Returns(10)
+          Mock.Arrange(Function() foo.Bar(Arg.Ref(Arg.Matches(Of Integer)(Function(x) x > 10)).Value)).Returns(10)
 
           ' Act
           Dim actual As Integer = foo.Bar(myRefArg)
