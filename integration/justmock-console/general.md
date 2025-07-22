@@ -41,6 +41,7 @@ The current version of JustMock Console contains just a single verb (**runadvanc
 | --no-logo | | | No | false | Hides banner with logo and copyright notice: **false** - display the banner; **true** - hide the banner. |
 | --help | | | No | N/A | Displays a help screen. |
 | --version | | | No | N/A | Displays a version information. |
+| --working-directory| -w | \<path\> | No | N/A | Set the working directory for the test runner process.|
 
 # Sample usage
 
