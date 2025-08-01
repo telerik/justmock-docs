@@ -216,7 +216,7 @@ Another common case is to mock an async method call to execute custom logic befo
 
 ## Return a Value for an Async Method from a Mocking Container (Automocking)
 
-In scenarios where a class has dependencies involving asynchronous methods, a [Mocking Container]({%slug justmock/basic-usage/automocking%}) can be created from the class. The `ReturnsAsync` method can then be used to provide a custom return value for the asynchronous method.
+In scenarios where a class has dependencies involving asynchronous methods, it is possible to create a [Mocking Container]({%slug justmock/basic-usage/automocking%}). The `ReturnsAsync` method can then be used to provide a custom return value for the asynchronous method.
 
 To take a look at this scenario, we will use the following code:
 
@@ -225,10 +225,7 @@ To take a look at this scenario, we will use the following code:
 
 	public interface ITaskAsync
 	{
-    	Task<int> GenericTaskWithValueReturnType();
     	Task<int> GenericTaskWithValueReturnTypeAndOneParam(int value);
-    	Task<object> GenericTaskWithObjectReturnType();
-    	Task<object> GenericTaskWithObjectReturnTypeAndOneParam(object value);
 	}
 
 	public class TaskClient
@@ -251,10 +248,7 @@ To take a look at this scenario, we will use the following code:
 {{region ReturnAsync#TaskClient}}
 
 	Public Interface ITaskAsync
-    	Function GenericTaskWithValueReturnType() As Task(Of Integer)
     	Function GenericTaskWithValueReturnTypeAndOneParam(value As Integer) As Task(Of Integer)
-    	Function GenericTaskWithObjectReturnType() As Task(Of Object)
-    	Function GenericTaskWithObjectReturnTypeAndOneParam(value As Object) As Task(Of Object)
 	End Interface
 
 	Public Class TaskClient
