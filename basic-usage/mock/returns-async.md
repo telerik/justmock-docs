@@ -333,7 +333,6 @@ In **Example 6**, we extend this by explicitly specifying the return type, showi
 
 {{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
 
-	[TestMethod]
  	<TestMethod>
 	Public Async Function TestTaskAutomockingAsyncResultWithIntParameter() As Task
     	' Arange
