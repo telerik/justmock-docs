@@ -214,6 +214,140 @@ Another common case is to mock an async method call to execute custom logic befo
 	End Function
 {{endregion}}
 
+## Return a Value for an Async Method from a Mocking Container (Automocking)
+
+In scenarios where a class has dependencies involving asynchronous methods, it is possible to create a [Mocking Container]({%slug justmock/basic-usage/automocking%}). The `ReturnsAsync` method can then be used to provide a custom return value for the asynchronous method.
+
+To take a look at this scenario, we will use the following code:
+
+#### __[C#]__
+{{region ReturnAsync#TaskClient}}
+
+	public interface ITaskAsync
+	{
+    	Task<int> GenericTaskWithValueReturnTypeAndOneParam(int value);
+	}
+
+	public class TaskClient
+	{
+    	private ITaskAsync task;
+
+    	public TaskClient(ITaskAsync t)
+    	{
+        	task = t;
+    	}
+
+    	public async Task<int> TaskUsageWithValue()
+    	{
+        	return await task.GenericTaskWithValueReturnTypeAndOneParam(10);
+    	}
+	}
+{{endregion}}
+
+#### __[VB]__
+{{region ReturnAsync#TaskClient}}
+
+	Public Interface ITaskAsync
+    	Function GenericTaskWithValueReturnTypeAndOneParam(value As Integer) As Task(Of Integer)
+	End Interface
+
+	Public Class TaskClient
+    	Private task As ITaskAsync
+
+    	Public Sub New(t As ITaskAsync)
+        	task = t
+    	End Sub
+
+    	Public Async Function TaskUsageWithValue() As Task(Of Integer)
+        	Return Await task.GenericTaskWithValueReturnTypeAndOneParam(10)
+    	End Function
+	End Class
+{{endregion}}
+
+In **Example 5**, we demonstrate the basic usage of ReturnsAsync with MockingContainer using type inference.
+
+#### __[C#] Example 5: Using ReturnsAsync with MockingContainer__
+
+{{region ReturnAsync#TestTaskAutomockingReturnsAsyncResult}}
+
+	[TestMethod]
+ 	public async Task TestTaskAutomockingReturnsAsyncResult()
+	{
+    	// Arange
+    	var container = new MockingContainer<TaskClient>();
+    	var expectedResult = 10;
+
+    	container.Arrange<ITaskAsync>(t => t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult);
+
+    	// Act
+    	var actualResult = await container.Instance.TaskUsageWithValue();
+
+    	// Assert
+    	Assert.Equals(expectedResult, actualResult);
+	}
+{{endregion}}
+
+#### __[VB] Example 5: Using ReturnsAsync with MockingContainer__
+{{region ReturnAsync#TestTaskAutomockingReturnsAsyncResult}}
+
+	<TestMethod>
+	Public Async Function TestTaskAutomockingReturnsAsyncResult() As Task
+    	' Arange
+    	Dim container = New MockingContainer(Of TaskClient)()
+    	Dim expectedResult = 10
+
+    	container.Arrange(Of ITaskAsync)(Function(t) t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult)
+
+    	' Act
+    	Dim actualResult = Await container.Instance.TaskUsageWithValue()
+
+    	' Assert
+    	Assert.Equals(expectedResult, actualResult)
+	End Function
+{{endregion}}
+
+In **Example 6**, we extend this by explicitly specifying the return type, showing a more controlled and type-safe approach.
+
+### __[C#] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
+
+{{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
+
+	[TestMethod]
+ 	public async Task TestTaskAutomockingAsyncResultWithIntParameter()
+	{
+    	// Arange
+    	var container = new MockingContainer<TaskClient>();
+    	var expectedResult = 10;
+
+    	container.Arrange<ITaskAsync, int>(t => t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult);
+
+    	// Act
+    	var actualResult = await container.Instance.TaskUsageWithValue();
+
+    	// Assert
+    	Assert.Equals(expectedResult, actualResult);
+	}
+{{endregion}}
+
+### __[VB] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
+
+{{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
+
+ 	<TestMethod>
+	Public Async Function TestTaskAutomockingAsyncResultWithIntParameter() As Task
+    	' Arange
+    	Dim container = New MockingContainer(Of TaskClient)()
+    	Dim expectedResult = 10
+
+    	container.Arrange(Of ITaskAsync, Integer)(Function(t) t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult)
+
+    	' Act
+    	Dim actualResult = Await container.Instance.TaskUsageWithValue()
+
+    	' Assert
+    	Assert.Equals(expectedResult, actualResult)
+	End Function
+{{endregion}}
 
 ## Testing Exception Handling for Async Methods
 
