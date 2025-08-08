@@ -1,3 +1,13 @@
+---
+title: Running JustMock Elevated Unit Tests with Docker
+page_title: Running JustMock Elevated Unit Tests with Docker | JustMock Documentation
+description: Running JustMock Elevated Unit Tests with Docker
+slug: justmock/scenarios/docker
+tags: integration, test, docker, console
+published: True
+position: 2
+---
+
 # Running JustMock Elevated Unit Tests with Docker
 
 You can run .NET Framework and .NET Core unit tests in Docker with either `docker build` or `docker run` commands. Running tests as a part of `docker build` provides an early feedback for pass/fail results printed the the console output. The other approach `docker run` is useful of getting complete test results (trx) captured with volume mounting.
