@@ -2,20 +2,38 @@
 
 You can run .NET Framework and .NET Core unit tests in Docker with either `docker build` or `docker run` commands. Running tests as a part of `docker build` provides an early feedback for pass/fail results printed the the console output. The other approach `docker run` is useful of getting complete test results (trx) captured with volume mounting.
 
+## Prepare required JustMock stuff
+
+Please perform the following actions either manually or by employing a script file:
+
+1. Determine the JustMock installation path from the system registry.
+2. Copy the necessary binaries and profiler files to a specified local directory.
+3. Prepare a clean environment for conducting tests using JustMock.
+
+**Note:** Ensure that the binaries and paths specified in your project file match those prepared during the containerization process.
+
 ## Build your Dockerfile
 
-1.	Use a base image that matches your framework and OS requirements.
-2.	Create the needed env variables 
+1.	Use a base image that aligns with the requirements of your framework and operating system.
+
+2.	Set up the necessary environment variables.
+
+```
 ENV JUSTMOCK_BINARY_PATH /justmock
 ENV TELERIK_LICENSE=your_license_key
-3.	Copy required binaries, libraries, and license files
+```
+
+3.	Copy required binaries and libraries.
+
 ```
 COPY JustMock/Telerik.JustMock.dll /justmock/
 COPY JustMock/CodeWeaver/32/Telerik.CodeWeaver.Profiler.dll /justmock/codewaver/32/
 COPY JustMock/CodeWeaver/64/Telerik.CodeWeaver.Profiler.dll /justmock/codewaver/64/
 COPY JustMock/Telerik.JustMock.Console.exe /justmock/
 ```
-4.	Use dotnet restore and dotnet build to prepare your code
+
+4.	Use `dotnet restore` and `dotnet build` to prepare your code.
+
 ```
 WORKDIR /build
 COPY *.sln .
@@ -28,7 +46,9 @@ WORKDIR /build
 COPY . .
 RUN dotnet build
 ```
-5.	You can run tests using the JustMock.Console
+
+5.	You can run tests using the [JustMock.Console]({%slug: justmock/integration/justmock-console/general%}).
+
 ```
 WORKDIR /build
 RUN ["/justmock/Telerik.JustMock.Console.exe", "runadvanced",\
@@ -36,8 +56,10 @@ RUN ["/justmock/Telerik.JustMock.Console.exe", "runadvanced",\
  "--profiler-path-64", "/justmock/codewaver/64/Telerik.CodeWeaver.Profiler.dll",\
  "--command", "dotnet",\
  "--command-args", "test --logger:\"console;verbosity=detailed\""]
+
  ```
-6.	Use a second stage to define a lightweight image for running tests
+6.	Optionally, you can define a second stage in your Dockerfile to create a lightweight image for running tests.
+
 ```
 FROM sdk AS testrunner
 WORKDIR /build
@@ -90,7 +112,7 @@ Now you can use previously built image with `docker build` command to run the te
 docker run --rm -v "%CD%\TestResults:C:\build\TestResults" -it jmsample:test
 ```
 
-#### Reading the Results
+### Reading the Results
 
 You should be able to find a `.trx` file in the TestResults folder. You can open this file in Visual Studio.
 
