@@ -57,7 +57,7 @@ COPY . .
 RUN dotnet build
 ```
 
-5.	You can run tests using the [JustMock.Console]({%slug: justmock/integration/justmock-console/general%}).
+5.	You can run tests using the [JustMock.Console]({%slug justmock/integration/justmock-console/general%}).
 
 ```
 WORKDIR /build
