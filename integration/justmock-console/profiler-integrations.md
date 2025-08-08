@@ -6,7 +6,7 @@ slug: justmock/integration/profiler-integration
 tags: profiler
 published: True
 position: 4
-previous_url: /integration-justmock-console-general, /integration-justmock-console-general.html
+previous_url: /integration-justmock-console-profiler-integration, /integration-justmock-console-profiler-integration.html
 ---
 
 # Third-party Profilers Integration
