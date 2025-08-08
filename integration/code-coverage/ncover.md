@@ -84,5 +84,3 @@ Having the profilers linked must be enough for using both JustMock and NCover in
 
  * [Code Coverage Tools]({%slug justmock/integration/codecoverage-tools%})
 
- * [OpenCover]({%slug justmock/integration/opencover%})
-

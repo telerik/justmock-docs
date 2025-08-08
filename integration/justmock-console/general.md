@@ -57,7 +57,7 @@ Run the tests with the JustMock profier existing in the specified path using .NE
 justmock-console runadvanced -p "\full\path\to\default\Telerik.CodeWeaver.Profiler.dll" -c "dotnet" -a "test --no-build \"\path\to\JustMock.Tests\""
 ```
 
-Run the tests with the JustMock profier existing in the specified path and [OpenCover]({%slug justmock/integration/justmock-console/profiler-integrations%}) integration using Command Line Tool for Windows::
+Run the tests with the JustMock profier existing in the specified path and [OpenCover]({%slug justmock/integration/profiler-integration%}) integration using Command Line Tool for Windows::
 
 ```bat
 OpenCover.Console -target:"Telerik.JustMock.Console" -targetargs:"runadvanced -p \"\full\path\to\default\Telerik.CodeWeaver.Profiler.dll\" -c vstest.console -a vstest \"\full\path\to\JustMock.Tests.dll\" -l" -output:opencovertests.xml
