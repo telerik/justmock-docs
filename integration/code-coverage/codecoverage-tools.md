@@ -48,5 +48,3 @@ Reinstalling or repairing the installation of a 3rd party profiler tool, as well
 
  * [NCover]({%slug justmock/integration/ncover%})
 
- * [OpenCover]({%slug justmock/integration/opencover%})
-
