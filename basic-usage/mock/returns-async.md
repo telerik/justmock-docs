@@ -308,7 +308,7 @@ In **Example 5**, we demonstrate the basic usage of ReturnsAsync with MockingCon
 
 In **Example 6**, we extend this by explicitly specifying the return type, showing a more controlled and type-safe approach.
 
-### __[C#] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
+#### __[C#] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
 
 {{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
 
@@ -329,7 +329,7 @@ In **Example 6**, we extend this by explicitly specifying the return type, showi
 	}
 {{endregion}}
 
-### __[VB] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
+#### __[VB] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
 
 {{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
 
