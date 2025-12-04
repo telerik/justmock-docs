@@ -21,7 +21,7 @@ The list below shows the operating systems supported by Telerik JustMock:
 | Windows | 11 or later | x86, x64 |
 | Windows Server | 2022 or later | x86, x64 |
 | Ubuntu | 22.04 or later  | x64 |
-| macOS  | 13.0 or later | x64, arm64 |
+| macOS  | 15.0 or later | x64, arm64 |
 
 ## Development Environment
 
