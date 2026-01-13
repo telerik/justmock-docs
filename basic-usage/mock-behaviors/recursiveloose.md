@@ -29,155 +29,134 @@ To explicitly set `Behavior.RecursiveLoose` use `Mock.Create<T>(Behavior.Recursi
 
 To explain what differs between both behaviors, let's look at the following interface:
 
-          
-  #### __[C#]__
+```C#
+public interface IFirst
+{
+    ISecond Second { get; set; }
+}
+public interface ISecond
+{
+    IThird Third { get; set; }
+}
 
-  {{region MockBehaviorRecursiveLoose#ChainedInterfaces}}
-    public interface IFirst
-    {
-        ISecond Second { get; set; }
-    }
-    public interface ISecond
-    {
-        IThird Third { get; set; }
-    }
+public interface IThird
+{
+    IFourth Fourth { get; set; }
+    Task<IFourth> GetFourthAsync();
+}
 
-    public interface IThird
-    {
-        IFourth Fourth { get; set; }
-        Task<IFourth> GetFourthAsync();
-    }
+public interface IFourth
+{
+    string DoSomething();
+}
+```
+```VB
+Public Interface IFirst
+    Property Second() As ISecond
+End Interface
+Public Interface ISecond
+    Property Third() As IThird
+End Interface
 
-    public interface IFourth
-    {
-        string DoSomething();
-    }
-  {{endregion}}
+Public Interface IThird
+    Property Fourth() As IFourth
+    Function GetFourthAsync() As Task(Of IFourth)
+End Interface
 
-  #### __[VB]__
-
-  {{region MockBehaviorRecursiveLoose#ChainedInterfaces}}
-    Public Interface IFirst
-		Property Second() As ISecond
-	End Interface
-	Public Interface ISecond
-		Property Third() As IThird
-	End Interface
-
-	Public Interface IThird
-		Property Fourth() As IFourth
-		Function GetFourthAsync() As Task(Of IFourth)
-	End Interface
-
-	Public Interface IFourth
-		Function DoSomething() As String
-	End Interface
-  {{endregion}}
+Public Interface IFourth
+    Function DoSomething() As String
+End Interface
+```
 
 Here, we have a number of nested properties. If we try to call a low level, non-arranged function from a `Loose` mock, the test will throw a `NullReferenceException`. This is shown in the next example:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(NullReferenceException))]
+public void ShouldAssertAgainstNonArrangedChainCallInLooseMock()
+{
+    //Arrange
+    var foo = Mock.Create<IFirst>(Behavior.Loose);
 
-  {{region MockBehaviorRecursiveLoose#LooseMockExample1}}
-    [TestMethod]
-    [ExpectedException(typeof(NullReferenceException))]
-    public void ShouldAssertAgainstNonArrangedChainCallInLooseMock()
-    {
-        //Arrange
-        var foo = Mock.Create<IFirst>(Behavior.Loose);
+    //Act
+    foo.Second.Third.Fourth.DoSomething(); // This will throw a NullReferenceException
+}
+```
+```VB
+<TestMethod>
+<ExpectedException(GetType(NullReferenceException))>
+Public Sub ShouldAssertAgainstNonArrangedChainCallInLooseMock()
+    'Arrange
+    Dim foo = Mock.Create(Of IFirst)(Behavior.Loose)
 
-        //Act
-        foo.Second.Third.Fourth.DoSomething(); // This will throw a NullReferenceException
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region MockBehaviorRecursiveLoose#LooseMockExample1}}
-    <TestMethod>
-		<ExpectedException(GetType(NullReferenceException))>
-		Public Sub ShouldAssertAgainstNonArrangedChainCallInLooseMock()
-			'Arrange
-			Dim foo = Mock.Create(Of IFirst)(Behavior.Loose)
-
-			'Act
-			foo.Second.Third.Fourth.DoSomething() ' This will throw a NullReferenceException
-		End Sub
-  {{endregion}}
+    'Act
+    foo.Second.Third.Fourth.DoSomething() ' This will throw a NullReferenceException
+End Sub
+```
           
 The exception is thrown right after the initialization of the `Second` property, as it returns the default reference type value (null). To avoid this in a `Loose` mock, we need to arrange the method chain, like this:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertAgainstArrangedChainCallInLooseMock()
+{
+    //Arrange
+    var foo = Mock.Create<IFirst>(Behavior.Loose);
 
-  {{region MockBehaviorRecursiveLoose#LooseMockExample2}}
-    [TestMethod]
-    public void ShouldAssertAgainstArrangedChainCallInLooseMock()
-    {
-        //Arrange
-        var foo = Mock.Create<IFirst>(Behavior.Loose);
+    Mock.Arrange(() => foo.Second.Third.Fourth.DoSomething()).Returns(String.Empty);
 
-        Mock.Arrange(() => foo.Second.Third.Fourth.DoSomething()).Returns(String.Empty);
+    //Act
+    var actual = foo.Second.Third.Fourth.DoSomething();
 
-        //Act
-        var actual = foo.Second.Third.Fourth.DoSomething();
+    // Assert
+    Assert.IsNotNull(actual);
+}
+```
+```VB
+<TestMethod> _
+Public Sub ShouldAssertAgainstArrangedChainCallInLooseMock()
+    'Arrange
+    Dim foo = Mock.Create(Of IFirst)(Behavior.Loose)
 
-        // Assert
-        Assert.IsNotNull(actual);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Second.Third.Fourth.DoSomething()).Returns([String].Empty)
 
-  #### __[VB]__
+    'Act
+    Dim actual = foo.Second.Third.Fourth.DoSomething()
 
-  {{region MockBehaviorRecursiveLoose#LooseMockExample2}}
-    <TestMethod> _
-		Public Sub ShouldAssertAgainstArrangedChainCallInLooseMock()
-			'Arrange
-			Dim foo = Mock.Create(Of IFirst)(Behavior.Loose)
-
-			Mock.Arrange(Function() foo.Second.Third.Fourth.DoSomething()).Returns([String].Empty)
-
-			'Act
-			Dim actual = foo.Second.Third.Fourth.DoSomething()
-
-			' Assert
-			Assert.IsNotNull(actual)
-		End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsNotNull(actual)
+End Sub
+```
 
 Using `RecursiveLoose` mocks, we are capable of writing the following:
 
-#### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMock()
+{
+    //Arrange
+    var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose); // This equals to: Mock.Create<IFirst>();
 
-  {{region MockBehaviorRecursiveLoose#RecursiveLooseMockExample}}
-    [TestMethod]
-    public void ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMock()
-    {
-        //Arrange
-        var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose); // This equals to: Mock.Create<IFirst>();
+    //Act
+    var actual = foo.Second.Third.Fourth.DoSomething();
 
-        //Act
-        var actual = foo.Second.Third.Fourth.DoSomething();
+    // Assert
+    Assert.IsNotNull(actual);
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMock()
+    'Arrange
+    Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose) ' This equals to: Mock.Create(Of IFirst)()
 
-        // Assert
-        Assert.IsNotNull(actual);
-    }
-  {{endregion}}
+    'Act
+    Dim actual = foo.Second.Third.Fourth.DoSomething()
 
-  #### __[VB]__
-
-  {{region MockBehaviorRecursiveLoose#RecursiveLooseMockExample}}
-    <TestMethod>
-		Public Sub ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMock()
-			'Arrange
-			Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose) ' This equals to: Mock.Create(Of IFirst)()
-
-			'Act
-			Dim actual = foo.Second.Third.Fourth.DoSomething()
-
-			' Assert
-			Assert.IsNotNull(actual)
-		End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsNotNull(actual)
+End Sub
+```
 
 
 Notice that no additional arrangements are needed for the test to pass.
@@ -186,211 +165,191 @@ Notice that no additional arrangements are needed for the test to pass.
 
 Assume we have the next system under test:         
           
-  #### __[C#]__
+```C#
+public class Product
+{
 
-  {{region MockBehaviorRecursiveLoose#SUT}}
-    public class Product
+}
+
+public class Order
+{
+    public List<Product> Products
     {
-
+        get { return products; }
     }
 
-    public class Order
-    {
-        public List<Product> Products
-        {
-            get { return products; }
-        }
+    private List<Product> products;
+}
 
-        private List<Product> products;
+public class OrderRepository
+{
+    public Order Order
+    {
+        get { return order; }
     }
 
-    public class OrderRepository
-    {
-        public Order Order
-        {
-            get { return order; }
-        }
+    private Order order;
+}
 
-        private Order order;
+public class ClassUnderTest
+{
+    public OrderRepository Repo
+    {
+        get { return new OrderRepository(); }
     }
 
-    public class ClassUnderTest
+    public string MethodUnderTest()
     {
-        public OrderRepository Repo
+        if (Repo.Order.Products != null)
         {
-            get { return new OrderRepository(); }
+            return "Pass";
         }
 
-        public string MethodUnderTest()
-        {
-            if (Repo.Order.Products != null)
-            {
-                return "Pass";
-            }
-
-            return "Fail";
-        }
+        return "Fail";
     }
-  {{endregion}}
+}
+```
+```VB
+Public Class Product
 
-  #### __[VB]__
+End Class
 
-  {{region MockBehaviorRecursiveLoose#SUT}}
-    Public Class Product
+Public Class Order
+    Public ReadOnly Property Products() As List(Of Product)
+        Get
+          Return m_products
+        End Get
+    End Property
 
-	End Class
+    Private m_products As List(Of Product)
+End Class
 
-	Public Class Order
-		Public ReadOnly Property Products() As List(Of Product)
-			Get
-				Return m_products
-			End Get
-		End Property
+Public Class OrderRepository
+    Public ReadOnly Property Order() As Order
+      Get
+        Return m_order
+      End Get
+    End Property
 
-		Private m_products As List(Of Product)
-	End Class
+    Private m_order As Order
+End Class
 
-	Public Class OrderRepository
-		Public ReadOnly Property Order() As Order
-			Get
-				Return m_order
-			End Get
-		End Property
+Public Class ClassUnderTest
+    Public ReadOnly Property Repo() As OrderRepository
+        Get
+          Return New OrderRepository()
+        End Get
+    End Property
 
-		Private m_order As Order
-	End Class
+    Public Function MethodUnderTest() As String
+        If Repo.Order.Products IsNot Nothing Then
+            Return "Pass"
+        End If
 
-	Public Class ClassUnderTest
-		Public ReadOnly Property Repo() As OrderRepository
-			Get
-				Return New OrderRepository()
-			End Get
-		End Property
-
-		Public Function MethodUnderTest() As String
-			If Repo.Order.Products IsNot Nothing Then
-				Return "Pass"
-			End If
-
-			Return "Fail"
-		End Function
-	End Class
-  {{endregion}}
+        Return "Fail"
+    End Function
+End Class
+```
    
 To enter the `If` statement of the MethodUnderTest(), we simply need to pass a `RecursiveLoose` mock, like this:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldReturnRecursiveMock()
+{
+    var cut = new ClassUnderTest();
 
-  {{region MockBehaviorRecursiveLoose#BasicExample}}
-    [TestMethod]
-    public void ShouldReturnRecursiveMock()
-    {
-        var cut = new ClassUnderTest();
+    // Arrange
+    Mock.Arrange(() => cut.Repo).Returns(Mock.Create<OrderRepository>());
 
-        // Arrange
-        Mock.Arrange(() => cut.Repo).Returns(Mock.Create<OrderRepository>());
+    // Act
+    var actual = cut.MethodUnderTest();
 
-        // Act
-        var actual = cut.MethodUnderTest();
+    // Assert
+    Assert.AreEqual("Pass", actual);
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldReturnRecursiveMock()
+    Dim cut = New ClassUnderTest()
 
-        // Assert
-        Assert.AreEqual("Pass", actual);
-    }
-  {{endregion}}
+    ' Arrange
+    Mock.Arrange(Function() cut.Repo).Returns(Mock.Create(Of OrderRepository)())
 
-  #### __[VB]__
+    ' Act
+    Dim actual = cut.MethodUnderTest()
 
-  {{region MockBehaviorRecursiveLoose#BasicExample}}
-    <TestMethod> _
-		Public Sub ShouldReturnRecursiveMock()
-			Dim cut = New ClassUnderTest()
-
-			' Arrange
-			Mock.Arrange(Function() cut.Repo).Returns(Mock.Create(Of OrderRepository)())
-
-			' Act
-			Dim actual = cut.MethodUnderTest()
-
-			' Assert
-			Assert.AreEqual("Pass", actual)
-		End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual("Pass", actual)
+End Sub
+```
 
 ### RecursiveLoose Mocks in Async Tests  
   
 The RecursiveLoose behavior automatically intercepts the return types in asynchronous calls and returns a mock object:
         
-  #### __[C#]__
+```C#
+[TestMethod]
+public async Task ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
+{
+    //Arrange
+    var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose); // This equals to: Mock.Create<IFirst>();
 
-  {{region MockBehaviorRecursiveLoose#RecursiveLooseMockAsync}}
-    [TestMethod]
-    public async Task ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
-    {
-        //Arrange
-        var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose); // This equals to: Mock.Create<IFirst>();
+    //Act
+    var actual = await foo.Second.Third.GetFourthAsync();
 
-        //Act
-        var actual = await foo.Second.Third.GetFourthAsync();
+    // Assert
+    Assert.IsNotNull(actual.DoSomething());
+}
+```
+```VB
+<TestMethod>
+Public Async Function ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
+    'Arrange
+    Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose) ' This equals to: Mock.Create(Of IFirst)()
 
-        // Assert
-        Assert.IsNotNull(actual.DoSomething());
-    }
-  {{endregion}}
+    'Act
+    Dim actual = Await foo.Second.Third.GetFourthAsync()
 
-  #### __[VB]__
-
-  {{region MockBehaviorRecursiveLoose#RecursiveLooseMockAsync}}
-    <TestMethod>
-    Public Async Function ShouldAssertAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
-        'Arrange
-        Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose) ' This equals to: Mock.Create(Of IFirst)()
-
-        'Act
-        Dim actual = Await foo.Second.Third.GetFourthAsync()
-
-        ' Assert
-        Assert.IsNotNull(actual.DoSomething())
-    End Function
-  {{endregion}}
+    ' Assert
+    Assert.IsNotNull(actual.DoSomething())
+End Function
+```
 
 In some scenarios returning mock objects on asynchronous calls might lead to undesired behavior during acting phase, consider the cases when the return type is a system type. The automatic return type interception could be disabled by explicitly using `NotIntercept` in the following way:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(NotImplementedException))]
+public async Task ShouldThrowAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
+{
+    //Arrange
+    Mock.NotIntercept<IFourth>();
+    var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose);
 
-  {{region MockBehaviorRecursiveLoose#RecursiveLooseDisableMockAsync}}
-    [TestMethod]
-    [ExpectedException(typeof(NotImplementedException))]
-    public async Task ShouldThrowAgainstNonArrangedChainCallInRecursiveLooseMockAsync()
-    {
-        //Arrange
-        Mock.NotIntercept<IFourth>();
-        var foo = Mock.Create<IFirst>(Behavior.RecursiveLoose);
+    //Act
+    var actual = await foo.Second.Third.GetFourthAsync();
 
-        //Act
-        var actual = await foo.Second.Third.GetFourthAsync();
+    // Assert
+    Assert.IsNull(actual.DoSomething());
+}
+```
+```VB
+<TestMethod>
+<ExpectedException(GetType(NotImplementedException))>
+Public Async Function ShouldThrowAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
+    'Arrange
+    Mock.NotIntercept(Of IFourth)()
+    Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose)
 
-        // Assert
-        Assert.IsNull(actual.DoSomething());
-    }
-  {{endregion}}
+    'Act
+    Dim actual = Await foo.Second.Third.GetFourthAsync()
 
-  #### __[VB]__
-
-  {{region MockBehaviorRecursiveLoose#RecursiveLooseDisableMockAsync}}
-    <TestMethod>
-    <ExpectedException(GetType(NotImplementedException))>
-    Public Async Function ShouldThrowAgainstNonArrangedChainCallInRecursiveLooseMockAsync() As Task
-        'Arrange
-        Mock.NotIntercept(Of IFourth)()
-        Dim foo = Mock.Create(Of IFirst)(Behavior.RecursiveLoose)
-
-        'Act
-        Dim actual = Await foo.Second.Third.GetFourthAsync()
-
-        ' Assert
-        Assert.IsNotNull(actual.DoSomething())
-    End Function
-  {{endregion}}
+    ' Assert
+    Assert.IsNotNull(actual.DoSomething())
+End Function
+```
   
 ## See Also
 

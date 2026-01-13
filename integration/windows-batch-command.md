@@ -37,7 +37,9 @@ Once the environment variables are set, you will be able to run elevated JustMoc
 
 Execution command for VS 2019: 
 
-`"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" "C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
+```
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" "C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"
+```
 
 ### With JustMock Runner
 
@@ -53,4 +55,6 @@ __JustMockRunner.exe__ can be found in the JustMock installation directory under
 
  Execution command for VS 2019: 
 
-`"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\JustMockRunner.exe" "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
+```
+"C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\JustMockRunner.exe" "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Progress\Telerik JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"
+```

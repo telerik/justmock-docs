@@ -17,60 +17,50 @@ To understand how to use the __When__ method, check the next examples:
 ## How It Works
 Let's assume we have the following `interface`:
 
-  #### __[C#]__
+```C#
+public interface IFoo
+{
+    bool IsCalled();
+    string Prop { get; set; }
+}
+```
+```VB
+Public Interface IFoo
+    Function IsCalled() As Boolean
 
-  {{region When#InterfaceUnderTest}}
-    public interface IFoo
-    {
-        bool IsCalled();
-        string Prop { get; set; }
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region When#InterfaceUnderTest}}
-    Public Interface IFoo
-        Function IsCalled() As Boolean
-
-        Property Prop() As String
-    End Interface
-  {{endregion}}
+    Property Prop() As String
+End Interface
+```
 
 Using JustMock, we can set a certain arrangement to be used only if another expectations are met. The below test method is a demonstration of this. The `IsCalled` function is arranged to return `true` only if `Prop` is equal to "test".
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void IsCalled_ShouldReturnTrue_WithMockedDependencies()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region When#FirstExample}}
-    [TestMethod]
-    public void IsCalled_ShouldReturnTrue_WithMockedDependencies()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Prop).Returns("test");
+    Mock.Arrange(() => foo.IsCalled()).When(() => foo.Prop == "test").Returns(true);
 
-        Mock.Arrange(() => foo.Prop).Returns("test");
-        Mock.Arrange(() => foo.IsCalled()).When(() => foo.Prop == "test").Returns(true);
+    // Assert
+    Assert.IsTrue(foo.IsCalled());
+}
+```
+```VB
+<TestMethod> _
+Public Sub IsCalled_ShouldReturnTrue_WithMockedDependencies()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Assert.IsTrue(foo.IsCalled());
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Prop).Returns("test")
+    Mock.Arrange(Function() foo.IsCalled()).When(Function() foo.Prop = "test").Returns(True)
 
-  #### __[VB]__
-
-  {{region When#FirstExample}}
-    <TestMethod> _
-    Public Sub IsCalled_ShouldReturnTrue_WithMockedDependencies()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Function() foo.Prop).Returns("test")
-        Mock.Arrange(Function() foo.IsCalled()).When(Function() foo.Prop = "test").Returns(True)
-
-        ' Assert
-        Assert.IsTrue(foo.IsCalled())
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsTrue(foo.IsCalled())
+End Sub
+```
 
 
 ## How It Helps
@@ -79,73 +69,63 @@ There are situations where you need to make an arrangement that will only work w
 
 Look at the following `interface`:
 
-  #### __[C#]__
-
-  {{region When#SecondInterfaceUnderTest}}
-    public interface IRequest
-    {
-        string Method { get; set; }
-        string GetResponse();
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region When#SecondInterfaceUnderTest}}
-    Public Interface IRequest
-        Property Method() As String
-        Function GetResponse() As String
-    End Interface
-  {{endregion}}
+```C#
+public interface IRequest
+{
+    string Method { get; set; }
+    string GetResponse();
+}
+```
+```VB
+Public Interface IRequest
+    Property Method() As String
+    Function GetResponse() As String
+End Interface
+```
 
 In the test, we will check if `GetResponse()` has been called once when `Method` == "GET" and once more when `Method` == "POST". Note that, the `Method` property is unrelated to the `GetResponse()` method.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
+{
+    // Arrange
+    var mock = Mock.Create<IRequest>();
 
-  {{region When#ThirdExample}}
-    [TestMethod]
-    public void ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
-    {
-        // Arrange
-        var mock = Mock.Create<IRequest>();
+    Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "GET").OccursOnce();
+    Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "POST").OccursOnce();
 
-        Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "GET").OccursOnce();
-        Mock.Arrange(() => mock.GetResponse()).When(() => mock.Method == "POST").OccursOnce();
+    // Act
+    mock.Method = "GET";
+    mock.GetResponse();
 
-        // Act
-        mock.Method = "GET";
-        mock.GetResponse();
+    mock.Method = "POST";
+    mock.GetResponse();
 
-        mock.Method = "POST";
-        mock.GetResponse();
+    // Assert
+    Mock.Assert(mock);
+}
+```
+```VB
+<TestMethod> _
+Public Sub ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
+    ' Arrange
+    Dim requestMock = Mock.Create(Of IRequest)()
 
-        // Assert
-        Mock.Assert(mock);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "GET").OccursOnce()
+    Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "POST").OccursOnce()
 
-  #### __[VB]__
+    ' Act
+    requestMock.Method = "GET"
+    requestMock.GetResponse()
 
-  {{region When#ThirdExample}}
-    <TestMethod> _
-    Public Sub ShouldAssertThatSUTCallsGetResponseWithBothGetAndPostMethods()
-        ' Arrange
-        Dim requestMock = Mock.Create(Of IRequest)()
+    requestMock.Method = "POST"
+    requestMock.GetResponse()
 
-        Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "GET").OccursOnce()
-        Mock.Arrange(Function() requestMock.GetResponse()).When(Function() requestMock.Method = "POST").OccursOnce()
-
-        ' Act
-        requestMock.Method = "GET"
-        requestMock.GetResponse()
-
-        requestMock.Method = "POST"
-        requestMock.GetResponse()
-
-        ' Assert
-        Mock.Assert(requestMock)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(requestMock)
+End Sub
+```
 
 
 ## See Also

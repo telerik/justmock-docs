@@ -31,111 +31,101 @@ As *MockingContainer<T>* derives from *Ninject.StandardKernel*, you can configur
 
 Assume that we have the following code, to be tested:
 
-  #### __[C#]__
+  ```C#
+public class ClassUnderTest
+{
+    private IFirstDependency firstDep;
+    private ISecondDependency secondDep;
+    private IThirdDependency thirdDep;
 
-  {{region AutoMocking#SUT}}
-    public class ClassUnderTest
+    public ClassUnderTest(IFirstDependency first, ISecondDependency second, IThirdDependency third)
     {
-        private IFirstDependency firstDep;
-        private ISecondDependency secondDep;
-        private IThirdDependency thirdDep;
-
-        public ClassUnderTest(IFirstDependency first, ISecondDependency second, IThirdDependency third)
-        {
-            this.firstDep = first;
-            this.secondDep = second;
-            this.thirdDep = third;
-        }
-
-        public IList<object> CollectionMethod()
-        {
-            var firstCollection = firstDep.GetList();
-
-            return firstCollection;
-        }
-
-        public string StringMethod()
-        {
-            var secondString = secondDep.GetString();
-
-            return secondString;
-        }
-
-        public void SetIntMethod(int value)
-        {
-            thirdDep.IntValue = value;
-        }
+        this.firstDep = first;
+        this.secondDep = second;
+        this.thirdDep = third;
     }
-  {{endregion}}
 
-  #### __[VB]__
+    public IList<object> CollectionMethod()
+    {
+        var firstCollection = firstDep.GetList();
 
-  {{region AutoMocking#SUT}}
-    Public Class ClassUnderTest
-        Private firstDep As IFirstDependency
-        Private secondDep As ISecondDependency
-        Private thirdDep As IThirdDependency
+        return firstCollection;
+    }
 
-        Public Sub New(first As IFirstDependency, second As ISecondDependency, third As IThirdDependency)
-            Me.firstDep = first
-            Me.secondDep = second
-            Me.thirdDep = third
-        End Sub
+    public string StringMethod()
+    {
+        var secondString = secondDep.GetString();
 
-        Public Function CollectionMethod() As IList(Of Object)
-            Dim firstCollection = firstDep.GetList()
+        return secondString;
+    }
 
-            Return firstCollection
-        End Function
+    public void SetIntMethod(int value)
+    {
+        thirdDep.IntValue = value;
+    }
+}
+ ```
+  ```VB
+Public Class ClassUnderTest
+    Private firstDep As IFirstDependency
+    Private secondDep As ISecondDependency
+    Private thirdDep As IThirdDependency
 
-        Public Function StringMethod() As String
-            Dim secondString = secondDep.GetString()
+    Public Sub New(first As IFirstDependency, second As ISecondDependency, third As IThirdDependency)
+        Me.firstDep = first
+        Me.secondDep = second
+        Me.thirdDep = third
+    End Sub
 
-            Return secondString
-        End Function
+    Public Function CollectionMethod() As IList(Of Object)
+        Dim firstCollection = firstDep.GetList()
 
-        Public Sub SetIntMethod(ByVal value As Integer)
-            thirdDep.IntValue = value
-        End Sub
-    End Class
-  {{endregion}}
+        Return firstCollection
+    End Function
+
+    Public Function StringMethod() As String
+        Dim secondString = secondDep.GetString()
+
+        Return secondString
+    End Function
+
+    Public Sub SetIntMethod(ByVal value As Integer)
+        thirdDep.IntValue = value
+    End Sub
+End Class
+ ```
 
 As you can see, our `ClassUnderTest` has two external dependencies:
 
-  #### __[C#]__
+  ```C#
+public interface IFirstDependency
+{
+    IList<object> GetList();
+}
 
-  {{region AutoMocking#Dependencies}}
-    public interface IFirstDependency
-    {
-        IList<object> GetList();
-    }
+public interface ISecondDependency
+{
+    string GetString();
+}
 
-    public interface ISecondDependency
-    {
-        string GetString();
-    }
+public interface IThirdDependency
+{
+    int IntValue { get; set; }
+}
+ ```
+  ```VB
+Public Interface IFirstDependency
+    Function GetList() As IList(Of Object)
+End Interface
 
-    public interface IThirdDependency
-    {
-        int IntValue { get; set; }
-    }
-  {{endregion}}
+Public Interface ISecondDependency
+    Function GetString() As String
+End Interface
 
-  #### __[VB]__
-
-  {{region AutoMocking#Dependencies}}
-    Public Interface IFirstDependency
-        Function GetList() As IList(Of Object)
-    End Interface
-
-    Public Interface ISecondDependency
-        Function GetString() As String
-    End Interface
-
-    Interface IThirdDependency
-        Property IntValue As Integer
-    End Interface
-  {{endregion}}
+Interface IThirdDependency
+    Property IntValue As Integer
+End Interface
+ ```
 
 To test the class under test against certain scenarios you will have to mock the dependencies. One way to do this is to mock them one by one and arrange their behavior as shown below:
 
@@ -150,60 +140,55 @@ To test the class under test against certain scenarios you will have to mock the
 1. We __assert__ our expectations.
           
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldMockDependenciesWithoutContainer()
+{
+    // Arrange
+    var firstDep = Mock.Create<IFirstDependency>();
+    var secondDep = Mock.Create<ISecondDependency>();
+    var thirdDep = Mock.Create<IThirdDependency>();
 
-  {{region AutoMocking#TestingWITHOUTContainer}}
-    [TestMethod]
-    public void ShouldMockDependenciesWithoutContainer()
-    {
-        // Arrange
-        var firstDep = Mock.Create<IFirstDependency>();
-        var secondDep = Mock.Create<ISecondDependency>();
-        var thirdDep = Mock.Create<IThirdDependency>();
+    var newInstance = new ClassUnderTest(firstDep, secondDep, thirdDep);
 
-        var newInstance = new ClassUnderTest(firstDep, secondDep, thirdDep);
+    string expectedString = "Test";
+    int expectedInt = 10;
 
-        string expectedString = "Test";
-        int expectedInt = 10;
+    Mock.Arrange(() => secondDep.GetString()).Returns(expectedString);
 
-        Mock.Arrange(() => secondDep.GetString()).Returns(expectedString);
+    // Act
+    var actual = newInstance.StringMethod();
+    newInstance.SetIntMethod(expectedInt);
 
-        // Act
-        var actual = newInstance.StringMethod();
-        newInstance.SetIntMethod(expectedInt);
+    // Assert
+    Assert.AreEqual(expectedString, actual);
+    Assert.AreEqual(expectedInt, thirdDep.IntValue);
+}
+ ```
+  ```VB
+<TestMethod()>
+Public Sub ShouldMockDependenciesWithoutContainer()
+    ' Arrange
+    Dim firstDep = Mock.Create(Of IFirstDependency)()
+    Dim secondDep = Mock.Create(Of ISecondDependency)()
+    Dim thirdDep = Mock.Create(Of IThirdDependency)()
 
-        // Assert
-        Assert.AreEqual(expectedString, actual);
-        Assert.AreEqual(expectedInt, thirdDep.IntValue);
-    }
-  {{endregion}}
+    Dim newInstance = New ClassUnderTest(firstDep, secondDep, thirdDep)
 
-  #### __[VB]__
+    Dim expectedString As String = "Test"
+    Dim expectedInt As Integer = 10
 
-  {{region AutoMocking#TestingWITHOUTContainer}}
-    <TestMethod()>
-    Public Sub ShouldMockDependenciesWithoutContainer()
-        ' Arrange
-        Dim firstDep = Mock.Create(Of IFirstDependency)()
-        Dim secondDep = Mock.Create(Of ISecondDependency)()
-        Dim thirdDep = Mock.Create(Of IThirdDependency)()
+    Mock.Arrange(Function() secondDep.GetString()).Returns(expectedString)
 
-        Dim newInstance = New ClassUnderTest(firstDep, secondDep, thirdDep)
+    ' Act
+    Dim actual = newInstance.StringMethod()
+    newInstance.SetIntMethod(expectedInt)
 
-        Dim expectedString As String = "Test"
-        Dim expectedInt As Integer = 10
-
-        Mock.Arrange(Function() secondDep.GetString()).Returns(expectedString)
-
-        ' Act
-        Dim actual = newInstance.StringMethod()
-        newInstance.SetIntMethod(expectedInt)
-
-        ' Assert
-        Assert.AreEqual(expectedString, actual)
-        Assert.AreEqual(expectedInt, thirdDep.IntValue)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(expectedString, actual)
+    Assert.AreEqual(expectedInt, thirdDep.IntValue)
+End Sub
+ ```
 
 This will work for certain scenarios, but not for all of them. For example there will be scenarios where you will have more dependencies and all of them needing to be mocked. In these cases you will find the JustMock __mocking container__ very handy. Next is how the previous example will look like using the __Automocking__ feature:
 
@@ -218,101 +203,90 @@ This will work for certain scenarios, but not for all of them. For example there
 
 > Import the `Telerik.JustMock` and `Telerik.JustMock.AutoMock` namespaces.
 
+```C#
+[TestMethod]
+public void ShouldMockDependenciesWithContainer()
+{
+    // Arrange
+    var container = new MockingContainer<ClassUnderTest>();
 
-  #### __[C#]__
+    string expectedString = "Test";
+    int expectedInt = 10;
 
-  {{region AutoMocking#TestingWITHContainer}}
-    [TestMethod]
-    public void ShouldMockDependenciesWithContainer()
-    {
-        // Arrange
-        var container = new MockingContainer<ClassUnderTest>();
-
-        string expectedString = "Test";
-        int expectedInt = 10;
-
-        container.Arrange<ISecondDependency>(
+    container.Arrange<ISecondDependency>(
            secondDep => secondDep.GetString()).Returns(expectedString);
 
-        // Act
-        var actualString = container.Instance.StringMethod();
-        container.Instance.SetIntMethod(expectedInt);
+    // Act
+    var actualString = container.Instance.StringMethod();
+    container.Instance.SetIntMethod(expectedInt);
 
-        // Assert
-        Assert.AreEqual(expectedString, actualString);
-        container.AssertSet<IThirdDependency>(thirdDep => thirdDep.IntValue = expectedInt);
-    }
-  {{endregion}}
+    // Assert
+    Assert.AreEqual(expectedString, actualString);
+    container.AssertSet<IThirdDependency>(thirdDep => thirdDep.IntValue = expectedInt);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldMockDependenciesWithContainer()
+    ' Arrange
+    Dim container = New MockingContainer(Of ClassUnderTest)()
 
-  #### __[VB]__
+    Dim expectedString As String = "Test"
+    Dim expectedInt As Integer = 10
 
-  {{region AutoMocking#TestingWITHContainer}}
-    <TestMethod()>
-    Public Sub ShouldMockDependenciesWithContainer()
-        ' Arrange
-        Dim container = New MockingContainer(Of ClassUnderTest)()
+    container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).Returns(expectedString)
 
-        Dim expectedString As String = "Test"
-        Dim expectedInt As Integer = 10
+    ' Act
+    Dim actualString = container.Instance.StringMethod()
+    container.Instance.SetIntMethod(expectedInt)
 
-        container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).Returns(expectedString)
-
-        ' Act
-        Dim actualString = container.Instance.StringMethod()
-        container.Instance.SetIntMethod(expectedInt)
-
-        ' Assert
-        Assert.AreEqual(expectedString, actualString)
-        container.AssertSet(Of IThirdDependency)(Sub(thirdDep) thirdDep.IntValue = expectedInt)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(expectedString, actualString)
+    container.AssertSet(Of IThirdDependency)(Sub(thirdDep) thirdDep.IntValue = expectedInt)
+End Sub
+```
 
 In this way, your test method stays more consistent and adding another dependency, won't break it's logic.
 
 Another way to __assert__ the arrangements is shown in the next example:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertAllContainerArrangments()
+{
+    // Arrange
+    var container = new MockingContainer<ClassUnderTest>();
 
-  {{region AutoMocking#AssertingAllContainerArrangings}}
-    [TestMethod]
-    public void ShouldAssertAllContainerArrangments()
-    {
-        // Arrange
-        var container = new MockingContainer<ClassUnderTest>();
-
-        container.Arrange<ISecondDependency>(
+    container.Arrange<ISecondDependency>(
            secondDep => secondDep.GetString()).MustBeCalled();
-        container.ArrangeSet<IThirdDependency>(
+    container.ArrangeSet<IThirdDependency>(
             thirdDep => thirdDep.IntValue = Arg.AnyInt).MustBeCalled();
 
-        // Act
-        var actualString = container.Instance.StringMethod();
-        container.Instance.SetIntMethod(10);
+    // Act
+    var actualString = container.Instance.StringMethod();
+    container.Instance.SetIntMethod(10);
 
-        // Assert
-        container.AssertAll();
-    }
-  {{endregion}}
+    // Assert
+    container.AssertAll();
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertAllContainerArrangments()
+    ' Arrange
+    Dim container = New MockingContainer(Of ClassUnderTest)()
 
-  #### __[VB]__
+    container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).MustBeCalled()
+    container.ArrangeSet(Of IThirdDependency)(Sub(thirdDep) thirdDep.IntValue = Arg.AnyInt).MustBeCalled()
 
-  {{region AutoMocking#AssertingAllContainerArrangings}}
-    <TestMethod()>
-    Public Sub ShouldAssertAllContainerArrangments()
-        ' Arrange
-        Dim container = New MockingContainer(Of ClassUnderTest)()
+    ' Act
+    Dim actualString = container.Instance.StringMethod()
+    container.Instance.SetIntMethod(10)
 
-        container.Arrange(Of ISecondDependency)(Function(secondDep) secondDep.GetString()).MustBeCalled()
-        container.ArrangeSet(Of IThirdDependency)(Sub(thirdDep) thirdDep.IntValue = Arg.AnyInt).MustBeCalled()
-
-        ' Act
-        Dim actualString = container.Instance.StringMethod()
-        container.Instance.SetIntMethod(10)
-
-        ' Assert
-        container.AssertAll()
-    End Sub
-  {{endregion}}
+    ' Assert
+    container.AssertAll()
+End Sub
+```
 
 This style of assertion let's you focus on the __arrange__, as a container of your tests logic.
 
@@ -330,98 +304,86 @@ Following this article, you will see examples that should explain how __Elevated
 
 The first example shows how easily inheritance could be handled using this feature. Assume, we have the class below with its dependency:
 
-  #### __[C#]__
+```C#
+public interface IAnimal
+{
+    void Walk();
+}
 
-  {{region ElevatedAutoMocking#SUT1}}
-    public interface IAnimal
+public class Person : IAnimal
+{
+    public void Walk()
     {
-        void Walk();
+
+    }
+}
+
+public class PersonRepository
+{
+    public PersonRepository(Person person)
+    {
+        this.person = person;
     }
 
-    public class Person : IAnimal
+    public void Walk()
     {
-        public void Walk()
-        {
-
-        }
+        (this.person as IAnimal).Walk();
     }
 
-    public class PersonRepository
-    {
-        public PersonRepository(Person person)
-        {
-            this.person = person;
-        }
+    private readonly Person person;
+}
+```
+```VB
+Public Interface IAnimal
+    Sub Walk()
+End Interface
 
-        public void Walk()
-        {
-            (this.person as IAnimal).Walk();
-        }
+Public Class Person
+Implements IAnimal
+    Public Sub Walk() Implements IAnimal.Walk
 
-        private readonly Person person;
-    }
-  {{endregion}}
+    End Sub
+End Class
 
-  #### __[VB]__
+Public Class PersonRepository
+    Public Sub New(person As Person)
+        Me.person = person
+    End Sub
 
-  {{region ElevatedAutoMocking#SUT1}}
-    Public Interface IAnimal
-        Sub Walk()
-    End Interface
+    Public Sub Walk()
+        TryCast(Me.person, IAnimal).Walk()
+    End Sub
 
-    Public Class Person
-    Implements IAnimal
-        Public Sub Walk() Implements IAnimal.Walk
-
-        End Sub
-    End Class
-
-    Public Class PersonRepository
-        Public Sub New(person As Person)
-            Me.person = person
-        End Sub
-
-        Public Sub Walk()
-            TryCast(Me.person, IAnimal).Walk()
-        End Sub
-
-        Private ReadOnly person As Person
-    End Class
-  {{endregion}}
+    Private ReadOnly person As Person
+End Class
+```
 
 With JustMocks __Elevated Automocking__ we are able to directly write the next test:
 
+```C#
+[TestMethod]
+public void ShouldAutoMockConcretedDependecies()
+{
+    var container = new MockingContainer<PersonRepository>();
 
-  #### __[C#]__
-
-  {{region ElevatedAutoMocking#ShouldAutoMockConcretedDependecies}}
-    [TestMethod]
-    public void ShouldAutoMockConcretedDependecies()
-    {
-        var container = new MockingContainer<PersonRepository>();
-
-        container.Arrange<Person>(anml => anml.Walk()).MustBeCalled();
-
-        container.Instance.Walk();
-
-        container.Assert<Person>(anml => anml.Walk());
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region ElevatedAutoMocking#ShouldAutoMockConcretedDependecies}}
-    <TestMethod>
-    Public Sub ShouldAutoMockConcretedDependecies()
-        Dim container = New MockingContainer(Of PersonRepository)()
-
-        container.Arrange(Of Person)(Sub(anml) anml.Walk()).MustBeCalled()
-
-        container.Instance.Walk()
         
-        container.Assert(Of Person)(Sub(anml) anml.Walk())
-    End Sub
-  {{endregion}}
+    container.Instance.Walk();
+
+    container.Assert<Person>(anml => anml.Walk());
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldAutoMockConcretedDependecies()
+    Dim container = New MockingContainer(Of PersonRepository)()
+
+    container.Arrange(Of Person)(Sub(anml) anml.Walk()).MustBeCalled()
+
+    container.Instance.Walk()
+        
+    container.Assert(Of Person)(Sub(anml) anml.Walk())
+End Sub
+```
 
 This saves us the time of creating independent mock for our dependency, and further, the inheritance is preserved.
 
@@ -429,132 +391,121 @@ The second example shows how multiple dependencies of the same type could be man
 
 Note the following classes:
 
-  #### __[C#]__
+```C#
+public class Account
+{
+    public decimal Balance { get; set; }
 
-  {{region ElevatedAutoMocking#SUT2}}
-    public class Account
+    public void Deposit(decimal amount)
     {
-        public decimal Balance { get; set; }
+        throw new NotImplementedException();
+    }
 
-        public void Deposit(decimal amount)
-        {
-            throw new NotImplementedException();
-        }
+    public void Withdraw(decimal amount)
+    {
+        throw new NotImplementedException();
+    }
+}
 
-        public void Withdraw(decimal amount)
+public class AccountService
+{
+    public AccountService(Account fromAccount, Account toAccount)
+    {
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+    }
+
+    public void TransferFunds(decimal amount)
+    {
+        if (fromAccount.Balance <= amount)
         {
-            throw new NotImplementedException();
+            fromAccount.Withdraw(amount);
+            toAccount.Deposit(amount);
         }
     }
 
-    public class AccountService
-    {
-        public AccountService(Account fromAccount, Account toAccount)
-        {
-            this.fromAccount = fromAccount;
-            this.toAccount = toAccount;
-        }
+    private readonly Account fromAccount;
+    private readonly Account toAccount;
+}
+```
+```VB
+Public Class Account
+    Public Property Balance() As Decimal
+        Get
+            Return m_Balance
+        End Get
+        Set
+            m_Balance = Value
+        End Set
+    End Property
+    Private m_Balance As Decimal
 
-        public void TransferFunds(decimal amount)
-        {
-            if (fromAccount.Balance <= amount)
-            {
-                fromAccount.Withdraw(amount);
-                toAccount.Deposit(amount);
-            }
-        }
+    Public Sub Deposit(amount As Decimal)
+        Throw New NotImplementedException()
+    End Sub
 
-        private readonly Account fromAccount;
-        private readonly Account toAccount;
-    }
-  {{endregion}}
+    Public Sub Withdraw(amount As Decimal)
+        Throw New NotImplementedException()
+    End Sub
+End Class
 
-  #### __[VB]__
-
-  {{region ElevatedAutoMocking#SUT2}}
-    Public Class Account
-        Public Property Balance() As Decimal
-            Get
-                Return m_Balance
-            End Get
-            Set
-                m_Balance = Value
-            End Set
-        End Property
-        Private m_Balance As Decimal
-
-        Public Sub Deposit(amount As Decimal)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Sub Withdraw(amount As Decimal)
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-
-    Public Class AccountService
-        Public Sub New(fromAccount As Account, toAccount As Account)
+Public Class AccountService
+    Public Sub New(fromAccount As Account, toAccount As Account)
             Me.fromAccount = fromAccount
             Me.toAccount = toAccount
-        End Sub
+    End Sub
 
-        Public Sub TransferFunds(amount As Decimal)
-            If fromAccount.Balance <= amount Then
+    Public Sub TransferFunds(amount As Decimal)
+        If fromAccount.Balance <= amount Then
                 fromAccount.Withdraw(amount)
                 toAccount.Deposit(amount)
-            End If
-        End Sub
+        End If
+    End Sub
 
-        Private ReadOnly fromAccount As Account
-        Private ReadOnly toAccount As Account
-    End Class
-  {{endregion}}
+    Private ReadOnly fromAccount As Account
+    Private ReadOnly toAccount As Account
+End Class
+```
 
 Again, we are able to directly apply the next test method:
 
+```C#
+[TestMethod]
+public void ShouldTransferFundsBetweenTwoAccounts()
+{
+    var container = new MockingContainer<AccountService>();
 
-  #### __[C#]__
+    decimal expectedBalance = 100;
 
-  {{region ElevatedAutoMocking#ShouldTransferFundsBetweenTwoAccounts}}
-    [TestMethod]
-    public void ShouldTransferFundsBetweenTwoAccounts()
-    {
-        var container = new MockingContainer<AccountService>();
-
-        decimal expectedBalance = 100;
-
-        container.Bind<Account>().ToMock().InjectedIntoParameter("fromAccount")
+    container.Bind<Account>().ToMock().InjectedIntoParameter("fromAccount")
             .AndArrange(x => Mock.Arrange(() => x.Balance).Returns(expectedBalance).MustBeCalled())
             .AndArrange(x => Mock.Arrange(() => x.Withdraw(expectedBalance)).MustBeCalled());
-        container.Bind<Account>().ToMock().InjectedIntoParameter("toAccount")
+    container.Bind<Account>().ToMock().InjectedIntoParameter("toAccount")
             .AndArrange(x => Mock.Arrange(() => x.Deposit(expectedBalance)).MustBeCalled());
 
-        container.Instance.TransferFunds(expectedBalance);
+    container.Instance.TransferFunds(expectedBalance);
 
-        container.Assert();
-    }
-  {{endregion}}
+    container.Assert();
+}
+```
+```VB
+<TestMethod> _
+Public Sub ShouldTransferFundsBetweenTwoAccounts()
+    Dim container = New MockingContainer(Of AccountService)()
 
-  #### __[VB]__
+    Dim expectedBalance As Decimal = 100
 
-  {{region ElevatedAutoMocking#ShouldTransferFundsBetweenTwoAccounts}}
-    <TestMethod> _
-    Public Sub ShouldTransferFundsBetweenTwoAccounts()
-        Dim container = New MockingContainer(Of AccountService)()
-
-        Dim expectedBalance As Decimal = 100
-
-        container.Bind(Of Account)().ToMock().InjectedIntoParameter("fromAccount") _
+    container.Bind(Of Account)().ToMock().InjectedIntoParameter("fromAccount") _
             .AndArrange(Sub(x) Mock.Arrange(Function() x.Balance).Returns(expectedBalance).MustBeCalled()) _
             .AndArrange(Sub(x) Mock.Arrange(Sub() x.Withdraw(expectedBalance)).MustBeCalled())
-        container.Bind(Of Account).ToMock().InjectedIntoParameter("toAccount") _
+    container.Bind(Of Account).ToMock().InjectedIntoParameter("toAccount") _
             .AndArrange(Sub(x) Mock.Arrange(Sub() x.Deposit(expectedBalance)).MustBeCalled())
 
-        container.Instance.TransferFunds(expectedBalance)
+    container.Instance.TransferFunds(expectedBalance)
 
-        container.Assert()
-    End Sub
-  {{endregion}}
+    container.Assert()
+End Sub
+```
 
 Here, you are able to arrange the behavior of the different Account dependencies, from the mocking container.
 

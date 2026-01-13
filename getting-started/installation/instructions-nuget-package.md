@@ -49,12 +49,12 @@ Once you have configured Visual Studio to access the Telerik NuGet server, add t
 
 - On the command line you can use the following commands:
 
-    ```bat
-    dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik.com" --username <TELERIK_USER> --password <TELERIK_PASS>
-    dotnet add package JustMock.Commercial --version 2024.4.1203.350
-    ```
+```bat
+dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik.com" --username <TELERIK_USER> --password <TELERIK_PASS>
+dotnet add package JustMock.Commercial --version 2024.4.1203.350
+```
 
-    > Telerik NuGet feed can be used with NuGet API keys, check this [article](https://docs.telerik.com/kendo-ui/intro/installation/nuget-keys) to learn more.
+> Telerik NuGet feed can be used with NuGet API keys, check this [article](https://docs.telerik.com/kendo-ui/intro/installation/nuget-keys) to learn more.
 
 ## Installing JustMock Lite
 

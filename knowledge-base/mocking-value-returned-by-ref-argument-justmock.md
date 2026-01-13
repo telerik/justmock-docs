@@ -20,80 +20,62 @@ While attempting to mock a method that has a ByRef argument, the expectation is 
 
 Considering the following method under test:
 
-#### __[C#]__
-
-{{region FixByRef#DemoClass}}
-
-    public class SomeDemoClass
+```C#
+public class SomeDemoClass
+{
+    public void SomeByRefParameter(string value, ref string @out)
     {
-        public void SomeByRefParameter(string value, ref string @out)
-        {
-            out = "Nonsense";
-        }
+        out = "Nonsense";
     }
-
-{{endregion}}
-
-#### __[VB]__
-
-{{region FixByRef#DemoClass}}
-
-    Public Class SomeDemoClass
-        Public Sub SomeByRefParameter(value As String, ByRef out As String)
-            out = "Nonsense"
-        End Sub
-    End Class
-
-{{endregion}}
+}
+```
+```VB
+Public Class SomeDemoClass
+    Public Sub SomeByRefParameter(value As String, ByRef out As String)
+        out = "Nonsense"
+    End Sub
+End Class
+```
 
 and the test:
+ 
+```C#
+[TestMethod]
+public void ArgRefTest()
+{
+    var classUnderTest = new SomeDemoClass();
+    string value = "Hello";
+    string expectedResult = "The value passed in parameter 'value' is 'Hello'";
+    string actualResult = null;
 
-#### __[C#]__
+    // Arrange
+    Mock.Arrange(() => classUnderTest.SomeByRefParameter(value, Arg.Ref(expectedResult).Value));
 
-{{region FixByRef#DemoTest}}
+    // Act
+    classUnderTest.SomeByRefParameter(value, actualResult);
 
-    [TestMethod]
-    public void ArgRefTest()
-    {
-        var classUnderTest = new SomeDemoClass();
-        string value = "Hello";
-        string expectedResult = "The value passed in parameter 'value' is 'Hello'";
-        string actualResult = null;
+    // Assert
+    Assert.AreEqual(expectedResult, actualResult);
+}
+```
+```VB
+<TestMethod>
+Public Sub ArgRefTest()
+    Dim classUnderTest = New SomeDemoClass()
+    Dim value = "Hello"
+    Dim expectedResult = "The value passed in parameter 'value' is 'Hello'"
+    Dim actualResult As String = Nothing
 
-        // Arrange
-        Mock.Arrange(() => classUnderTest.SomeByRefParameter(value, Arg.Ref(expectedResult).Value));
+    ' Arrange
+    Mock.Arrange(Sub() classUnderTest.SomeByRefParameter(value, Arg.Ref(expectedResult).Value))
 
-        // Act
-        classUnderTest.SomeByRefParameter(value, actualResult);
+    ' Act
+    classUnderTest.SomeByRefParameter(value, actualResult)
 
-        // Assert
-        Assert.AreEqual(expectedResult, actualResult);
-    }
-
-{{endregion}}
-
-#### __[VB]__
-
-{{region FixByRef#DemoTest}}
-  
-    <TestMethod>
-    Public Sub ArgRefTest()
-        Dim classUnderTest = New SomeDemoClass()
-        Dim value = "Hello"
-        Dim expectedResult = "The value passed in parameter 'value' is 'Hello'"
-        Dim actualResult As String = Nothing
-
-        ' Arrange
-        Mock.Arrange(Sub() classUnderTest.SomeByRefParameter(value, Arg.Ref(expectedResult).Value))
-
-        ' Act
-        classUnderTest.SomeByRefParameter(value, actualResult)
-
-        ' Assert
-        Assert.AreEqual(expectedResult, actualResult)
-    End Sub
-
-{{endregion}}
+    ' Assert
+    Assert.AreEqual(expectedResult, actualResult)
+End Sub
+```
 
 ## Solution
 To mock a method that includes ByRef arguments and to ensure the ByRef parameter is appropriately overwritten, follow the steps outlined below. The key is to use the `DoInstead` arrangement clause effectively.
@@ -104,54 +86,45 @@ To mock a method that includes ByRef arguments and to ensure the ByRef parameter
 
 Here is an example demonstrating how to apply these steps in a unit test with Telerik JustMock:
 
-#### __[C#]__
+```C#
+[TestMethod]
+public void ArgRefTest()
+{
+    var classUnderTest = new SomeDemoClass();
+    string value = "Hello";
+    string expectedResult = "The value passed in parameter 'value' is 'Hello'";
+    string actualResult = null;
 
-{{region FixByRef#SolutionTest}}
+    // Arrange
+    Mock.Arrange(() => classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value))
+        .DoInstead((val, ref @out) => out = expectedResult);
 
-    [TestMethod]
-    public void ArgRefTest()
-    {
-        var classUnderTest = new SomeDemoClass();
-        string value = "Hello";
-        string expectedResult = "The value passed in parameter 'value' is 'Hello'";
-        string actualResult = null;
+    // Act
+    classUnderTest.SomeByRefParameter(value, actualResult);
 
-        // Arrange
-        Mock.Arrange(() => classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value))
-            .DoInstead((val, ref @out) => out = expectedResult);
+    // Assert
+    Assert.AreEqual(expectedResult, actualResult);
+}
+```
+```VB
+<TestMethod>
+Public Sub ArgRefTest()
+    Dim classUnderTest = New SomeDemoClass()
+    Dim value = "Hello"
+    Dim expectedResult = "The value passed in parameter 'value' is 'Hello'"
+    Dim actualResult As String = Nothing
 
-        // Act
-        classUnderTest.SomeByRefParameter(value, actualResult);
+    ' Arrange
+    Mock.Arrange(Sub() classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value)) _
+        .DoInstead(Sub(val, ByRef out) out = expectedResult)
 
-        // Assert
-        Assert.AreEqual(expectedResult, actualResult);
-    }
+    ' Act
+    classUnderTest.SomeByRefParameter(value, actualResult)
 
-{{endregion}}
-
-#### __[VB]__
-
-{{region FixByRef#SolutionTest}}
- 
-    <TestMethod>
-    Public Sub ArgRefTest()
-        Dim classUnderTest = New SomeDemoClass()
-        Dim value = "Hello"
-        Dim expectedResult = "The value passed in parameter 'value' is 'Hello'"
-        Dim actualResult As String = Nothing
-
-        ' Arrange
-        Mock.Arrange(Sub() classUnderTest.SomeByRefParameter(value, Arg.Ref(Arg.AnyString).Value)) _
-            .DoInstead(Sub(val, ByRef out) out = expectedResult)
-
-        ' Act
-        classUnderTest.SomeByRefParameter(value, actualResult)
-
-        ' Assert
-        Assert.AreEqual(expectedResult, actualResult)
-    End Sub
-
-{{endregion}}
+    ' Assert
+    Assert.AreEqual(expectedResult, actualResult)
+End Sub
+```
 
 In this code snippet, the `DoInstead` clause is used to overwrite the `ByRef` argument `out` with the `expectedResult` variable. The `Arg.Ref(Arg.AnyString).Value` matcher is employed to apply the arrangement regardless of the string value passed as an argument.
 

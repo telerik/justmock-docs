@@ -19,97 +19,93 @@ Threadpool mocking is one of the advanced features supported in __Telerik® Just
 
 We will use the following sample code to illustrate how you can do this:
 
-  #### __[C#]__
+```C#
+public class Mockable
+{
+	public bool IsMocked
+	{
+		get
+		{
+			throw new NotImplementedException();
+		}
+	}
+}
 
-  {{region ThreadpoolMocking#SampleCode1}}
-    public class Mockable
+internal class WaitLatch : IDisposable
+{
+	public void Wait()
 	{
-	    public bool IsMocked
-	    {
-	        get
-	        {
-	            throw new NotImplementedException();
-	        }
-	    }
+		while (autoResetEvent.WaitOne())
+		{
+			if (currentCount >= initialCount)
+				break;
+		}
 	}
-	
-	internal class WaitLatch : IDisposable
+
+	public void Signal()
 	{
-	    public void Wait()
-	    {
-	        while (autoResetEvent.WaitOne())
-	        {
-	            if (currentCount >= initialCount)
-	                break;
-	        }
-	    }
-	
-	    public void Signal()
-	    {
-	        Interlocked.Increment(ref currentCount);
-	        autoResetEvent.Set();
-	    }
-	
-	    public void Dispose()
-	    {
-	        Dispose(true);
-	        GC.SuppressFinalize(this);
-	    }
-	
-	    protected virtual void Dispose(bool disposing)
-	    {
-	        if (disposing)
-	            if (autoResetEvent != null)
-	            {
-	                autoResetEvent = null;
-	            }
-	    }
-	
-	    ~WaitLatch()
-	    {
-	        Dispose(false);
-	    }
-	
-	    private int currentCount;
-	    private const int initialCount = 1;
-	
-	    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+		Interlocked.Increment(ref currentCount);
+		autoResetEvent.Set();
 	}
-  {{endregion}}
+
+	public void Dispose()
+	{
+		Dispose(true);
+		GC.SuppressFinalize(this);
+	}
+
+	protected virtual void Dispose(bool disposing)
+	{
+		if (disposing)
+			if (autoResetEvent != null)
+			{
+				autoResetEvent = null;
+			}
+	}
+
+	~WaitLatch()
+	{
+		Dispose(false);
+	}
+
+	private int currentCount;
+	private const int initialCount = 1;
+
+	AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+}
+```
 
 
 Here the `WaitLatch` class represents the thread we are going to execute. Inside the thread we will access an instance of the `Mockable` class. Let's see a complete example:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldInvokeMockInsideAChildThreadFromThreadPool()
+{
+	var mockable = Mock.Create<Mockable>();
+	Mock.Arrange(() => mockable.IsMocked).Returns(true);
 
-  {{region ThreadpoolMocking#SampleCode2}}
-    [TestMethod]
-	public void ShouldInvokeMockInsideAChildThreadFromThreadPool()
+	bool mocked = false;
+
+	var latch = new WaitLatch();
+
+	ThreadPool.QueueUserWorkItem((cookie) =>
 	{
-	    var mockable = Mock.Create<Mockable>();
-	    Mock.Arrange(() => mockable.IsMocked).Returns(true);
-	
-	    bool mocked = false;
-	
-	    var latch = new WaitLatch();
-	
-	    ThreadPool.QueueUserWorkItem((cookie) =>
-	    {
-	        try
-	        {
-	            mocked = mockable.IsMocked;
-	        }
-	        finally
-	        {
-	            latch.Signal();
-	        }
-	    });
-	
-	    latch.Wait();
-	
-	    Assert.IsTrue(mocked);
-	}
-  {{endregion}}
+		try
+		{
+			mocked = mockable.IsMocked;
+		}
+		finally
+		{
+			latch.Signal();
+		}
+	});
+
+	latch.Wait();
+
+	Assert.IsTrue(mocked);
+}
+```
 
 
 We use `Mock.Arrange` to specify that the `IsMocked` property should return true. Then we create another thread using `ThreadPool.QueueUserWorkItem` and access the mocked object. Finally, we assert that the expected value is returned.
@@ -117,7 +113,8 @@ We use `Mock.Arrange` to specify that the `IsMocked` property should return true
 > **Note**
 >
 > Static member mocking and future mocking does not work across threads by default. To make a static or future arrangement valid across all threads, add the .OnAllThreads() clause to the arrangement, e.g. 
->  {{region }}
-    Mock.Arrange(() => DateTime.Now).Returns(new DateTime()).OnAllThreads();
-  {{endregion}}
+
+```C#
+Mock.Arrange(() => DateTime.Now).Returns(new DateTime()).OnAllThreads();
+```
 

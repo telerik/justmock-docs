@@ -15,60 +15,50 @@ The `Throws` method is used to throw an exception when a given call is made. Thi
 
 Here is the system under test for these examples:
 
-  #### __[C#]__
-
-  {{region Throws#IFooSUT}}
-    public interface IFoo
-    {
-        string Execute(string myStr);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region Throws#IFooSUT}}
-    Public Interface IFoo
-        Function Execute(ByVal str As String)
-    End Interface
-  {{endregion}}
+```C#
+public interface IFoo
+{
+    string Execute(string myStr);
+}
+```
+```VB
+Public Interface IFoo
+    Function Execute(ByVal str As String)
+End Interface
+```
 
 
 ## Throw Exception on Method Call
 
 Change a method behavior to throw an exception once it is called.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(ArgumentException))]
+public void ShouldThrowExceptionOnMethodCall()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Throws#ThrowExceptionOnMethodCall}}
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void ShouldThrowExceptionOnMethodCall()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>();
 
-        Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>();
+    // Act
+    foo.Execute(string.Empty);
+}
+```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(ArgumentException))>
+Public Sub ShouldThrowExceptionOnMethodCall()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Act
-        foo.Execute(string.Empty);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)()
 
-  #### __[VB]__
-
-  {{region Throws#ThrowExceptionOnMethodCall}}
-    <TestMethod()>
-    <ExpectedException(GetType(ArgumentException))>
-    Public Sub ShouldThrowExceptionOnMethodCall()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)()
-
-        ' Act
-        foo.Execute(String.Empty)
-    End Sub
-  {{endregion}}
+    ' Act
+    foo.Execute(String.Empty)
+End Sub
+```
 
 The assert step is done via the `ExpectedException` attribute, where we explicitly specify that an exception of type `ArgumentException` must be thrown during the execution of the test.
 
@@ -76,38 +66,33 @@ The assert step is done via the `ExpectedException` attribute, where we explicit
 
 Change a method behavior to throw an exception once it is called and pass arguments to the exception.
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+[ExpectedException(typeof(ArgumentException))]
+public void ShouldThrowExceptionWithArgumentsOnMethodCall()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Throws#ExceptionWithArgumentsOnMethodCall}}
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void ShouldThrowExceptionWithArgumentsOnMethodCall()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>("Argument shouldn't be empty.");
 
-        Mock.Arrange(() => foo.Execute(string.Empty)).Throws<ArgumentException>("Argument shouldn't be empty.");
+    // Act
+    foo.Execute(string.Empty);
+}
+```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(ArgumentException))>
+Public Sub ShouldThrowExceptionWithArgumentsOnMethodCall()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Act
-        foo.Execute(string.Empty);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)("Argument shouldn't be empty.")
 
-  #### __[VB]__
-
-  {{region Throws#ExceptionWithArgumentsOnMethodCall}}
-    <TestMethod()>
-    <ExpectedException(GetType(ArgumentException))>
-    Public Sub ShouldThrowExceptionWithArgumentsOnMethodCall()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Function() foo.Execute(String.Empty)).Throws(Of ArgumentException)("Argument shouldn't be empty.")
-
-        ' Act
-        foo.Execute(String.Empty)
-    End Sub
-  {{endregion}}
+    ' Act
+    foo.Execute(String.Empty)
+End Sub
+```
 
 The assert step is done via the `ExpectedException` attribute, where we explicitly specify that an exception of type `ArgumentException` must be thrown during the execution of the test. Calling `foo.Execute` with empty string will result in throwing an exception and passing "Argument shouldn't be empty." to it.
 

@@ -14,41 +14,35 @@ position: 1
 When a mock is created by using `Mock.Create` all dependencies are also implemented. Thus, if you are interested in a specific interface implementation you can use the `as` operator and call the interface members.
 
 Consider the following interface:
-
-  #### __[C#]__
-
-  {{region MockMultipleInterfaces#Sample}}
-    public interface IFoo : IDisposable
-	{
-	    void Do();
-	}
-  {{endregion}}
+ 
+```C#
+public interface IFoo : IDisposable
+{
+    void Do();
+}
+```
 
 The `IFoo` interface has `IDisposable` implemented. When you are interested only in `IDisposable` calls, you need to perform a conversion from the created mock to `IDisposable`.
 
-  #### __[C#]__
-
-  {{region MockMultipleInterfaces#IDisposable}}
-    // Arrange
-	var foo = Mock.Create<IFoo>();
-	var iDisposable = foo as IDisposable;
-  {{endregion}}
+```C#
+// Arrange
+var foo = Mock.Create<IFoo>();
+var iDisposable = foo as IDisposable;
+```
 
 
 Finally, check whether the dispose method invokes our mock code successfully.
 
-  #### __[C#]__
+```C#
+bool called = false;
 
-  {{region MockMultipleInterfaces#Assert}}
-    bool called = false;
+Mock.Arrange(() => iDisposable.Dispose()).DoInstead(() => called = true);
 
-	Mock.Arrange(() => iDisposable.Dispose()).DoInstead(() => called = true);
-	
-	// Act
-	iDisposable.Dispose();
-	
-	// Assert
-	Assert.IsTrue(called);
-	
-	Mock.Assert(() => iDisposable.Dispose(), Occurs.Once());
-  {{endregion}}
+// Act
+iDisposable.Dispose();
+
+// Assert
+Assert.IsTrue(called);
+
+Mock.Assert(() => iDisposable.Dispose(), Occurs.Once());
+```

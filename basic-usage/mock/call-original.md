@@ -19,64 +19,52 @@ The `CallOriginal` method marks a mocked method/property call that should execut
 
 You can use `CallOriginal` on methods and properties. This also includes methods that doesn't return a value. Consider the following class:
 
-#### __[C#] Sample setup__
-
-{{region CallOriginal#LogClass}}
-
-    public class Log
+#### Sample setup
+```C#
+public class Log
+{
+    public virtual void Info(string message)
     {
-        public virtual void Info(string message)
-        {
-            throw new Exception(message);
-        }
+        throw new Exception(message);
     }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region CallOriginal#LogClass}}
-
-    Public Class Log
-        Public Overridable Function Info(ByVal message As String) As String
-            Throw New Exception(message)
-        End Function
-    End Class
-{{endregion}}
+}
+```
+```VB
+Public Class Log
+    Public Overridable Function Info(ByVal message As String) As String
+        Throw New Exception(message)
+    End Function
+End Class
+```
 
 Let's arrange its `Info` method to be called with its original implementation and verify the call.
 
-#### __[C#] Example 1: Calling the original implementation__
+#### Example 1: Calling the original implementation
+```C#
+[TestMethod]
+[ExpectedException(typeof(Exception))]
+public void MockAssertOnCallOriginal()
+{
+    // Arrange
+    var log = Mock.Create<Log>();
+    Mock.Arrange(() => log.Info(Arg.IsAny<string>())).CallOriginal();
 
-{{region CallOriginal#AssertCallOriginalForVoid}}
-  
-    [TestMethod]
-    [ExpectedException(typeof(Exception))]
-    public void MockAssertOnCallOriginal()
-    {
-        // Arrange
-        var log = Mock.Create<Log>();
-        Mock.Arrange(() => log.Info(Arg.IsAny<string>())).CallOriginal();
+    // Act
+    log.Info("test");
+}
+```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(Exception))>
+Public Sub MockAssertOnCallOriginal()
+    ' Arrange
+    Dim log = Mock.Create(Of Log)()
+    Mock.Arrange(Function() log.Info(Arg.AnyString)).CallOriginal()
 
-        // Act
-        log.Info("test");
-    }
-{{endregion}}
-
-#### __[VB] Example 1: Calling the original implementation__
-
-{{region CallOriginal#AssertCallOriginalForVoid}}
-
-    <TestMethod()>
-    <ExpectedException(GetType(Exception))>
-    Public Sub MockAssertOnCallOriginal()
-        ' Arrange
-        Dim log = Mock.Create(Of Log)()
-        Mock.Arrange(Function() log.Info(Arg.AnyString)).CallOriginal()
-
-        ' Act
-        log.Info("test")
-    End Sub
-{{endregion}}
+    ' Act
+    log.Info("test")
+End Sub
+```
 
 The call of the `Info` method throws an exception. To verify this behavior, we use the [ExpectedException attribute](https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.testtools.unittesting.expectedexceptionattribute?view=visualstudiosdk-2019) provided from the *Microsoft.VisualStudio.TestTools.UnitTesting* namespace (found in *Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll*).
 
@@ -86,93 +74,82 @@ This section shows how you can set up that a call to a method should call the or
 
 For this example, we will use the following sample class:
 
-#### __[C#] Sample setup__
-
-{{region CallOriginal#FooBase}}
-
-    public class FooBase
+#### Sample setup
+```C#
+public class FooBase
+{
+    public string GetString(string str)
     {
-        public string GetString(string str)
-        {
-            return str;
-        }
+        return str;
     }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region CallOriginal#FooBase}}
-    Public Class FooBase
-        Public Function GetString(ByVal str As String) As String
-            Return str
-        End Function
-    End Class
-{{endregion}}
+}
+```
+```VB
+Public Class FooBase
+    Public Function GetString(ByVal str As String) As String
+        Return str
+    End Function
+End Class
+```
 
 **Example 2** shows how to implement the different behavior of the mocked object depending on the parameter value the method is invoked with.
 
-#### __[C#] Example 2: Calling original implementation vs customizing method behavior depending on the parameter value__
+#### Example 2: Calling original implementation vs customizing method behavior depending on the parameter value
+```C#
+[TestMethod]
+public void ShouldCallOriginalForSpecificArgs()
+{
+    // Arrange
+    // Create a mock of FooBase.
+    var foo = Mock.Create<FooBase>();
 
-{{region CallOriginal#AssertCallOriginal}}
+    // Set up that the original method implementation should be called when the method is called with argument "x".
+    Mock.Arrange(() => foo.GetString("x")).CallOriginal();
+    // Set up that once the method is called with argument "y", it should return "z".
+    Mock.Arrange(() => foo.GetString("y")).Returns("z");
 
-    [TestMethod]
-    public void ShouldCallOriginalForSpecificArgs()
-    {
-        // Arrange
-        // Create a mock of FooBase.
-        var foo = Mock.Create<FooBase>();
+    // Act
+    var actualX = string.Empty;
+    var actualY = string.Empty;
+    
+    actualX = foo.GetString("x");
+    actualY = foo.GetString("y");
 
-        // Set up that the original method implementation should be called when the method is called with argument "x".
-        Mock.Arrange(() => foo.GetString("x")).CallOriginal();
-        // Set up that once the method is called with argument "y", it should return "z".
-        Mock.Arrange(() => foo.GetString("y")).Returns("z");
+    var expectedX = "x";
+    var expectedY = "z";
 
-        // Act
-        var actualX = string.Empty;
-        var actualY = string.Empty;
-        
-        actualX = foo.GetString("x");
-        actualY = foo.GetString("y");
+    // Assert
+    Assert.AreEqual(expectedX, actualX);
+    Assert.AreEqual(expectedY, actualY);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldCallOriginalForSpecificArgs()
+    ' Arrange
+    ' Create a mock of FooBase.
+    Dim foo = Mock.Create(Of FooBase)()
 
-        var expectedX = "x";
-        var expectedY = "z";
+    ' Set up that the original method implementation should be called when the method is called with argument "x".
+    Mock.Arrange(Function() foo.GetString("x")).CallOriginal()
+    ' Set up that once the method is called with argument "y", it should return "z".
+    Mock.Arrange(Function() foo.GetString("y")).Returns("z")
 
-        // Assert
-        Assert.AreEqual(expectedX, actualX);
-        Assert.AreEqual(expectedY, actualY);
-    }
-{{endregion}}
+    ' Act
+    Dim actualX = String.Empty
+    Dim actualY = String.Empty
+    
+    actualX = foo.GetString("x")
+    actualY = foo.GetString("y")
 
-#### __[VB] Example 2: Calling original implementation vs customizing method behavior depending on the parameter value__
+    Dim expectedX = "x"
+    Dim expectedY = "z"
 
-{{region CallOriginal#AssertCallOriginal}}
-
-    <TestMethod()>
-    Public Sub ShouldCallOriginalForSpecificArgs()
-        ' Arrange
-        ' Create a mock of FooBase.
-        Dim foo = Mock.Create(Of FooBase)()
-
-        ' Set up that the original method implementation should be called when the method is called with argument "x".
-        Mock.Arrange(Function() foo.GetString("x")).CallOriginal()
-        ' Set up that once the method is called with argument "y", it should return "z".
-        Mock.Arrange(Function() foo.GetString("y")).Returns("z")
-
-        ' Act
-        Dim actualX = String.Empty
-        Dim actualY = String.Empty
-        
-        actualX = foo.GetString("x")
-        actualY = foo.GetString("y")
-
-        Dim expectedX = "x"
-        Dim expectedY = "z"
-
-        ' Assert
-        Assert.AreEqual(expectedX, actualX)
-        Assert.AreEqual(expectedY, actualY)
-    End Sub
-{{endregion}}
+    ' Assert
+    Assert.AreEqual(expectedX, actualX)
+    Assert.AreEqual(expectedY, actualY)
+End Sub
+```
 
 
 ## See Also

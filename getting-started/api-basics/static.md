@@ -18,74 +18,71 @@ Testing a non-static method (at least one that has a simple implementation witho
 
 To better illustrate different cases, we will be using several examples classes representing an order. The order can contain different products and it might have a gift for the user if they purchased more items. Here is how the implementation looks like:
 
-#### [C#] Sample setup
-
-{{region justmock-getting-started-basics-static_0}}
-
-    public class Product
+#### Sample setup
+```C#
+public class Product
+{
+    public Product(string name, int quantity)
     {
-        public Product(string name, int quantity)
-        {
-            this.Name = name;
-            this.Quantity = quantity;
-        }
-     
-        public string Name { get; internal set; }
-        public int Quantity { get; internal set; }
+        this.Name = name;
+        this.Quantity = quantity;
     }
-     
-    public class Order
+ 
+    public string Name { get; internal set; }
+    public int Quantity { get; internal set; }
+}
+ 
+public class Order
+{
+    public Order(List<Product> products)
     {
-        public Order(List<Product> products)
-        {
-            this.Products = products;
-        }
-     
-        public List<Product> Products { get; private set; }
-        public bool IsCompleted { get; private set; }
+        this.Products = products;
     }
-     
-    public static class GiftsDistributor
+ 
+    public List<Product> Products { get; private set; }
+    public bool IsCompleted { get; private set; }
+}
+ 
+public static class GiftsDistributor
+{
+    public static int MinimalProductsCount { get; set; }
+    public static Product Gift { get; set; }
+ 
+    static GiftsDistributor()
     {
-        public static int MinimalProductsCount { get; set; }
-        public static Product Gift { get; set; }
-     
-        static GiftsDistributor()
-        {
-            MinimalProductsCount = 5;
-            Gift = new Product("Hat (gift)", 1);
-            EnsureGifts(Gift);
-        }
-     
-        private static void EnsureGifts(Product gift)
-        {
-            // Contact the database to ensure warehouses have enough amount of the gift product to distribute between orders.
-            throw new NotImplementedException();
-        }
-     
-        public static void AddGift(Order order)
-        {
-            order.Products.Add(Gift);
-        }
-     
-        public static bool IsEligibleForGift(Order order)
-        {
-            int currentProductsCount = 0;
-            foreach (var product in order.Products)
-            {
-                currentProductsCount += product.Quantity;
-            }
-     
-            if (currentProductsCount >= MinimalProductsCount)
-            {
-                return true;
-            }
-     
-            return false;
-        }
+        MinimalProductsCount = 5;
+        Gift = new Product("Hat (gift)", 1);
+        EnsureGifts(Gift);
     }
-
-{{endregion}}
+ 
+    private static void EnsureGifts(Product gift)
+    {
+        // Contact the database to ensure warehouses have enough amount of the gift product to distribute between orders.
+        throw new NotImplementedException();
+    }
+ 
+    public static void AddGift(Order order)
+    {
+        order.Products.Add(Gift);
+    }
+ 
+    public static bool IsEligibleForGift(Order order)
+    {
+        int currentProductsCount = 0;
+        foreach (var product in order.Products)
+        {
+            currentProductsCount += product.Quantity;
+        }
+ 
+        if (currentProductsCount >= MinimalProductsCount)
+        {
+            return true;
+        }
+ 
+        return false;
+    }
+}
+```
 
 ## Mock Static Constructor
 
@@ -93,12 +90,10 @@ In the sample code above, you will notice that the constructor of `GiftsDistribu
 
 The API of **JustMock** provides you with the **`SetupStatic`** method that prepares all the static members of a class and mocks its constructor.
 
-#### [C#] Example 1: Mock a static object constructor
-
-{{region justmock-getting-started-basics-static_1}}
-
-    Mock.SetupStatic(typeof(GiftsDistributor), StaticConstructor.Mocked);
-{{endregion}}
+#### Example 1: Mock a static object constructor
+```C#
+Mock.SetupStatic(typeof(GiftsDistributor), StaticConstructor.Mocked);
+```
 
 With this method, you can specify whether you would like to mock the constructor or not and choose a [mock behavior]({%slug justmock/basic-usage/mock-behaviors%}).
 
@@ -106,73 +101,64 @@ With this method, you can specify whether you would like to mock the constructor
 
 Once you set up the static type, you can mock its properties as you would do with instance properties. 
 
-#### [C#] Example 2: Mock a static property
-
-{{region justmock-getting-started-basics-static_2}}
-
-    Mock.Arrange(() => GiftsDistributor.MinimalProductsCount).Returns(0);
-{{endregion}}
+#### Example 2: Mock a static property
+```C#
+Mock.Arrange(() => GiftsDistributor.MinimalProductsCount).Returns(0);
+```
 
 ## Mock Static Method
 
 Mocking static methods is also similar to how you mock instance methods. Just use the **`Mock.Arrange()`** method to setup the behavior you need.
 
-#### [C#] Example 3: Mock a static method
-
-{{region justmock-getting-started-basics-static_3}}
-
-    Mock.SetupStatic(typeof(GiftsDistributor), StaticConstructor.Mocked);
-    Order order = new Order(new List<Product>());
-     
-    Mock.Arrange(() => GiftsDistributor.IsEligibleForGift(order)).Returns(true);
-    // Ensure the original implementation of AddGift is being invoked
-    Mock.Arrange(() => GiftsDistributor.AddGift(order)).CallOriginal();
-    GiftsDistributor.AddGift(order);
-     
-    // Assert 
-    // Ensure that a gift is added to the order
-    Assert.AreEqual(1, order.Products.Count);
-    
-{{endregion}}
+#### Example 3: Mock a static method
+```C#
+Mock.SetupStatic(typeof(GiftsDistributor), StaticConstructor.Mocked);
+Order order = new Order(new List<Product>());
+ 
+Mock.Arrange(() => GiftsDistributor.IsEligibleForGift(order)).Returns(true);
+// Ensure the original implementation of AddGift is being invoked
+Mock.Arrange(() => GiftsDistributor.AddGift(order)).CallOriginal();
+GiftsDistributor.AddGift(order);
+ 
+// Assert 
+// Ensure that a gift is added to the order
+Assert.AreEqual(1, order.Products.Count);
+```
 
 ## Mock Extension Method
 
 Extension methods in .NET are also defined as static ones. To demonstrate how you can mock extension methods, we will use the following sample implementation extending the functionality of the `Order` class.
 
-#### [C#] Sample static class
-
-{{region justmock-getting-started-basics-static_4}}
-
-    public static class OrderExtensions
+#### Sample static class
+```C#
+public static class OrderExtensions
+{
+    public static string PrintOrder(this Order order)
     {
-        public static string PrintOrder(this Order order)
+        StringBuilder result = new StringBuilder();
+        foreach (var product in order.Products)
         {
-            StringBuilder result = new StringBuilder();
-            foreach (var product in order.Products)
-            {
-                result.AppendLine(string.Format("Purchased {0} {1}(s)", product.Quantity, product.Name));
-            }
-     
-            return result.ToString();
+            result.AppendLine(string.Format("Purchased {0} {1}(s)", product.Quantity, product.Name));
         }
+ 
+        return result.ToString();
     }
-{{endregion}}
+}
+```
 
 To mock `PrintOrder` you would again need only to arrange your expectations with `Mock.Arrange()`.
 
-#### [C#] Example 4: Mock extension method
-
-{{region justmock-getting-started-basics-static_5}}
-
-    Order order = new Order(new List<Product>());
-     
-    string expected = "Mocked";
-    Mock.Arrange(() => order.PrintOrder()).Returns(expected);
-     
-    string actual = order.PrintOrder();
-                
-    Assert.AreEqual(expected, actual);
-{{endregion}}
+#### Example 4: Mock extension method
+```C#
+Order order = new Order(new List<Product>());
+ 
+string expected = "Mocked";
+Mock.Arrange(() => order.PrintOrder()).Returns(expected);
+ 
+string actual = order.PrintOrder();
+            
+Assert.AreEqual(expected, actual);
+```
 
 ## Next Steps
 

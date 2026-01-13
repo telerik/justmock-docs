@@ -14,71 +14,65 @@ The [Mock the behavior of a public method]({%slug justmock/getting-started/basic
 
 To illustrate that case, we will use a slightly extended version of the example with orders and a warehouse. Now, we will define the warehouse as an interface and will enable a product to be delivered from multiple warehouses.
 
-#### [C#] Sample setup
-
-{{region justmock-getting-started-basics-create_0}}
-
-    public interface IWarehouse
+#### Sample setup
+```C#
+public interface IWarehouse
+{
+    bool HasInventory(string productName, int quantity);
+ 
+    void Remove(string productName, int quantity);
+}
+ 
+public class Order
+{
+    public Order(string productName, int quantity)
     {
-        bool HasInventory(string productName, int quantity);
-     
-        void Remove(string productName, int quantity);
+        this.ProductName = productName;
+        this.Quantity = quantity;
     }
-     
-    public class Order
+ 
+    public string ProductName { get; private set; }
+    public int Quantity { get; private set; }
+    public bool IsCompleted { get; private set; }
+ 
+    public void Complete(IWarehouse warehouse)
     {
-        public Order(string productName, int quantity)
+        if (warehouse.HasInventory(this.ProductName, this.Quantity))
         {
-            this.ProductName = productName;
-            this.Quantity = quantity;
-        }
-     
-        public string ProductName { get; private set; }
-        public int Quantity { get; private set; }
-        public bool IsCompleted { get; private set; }
-     
-        public void Complete(IWarehouse warehouse)
-        {
-            if (warehouse.HasInventory(this.ProductName, this.Quantity))
-            {
-                warehouse.Remove(this.ProductName, this.Quantity);
-                this.IsCompleted = true;
-            }
+            warehouse.Remove(this.ProductName, this.Quantity);
+            this.IsCompleted = true;
         }
     }
-
-{{endregion}}
+}
+```
 
 
 What would you need to do in order to verify that the `Complete` method of the `Order` class properly sets the `IsCompleted` property? Let’s take a closer look - our target method depends on an instance implementing `IWarehouse` that has some products currently present and internally invokes other two methods - `HasInventory` and `Remove`. Testing this case without using a mocking framework will force you to find a specific instance of a warehouse and control its data so that the `Complete` method of `Order` can perform the needed actions. 
 
 **JustMock** enables you to create instances of abstract classes and interfaces without providing their exact implementations. You also have control over how they should be mocked. **Example 1** demonstrates how you can use the `Mock.Create()` method to get an instance representing `IWarehouse`.
 
-#### [C#] Example 1: Create mock from an interface
-
-{{region justmock-getting-started-basics-create_1}}
-
-    [TestMethod]
-    public void Order_IsCompleted_WhenWarehouseHasInventory()
-    {
-        // Create an instance of the class
-        Order order = new Order("testProduct", 10);
-     
-        // Get an instance of the interface dependency
-        IWarehouse warehouse = Mock.Create<IWarehouse>();
-     
-        // Setup the warehouse - the HasInventory method called with the specified parameters will always return true.
-        Mock.Arrange(() => warehouse.HasInventory(order.ProductName, order.Quantity)).Returns(true);
-     
-        // We are not maintaining a collection of products, so there isn't anything to remove.
-        Mock.Arrange(() => warehouse.Remove(order.ProductName, order.Quantity)).DoNothing();
-     
-        order.Complete(warehouse);
-     
-        Assert.IsTrue(order.IsCompleted);
-    }
-
-{{endregion}}
+#### Example 1: Create mock from an interface
+```C#
+[TestMethod]
+public void Order_IsCompleted_WhenWarehouseHasInventory()
+{
+    // Create an instance of the class
+    Order order = new Order("testProduct", 10);
+ 
+    // Get an instance of the interface dependency
+    IWarehouse warehouse = Mock.Create<IWarehouse>();
+ 
+    // Setup the warehouse - the HasInventory method called with the specified parameters will always return true.
+    Mock.Arrange(() => warehouse.HasInventory(order.ProductName, order.Quantity)).Returns(true);
+ 
+    // We are not maintaining a collection of products, so there isn't anything to remove.
+    Mock.Arrange(() => warehouse.Remove(order.ProductName, order.Quantity)).DoNothing();
+ 
+    order.Complete(warehouse);
+ 
+    Assert.IsTrue(order.IsCompleted);
+}
+```
 
 
 The parameterless overload of the `Create()` method generates an instance of the mocked class or interface using the **RecursiveLoose** behavior. The following list will give you a brief overview of the different mock behaviors you can use. 
@@ -97,12 +91,10 @@ In addition to passing the mock behavior, the overloads of the `Create` method a
 
 In the sample setup used in this topic, the Order class doesn't provide a default constructor, so we will need to provide the required parameters if we need to create an object of that type.
 
-#### [C#] Example 2: Create mock using non-default constructor
-
-{{region justmock-getting-started-basics-create_2}}
-
-    Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, "test product", 1);
-{{endregion}}
+#### Example 2: Create mock using non-default constructor
+```C#
+Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, "test product", 1);
+```
 
 
 ## Next Steps

@@ -47,14 +47,18 @@ To use __NCover__ along with the JustMock profiler, you will need to:
 
 	Do this by inserting the following line in the previously opened command prompt:
 
-	`SET JUSTMOCK_INSTANCE=1`
+	```
+	SET JUSTMOCK_INSTANCE=1
+	```
 
 
 1. Then, you will be able to collect the coverage data of your assemblies.
 
 	*For example:*
 
-	`ncover run --project=proj -- "c:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Telerik\JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"`
+	```
+	ncover run --project=proj -- "c:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\MSTest.exe" /testcontainer:"C:\Program Files (x86)\Telerik\JustMock\Examples\CSExamples\JustMock.ElevatedExamples\bin\Debug\JustMock.ElevatedExamples.dll"
+	```
 
 	JustMock elevated tests should pass now:
 

@@ -1,4 +1,4 @@
-top-navigation-product: "justmock"
+top-navigation-product: "just-mock"
 path-prefix: /devtools/justmock 
 default-title-prefix: JustMock
 
@@ -22,16 +22,13 @@ enable-tabbed-code-blocks: true
 gitLastCommitDateEnabled: true
 #search-provider: nuclia
 
-cta-overview: The The @Subject component is part of @ProductLink, a professional grade UI library with 110+ native components for building modern and feature-rich applications. To try it out sign up for a free 30-day trial.
-cta-intro: "@ProductLink is a professional grade UI library with 110+ native components for building modern and feature-rich applications. To try it out sign up for a free 30-day trial."
+cta-overview: The @Subject component is part of @ProductLink, a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial.
+cta-intro: "@ProductLink is a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial."
 
 excluded-files: [README.md, Gemfile, Gemfile.lock, docs-watcher/*, api/*]
 
 #liquid-output-delimiter-left: "{{"
 #liquid-output-delimiter-right: "}}"
-#liquid:
-#  uiForBlazorLatestVersion: "12.2.0"
-#  themesVersion: "12.3.0"
 
 meta:
   # Getting Started

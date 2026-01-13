@@ -15,97 +15,87 @@ The `MustBeCalled` method is used to assert that a call to a given method or pro
 
 In this article you will find various examples of the `MustBeCalled` usage, for which we will be using the following class:
 
-  #### __[C#]__
-
-  {{region MustBeCalled#FooSUT}}
-    public class Foo
+```C#
+public class Foo
+{
+    public void Execute()
     {
-        public void Execute()
-        {
-        }
-
-        public int Execute(int str)
-        {
-            return str;
-        }
-
-        public int Echo(int a)
-        {
-            return 5;
-        }
     }
-  {{endregion}}
 
-  #### __[VB]__
+    public int Execute(int str)
+    {
+        return str;
+    }
 
-  {{region MustBeCalled#FooSUT}}
-    Public Class Foo
-        Public Sub Execute()
-        End Sub
+    public int Echo(int a)
+    {
+        return 5;
+    }
+}
+```
+```VB
+Public Class Foo
+    Public Sub Execute()
+    End Sub
 
-        Public Function Execute(ByVal str As Integer)
-            Return str
-        End Function
+    Public Function Execute(ByVal str As Integer)
+        Return str
+    End Function
 
-        Public Shared Function Echo(num As Integer) As Integer
-            Throw New NotImplementedException
-        End Function
-    End Class
-  {{endregion}}
+    Public Shared Function Echo(num As Integer) As Integer
+        Throw New NotImplementedException
+    End Function
+End Class
+```
 
 
 ## Assert All Calls Marked as Assertable
 
 Let's arrange that a call must be made and then assert that. Only calls marked as assertable, i.e. with `MustBeCalled`, are verified.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertAllCallsMarkedAsAssertable()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-  {{region MustBeCalled#OnlyTheOnesMarkedAsAssertable}}
-    [TestMethod]
-    public void ShouldAssertAllCallsMarkedAsAssertable()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    Mock.Arrange(() => foo.Echo(1)).Returns(1).MustBeCalled();
+    Mock.Arrange(() => foo.Echo(2)).Returns(2);
 
-        Mock.Arrange(() => foo.Echo(1)).Returns(1).MustBeCalled();
-        Mock.Arrange(() => foo.Echo(2)).Returns(2);
+    // Act
+    var actual1 = 0;
+    var actual2 = 0;
+    actual1 = foo.Echo(1);
+    actual2 = foo.Echo(2);
 
-        // Act
-        var actual1 = 0;
-        var actual2 = 0;
-        actual1 = foo.Echo(1);
-        actual2 = foo.Echo(2);
+    // Assert
+    Assert.AreEqual(1, actual1);
+    Assert.AreEqual(2, actual2);
+    Mock.Assert(foo);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertAllCallsMarkedAsAssertable()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Assert
-        Assert.AreEqual(1, actual1);
-        Assert.AreEqual(2, actual2);
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Echo(1)).Returns(1).MustBeCalled()
+    Mock.Arrange(Function() foo.Echo(2)).Returns(2)
 
-  #### __[VB]__
+    ' Act
+    Dim actual1 = 0
+    Dim actual2 = 0
+    actual1 = foo.Echo(1)
+    actual2 = foo.Echo(2)
 
-  {{region MustBeCalled#OnlyTheOnesMarkedAsAssertable}}
-    <TestMethod()>
-    Public Sub ShouldAssertAllCallsMarkedAsAssertable()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Mock.Arrange(Function() foo.Echo(1)).Returns(1).MustBeCalled()
-        Mock.Arrange(Function() foo.Echo(2)).Returns(2)
-
-        ' Act
-        Dim actual1 = 0
-        Dim actual2 = 0
-        actual1 = foo.Echo(1)
-        actual2 = foo.Echo(2)
-
-        ' Assert
-        Assert.AreEqual(1, actual1)
-        Assert.AreEqual(2, actual2)
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(1, actual1)
+    Assert.AreEqual(2, actual2)
+    Mock.Assert(foo)
+End Sub
+```
 
 Here we ensure that `foo.Echo` is called with argument 1, however, the call with argument 2 is not verified.
 
@@ -116,36 +106,31 @@ When `MustBeCalled` setup for some method is never invoked an exception is throw
 > In the next example is used NUnit Testing Framework.
 
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
+{
+    // Arrange
+    var foo = new Foo();
 
-  {{region MustBeCalled#FailsOnNotCalling}}
-    [TestMethod]
-    public void ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
-    {
-        // Arrange
-        var foo = new Foo();
+    Mock.Arrange(() => foo.Execute()).MustBeCalled();
 
-        Mock.Arrange(() => foo.Execute()).MustBeCalled();
+    // Assert
+    Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
+    ' Arrange
+    Dim foo = New Foo()
 
-        // Assert
-        Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
-    }
-  {{endregion}}
+    Mock.Arrange(Sub() foo.Execute()).MustBeCalled()
 
-  #### __[VB]__
-
-  {{region MustBeCalled#FailsOnNotCalling}}
-    <TestMethod()>
-    Public Sub ShouldThrowExceptionWhenMustBeCalledSetupIsNeverInvoked()
-        ' Arrange
-        Dim foo = New Foo()
-
-        Mock.Arrange(Sub() foo.Execute()).MustBeCalled()
-
-        ' Assert
-        Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
+End Sub
+```
 
 As a result, when verifying the `foo` object, `MockAssertion` exception is thrown as `foo.Execute` is never actually called.
 
@@ -153,70 +138,60 @@ As a result, when verifying the `foo` object, `MockAssertion` exception is throw
 
 Let`s assume we have the following interface:
 
-  #### __[C#]__
-
-  {{region MustBeCalled#IFooSUT}}
-    public interface IFoo
-    {
-        int Value { get; set; }
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region MustBeCalled#IFooSUT}}
-    Public Interface IFoo
-        Property Value() As Integer
-    End Interface
-  {{endregion}}
+```C#
+public interface IFoo
+{
+    int Value { get; set; }
+}
+```
+```VB
+Public Interface IFoo
+    Property Value() As Integer
+End Interface
+```
 
 You can use `MustBeCalled` when arranging property set. Here is an example:
 
-  #### __[C#]__
+```C# 
+[TestMethod]
+public void ShouldArrangeMustBeCalledForPropertySet()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
+    Mock.ArrangeSet(() => { foo.Value = 1; })
+        .DoNothing()
+        .MustBeCalled();
 
-  {{region MustBeCalled#OnPropertySet}}
-    [TestMethod]
-    public void ShouldArrangeMustBeCalledForPropertySet()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
-        Mock.ArrangeSet(() => { foo.Value = 1; })
-            .DoNothing()
-            .MustBeCalled();
+    // Assert
+    Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
 
-        // Assert
-        Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
+    // Act
+    foo.Value = 1;
 
-        // Act
-        foo.Value = 1;
+    // Assert
+    Mock.Assert(foo);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldArrangeMustBeCalledForPropertySet()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    Mock.ArrangeSet(Sub() foo.Value = 1).
+                DoNothing().
+                MustBeCalled()
 
-  #### __[VB]__
+    ' Assert
+    Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
 
-  {{region MustBeCalled#OnPropertySet}}
-    <TestMethod()>
-    Public Sub ShouldArrangeMustBeCalledForPropertySet()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
+    ' Act
+    foo.Value = 1
 
-        Mock.ArrangeSet(Sub() foo.Value = 1).
-                    DoNothing().
-                    MustBeCalled()
-
-        ' Assert
-        Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
-
-        ' Act
-        foo.Value = 1
-
-        ' Assert
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(foo)
+End Sub
+```
 
 We use `DoNothing` to ignore the actual implementation when `foo.Value` is set to `1` and specify that it must be set to exactly `1` in our test. Before acting with `foo.Value = 1;` an exception of type `MockAssertion` would be thrown when asserting `foo`. After acting we verify that `foo.Value` was previously set to `1`.
 
@@ -224,42 +199,37 @@ We use `DoNothing` to ignore the actual implementation when `foo.Value` is set t
 
 You can use `MustBeCalled` in conjunction with `IgnoreArguments`. Here is an example:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldCombineMustBeCalledWithIgnoreArguments()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-  {{region MustBeCalled#IgnoreArguments}}
-    [TestMethod]
-    public void ShouldCombineMustBeCalledWithIgnoreArguments()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    Mock.Arrange(() => foo.Execute(0)).IgnoreArguments().MustBeCalled();
 
-        Mock.Arrange(() => foo.Execute(0)).IgnoreArguments().MustBeCalled();
+    // Act
+    foo.Execute(10);
 
-        // Act
-        foo.Execute(10);
+    // Assert
+    Mock.Assert(foo);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldCombineMustBeCalledWithIgnoreArguments()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Assert
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Execute(0)).IgnoreArguments().MustBeCalled()
 
-  #### __[VB]__
+    ' Act
+    foo.Execute(10)
 
-  {{region MustBeCalled#IgnoreArguments}}
-    <TestMethod()>
-    Public Sub ShouldCombineMustBeCalledWithIgnoreArguments()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Mock.Arrange(Function() foo.Execute(0)).IgnoreArguments().MustBeCalled()
-
-        ' Act
-        foo.Execute(10)
-
-        ' Assert
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(foo)
+End Sub
+```
 
 We use `IgnoreArguments()` to ignore the arguments passed to `foo.Execute` method and specify that it must be called. Our acting is by `foo.Execute(10);`. Finally, we verify that the method is actually called with some or other argument.
 

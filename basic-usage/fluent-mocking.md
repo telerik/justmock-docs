@@ -17,81 +17,63 @@ Note that JustMock dynamically checks for any assertion mechanism provided by th
 
 In the following examples we will use this sample interface:
 
-#### __[C#] Sample setup__
-
-{{region FluentAssertions#SampleClasses}}
-
-    public interface IFileReader
-    {
-        string Path { get; set; }    
-        void Initialize();
-    }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region FluentAssertions#SampleClasses}}
-
-    Public Interface IFileReader
-        Property Path() As String
-        Sub Initialize()
-    End Interface
-{{endregion}}
+#### Sample setup
+```C#
+public interface IFileReader
+{
+    string Path { get; set; }    
+    void Initialize();
+}
+```
+```VB
+Public Interface IFileReader
+    Property Path() As String
+    Sub Initialize()
+End Interface
+```
 
 
 ## Fluent or Explicit Asserts
 
 > **Note**
 >
-> In order to use the fluent syntax, you must import the  __Telerik.JustMock.Helpers__  namespace in your source file. 
-  #### __[C#] Example 1: Add Telerik.JustMock.Helpers__
-
-  {{region FluentAssertions#Using}}
-  
-    using Telerik.JustMock.Helpers;
-  {{endregion}}
-
-  #### __[VB] Example 1: Add Telerik.JustMock.Helpers__
-
-  {{region FluentAssertions#Using}}
-  
-    Imports Telerik.JustMock.Helpers
-  {{endregion}}
+> In order to use the fluent syntax, you must import the  __Telerik.JustMock.Helpers__  namespace in your source file.
+  #### Example 1: Add Telerik.JustMock.Helpers
+```C#
+using Telerik.JustMock.Helpers;
+```
+```VB
+Imports Telerik.JustMock.Helpers
+```
 
 
 
 Having defined the `IFileReader` interface, we now want to create a mock and to check whether certain expectations are fulfilled.
-  
-#### __[C#] Example 2: Arrange expectations__
-    
-{{region FluentAssertions#SampleMockCS}}
-        
-    IFileReader fileReader = Mock.Create<IFileReader>();
-    const string expected = @"C:\JustMock";
-    
-    // Arrange
-    fileReader.Arrange( x => x.Path ).Returns( expected ).OccursOnce();
-    fileReader.Arrange(x => x.Initialize()).MustBeCalled();
-     
-    // Act
-    var actual = fileReader.Path;
-{{endregion}}
 
-#### __[VB] Example 2: Arrange expectations__
+#### Example 2: Arrange expectations
+```C#
+IFileReader fileReader = Mock.Create<IFileReader>();
+const string expected = @"C:\JustMock";
 
-{{region FluentAssertions#SampleMockVB}}
+// Arrange
+fileReader.Arrange( x => x.Path ).Returns( expected ).OccursOnce();
+fileReader.Arrange(x => x.Initialize()).MustBeCalled();
+ 
+// Act
+var actual = fileReader.Path;
+```
+```VB
+' Arrange
+Dim fileReader As IFileReader = Mock.Create(Of IFileReader)()
 
-    ' Arrange
-    Dim fileReader As IFileReader = Mock.Create(Of IFileReader)()
-    
-    Const expected As String = "C:\JustMock"
-    
-    fileReader.Arrange(Function(x) x.Path).Returns(expected).OccursOnce()
-    fileReader.Arrange(Sub(x) x.Initialize()).MustBeCalled()
-    
-    ' Act
-    Dim actual = fileReader.Path
-{{endregion}}
+Const expected As String = "C:\JustMock"
+
+fileReader.Arrange(Function(x) x.Path).Returns(expected).OccursOnce()
+fileReader.Arrange(Sub(x) x.Initialize()).MustBeCalled()
+
+' Act
+Dim actual = fileReader.Path
+```
 
 
 The code from **Example 2** defines that the `Path` property should be called exactly one time. This is achieved using the [OccursOnce]({%slug justmock/basic-usage/asserting-occurrence%}) method. In this example, it is also defined that the `Initialize` method must be called using the [MustBeCalled]({%slug justmock/basic-usage/mock/must-be-called%}) method.
@@ -100,21 +82,15 @@ Note that there is no difference between using `fileReader.Arrange` and `Mock.Ar
 
 Let's assert our expectations.
 
-  #### __[C#] Example 3: Assert expectations__
-
-{{region FluentAssertions#MockAssertCS}}
-
-    Assert.AreEqual( expected, actual ); // explicit assert
-    fileReader.Assert( x => x.Path ); // fluent assert
-{{endregion}}
-
-#### __[VB] Example 3: Assert expectations__
-
-{{region FluentAssertions#MockAssertVB}}
-
-    Assert.AreEqual(expected, actual) ' explicit
-    fileReader.Assert(Function(x) x.Path) ' fluent
-{{endregion}}
+#### Example 3: Assert expectations
+```C#
+Assert.AreEqual( expected, actual ); // explicit assert
+fileReader.Assert( x => x.Path ); // fluent assert
+```
+```VB
+Assert.AreEqual(expected, actual) ' explicit
+fileReader.Assert(Function(x) x.Path) ' fluent
+```
 
 When you use the most general call - `fileReader.Assert()`, JustMock will actually assert all the setup arrangements marked with either `MustBeCalled` or `Occurs`. Note that, if there are tests that don’t have these modifiers, then you still have to assert them using the explicit assert.
 

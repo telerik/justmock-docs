@@ -16,124 +16,119 @@ To provide you with full control on the behavior of the different private implem
 
 To illustrate its usage, we will be using the following sample setup that takes care of gifts distribution for orders containing more than 5 products:
 
-#### [C#] Sample setup
-
-{{region justmock-getting-started-basics-private_0}}
-
-    public class Product
+#### Sample setup
+```C#
+public class Product
+{
+    public Product(string name, int quantity)
     {
-        public Product(string name, int quantity)
-        {
-            this.Name = name;
-            this.Quantity = quantity;
-        }
-     
-        public string Name { get; internal set; }
-        public int Quantity { get; internal set; }
+        this.Name = name;
+        this.Quantity = quantity;
     }
-     
-    public class Order
+ 
+    public string Name { get; internal set; }
+    public int Quantity { get; internal set; }
+}
+ 
+public class Order
+{
+    private int minimalProductsCountForGift = 5;
+    private bool isCompleted;
+ 
+    public Order(List<Product> products)
     {
-        private int minimalProductsCountForGift = 5;
-        private bool isCompleted;
-     
-        public Order(List<Product> products)
+        this.Products = products;
+    }
+ 
+    public List<Product> Products { get; private set; }
+ 
+    public void Complete(IWarehouse warehouse)
+    {
+        if (this.isCompleted)
         {
-            this.Products = products;
+            return;
         }
-     
-        public List<Product> Products { get; private set; }
-     
-        public void Complete(IWarehouse warehouse)
+ 
+        if (this.IsEligibleForGift())
         {
-            if (this.isCompleted)
+            GiftsDistributor.AddGift(this);
+        }
+ 
+        foreach (var product in this.Products)
+        {
+            if (warehouse.HasInventory(product.Name, product.Quantity))
             {
+                warehouse.Remove(product.Name, product.Quantity);
+            }
+            else
+            {
+                this.UpdateStatus(false);
                 return;
             }
-     
-            if (this.IsEligibleForGift())
-            {
-                GiftsDistributor.AddGift(this);
-            }
-     
-            foreach (var product in this.Products)
-            {
-                if (warehouse.HasInventory(product.Name, product.Quantity))
-                {
-                    warehouse.Remove(product.Name, product.Quantity);
-                }
-                else
-                {
-                    this.UpdateStatus(false);
-                    return;
-                }
-            }
-     
-            this.UpdateStatus(true);
         }
-     
-        private void UpdateStatus(bool isCompleted)
-        {
-            this.isCompleted = isCompleted;
-        }
-     
-        private bool IsEligibleForGift()
-        {
-            int currentProductsCount = 0;
-            foreach (var product in this.Products)
-            {
-                currentProductsCount += product.Quantity;
-            }
-     
-            if (currentProductsCount >= minimalProductsCountForGift)
-            {
-                return true;
-            }
-     
-            return false;
-        }
+ 
+        this.UpdateStatus(true);
     }
-     
-    public static class GiftsDistributor
+ 
+    private void UpdateStatus(bool isCompleted)
     {
-        public static Product Gift { get; set; }
-     
-        static GiftsDistributor()
-        {
-            Gift = new Product("Hat (gift)", 1);
-        }
-     
-        public static void AddGift(Order order)
-        {
-            order.Products.Add(Gift);
-        }
+        this.isCompleted = isCompleted;
     }
-
-{{endregion}}
+ 
+    private bool IsEligibleForGift()
+    {
+        int currentProductsCount = 0;
+        foreach (var product in this.Products)
+        {
+            currentProductsCount += product.Quantity;
+        }
+ 
+        if (currentProductsCount >= minimalProductsCountForGift)
+        {
+            return true;
+        }
+ 
+        return false;
+    }
+}
+ 
+public static class GiftsDistributor
+{
+    public static Product Gift { get; set; }
+ 
+    static GiftsDistributor()
+    {
+        Gift = new Product("Hat (gift)", 1);
+    }
+ 
+    public static void AddGift(Order order)
+    {
+        order.Products.Add(Gift);
+    }
+}
+```
 
 
 With the implementation above, testing that the gifts distribution is correctly performed without using mocks would require us to investigate the implementation of the `IsEligibleForGift` method and setup our order in a way that ensures the method will return `true`. With **JustMock** you can skip these details and just define the value you need to be returned so that the execution of the logic can continue in the desired way.
 
-#### [C#] Example 1: Arrange private field
-
-{{region justmock-getting-started-basics-private_1}}
-    
-    // Create mocks for the class under test and its dependency
-    Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, new List<Product>());
-    IWarehouse warehouseMock = Mock.Create<IWarehouse>();
+#### Example 1: Arrange private field
+```C#
+// Create mocks for the class under test and its dependency
+Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, new List<Product>());
+IWarehouse warehouseMock = Mock.Create<IWarehouse>();
+ 
+// Arrange your expectations with Mock.NonPublic
+Mock.NonPublic.Arrange<bool>(orderMock, "IsEligibleForGift").Returns(true);
+ 
+// Any invocation of HasInventory(string, int) and Remove(string, int) will return true
+Mock.Arrange(() => warehouseMock.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
+Mock.Arrange(() => warehouseMock.Remove(Arg.IsAny<string>(), Arg.IsAny<int>())).DoNothing();
+ 
+orderMock.Complete(warehouseMock);
      
-    // Arrange your expectations with Mock.NonPublic
-    Mock.NonPublic.Arrange<bool>(orderMock, "IsEligibleForGift").Returns(true);
-     
-    // Any invocation of HasInventory(string, int) and Remove(string, int) will return true
-    Mock.Arrange(() => warehouseMock.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
-    Mock.Arrange(() => warehouseMock.Remove(Arg.IsAny<string>(), Arg.IsAny<int>())).DoNothing();
-     
-    orderMock.Complete(warehouseMock);
-         
-    // Ensure that a gift hat is added to the order
-    Assert.AreEqual(1, orderMock.Products.Count);
-{{endregion}}
+// Ensure that a gift hat is added to the order
+Assert.AreEqual(1, orderMock.Products.Count);
+```
 
 
 With `Mock.NonPublic` you can use the same familiar approach for arranging the getter and setter of properties and the behavior of methods that have restrictive access modifier.
@@ -145,25 +140,23 @@ With `Mock.NonPublic` you can use the same familiar approach for arranging the g
 To see `PrivateAccessor` in action, let’s say that we would like to test that invoking the `Complete` method from our sample setup doesn’t add gifts to orders that are already processed. An order is considered processed when its `isCompleted` field is set to `true`. There is also a method changing the status and we can use it to avoid additional unneeded processing.
 
 
-#### [C#] Example 2: Call a private method and obtain the value of a private field
-
-{{region justmock-getting-started-basics-private_1}}
-
-    // Create mocks for the class under test and its dependency
-    Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, new List<Product>());
-    IWarehouse warehouseMock = Mock.Create<IWarehouse>();
-     
-    PrivateAccessor accessor = new PrivateAccessor(orderMock);
-    accessor.CallMethod("UpdateStatus", true); // Invoke the UpdateStatus() method to set the isCompleted field to true
-    bool isCompleted = (bool)accessor.GetMember("isCompleted");
-              
-    Assert.AreEqual(true, isCompleted);
-     
-    orderMock.Complete(warehouseMock);
-     
-    // Ensure that a gift is not added to the order
-    Assert.AreEqual(0, orderMock.Products.Count);
-{{endregion}}
+#### Example 2: Call a private method and obtain the value of a private field
+```C#
+// Create mocks for the class under test and its dependency
+Order orderMock = Mock.Create<Order>(Behavior.CallOriginal, new List<Product>());
+IWarehouse warehouseMock = Mock.Create<IWarehouse>();
+ 
+PrivateAccessor accessor = new PrivateAccessor(orderMock);
+accessor.CallMethod("UpdateStatus", true); // Invoke the UpdateStatus() method to set the isCompleted field to true
+bool isCompleted = (bool)accessor.GetMember("isCompleted");
+          
+Assert.AreEqual(true, isCompleted);
+ 
+orderMock.Complete(warehouseMock);
+ 
+// Ensure that a gift is not added to the order
+Assert.AreEqual(0, orderMock.Products.Count);
+```
 
 ## Next Steps
 

@@ -17,74 +17,64 @@ The `Raise` method is used for raising mocked events. You can use custom or stan
 
 Assume we have the following interface:
 
-  #### __[C#]__
+```C#
+public delegate void CustomEvent(string value);
 
-  {{region Raise#SUTIFoo}}
-    public delegate void CustomEvent(string value);
+public interface IFoo
+{
+    event CustomEvent CustomEvent;
+}
+```
+```VB
+Public Delegate Sub CustomEvent(value As String)
 
-    public interface IFoo
-    {
-        event CustomEvent CustomEvent;
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region Raise#SUTIFoo}}
-    Public Delegate Sub CustomEvent(value As String)
-
-    Public Interface IFoo
-        Event CustomEvent As CustomEvent
-    End Interface
-  {{endregion}}
+Public Interface IFoo
+    Event CustomEvent As CustomEvent
+End Interface
+```
 
 Next is an example on how to use `Raise` to fire custom event.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldInvokeMethodForACustomEventWhenRaised()
+{
+    string expected = "ping";
+    string actual = string.Empty;
 
-  {{region Raise#CustomEvent}}
-    [TestMethod]
-    public void ShouldInvokeMethodForACustomEventWhenRaised()
+    // Arrange
+    var foo = Mock.Create<IFoo>();
+
+    foo.CustomEvent += delegate(string s)
     {
-        string expected = "ping";
-        string actual = string.Empty;
+        actual = s;
+    };
 
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    // Act
+    Mock.Raise(() => foo.CustomEvent += null, expected);
 
-        foo.CustomEvent += delegate(string s)
-        {
-            actual = s;
-        };
+    // Assert
+    Assert.AreEqual(expected, actual);
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldInvokeMethodForACustomEventWhenRaised()
+    Dim expected As String = "ping"
+    Dim actual As String = String.Empty
 
-        // Act
-        Mock.Raise(() => foo.CustomEvent += null, expected);
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-  {{endregion}}
+    AddHandler foo.CustomEvent, Sub(s As String) actual = s
 
-  #### __[VB]__
+    ' Act
+    Mock.Raise(Sub() AddHandler foo.CustomEvent, Nothing, expected)
 
-  {{region Raise#CustomEvent}}
-    <TestMethod>
-    Public Sub ShouldInvokeMethodForACustomEventWhenRaised()
-        Dim expected As String = "ping"
-        Dim actual As String = String.Empty
-
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        AddHandler foo.CustomEvent, Sub(s As String) actual = s
-
-        ' Act
-        Mock.Raise(Sub() AddHandler foo.CustomEvent, Nothing, expected)
-
-        ' Assert
-        Assert.AreEqual(expected, actual)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(expected, actual)
+End Sub
+```
 
 We use `Raise` to raise `foo.CustomEvent` and pass "ping" to it. Before acting we have attached a delegate to the event. Executing the delegate will result in assigning the passed string to `actual`. Finally, we verify that `expected` and `actual` have the same value.
 
@@ -92,104 +82,94 @@ We use `Raise` to raise `foo.CustomEvent` and pass "ping" to it. Before acting w
 
 Assume we have the following system under test:
 
-  #### __[C#]__
+```C#
+public interface IExecutor<T>
+{
+    event EventHandler<FooArgs> Done;
+}
 
-  {{region Raise#SUTIExecutor}}
-    public interface IExecutor<T>
+public class FooArgs : EventArgs
+{
+    public FooArgs()
     {
-        event EventHandler<FooArgs> Done;
     }
 
-    public class FooArgs : EventArgs
+    public FooArgs(string value)
     {
-        public FooArgs()
-        {
-        }
-
-        public FooArgs(string value)
-        {
-            this.Value = value;
-        }
-
-        public string Value { get; set; }
+        this.Value = value;
     }
-  {{endregion}}
 
-  #### __[VB]__
+    public string Value { get; set; }
+}
+```
+```VB
+Public Interface IExecutor(Of T)
+    Event Done As EventHandler(Of FooArgs)
+End Interface
 
-  {{region Raise#SUTIExecutor}}
-    Public Interface IExecutor(Of T)
-        Event Done As EventHandler(Of FooArgs)
-    End Interface
+Public Class FooArgs
+    Inherits EventArgs
+    Public Sub New()
+    End Sub
 
-    Public Class FooArgs
-        Inherits EventArgs
-        Public Sub New()
-        End Sub
+    Public Sub New(value As String)
+        Me.Value = value
+    End Sub
 
-        Public Sub New(value As String)
-            Me.Value = value
-        End Sub
-
-        Public Property Value() As String
-            Get
-                Return m_Value
-            End Get
-            Set(value As String)
-                m_Value = value
-            End Set
-        End Property
-        Private m_Value As String
-    End Class
-  {{endregion}}
+    Public Property Value() As String
+        Get
+            Return m_Value
+        End Get
+        Set(value As String)
+            m_Value = value
+        End Set
+    End Property
+    Private m_Value As String
+End Class
+```
 
 An example on how to use `Raise` to fire standard event would look like this:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldRaiseEventWithStandardEventArgs()
+{
+    string actual = null;
+    string expected = "ping";
 
-  {{region Raise#StandardEvent}}
-    [TestMethod]
-    public void ShouldRaiseEventWithStandardEventArgs()
+    // Arrange
+    var executor = Mock.Create<IExecutor<int>>();
+
+    executor.Done += delegate(object sender, FooArgs args)
     {
-        string actual = null;
-        string expected = "ping";
+        actual = args.Value;
+    };
 
-        // Arrange
-        var executor = Mock.Create<IExecutor<int>>();
+    // Act
+    Mock.Raise(() => executor.Done += null, new FooArgs(expected));
 
-        executor.Done += delegate(object sender, FooArgs args)
-        {
-            actual = args.Value;
-        };
+    // Assert
+    Assert.AreEqual(expected, actual);
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldRaiseEventWithStandardEventArgs()
+    Dim actual As String = Nothing
+    Dim expected As String = "ping"
 
-        // Act
-        Mock.Raise(() => executor.Done += null, new FooArgs(expected));
+    ' Arrange
+    Dim executor = Mock.Create(Of IExecutor(Of Integer))()
 
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-  {{endregion}}
+    AddHandler executor.Done, Sub(sender As Object, args As FooArgs) actual = args.Value
 
-  #### __[VB]__
+    ' Act
+    Mock.Raise(Sub() AddHandler executor.Done, Nothing, New FooArgs(expected))
 
-  {{region Raise#StandardEvent}}
-    <TestMethod>
-    Public Sub ShouldRaiseEventWithStandardEventArgs()
-        Dim actual As String = Nothing
-        Dim expected As String = "ping"
-
-        ' Arrange
-        Dim executor = Mock.Create(Of IExecutor(Of Integer))()
-
-        AddHandler executor.Done, Sub(sender As Object, args As FooArgs) actual = args.Value
-
-        ' Act
-        Mock.Raise(Sub() AddHandler executor.Done, Nothing, New FooArgs(expected))
-
-        ' Assert
-        Assert.AreEqual(expected, actual)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(expected, actual)
+End Sub
+```
 
 Here we use `Raise` to raise a standard event - `executor.Done` accepting `FooArgs` object. The attached delegate sets the `Value` property in `FooArgs` object to the variable `actual`. Finally, we verify that `expected` and `actual` have the same value.
 
