@@ -20,19 +20,19 @@ table-layout: fixed
 enable-tabbed-code-blocks: true
 
 gitLastCommitDateEnabled: true
-#search-provider: nuclia
+#search-provider: google
 
 cta-overview: The @Subject component is part of @ProductLink, a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial.
 cta-intro: "@ProductLink is a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial."
 
-excluded-files: [README.md, Gemfile, Gemfile.lock, docs-watcher/*, api/*]
+excluded-files: ["README.md", "Gemfile", "Gemfile.lock", "docs-watcher/*", "api/*"]
 
 #liquid-output-delimiter-left: "{{"
 #liquid-output-delimiter-right: "}}"
 
 meta:
   # Getting Started
-  getting-started:
+  "*getting-started":
     title: Getting Started
     position: 2
   getting-started/system-requirements:
@@ -97,7 +97,7 @@ meta:
     title: Video Onboarding
     position: 5
   # Licensing 
-  licensing:
+  "*licensing":
     title: Licensing
     position: 3
   licensing/set-up-your-license:
@@ -116,7 +116,7 @@ meta:
     title: Commercial vs Free Version
     position: 5
   # Basic Usage Section
-  basic-usage:
+  "*basic-usage":
     title: Basic Mocking
     position: 4
   basic-usage/arrange-act-assert:
@@ -194,7 +194,7 @@ meta:
     title: Create and Arrange Mocks at the Same Time
     position: 13
   # Advanced Usage Section
-  advanced-usage:
+  "*advanced-usage":
     title: Advanced Usage
     position: 5
   advanced-usage/advanced-usage:
@@ -250,7 +250,7 @@ meta:
   scenarios/setup-callbacks-with-ref-and-out-parameters:
     title: Setup Callbacks with Ref and Out Parameters
   # Integration Section
-  integration:
+  "*integration":
     title: Integrations
     position: 8
   integration/general:
@@ -329,7 +329,7 @@ meta:
     title: Command Line
     position: 10
   # Knowledge Base Section
-  knowledge-base:
+  "*knowledge-base":
     title: Knowledge Base
     position: 9
   knowledge-base/configure-justmock-rider-ide-macos-unit-test-coverage:
@@ -354,9 +354,10 @@ meta:
     title: The type initializer for 'Telerik.JustMock.SecuredReflection' threw an exception
   # API Reference
   api:
+    res_type: api
     title: API Reference
     position: 12
-  # Additional root-level files with wildcard patterns for flexible matching
+  # Additional root-level files
   "*troubleshooting":
     title: Troubleshooting
     position: 11
@@ -371,6 +372,69 @@ meta:
     position: 1
 
 redirects: 
--
-    from: "^/?$"
-    to: "/introduction"
+- from: "^/?$"
+  to: "/introduction"
+
+- from: "^/getting-started/mock/?$"
+  to: "/getting-started/api-basics/basics"
+
+- from: "^/getting-started/quick-start/?$"
+  to: "/getting-started/api-basics/basics"
+
+- from: "^/getting-started/?$"
+  to: "/getting-started/installation-instructions"
+
+- from: "^/basic-usage/rapid-testing-with-justcode/?$"
+  to: "/introduction"
+
+- from: "^/advanced-usage/openaccess-mocking/?$"
+  to: "/introduction"
+
+- from: "^/scenarios/?$"
+  to: "/scenarios/setup-callbacks-with-ref-and-out-parameters"
+
+- from: "^/integration/installation-free-elevated-mocking/?$"
+  to: "/integration/general"
+
+- from: "^/continuous-integration/tfs-2010/?$"
+  to: "/continuous-integration/tfs-azure/tfs-2010"
+
+- from: "^/continuous-integration/tfs-2012/?$"
+  to: "/continuous-integration/tfs-azure/tfs-2012"
+
+- from: "^/continuous-integration/tfs-2013/?$"
+  to: "/continuous-integration/tfs-azure/tfs-2013"
+
+- from: "^/advanced-usage/final-mocking/?$"
+  to: "/advanced-usage/concrete-mocking"
+
+- from: "^/license-agreement/?$"
+  to: "/licensing/set-up-your-license"
+
+- from: "^/code-coverage/(.*)$"
+  to: "/integration/code-coverage/$1"
+
+- from: "^/continuous-integration/(.*)$"
+  to: "/integration/continuous-integration/$1"
+
+- from: "^/api/(.*)_telerik_justmock_trial(.*)$"
+  to: "/api/Telerik.JustMock.Trial"
+
+- from: "^/api/(.*)_telerik_justmock_setup(.*)$"
+  to: "/api/Telerik.JustMock.Setup"
+
+- from: "^/api/(.*)_telerik_justmock_helpers(.*)$"
+  to: "/api/Telerik.JustMock.Helpers"
+
+- from: "^/api/(.*)_telerik_justmock_automock(.*)$"
+  to: "/api/Telerik.JustMock.AutoMock"
+
+- from: "^/api/(.*)_telerik_justmock(.*)$"
+  to: "/api/Telerik.JustMock"
+
+- from: "^/api/((.*?)_)+$"
+  to: "/api/"
+
+- from: "^/api/html/.*$"
+  to: "/api/"
+  type: Permanent

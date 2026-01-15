@@ -150,24 +150,23 @@ This will work for each new instance of the `FooWithProp` type outside the test 
 
 The instance that is created in **Example 3** is an object of type `UserData`, which has a single method called `ReturnFive()` which returns an integer. Then we mock the call to the `ReturnFive()` method for the mocked instance(`userDataMock`) of the `UserData` class. With this setup, the `ReturnFive()` method will not be mocked for any of the other instances of the `UserData` class.
 
-#### [C#] Sample setup
-
+#### Sample setup
+```C#
 public class UserData
+{
+    public int ReturnFive()
     {
-        public int ReturnFive()
-        {
-            return 5;
-        }
+        return 5;
     }
-
-#### [VB] Sample setup
-
+}
+```
+```VB
 Public Class UserData
         Public Function ReturnFive() As Integer
             Return 5
         End Function
-    End Class
-
+End Class
+```
 
 #### Example 3: Arrange method for specific instance
 ```C#

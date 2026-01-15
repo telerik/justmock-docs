@@ -1,6 +1,6 @@
 ---
 title: Telerik JustMock Lite and JustMock Documentation Repo
-publish: false
+published: false
 ---
 
 
