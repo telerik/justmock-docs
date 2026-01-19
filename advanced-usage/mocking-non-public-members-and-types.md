@@ -662,21 +662,21 @@ End Class
 
 The method arranged in **Example 9** is `FooInternalStatic.EchoPrivate()`.
 
-  #### __[C#] Example 9: Mock private static method__
+  #### Example 9: Mock private static method__
 
-  {{region NonPublicMocking#PrivateStaticMethod}}
-    [TestMethod]
-    public void ShouldMockPrivateStaticMethod()
-    {
-        // Arrange
-        Mock.NonPublic.Arrange<FooInternalStatic, int>("EchoPrivate", 10);
+```C#
+[TestMethod]
+public void ShouldMockPrivateStaticMethod()
+{
+    // Arrange
+    Mock.NonPublic.Arrange<FooInternalStatic, int>("EchoPrivate", 10);
 
-        // Act
-        FooInternalStatic.Echo(10);
+    // Act
+    FooInternalStatic.Echo(10);
 
-        // Assert
-        Mock.NonPublic.Assert<FooInternalStatic, int>("EchoPrivate", 10);
-    }
+    // Assert
+    Mock.NonPublic.Assert<FooInternalStatic, int>("EchoPrivate", 10);
+}
 ```
 ```VB
 <TestMethod> _
@@ -731,7 +731,7 @@ This section shows how to mock the get function of a *private static property*. 
 
 The property arranged in **Example 11** is `Foo.PrivateStaticProperty`. When called, it will return an expected integer value, different from the default one.
 
-  #### Example 11: Mock private static property
+#### Example 11: Mock private static property
 ```C#
 [TestMethod]
 public void ShouldMockPrivateStaticProperty()
@@ -774,7 +774,7 @@ To act, the code calls the `GetMyPrivateStaticProperty()` method, but its implem
 
 To show how to mock a protected member, we will use the following class:
 
-  #### Sample setup
+#### Sample setup
 ```C#
 public class FooWithProtectedMembers
 {
@@ -820,7 +820,7 @@ To mock protected members in JustMock, you can use the same method and logic, as
 
 First, we will arrange that our `IntValue()` method must never occur::
 
-  #### Example 12: Arrange protected method
+#### Example 12: Arrange protected method
 ```C#
 [TestMethod]
 public void ShouldAssertOccrenceForNonPublicFunction()
@@ -841,7 +841,7 @@ End Sub
 
 The second test will test if the protected `Load()` method is actually been called, when `Init()` is initiated.
 
-  #### Example 13: Arrange that a protected method must be called at least once
+#### Example 13: Arrange that a protected method must be called at least once
 ```C#
 [TestMethod]
 public void ShouldMockProtectedVirtualMembers()

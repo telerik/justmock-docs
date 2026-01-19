@@ -1,0 +1,13 @@
+{
+  "metadata": [{
+            "src": [
+                {
+                    "files": [
+                        "src/Telerik.JustMock.dll"
+                    ]
+                }
+            ],
+            "dest": "metadata",
+            "filter": "filterConfig.yml"
+  }]
+}

@@ -23,7 +23,7 @@ There are two possible ways to enable waving filter:
 
 ## File Format
 
-Supported format is JSON. When the file cannot be parsed, failures are logged (see [Profiler Log And Trace](profiler-log-and-trace.html) article), and the configuration is rejected.
+Supported format is JSON. When the file cannot be parsed, failures are logged (see [Profiler Log And Trace](advanced-usage/profiler-log-and-trace.md) article), and the configuration is rejected.
 
 ### Structure
 
@@ -66,7 +66,7 @@ Filter entries can have additional evaluation parameters, which are objects with
 **Available options**
 
 At this point, a single option is available that allows you specify the accessibility of a member entry.
-```
+```json
   {
     "name": "accessibility",
     "value": "public" | "private"
@@ -92,7 +92,7 @@ The configuration sample below allows instrumentation of all methods matching to
 * Do not belong to __System.DateTime__ type.
 
 The settings file for a similar setup would look like the following example:
-```
+```json
 {
   "weavingFilter": {
     "defaultAction": "exclude",
@@ -140,7 +140,7 @@ The options that you can use to achieve that vary depending on the specific setu
 In command line or inside Visual Studio, you can use the *.runsettings* file to specify the path. The next examples shows how you can set the variable in *.runsettings*:
 
 
-```
+```xml
 <RunSettings>
     <RunConfiguration>
       <EnvironmentVariables>
