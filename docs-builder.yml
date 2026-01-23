@@ -127,7 +127,7 @@ redirects:
   to: "/integration/continuous-integration/$1"
 
 - from: "^/api/(.*)_telerik_justmock_trial(.*)$"
-  to: "/api/Telerik.JustMock.Trial"
+  to: "/api/"
 
 - from: "^/api/(.*)_telerik_justmock_setup(.*)$"
   to: "/api/Telerik.JustMock.Setup"
