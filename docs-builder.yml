@@ -31,344 +31,53 @@ excluded-files: ["README.md", "Gemfile", "Gemfile.lock", "docs-watcher/*", "api/
 #liquid-output-delimiter-right: "}}"
 
 meta:
-  # Getting Started
-  "*getting-started":
-    title: Getting Started
-    position: 2
-  getting-started/system-requirements:
-    title: System Requirements
-    position: 1
-  # Installation
-  getting-started/installation:
-    title: Installation
-    position: 2
-  getting-started/installation/instructions-windows:
-    title: Windows
-    position: 1
-  getting-started/installation/instructions-macos:
-    title: macOS
-    position: 2
-  getting-started/installation/instructions-ubuntu:
-    title: Ubuntu
-    position: 3
-  getting-started/installation/instructions-nuget-package:
-    title: Using NuGet
-    position: 4
-  getting-started/installation/instructions-control-panel:
-    title: Using Progress Control Panel
-    position: 5
-  # Configuration
-  getting-started/configuration:
-    title: Configuration
-    position: 3
-  getting-started/configuration/using-telerik-justmock-in-your-test-project:
-    title: Add Telerik JustMock to Test Project
-    position: 1
-  getting-started/configuration/visual-studio-extension:
-    title: Visual Studio Extension
-    position: 2
-  # API Basics
-  getting-started/api-basics:
-    title: API Basics
-    position: 4
-  getting-started/api-basics/basics:
-    title: Mocking Basics
-    position: 1
-  getting-started/api-basics/create:
-    title: Create Mock Instance
-    position: 2
-  getting-started/api-basics/arrange:
-    title: Arrange Mocks
-    position: 3
-  getting-started/api-basics/assert-and-verification:
-    title: Assert and Verification
-    position: 4
-  getting-started/api-basics/static:
-    title: Mock Static or Extension Members
-    position: 5
-  getting-started/api-basics/non-public:
-    title: Mock Non-Public API
-    position: 6
-  getting-started/api-basics/system-api:
-    title: Mock System API
-    position: 7
-  # Video Onboarding
-  getting-started/video-onboarding:
-    title: Video Onboarding
-    position: 5
-  # Licensing 
-  "*licensing":
-    title: Licensing
-    position: 3
-  licensing/set-up-your-license:
-    title: Introduction
-    position: 1
-  licensing/add-license-to-ci-cd:
-    title: Adding Your License Key to CI/CD Services
-    position: 2
-  licensing/licensing-faq:
-    title: Frequently Asked Questions about Your Telerik JustMock License
-    position: 3
-  licensing/license-errors-warnings:
-    title: License Activation Errors and Warnings
-    position: 4
-  licensing/commercial-vs-free-version:
-    title: Commercial vs Free Version
-    position: 5
-  # Basic Usage Section
-  "*basic-usage":
-    title: Basic Mocking
-    position: 4
-  basic-usage/arrange-act-assert:
-    title: Arrange Act Assert
-    position: 1
-  # Mock Behaviours
-  basic-usage/mock-behaviors:
-    title: Mock Behaviors
-    position: 2
-  basic-usage/mock-behaviors/mock-behaviors:
-    title: Mock Behaviors
-  basic-usage/mock-behaviors/calloriginal:
-    title: Call Original
-  basic-usage/mock-behaviors/loose:
-    title: Loose
-  basic-usage/mock-behaviors/recursiveloose:
-    title: Recursive Loose
-  basic-usage/mock-behaviors/strict:
-    title: Strict
-  # Mock
-  basic-usage/mock:
-    title: Mock
-    position: 3
-  basic-usage/mock/call-original:
-    title: Call Original
-  basic-usage/mock/do-instead:
-    title: Do Instead
-  basic-usage/mock/do-nothing:
-    title: Do Nothing
-  basic-usage/mock/must-be-called:
-    title: Must Be Called
-  basic-usage/mock/raise:
-    title: Raise
-  basic-usage/mock/raises:
-    title: Raises
-  basic-usage/mock/returns-async:
-    title: Returns Async
-  basic-usage/mock/returns:
-    title: Returns
-  basic-usage/mock/throws-async:
-    title: Throws Async
-  basic-usage/mock/throws:
-    title: Throws
-  basic-usage/mock/when:
-    title: When
-  # other basic usage
-  basic-usage/generics:
-    title: Generics
-    position: 4
-  basic-usage/mock-properties:
-    title: Mock Properties
-    position: 5
-  basic-usage/asserting-occurrence:
-    title: Asserting Occurrence
-    position: 6
-  basic-usage/matchers:
-    title: Matchers
-    position: 7
-  basic-usage/fluent-mocking:
-    title: Fluent Mocking
+  knowledge-base:
+    title: Knowledge Base
     position: 8
-  basic-usage/sequential-mocking:
-    title: Sequential Mocking
-    position: 9
-  basic-usage/recursive-mocking:
-    title: Mocking Chained Classes
-    position: 10
-  basic-usage/mock-internal-types-via-proxy:
-    title: Mock Internal Types Via Proxy
-    position: 11
-  basic-usage/automocking:
-    title: Automocking
-    position: 12
-  basic-usage/create-mocks-by-example:
-    title: Create and Arrange Mocks at the Same Time
-    position: 13
-  # Advanced Usage Section
-  "*advanced-usage":
-    title: Advanced Usage
-    position: 5
-  advanced-usage/advanced-usage:
-    title: Advanced Usage
-  advanced-usage/static-mocking:
-    title: Static Mocking
-  advanced-usage/sealed-mocking:
-    title: Sealed Mocking
-  advanced-usage/final-mocking:
-    title: Final Mocking
-  advanced-usage/concrete-mocking:
-    title: Non-Abstract and Non-Virtual
-  advanced-usage/partial-mocking:
-    title: Partial Mocking
-  advanced-usage/future-mocking:
-    title: Arrange All Instances of a Type
-  advanced-usage/extension-methods-mocking:
-    title: Extension Methods Mocking
-  advanced-usage/mocking-delegates:
-    title: Delegates
-  advanced-usage/mocking-local-functions:
-    title: Mocking Local Functions
-  advanced-usage/mocking-linq-queries:
-    title: Mocking LINQ Queries
-  advanced-usage/entity-framework-mocking:
-    title: Entity Framework Mocking
-  advanced-usage/mocking-non-public-members-and-types:
-    title: Mocking Non-Public Members and Types
-  advanced-usage/private-accessor:
-    title: Private Accessor
-  advanced-usage/mocking-dll-imports:
-    title: Mocking DLL Imports
-  advanced-usage/mscorlib-mocking:
-    title: System API / MsCorLib
-  advanced-usage/sharepoint-mocking:
-    title: SharePoint Mocking
-  advanced-usage/threadpool-mocking:
-    title: ThreadPool Mocking
-  advanced-usage/ref-return-mocking:
-    title: Mocking Ref Returns
-  advanced-usage/profiler-log-and-trace:
-    title: Profiler Log and Trace
-  advanced-usage/profiler-weaving-optimizations:
-    title: Profiler Optimizations
-  # Scenarios Section
-  scenarios:
-    title: Scenarios
-    position: 7
-  scenarios/docker:
-    title: Running JustMock Elevated Unit Tests with Docker
-  scenarios/mock-multiple-interfaces:
-    title: Mock Multiple Interfaces
-  scenarios/setup-callbacks-with-ref-and-out-parameters:
-    title: Setup Callbacks with Ref and Out Parameters
-  # Integration Section
-  "*integration":
-    title: Integrations
-    position: 8
-  integration/general:
-    title: Integration Concepts
-    position: 1
-  # JustMock Console
-  integration/justmock-console:
-    title: JustMock Console
-    position: 2
-  integration/justmock-console/general:
-    title: General
-    position: 1
-  integration/justmock-console/dotnet-tool:
-    title: .NET Tool
-    position: 2
-  integration/justmock-console/profiler-integrations:
-    title: Profiler Integrations
-    position: 3
-  integration/justmock-console/windows:
-    title: Windows
-    position: 4
-  # Continuous Integration
-  integration/continuous-integration:
-    title: Continuous Integration
-    position: 3
-  integration/continuous-integration/cruise-control-.net:
-    title: Cruise Control .NET
-    position: 1
-  integration/continuous-integration/jenkins-ci:
-    title: Jenkins CI
-  integration/continuous-integration/teamcity:
-    title: TeamCity
-    position: 3
-  integration/continuous-integration/tfs-azure:
-    title: TFS and Azure Pipelines
-    position: 4
-  integration/continuous-integration/tfs-azure/azure-devops:
-    title: Azure DevOps
-    position: 1
-  integration/continuous-integration/tfs-azure/tfs-2010:
-    title: TFS 2010
-    position: 2
-  integration/continuous-integration/tfs-azure/tfs-2012:
-    title: TFS 2012
-    position: 3
-  integration/continuous-integration/tfs-azure/tfs-2013:
-    title: TFS 2013
-    position: 4
-  # Code Coverage
   integration/code-coverage:
     title: Code Coverage
     position: 4
-  integration/code-coverage/codecoverage-tools:
-    title: Code Coverage Tools
+  integration/continuous-integration/tfs-azure:
+    title: TFS and Azure Pipelines
     position: 1
-  integration/code-coverage/ncover:
-    title: NCover
+  integration/continuous-integration:
+    title: Continuous Integration
+    position: 3
+  integration/justmock-console:
+    title: JustMock Console
     position: 2
-  # Other Integrations
-  integration/installation-free-elevated-mocking:
-    title: Installation Free Elevated Mocking
-    position: 5
-  integration/msbuild-tasks:
-    title: MSBuild Tasks
-    position: 6
-  integration/nant:
-    title: NAnt
+  integration:
+    title: Integrations
     position: 7
-  integration/ncrunch:
-    title: NCrunch
-    position: 8
-  integration/postsharp:
-    title: PostSharp
-    position: 9
-  integration/windows-batch-command:
-    title: Command Line
-    position: 10
-  # Knowledge Base Section
-  "*knowledge-base":
-    title: Knowledge Base
-    position: 9
-  knowledge-base/configure-justmock-rider-ide-macos-unit-test-coverage:
-    title: Configuring JustMock with Rider IDE macOS Unit Test Coverage
-  knowledge-base/controlling-mock-dependencies-justmock:
-    title: Controlling Mock Dependencies in JustMock for Specific Assertion Behavior
-  knowledge-base/enable-justmock-profiler-jetbrains-rider:
-    title: Enabling JustMock Profiler in JetBrains Rider
-  knowledge-base/fix-profiler-interceptor-initialization-exception-justmock:
-    title: Resolving Profiler Interceptor Initialization Exception in JustMock
-  knowledge-base/justmock-nuget-troubleshooting:
-    title: NuGet Troubleshooting with JustMock
-  knowledge-base/justmock-profiler-relative-paths-dotnet:
-    title: Configuring JustMock Profiler with Relative Paths in .NET Projects
-  knowledge-base/mock-limitations:
-    title: Mock Limitations
-  knowledge-base/mocking-value-returned-by-ref-argument-justmock:
-    title: Mocking ByRef Arguments with Telerik JustMock
-  knowledge-base/performance-degradation-after-upgrade:
-    title: The test execution is noticeably slower after upgrade
-  knowledge-base/type-initializer-for-secured-reflection:
-    title: The type initializer for 'Telerik.JustMock.SecuredReflection' threw an exception
-  # API Reference
-  api:
-    res_type: api
-    title: API Reference
-    position: 12
-  # Additional root-level files
-  "*troubleshooting":
-    title: Troubleshooting
-    position: 11
-  "*cheat-sheet":
-    title: Cheat Sheet
-    position: 10
-  "*debug-view":
-    title: Debugging Tests
+  scenarios:
+    title: Scenarios
     position: 6
-  "*introduction":
-    title: Introduction
+  advanced-usage:
+    title: Advanced Usage
+    position: 4
+  basic-usage/mock:
+    title: Mock
+    position: 3
+  basic-usage/mock-behaviors:
+    title: Mock Behaviors
+    position: 2
+  basic-usage:
+    title: Basic Mocking
+    position: 3
+  licensing:
+    title: Licensing
+    position: 2
+  getting-started/api-basics:
+    title: API Basics
+    position: 4
+  getting-started/configuration:
+    title: Configuration
+    position: 3
+  getting-started/installation:
+    title: Installation
+    position: 2
+  getting-started:
+    title: Getting Started
     position: 1
 
 redirects: 
