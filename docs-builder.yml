@@ -1,0 +1,149 @@
+top-navigation-product: "just-mock"
+path-prefix: /products/just-mock/documentation
+default-title-prefix: JustMock
+
+primary-color: 
+  light: rgb(112, 45, 232)
+  dark: rgb(162, 119, 240)
+product-id: 743
+product-code: JUSTMOCK
+product-name: Telerik JustMock
+product-url: https://docs.telerik.com/devtools/justmock
+product-trial-url: https://www.telerik.com/try/justmock
+contribute-url: https://github.com/telerik/justmock-docs/edit/master
+search-engine-id: 001595215763381649090:bmvql-x1xsw
+avatar-path: ./images/avatar-ninja.svg
+no-results-image-path: ./images/ninja-no-results.svg
+pdf-cover-png-path: ./images/pdf-cover.png
+img-max-width: 100%
+table-layout: fixed
+enable-tabbed-code-blocks: true
+
+gitLastCommitDateEnabled: true
+#search-provider: google
+
+cta-overview: The @Subject component is part of @ProductLink, a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial.
+cta-intro: "@ProductLink is a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial."
+
+excluded-files: ["README.md", "Gemfile", "Gemfile.lock", "**/docs-watcher/*", "**/api/**"]
+
+#liquid-output-delimiter-left: "{{"
+#liquid-output-delimiter-right: "}}"
+
+meta:
+  knowledge-base:
+    title: Knowledge Base
+    position: 8
+  integration/code-coverage:
+    title: Code Coverage
+    position: 4
+  integration/continuous-integration/tfs-azure:
+    title: TFS and Azure Pipelines
+    position: 1
+  integration/continuous-integration:
+    title: Continuous Integration
+    position: 3
+  integration/justmock-console:
+    title: JustMock Console
+    position: 2
+  integration:
+    title: Integrations
+    position: 7
+  scenarios:
+    title: Scenarios
+    position: 6
+  advanced-usage:
+    title: Advanced Usage
+    position: 4
+  basic-usage/mock:
+    title: Mock
+    position: 3
+  basic-usage/mock-behaviors:
+    title: Mock Behaviors
+    position: 2
+  basic-usage:
+    title: Basic Mocking
+    position: 3
+  licensing:
+    title: Licensing
+    position: 2
+  getting-started/api-basics:
+    title: API Basics
+    position: 4
+  getting-started/configuration:
+    title: Configuration
+    position: 3
+  getting-started/installation:
+    title: Installation
+    position: 2
+  getting-started:
+    title: Getting Started
+    position: 1
+
+redirects: 
+- from: "^/?$"
+  to: "/introduction"
+
+- from: "^/getting-started/mock/?$"
+  to: "/getting-started/api-basics/basics"
+
+- from: "^/getting-started/quick-start/?$"
+  to: "/getting-started/api-basics/basics"
+
+- from: "^/getting-started/?$"
+  to: "/getting-started/installation-instructions"
+
+- from: "^/basic-usage/rapid-testing-with-justcode/?$"
+  to: "/introduction"
+
+- from: "^/advanced-usage/openaccess-mocking/?$"
+  to: "/introduction"
+
+- from: "^/scenarios/?$"
+  to: "/scenarios/setup-callbacks-with-ref-and-out-parameters"
+
+- from: "^/integration/installation-free-elevated-mocking/?$"
+  to: "/integration/general"
+
+- from: "^/continuous-integration/tfs-2010/?$"
+  to: "/continuous-integration/tfs-azure/tfs-2010"
+
+- from: "^/continuous-integration/tfs-2012/?$"
+  to: "/continuous-integration/tfs-azure/tfs-2012"
+
+- from: "^/continuous-integration/tfs-2013/?$"
+  to: "/continuous-integration/tfs-azure/tfs-2013"
+
+- from: "^/advanced-usage/final-mocking/?$"
+  to: "/advanced-usage/concrete-mocking"
+
+- from: "^/license-agreement/?$"
+  to: "/licensing/set-up-your-license"
+
+- from: "^/code-coverage/(.*)$"
+  to: "/integration/code-coverage/$1"
+
+- from: "^/continuous-integration/(.*)$"
+  to: "/integration/continuous-integration/$1"
+
+- from: "^/api/(.*)_telerik_justmock_trial(.*)$"
+  to: "/api/"
+
+- from: "^/api/(.*)_telerik_justmock_setup(.*)$"
+  to: "/api/Telerik.JustMock.Setup"
+
+- from: "^/api/(.*)_telerik_justmock_helpers(.*)$"
+  to: "/api/Telerik.JustMock.Helpers"
+
+- from: "^/api/(.*)_telerik_justmock_automock(.*)$"
+  to: "/api/Telerik.JustMock.AutoMock"
+
+- from: "^/api/(.*)_telerik_justmock(.*)$"
+  to: "/api/Telerik.JustMock"
+
+- from: "^/api/((.*?)_)+$"
+  to: "/api/"
+
+- from: "^/api/html/.*$"
+  to: "/api/"
+  type: Permanent

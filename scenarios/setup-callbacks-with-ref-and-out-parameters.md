@@ -15,39 +15,36 @@ By using __Telerik® JustMock__ you can mock methods that take `out` or `ref` pa
 
 In the following examples, we will use the following sample code to test:
 
-  #### __[C#]__
-
-  {{region OutRef#SampleClass}}
-    public interface IFoo
-	{
-	    bool Execute(string arg1, out string arg2);
-	    void Execute(ref string arg1);
-	}  
-  {{endregion}}
+```C#
+public interface IFoo
+{
+	bool Execute(string arg1, out string arg2);
+	void Execute(ref string arg1);
+}  
+```
 
 
 ## Expect Out Arguments
 
 Let's arrange that an `out` argument should have a particular value.
 
-  #### __[C#]__
 
-  {{region OutRef#Out}}
-    // Arrange
-	var iFoo = Mock.Create<IFoo>();
-	
-	string expected = "pong";
-	Mock.Arrange(() => iFoo.Execute("ping", out expected)).Returns(true);
-	
-	// Act
-	string actual;
-	bool called = false;
-	called = iFoo.Execute("ping", out actual);
-	
-	// Assert
-	Assert.IsTrue(called);
-	Assert.AreEqual(expected, actual);  
-  {{endregion}}
+```C#
+// Arrange
+var iFoo = Mock.Create<IFoo>();
+
+string expected = "pong";
+Mock.Arrange(() => iFoo.Execute("ping", out expected)).Returns(true);
+
+// Act
+string actual;
+bool called = false;
+called = iFoo.Execute("ping", out actual);
+
+// Assert
+Assert.IsTrue(called);
+Assert.AreEqual(expected, actual);  
+```
 
 
 In the arrange statement we use the `out` keyword and pass the already initialized variable. Thus, we arrange that a call to the `Execute` method, passing `"ping"` as first argument, should set the `out` argument to `"pong"`.
@@ -56,22 +53,20 @@ In the arrange statement we use the `out` keyword and pass the already initializ
 
 We use the same technique as in the `out` argument example to set a value for the `ref` argument.
 
-  #### __[C#]__
+```C#
+// Arrange
+var iFoo = Mock.Create<IFoo>();
 
-  {{region OutRef#Ref}}
-    // Arrange
-	var iFoo = Mock.Create<IFoo>();
-	
-	string expected = "foo";
-	Mock.Arrange(() => iFoo.Execute(ref expected)).DoNothing();
-	
-	// Act
-	string actual = string.Empty;
-	iFoo.Execute(ref actual);
-	
-	// Assert
-	Assert.AreEqual(expected, actual);  
-  {{endregion}}
+string expected = "foo";
+Mock.Arrange(() => iFoo.Execute(ref expected)).DoNothing();
+
+// Act
+string actual = string.Empty;
+iFoo.Execute(ref actual);
+
+// Assert
+Assert.AreEqual(expected, actual);  
+```
 
 
 In the arrange statement we use the `ref` keyword and pass the already initialized variable. Thus, we arrange that a call to the `Execute` method should set the `ref` argument to `"foo"`.

@@ -21,33 +21,27 @@ Partial mocks allow you to mock some of the methods of a class while keeping the
 
 In the further examples, we will use the following sample class to test:
 
-#### __[C#] Sample setup__
+#### Sample setup
+```C#
+public class Foo
+{
+    public static int FooStaticProp { get; set; }
 
-{{region PartialMocks#Foo}}
-
-    public class Foo
+    public int Echo(int arg1)
     {
-        public static int FooStaticProp { get; set; }
-
-        public int Echo(int arg1)
-        {
-            return default(int);
-        }
+        return default(int);
     }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region PartialMocks#Foo}}
-
-    Public Class Foo
-        Public Shared Property FooStaticProp As Integer
+}
+```
+```VB
+Public Class Foo
+    Public Shared Property FooStaticProp As Integer
     
-        Public Function Echo(arg1 As Integer) As Integer
-            Return Nothing
-        End Function
-    End Class
-{{endregion}}
+    Public Function Echo(arg1 As Integer) As Integer
+        Return Nothing
+    End Function
+End Class
+```
 
 
 > **Important**
@@ -59,42 +53,36 @@ In the further examples, we will use the following sample class to test:
 **Example 1** shows how you can use a non mocked instance and still arrange the behavior of one of its methods.
 
 
-#### __[C#] Example 1: Partial mocking of a method__
+#### Example 1: Partial mocking of a method
+```C#
+[TestMethod]
+public void ShouldMockInstanceCallPartially()
+{
+    // Arrange
+    Foo foo = new Foo();
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
 
-{{region PartialMocks#MockInstanceCallPartially}}
+    // Act
+    int actual = foo.Echo(10);
 
-    [TestMethod]
-    public void ShouldMockInstanceCallPartially()
-    {
-        // Arrange
-        Foo foo = new Foo();
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
+    // Assert
+    Assert.AreEqual(10, actual);
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldMockInstanceCallPartially()
+    ' Arrange
+    Dim foo As New Foo()
+    Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg As Integer) arg)
 
-        // Act
-        int actual = foo.Echo(10);
+    ' Act
+    Dim actual As Integer = foo.Echo(10)
 
-        // Assert
-        Assert.AreEqual(10, actual);
-    }
-{{endregion}}
-
-#### __[VB] Example 1: Partial mocking of a method__
-
-{{region PartialMocks#MockInstanceCallPartially}}
-
-    <TestMethod>
-    Public Sub ShouldMockInstanceCallPartially()
-        ' Arrange
-        Dim foo As New Foo()
-        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg As Integer) arg)
-
-        ' Act
-        Dim actual As Integer = foo.Echo(10)
-
-        ' Assert
-        Assert.AreEqual(10, actual)
-    End Sub
-{{endregion}}
+    ' Assert
+    Assert.AreEqual(10, actual)
+End Sub
+```
 
 With partial mocks, we are still able to arrange a method call even when we don't use a mock object. Running the above test would pass.
 
@@ -102,46 +90,40 @@ With partial mocks, we are still able to arrange a method call even when we don'
 
 While not using a mock object in partial mocking, you can still assert that a specific call has been made during the execution of a test. To do that, you should pass the lambda of the method that you are expecting.
 
-#### __[C#] Example 2: Assert the behavior of partial mock__
+#### Example 2: Assert the behavior of partial mock
+```C#
+[TestMethod]
+public void ShouldAssertCallsPartially()
+{
+    // Arrange
+    Foo foo = new Foo();
 
-{{region PartialMocks#AssertInvokedPartialCalls}}
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
 
-    [TestMethod]
-    public void ShouldAssertCallsPartially()
-    {
-        // Arrange
-        Foo foo = new Foo();
+    // Act
+    foo.Echo(10);
+    foo.Echo(10);
 
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns((int arg) => arg);
+    // Assert
+    Mock.Assert(() => foo.Echo(10), Occurs.Exactly(2));
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldAssertCallsPartially()
+    ' Arrange
+    Dim foo As New Foo()
 
-        // Act
-        foo.Echo(10);
-        foo.Echo(10);
+    Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg As Integer) arg)
 
-        // Assert
-        Mock.Assert(() => foo.Echo(10), Occurs.Exactly(2));
-    }
-{{endregion}}
+    ' Act
+    foo.Echo(10)
+    foo.Echo(10)
 
-#### __[VB] Example 2: Assert the behavior of partial mock__
-
-{{region PartialMocks#AssertInvokedPartialCalls}}
-
-    <TestMethod>
-    Public Sub ShouldAssertCallsPartially()
-        ' Arrange
-        Dim foo As New Foo()
-
-        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(Function(arg As Integer) arg)
-
-        ' Act
-        foo.Echo(10)
-        foo.Echo(10)
-
-        ' Assert
-        Mock.Assert(Function() foo.Echo(10), Occurs.Exactly(2))
-    End Sub
-{{endregion}}
+    ' Assert
+    Mock.Assert(Function() foo.Echo(10), Occurs.Exactly(2))
+End Sub
+```
 
 In the Assert section of **Example 2**, we make sure that the `foo.Echo` method has been called exactly two times by passing `10` as an argument. It is not required to enter a specific value for the argument - you can use a [matcher]({%slug justmock/basic-usage/matchers%}) instead.
 
@@ -149,40 +131,34 @@ In the Assert section of **Example 2**, we make sure that the `foo.Echo` method 
 
 Another common usage of partial mocks is to arrange a call to a ***static method/property*** of a class. **Example 3** demonstrates how you can arrange the return value of a static property.
 
-#### __[C#] Example 3: Partial mocking of static property__ 
+#### Example 3: Partial mocking of static property
+```C#
+[TestMethod]
+public void ShouldArrangeStaticCallPartially()
+{
+    // Arrange
+    Mock.Arrange(() => Foo.FooStaticProp).Returns(10);
 
-{{region PartialMocks#ArrangeStaticCallsDirectly}}
+    // Act
+    int actual = Foo.FooStaticProp;
 
-    [TestMethod]
-    public void ShouldArrangeStaticCallPartially()
-    {
-        // Arrange
-        Mock.Arrange(() => Foo.FooStaticProp).Returns(10);
+    // Assert
+    Assert.AreEqual(10, actual);
+}
+```
+```VB
+<TestMethod>
+Public Sub ShouldArrangeStaticCallPartially()
+    ' Arrange
+    Mock.Arrange(Function() Foo.FooStaticProp).Returns(10)
 
-        // Act
-        int actual = Foo.FooStaticProp;
+    ' Act
+    Dim actual As Integer = Foo.FooStaticProp
 
-        // Assert
-        Assert.AreEqual(10, actual);
-    }
-{{endregion}}
-
-#### __[VB] Example 3: Partial mocking of static property__
-
-{{region PartialMocks#ArrangeStaticCallsDirectly}}
-
-    <TestMethod>
-    Public Sub ShouldArrangeStaticCallPartially()
-        ' Arrange
-        Mock.Arrange(Function() Foo.FooStaticProp).Returns(10)
-
-        ' Act
-        Dim actual As Integer = Foo.FooStaticProp
-
-        ' Assert
-        Assert.AreEqual(10, actual)
-    End Sub
-{{endregion}}
+    ' Assert
+    Assert.AreEqual(10, actual)
+End Sub
+```
 
 
 ## See Also

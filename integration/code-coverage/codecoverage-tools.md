@@ -25,9 +25,13 @@ Once into the configuration window, you will be able to choose from one of the a
 
 You can link and unlink profilers from the command line. This is useful for integrating 3rd party profilers into your build system. This is done by executing Telerik.JustMock.Configuration.exe with the /link or /unlink option. 
 
-`start /wait "" "C:\Program Files (x86)\Telerik\JustMock\Libraries\Telerik.JustMock.Configuration.exe" /link "Visual Studio 2017/2019 Code Coverage/IntelliTrace"`
+```
+start /wait "" "C:\Program Files (x86)\Telerik\JustMock\Libraries\Telerik.JustMock.Configuration.exe" /link "Visual Studio 2017/2019 Code Coverage/IntelliTrace"
+```
 
-`start /wait "" "C:\Program Files (x86)\Telerik\JustMock\Libraries\Telerik.JustMock.Configuration.exe" /unlink "Visual Studio 2017/2019 Code Coverage/IntelliTrace"`
+```
+start /wait "" "C:\Program Files (x86)\Telerik\JustMock\Libraries\Telerik.JustMock.Configuration.exe" /unlink "Visual Studio 2017/2019 Code Coverage/IntelliTrace"
+```
 
 The parameter to the /link (and /unlink) option is the name of the profiler to link (or unlink) exactly as it is shown in the UI of the configuration tool. The *start /wait ""* bit is necessary so that any errors are correctly reported through the exit code. If the *start /wait ""* bit is omitted, then the tool will always return an exit code of 0, regardless of errors. A non-zero code is returned if the specified profiler is not installed or if there's a typo in the profiler name. Specifying /unlink with no parameter will unlink all profilers.
 

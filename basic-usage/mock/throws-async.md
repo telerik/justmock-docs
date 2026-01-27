@@ -15,27 +15,22 @@ position: 10
 
 Let us have the system under test:
 
-  #### __[C#]__
-
-  {{region ThrowsAsync#FooSUT}}
-    public class Foo
+```C#
+public class Foo
+{
+    public async Task AsyncExecute()
     {
-        public async Task AsyncExecute()
-        {
-            await Task.Delay(1000);
-        }
+        await Task.Delay(1000);
     }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region ThrowsAsync#FooSUT}}
-    Public Class Foo
-        Public Async Function AsyncExecute() As Task
-            Await Task.Delay(1000)
-        End Function
-    End Class
-  {{endregion}}
+}
+```
+```VB
+Public Class Foo
+    Public Async Function AsyncExecute() As Task
+        Await Task.Delay(1000)
+    End Function
+End Class
+```
 
 Assume that during asynchronous execution of `AsyncExecute` an unhandled exception was thrown and the task has failed. Later, upon task completion, the client code consumes the result and handles the failure. This particular scenarios can be easily simulated by using `ThrowsAsync`.
 
@@ -49,44 +44,39 @@ The asynchronous method execution can be mocked to fail with specific exception,
 
 An example on how to use `ThrowsAsync` to return a failed Task would look in the following way:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldReturnFailedTaskOnAsyncMethodCall()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
+    Mock.Arrange(() => foo.AsyncExecute()).ThrowsAsync<ArgumentException>();
 
-  {{region ThrowsAsync#ReturnFailedTask}}
-    [TestMethod]
-    public void ShouldReturnFailedTaskOnAsyncMethodCall()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
-        Mock.Arrange(() => foo.AsyncExecute()).ThrowsAsync<ArgumentException>();
+    // Act
+    var result = foo.AsyncExecute();
 
-        // Act
-        var result = foo.AsyncExecute();
+    // Assert
+    Assert.IsTrue(result.IsFaulted);
+    Assert.IsTrue(result.IsCompleted);
+    Assert.IsTrue(result.Exception.InnerException is ArgumentException);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldReturnFailedTaskOnAsyncMethodCall()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
+    Mock.Arrange(Function() foo.AsyncExecute()).ThrowsAsync(Of ArgumentException)()
 
-        // Assert
-        Assert.IsTrue(result.IsFaulted);
-        Assert.IsTrue(result.IsCompleted);
-        Assert.IsTrue(result.Exception.InnerException is ArgumentException);
-    }
-  {{endregion}}
+    ' Act
+    Dim result = foo.AsyncExecute()
 
-  #### __[VB]__
-
-  {{region ThrowsAsync#ReturnFailedTask}}
-    <TestMethod()>
-    Public Sub ShouldReturnFailedTaskOnAsyncMethodCall()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-        Mock.Arrange(Function() foo.AsyncExecute()).ThrowsAsync(Of ArgumentException)()
-
-        ' Act
-        Dim result = foo.AsyncExecute()
-
-        ' Assert
-        Assert.IsTrue(result.IsFaulted)
-        Assert.IsTrue(result.IsCompleted)
-        Assert.IsTrue(TypeOf result.Exception.InnerException Is ArgumentException)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsTrue(result.IsFaulted)
+    Assert.IsTrue(result.IsCompleted)
+    Assert.IsTrue(TypeOf result.Exception.InnerException Is ArgumentException)
+End Sub
+```
 
 Like `Throws` method, `ThrowsAsync` gives an option to pass arguments to the exception constructor.
   

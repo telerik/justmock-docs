@@ -72,24 +72,24 @@ To enable the tracing mode inside the __Debug View__, you must set the __IsTrace
 
 Another option is to add: `DebugView.IsTraceEnabled = true;` as a first line of the test method. This will automatically enable the tracing option in debug mode.
 
-#### [C#] Enable tracing in code
-````
-	[TestMethod]
-	public void Echo_ReturnsExpectedValue()
-	{
-		DebugView.IsTraceEnabled = true;
+#### Enable tracing in code
+```C#
+[TestMethod]
+public void Echo_ReturnsExpectedValue()
+{
+	DebugView.IsTraceEnabled = true;
 
-		//Arrange 
-		var foo = Mock.Create<IFoo>();
+	//Arrange 
+	var foo = Mock.Create<IFoo>();
 
-		Mock.Arrange(() => foo.Echo(Arg.AnyInt)).Returns(10);
+	Mock.Arrange(() => foo.Echo(Arg.AnyInt)).Returns(10);
 
-		int actual = foo.Echo(1);
+	int actual = foo.Echo(1);
 
-		//Assert 
-		Assert.AreEqual(actual, 10);
-	}
-````
+	//Assert 
+	Assert.AreEqual(actual, 10);
+}
+```
 
 While tracing, you can operate with the rest two fields from the __Debug View__: 
 

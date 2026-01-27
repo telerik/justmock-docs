@@ -32,19 +32,19 @@ To configure the JustMock profiler with a relative path in your .NET project, fo
 
 2. **Configure the Runsettings File**: Adjust the `CORECLR_PROFILER_PATH_32` and `CORECLR_PROFILER_PATH_64` settings in your runsettings file to point to the 32-bit and 64-bit versions of the JustMock profiler DLLs using a relative path from the test project's output folder. For example:
 
-    ```xml
-    <RunSettings>
-        <RunConfiguration>
-          <EnvironmentVariables>
-            <JUSTMOCK_INSTANCE>1</JUSTMOCK_INSTANCE>
-            <CORECLR_ENABLE_PROFILING>1</CORECLR_ENABLE_PROFILING>
-            <CORECLR_PROFILER>{B7ABE522-A68F-44F2-925B-81E7488E9EC0}</CORECLR_PROFILER>
-            <CORECLR_PROFILER_PATH_32>..\..\..\..\..\..\..\JustMock\Libraries\32\Telerik.CodeWeaver.Profiler.dll</CORECLR_PROFILER_PATH_32>
-            <CORECLR_PROFILER_PATH_64>..\..\..\..\..\..\..\JustMock\Libraries\64\Telerik.CodeWeaver.Profiler.dll</CORECLR_PROFILER_PATH_64>
-          </EnvironmentVariables>
-        </RunConfiguration>
-    </RunSettings>
-    ```
+```xml
+<RunSettings>
+    <RunConfiguration>
+      <EnvironmentVariables>
+        <JUSTMOCK_INSTANCE>1</JUSTMOCK_INSTANCE>
+        <CORECLR_ENABLE_PROFILING>1</CORECLR_ENABLE_PROFILING>
+        <CORECLR_PROFILER>{B7ABE522-A68F-44F2-925B-81E7488E9EC0}</CORECLR_PROFILER>
+        <CORECLR_PROFILER_PATH_32>..\..\..\..\..\..\..\JustMock\Libraries\32\Telerik.CodeWeaver.Profiler.dll</CORECLR_PROFILER_PATH_32>
+        <CORECLR_PROFILER_PATH_64>..\..\..\..\..\..\..\JustMock\Libraries\64\Telerik.CodeWeaver.Profiler.dll</CORECLR_PROFILER_PATH_64>
+      </EnvironmentVariables>
+    </RunConfiguration>
+</RunSettings>
+```
 
 3. **Consider the Project's Target Framework**: If your project targets the .NET Framework, note that there are limitations preventing the usage of relative paths and might require using absolute paths as a workaround.
 

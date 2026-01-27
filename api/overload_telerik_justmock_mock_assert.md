@@ -27,7 +27,7 @@ category: "api"
 ![Public method](/icons/pubmethod.gif)![Static member](/icons/static.gif) |[Assert(Expression&lt;Action&gt;, Args, String)](m_telerik_justmock_mock_assert_1) |Asserts the specified call from expression. |
 ![Public method](/icons/pubmethod.gif)![Static member](/icons/static.gif) |[Assert(Expression&lt;Action&gt;, Occurs, String)](m_telerik_justmock_mock_assert_3) |Asserts the specified call from expression. |
 ![Public method](/icons/pubmethod.gif)![Static member](/icons/static.gif) |[Assert&lt;TReturn&gt;(Expression&lt;Func&lt;TResult&gt;&gt;, Void, TReturn)](m_telerik_justmock_mock_assert__1_1) | |
-![](/icons/pub.gif) |[Assert&lt;TReturn&gt;(Expression&lt;Func&lt;TResult&gt;&gt;, Void, TReturn)](m_telerik_justmock_mock_assert__1_1) | |
+![](/icons/pubmethod.gif) |[Assert&lt;TReturn&gt;(Expression&lt;Func&lt;TResult&gt;&gt;, Void, TReturn)](m_telerik_justmock_mock_assert__1_1) | |
 ![Public method](/icons/pubmethod.gif)![Static member](/icons/static.gif) |[Assert&lt;T, TResult&gt;(T, Func&lt;T, TResult&gt;, Boolean)](m_telerik_justmock_mock_assert__2) | |
 ![Public method](/icons/pubmethod.gif)![Static member](/icons/static.gif) |[Assert(Expression&lt;Action&gt;, Args, Occurs, String)](m_telerik_justmock_mock_assert_2) |Asserts the specified call from expression. |
 ![Public method](/icons/pubmethod.gif)![Static member](/icons/static.gif) |[Assert&lt;TReturn&gt;(Expression&lt;Func&lt;TResult&gt;&gt;, Void, TReturn, Args)](m_telerik_justmock_mock_assert__1_2) | |

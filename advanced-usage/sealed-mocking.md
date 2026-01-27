@@ -23,68 +23,58 @@ This functionality allows you to fake sealed classes and calls to their members,
 
 To demonstrate how you can mock the behavior of a method from a sealed class, let's take the following class as an example:
 
-#### __[C#] Sample setup__
-
-{{region SealedMocking#SampleClasses}}
-    public sealed class FooSealed
+#### Sample setup
+```C#
+public sealed class FooSealed
+{
+    public int Echo(int arg1)
     {
-        public int Echo(int arg1)
-        {
-            return arg1;
-        }
+        return arg1;
     }
-{{endregion}}
-
-#### __[VB] Sample setup__
-
-{{region SealedMocking#SampleClasses}}
-    Public NotInheritable Class FooSealed
-        Public Function Echo(arg1 As Integer) As Integer
-            Return arg1
-        End Function
-    End Class
-{{endregion}}
+}
+```
+```VB
+Public NotInheritable Class FooSealed
+    Public Function Echo(arg1 As Integer) As Integer
+        Return arg1
+    End Function
+End Class
+```
 
 **Example 1** shows how you can arrange a non-virtual method of a sealed class. More specifically, how to setup that a call to the `foo.Echo` method with any `int` argument should return `10`.
 
-#### __[C#] Example 1: Arrange method__
+#### Example 1: Arrange method
+```C#
+[TestMethod]
+public void ShouldAssertFinalMethodCallOnASealedClass()
+{
+    // Arrange
+    var foo = Mock.Create<FooSealed>();
 
-{{region SealedMocking#AsssertFinalCall}}
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
 
-    [TestMethod]
-    public void ShouldAssertFinalMethodCallOnASealedClass()
-    {
-        // Arrange
-        var foo = Mock.Create<FooSealed>();
+    // Act
+    var actual = foo.Echo(1);
 
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
+    // Assert
+    Assert.AreEqual(10, actual);    
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertFinalMethodCallOnASealedClass()
+    ' Arrange
+    Dim foo = Mock.Create(Of FooSealed)()
 
-        // Act
-        var actual = foo.Echo(1);
+    Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
 
-        // Assert
-        Assert.AreEqual(10, actual);    
-    }
-{{endregion}}
+    ' Act
+    Dim actual = foo.Echo(1)
 
-#### __[VB] Example 1: Arrange method__
-
-{{region SealedMocking#AsssertFinalCall}}
-
-    <TestMethod()>
-    Public Sub ShouldAssertFinalMethodCallOnASealedClass()
-        ' Arrange
-        Dim foo = Mock.Create(Of FooSealed)()
-
-        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
-
-        ' Act
-        Dim actual = foo.Echo(1)
-
-        ' Assert
-        Assert.AreEqual(10, actual)
-    End Sub
-{{endregion}}
+    ' Assert
+    Assert.AreEqual(10, actual)
+End Sub
+```
 
 
 
@@ -94,227 +84,195 @@ Even the `sealed` class has only an `internal` constructor, you can still create
 
 Following is the sample class that will be used to demonstrate that:
 
-#### __[C#] Sample setup__
-
-{{region SealedMocking#SampleClasses}}
-
-    public sealed class FooSealedInternal
+#### Sample setup
+```C#
+public sealed class FooSealedInternal
+{
+    internal FooSealedInternal()
     {
-        internal FooSealedInternal()
-        {
-        }
-
-        public int Echo(int arg1)
-        {
-            return arg1;
-        }
     }
-{{endregion}}
 
-#### __[VB] Sample setup__
+    public int Echo(int arg1)
+    {
+        return arg1;
+    }
+}
+```
+```VB
+Public NotInheritable Class FooSealedInternal
 
-{{region SealedMocking#SampleClasses}}
+    Friend Sub New()
+    End Sub
 
-    Public NotInheritable Class FooSealedInternal
-
-        Friend Sub New()
-        End Sub
-
-        Public Function Echo(arg1 As Integer) As Integer
-            Return arg1
-        End Function
-    End Class
-{{endregion}}
+    Public Function Echo(arg1 As Integer) As Integer
+        Return arg1
+    End Function
+End Class
+```
 
 **Example 2** sets up that a call to the `foo.Echo` method with any `int` argument should return 10. After we ensure that the object is actually created, we assert for the return value of the `foo.Echo` method.
 
-#### __[C#] Example 2: Create mock of sealed class with internal constructor__
+#### Example 2: Create mock of sealed class with internal constructor
+```C#
+[TestMethod]
+public void ShouldCreateMockForASealedClassWithInternalConstructor()
+{
+    // Arrange
+    var foo = Mock.Create<FooSealedInternal>();
 
-{{region SealedMocking#CreateMockForSealedInternal}}
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
 
-    [TestMethod]
-    public void ShouldCreateMockForASealedClassWithInternalConstructor()
-    {
-        // Arrange
-        var foo = Mock.Create<FooSealedInternal>();
+    // Assert
+    Assert.IsNotNull(foo);
 
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
+    // Act
+    var actual = foo.Echo(1);
 
-        // Assert
-        Assert.IsNotNull(foo);
+    // Assert
+    Assert.AreEqual(10, actual);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldCreateMockForASealedClassWithInternalConstructor()
+    ' Arrange
+    Dim foo = Mock.Create(Of FooSealedInternal)()
 
-        // Act
-        var actual = foo.Echo(1);
+    Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
 
-        // Assert
-        Assert.AreEqual(10, actual);
-    }
-{{endregion}}
+    ' Assert
+    Assert.IsNotNull(foo)
 
-#### __[VB] Example 2: Create mock of sealed class with internal constructor__
+    ' Act
+    Dim actual = foo.Echo(1)
 
-{{region SealedMocking#CreateMockForSealedInternal}}
-
-    <TestMethod()>
-    Public Sub ShouldCreateMockForASealedClassWithInternalConstructor()
-        ' Arrange
-        Dim foo = Mock.Create(Of FooSealedInternal)()
-
-        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
-
-        ' Assert
-        Assert.IsNotNull(foo)
-
-        ' Act
-        Dim actual = foo.Echo(1)
-
-        ' Assert
-        Assert.AreEqual(10, actual)
-    End Sub
-{{endregion}}
-
-
+    ' Assert
+    Assert.AreEqual(10, actual)
+End Sub
+```
 
 ## Create Mock for Sealed Class with Interface
 
 You can also mock sealed classes that implement an interface. 
 
-#### __[C#] Sample setup__
+#### Sample setup
+```C#
+public interface IFoo
+{
+    void Execute();
+    void Execute(int arg1);
+}
 
-{{region SealedMocking#SampleClassInterface}}
-
-    public interface IFoo
+public sealed class Foo : IFoo
+{
+    public void Execute()
     {
-        void Execute();
-        void Execute(int arg1);
+        throw new NotImplementedException();
     }
 
-    public sealed class Foo : IFoo
+    void IFoo.Execute(int arg1)
     {
-        public void Execute()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IFoo.Execute(int arg1)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
-{{endregion}}
+}
+```
+```VB
+Public Interface IFoo
+    Sub Execute()
+    Sub Execute(arg1 As Integer)
+End Interface
 
-#### __[VB] Sample setup__
+Public NotInheritable Class Foo
+Implements IFoo
+    Public Sub Execute() Implements IFoo.Execute
+        Throw New NotImplementedException()
+    End Sub
 
-{{region SealedMocking#SampleClassInterface}}
-
-    Public Interface IFoo
-        Sub Execute()
-        Sub Execute(arg1 As Integer)
-    End Interface
-
-    Public NotInheritable Class Foo
-    Implements IFoo
-        Public Sub Execute() Implements IFoo.Execute
-            Throw New NotImplementedException()
-        End Sub
-
-        Private Sub Execute(arg1 As Integer) Implements IFoo.Execute
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-  {{endregion}}
+    Private Sub Execute(arg1 As Integer) Implements IFoo.Execute
+        Throw New NotImplementedException()
+    End Sub
+End Class
+```
 
 When a mock is created using `Mock.Create`, all of its dependencies are also implemented behind the scenes. In **Example 3**, we mock the `Foo` class, which implements the `IFoo` interface.
 
-#### __[C#] Example 3: Create mock from sealed class implementing an interface and control its method behavior__
+#### Example 3: Create mock from sealed class implementing an interface and control its method behavior
+```C#
+[TestMethod]
+public void ShouldAssertCallOnVoid()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-{{region SealedMocking#CreateMockForClassWithInterface}}
+    bool called = false;
+    // When foo.Execute() is invoked, skip its implementation and set called to true instead.
+    Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
 
-    [TestMethod]
-    public void ShouldAssertCallOnVoid()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    // Act
+    foo.Execute();
 
-        bool called = false;
-        // When foo.Execute() is invoked, skip its implementation and set called to true instead.
-        Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
+    // Assert
+    Assert.IsTrue(called);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertCallOnVoid()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Act
-        foo.Execute();
+    Dim called As Boolean = False
+    ' When foo.Execute() is invoked, skip its implementation and set called to true instead.
+    Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
 
-        // Assert
-        Assert.IsTrue(called);
-    }
-{{endregion}}
+    ' Act
+    foo.Execute()
 
-#### __[VB] Example 3: Create mock from sealed class implementing an interface and control its method behavior__
-
-{{region SealedMocking#CreateMockForClassWithInterface}}
-
-    <TestMethod()>
-    Public Sub ShouldAssertCallOnVoid()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Dim called As Boolean = False
-        ' When foo.Execute() is invoked, skip its implementation and set called to true instead.
-        Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
-
-        ' Act
-        foo.Execute()
-
-        ' Assert
-        Assert.IsTrue(called)
-    End Sub
-{{endregion}}
+    ' Assert
+    Assert.IsTrue(called)
+End Sub
+```
 
 Furthermore, if you are interested in `IFoo` interface implementation, you can use the `as` operator and call the interface members as shown below.
 
-#### __[C#] Example 4: Create mock from sealed class implementing an interface and verify the behavior of the interface's method__
+#### Example 4: Create mock from sealed class implementing an interface and verify the behavior of the interface's method
+```C#
+[TestMethod]
+public void ShouldAssertCallOnVoidThroughAnInterface()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-{{region SealedMocking#CreateMockForClassWithInterfaceExtracted}}
+    bool called = false;
+    // When foo.Execute() is invoked, skip its implementation and set called to true instead.
+    Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
 
-    [TestMethod]
-    public void ShouldAssertCallOnVoidThroughAnInterface()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    // Act
+    IFoo iFoo = foo;
+    iFoo.Execute();
 
-        bool called = false;
-        // When foo.Execute() is invoked, skip its implementation and set called to true instead.
-        Mock.Arrange(() => foo.Execute()).DoInstead(() => called = true);
+    // Assert
+    Assert.IsTrue(called);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertCallOnVoidThroughAnInterface()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Act
-        IFoo iFoo = foo;
-        iFoo.Execute();
+    Dim called As Boolean = False
+    ' When foo.Execute() is invoked, skip its implementation and set called to true instead.
+    Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
 
-        // Assert
-        Assert.IsTrue(called);
-    }
-{{endregion}}
+    ' Act
+    Dim iFoo As IFoo = foo
+    iFoo.Execute()
 
-#### __[VB] Example 4: Create mock from sealed class implementing an interface and verify the behavior of the interface's method__
-
-{{region SealedMocking#CreateMockForClassWithInterfaceExtracted}}
-
-    <TestMethod()>
-    Public Sub ShouldAssertCallOnVoidThroughAnInterface()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Dim called As Boolean = False
-        ' When foo.Execute() is invoked, skip its implementation and set called to true instead.
-        Mock.Arrange(Sub() foo.Execute()).DoInstead(Sub() called = True)
-
-        ' Act
-        Dim iFoo As IFoo = foo
-        iFoo.Execute()
-
-        ' Assert
-        Assert.IsTrue(called)
-    End Sub
-{{endregion}}
+    ' Assert
+    Assert.IsTrue(called)
+End Sub
+```
 
 ## See Also
 

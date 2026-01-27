@@ -17,64 +17,53 @@ Unit testing and mocking asynchronous methods has never been easier. The `Return
 
 We will be using the following interface for the examples:
 
-  #### __[C#]__
-
-  {{region ReturnAsync#ITaskAsync}}
-    public interface ITaskAsync
-    {
-        Task<int> AsyncExecute(int value);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region ReturnAsync#ITaskAsync}}
-    Public Interface ITaskAsync
-        Public Async Function AsyncExecute(ByVal value As Integer) As Task(Of Integer)
-    End Interface
-  {{endregion}}
+```C#
+public interface ITaskAsync
+{
+	Task<int> AsyncExecute(int value);
+}
+```
+```VB
+Public Interface ITaskAsync
+	Public Async Function AsyncExecute(ByVal value As Integer) As Task(Of Integer)
+End Interface
+```
 
 
 ## Return a Value for an Async Method
 
 Using `ReturnsAsync`, you can change the return value of the mocked method. The code from **Example 1** arranges the AsyncExecute method to return the value of `10` only when the method is called with an argument of `20`.
 
-#### __[C#] Example 1: Change the return value of an async method__
+#### Example 1: Change the return value of an async method
+```C# 
+[TestMethod]
+public async Task ShouldReturnValueForAsyncMethod()
+{
+	// Arrange
+	var mock = Mock.Create<ITaskAsync>();
+	Mock.Arrange(() => mock.AsyncExecute(20)).ReturnsAsync(10);
 
-{{region ReturnAsync#ShouldReturnValueForAsyncMethod}}
+	// Act
+	var result = await mock.AsyncExecute(20);
 
-	[TestMethod]
-	public async Task ShouldReturnValueForAsyncMethod()
-	{
-		// Arrange
-		var mock = Mock.Create<ITaskAsync>();
-		Mock.Arrange(() => mock.AsyncExecute(20)).ReturnsAsync(10);
-	
-		// Act
-		var result = await mock.AsyncExecute(20);
-	
-		// Assert
-		Assert.AreEqual(10, result);
-	}
-{{endregion}}
+	// Assert
+	Assert.AreEqual(10, result);
+}
+```
+```VB
+<TestMethod>
+Public Async Function ShouldReturnValueForAsyncMethod() As Task
+	' Arrange
+	Dim mock = Mock.Create(Of ITaskAsync)()
+	Mock.Arrange(Function() mock.AsyncExecute(20)).ReturnsAsync(10)
 
-#### __[VB] Example 1: Change the return value of an async method__
+	' Act
+	Dim result = Await mock.AsyncExecute(20)
 
-{{region ReturnAsync#ShouldReturnValueForAsyncMethod}}
-
-	<TestMethod>
-	Public Async Function ShouldReturnValueForAsyncMethod() As Task
-		' Arrange
-		Dim mock = Mock.Create(Of ITaskAsync)()
-		Mock.Arrange(Function() mock.AsyncExecute(20)).ReturnsAsync(10)
-	
-		' Act
-		Dim result = Await mock.AsyncExecute(20)
-	
-		' Assert
-		Assert.AreEqual(10, result)
-	End Function
-{{endregion}}
+	' Assert
+	Assert.AreEqual(10, result)
+End Function
+```
 
 
 ## Return a Value for an Async Method Using a Matcher
@@ -83,84 +72,74 @@ A common case is to mock an async method call to return a custom value in conjun
 
 In **Example 2** we use an `Arg.AnyInt` matcher for the call to match calls to `ITaskAsync.AsyncExecute` with any int argument. In the `ReturnsAsync` method, instead of using a simple int value, we use a function to return the value `10`.
 
-#### __[C#] Example 2: Using matchers to change the return value depending on the argument__
+#### Example 2: Using matchers to change the return value depending on the argument
+```C# 
+[TestMethod]
+public async Task ShouldReturnValueForAsyncMethodUsingMatcher()
+{
+	// Arrange
+	int expected = 10;
+	var mock = Mock.Create<ITaskAsync1>();
+	Mock.Arrange(() => mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(()=> expected);
 
-{{region ReturnAsync#ShouldReturnValueForAsyncMethodUsingMatcher}}
+	// Act
+	var result = await mock.AsyncExecute(20);
 
+	// Assert
+	Assert.Equal(expected, result);
+}
+```
+```VB
+<TestMethod>
+Public Async Function ShouldReturnValueForAsyncMethodUsingMatcher() As Task
+	' Arrange
+	Dim expected = 10
+	Dim mock = Mock.Create(Of ITaskAsync1)()
+	Mock.Arrange(Function() mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(Function() expected)
+
+	' Act
+	Dim result = Await mock.AsyncExecute(20)
+
+	' Assert
+	Assert.Equal(expected, result)
+End Function
+```
+
+
+You may also use a more complicated matcher. For example, you can make arrangement for passing exactly `20` to `ITaskAsync.AsyncExecute` method. 
+
+#### Example 3: Using matchers to change the return value depending on the argument
+```C# 
 	[TestMethod]
-	public async Task ShouldReturnValueForAsyncMethodUsingMatcher()
+	public async Task ShouldReturnValueForAsyncMethodUsingComplexMatcher()
 	{
 		// Arrange
 		int expected = 10;
-		var mock = Mock.Create<ITaskAsync1>();
-		Mock.Arrange(() => mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(()=> expected);
+		var mock = Mock.Create<ITaskAsync>();
+		Mock.Arrange(() => mock.AsyncExecute(Arg.Matches<int>(x => x == 20))).ReturnsAsync(() => expected);
 	
 		// Act
 		var result = await mock.AsyncExecute(20);
 	
 		// Assert
-		Assert.Equal(expected, result);
+		Assert.AreEqual(expected, result);
 	}
-{{endregion}}
-
-#### __[VB] Example 2: Using matchers to change the return value depending on the argument__
-
-{{region ReturnAsync#ShouldReturnValueForAsyncMethodUsingMatcher}}
-
+```
+```VB
 	<TestMethod>
-	Public Async Function ShouldReturnValueForAsyncMethodUsingMatcher() As Task
+	Public Async Function ShouldReturnValueForAsyncMethodUsingComplexMatcher() As Task
 		' Arrange
 		Dim expected = 10
-		Dim mock = Mock.Create(Of ITaskAsync1)()
-		Mock.Arrange(Function() mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(Function() expected)
+		Dim mock = Mock.Create(Of ITaskAsync)()
+		Mock.Arrange(Function() mock.AsyncExecute(Arg.Matches(Of Integer)(Function(x) x = 20))).ReturnsAsync(Function() expected)
 	
 		' Act
 		Dim result = Await mock.AsyncExecute(20)
 	
 		' Assert
-		Assert.Equal(expected, result)
+		Assert.AreEqual(expected, result)
 	End Function
-{{endregion}}
-
-
-You may also use a more complicated matcher. For example, you can make arrangement for passing exactly `20` to `ITaskAsync.AsyncExecute` method. 
-
- #### __[C#] Example 3: Using matchers to change the return value depending on the argument__
-
-    {{region ReturnAsync#ShouldReturnValueForAsyncMethodUsingComplexMatcher}}
-        [TestMethod]
-        public async Task ShouldReturnValueForAsyncMethodUsingComplexMatcher()
-        {
-            // Arrange
-            int expected = 10;
-            var mock = Mock.Create<ITaskAsync>();
-            Mock.Arrange(() => mock.AsyncExecute(Arg.Matches<int>(x => x == 20))).ReturnsAsync(() => expected);
-        
-            // Act
-            var result = await mock.AsyncExecute(20);
-        
-            // Assert
-            Assert.AreEqual(expected, result);
-        }
-    {{endregion}}
-
-  #### __[VB] Example 3: Using matchers to change the return value depending on the argument__
-
-    {{region ReturnAsync#ShouldReturnValueForAsyncMethodUsingComplexMatcher}}
-        <TestMethod>
-        Public Async Function ShouldReturnValueForAsyncMethodUsingComplexMatcher() As Task
-            ' Arrange
-            Dim expected = 10
-            Dim mock = Mock.Create(Of ITaskAsync)()
-            Mock.Arrange(Function() mock.AsyncExecute(Arg.Matches(Of Integer)(Function(x) x = 20))).ReturnsAsync(Function() expected)
-        
-            ' Act
-            Dim result = Await mock.AsyncExecute(20)
-        
-            ' Assert
-            Assert.AreEqual(expected, result)
-        End Function
-    {{endregion}}
+```
 
 > Refer to the [Matchers]({%slug justmock/basic-usage/matchers%}) help topic for more information about using matchers.
 
@@ -168,51 +147,45 @@ You may also use a more complicated matcher. For example, you can make arrangeme
 
 Another common case is to mock an async method call to execute custom logic before returning a custom value. This again could be done with few lines of code. In **Example 4** we assign a value to the `called` variable in the function responsible for returning custom value for the `AsyncExecute` method.
 
-#### __[C#] Example 4: Execute logic prior to returning value for async method__
+#### Example 4: Execute logic prior to returning value for async method
+```C# 
+[TestMethod]
+public async Task ShouldReturnValueForAsyncMethodAndExecuteCustomLogic()
+{
+	// Arrange
+	int expected = 10;
+	bool called = false;
+	var mock = Mock.Create<ITaskAsync>();
+	Mock.Arrange(() => mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(() => { called = true; return expected; });
 
-{{region ReturnAsync#ShouldReturnValueForAsyncMethodAndExecuteCustomLogic}}
+	// Act
+	var result = await mock.AsyncExecute(20);
 
-	[TestMethod]
-	public async Task ShouldReturnValueForAsyncMethodAndExecuteCustomLogic()
-	{
-		// Arrange
-		int expected = 10;
-		bool called = false;
-		var mock = Mock.Create<ITaskAsync>();
-		Mock.Arrange(() => mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(() => { called = true; return expected; });
-	
-		// Act
-		var result = await mock.AsyncExecute(20);
-	
-		// Assert
-		Assert.True(called);
-		Assert.Equal(expected, result);
-	}
-{{endregion}}
+	// Assert
+	Assert.True(called);
+	Assert.Equal(expected, result);
+}
+```
+```VB
+<TestMethod>
+Public Async Function ShouldReturnValueForAsyncMethodAndExecuteCustomLogic() As Task
+	' Arrange
+	Dim expected = 10
+	Dim called = False
+	Dim mock = Mock.Create(Of ITaskAsync)()
+	Mock.Arrange(Function() mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(Function()
+																			called = True
+																			Return expected
+																		End Function)
 
-#### __[VB] Example 4: Execute logic prior to returning value for async method__
+	' Act
+	Dim result = Await mock.AsyncExecute(20)
 
-{{region ReturnAsync#ShouldReturnValueForAsyncMethodAndExecuteCustomLogic}}
-
-	<TestMethod>
-	Public Async Function ShouldReturnValueForAsyncMethodAndExecuteCustomLogic() As Task
-		' Arrange
-		Dim expected = 10
-		Dim called = False
-		Dim mock = Mock.Create(Of ITaskAsync)()
-		Mock.Arrange(Function() mock.AsyncExecute(Arg.AnyInt)).ReturnsAsync(Function()
-																				called = True
-																				Return expected
-																			End Function)
-	
-		' Act
-		Dim result = Await mock.AsyncExecute(20)
-	
-		' Assert
-		Assert.[True](called)
-		Assert.Equal(expected, result)
-	End Function
-{{endregion}}
+	' Assert
+	Assert.[True](called)
+	Assert.Equal(expected, result)
+End Function
+```
 
 ## Return a Value for an Async Method from a Mocking Container (Automocking)
 
@@ -220,134 +193,118 @@ In scenarios where a class has dependencies involving asynchronous methods, it i
 
 To take a look at this scenario, we will use the following code:
 
-#### __[C#]__
-{{region ReturnAsync#TaskClient}}
+```C#
+public interface ITaskAsync
+{
+	Task<int> GenericTaskWithValueReturnTypeAndOneParam(int value);
+}
 
-	public interface ITaskAsync
+public class TaskClient
+{
+	private ITaskAsync task;
+
+	public TaskClient(ITaskAsync t)
 	{
-    	Task<int> GenericTaskWithValueReturnTypeAndOneParam(int value);
+		task = t;
 	}
 
-	public class TaskClient
+	public async Task<int> TaskUsageWithValue()
 	{
-    	private ITaskAsync task;
-
-    	public TaskClient(ITaskAsync t)
-    	{
-        	task = t;
-    	}
-
-    	public async Task<int> TaskUsageWithValue()
-    	{
-        	return await task.GenericTaskWithValueReturnTypeAndOneParam(10);
-    	}
+		return await task.GenericTaskWithValueReturnTypeAndOneParam(10);
 	}
-{{endregion}}
+}
+```
+```VB
+Public Interface ITaskAsync
+	Function GenericTaskWithValueReturnTypeAndOneParam(value As Integer) As Task(Of Integer)
+End Interface
 
-#### __[VB]__
-{{region ReturnAsync#TaskClient}}
+Public Class TaskClient
+	Private task As ITaskAsync
 
-	Public Interface ITaskAsync
-    	Function GenericTaskWithValueReturnTypeAndOneParam(value As Integer) As Task(Of Integer)
-	End Interface
+	Public Sub New(t As ITaskAsync)
+		task = t
+	End Sub
 
-	Public Class TaskClient
-    	Private task As ITaskAsync
-
-    	Public Sub New(t As ITaskAsync)
-        	task = t
-    	End Sub
-
-    	Public Async Function TaskUsageWithValue() As Task(Of Integer)
-        	Return Await task.GenericTaskWithValueReturnTypeAndOneParam(10)
-    	End Function
-	End Class
-{{endregion}}
+	Public Async Function TaskUsageWithValue() As Task(Of Integer)
+		Return Await task.GenericTaskWithValueReturnTypeAndOneParam(10)
+	End Function
+End Class
+```
 
 In **Example 5**, we demonstrate the basic usage of ReturnsAsync with MockingContainer using type inference.
 
-#### __[C#] Example 5: Using ReturnsAsync with MockingContainer__
+#### Example 5: Using ReturnsAsync with MockingContainer
+```C# 
+[TestMethod]
+public async Task TestTaskAutomockingReturnsAsyncResult()
+{
+	// Arange
+	var container = new MockingContainer<TaskClient>();
+	var expectedResult = 10;
 
-{{region ReturnAsync#TestTaskAutomockingReturnsAsyncResult}}
+	container.Arrange<ITaskAsync>(t => t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult);
 
-	[TestMethod]
- 	public async Task TestTaskAutomockingReturnsAsyncResult()
-	{
-    	// Arange
-    	var container = new MockingContainer<TaskClient>();
-    	var expectedResult = 10;
+	// Act
+	var actualResult = await container.Instance.TaskUsageWithValue();
 
-    	container.Arrange<ITaskAsync>(t => t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult);
+	// Assert
+	Assert.Equals(expectedResult, actualResult);
+}
+```
+```VB
+<TestMethod>
+Public Async Function TestTaskAutomockingReturnsAsyncResult() As Task
+	' Arange
+	Dim container = New MockingContainer(Of TaskClient)()
+	Dim expectedResult = 10
 
-    	// Act
-    	var actualResult = await container.Instance.TaskUsageWithValue();
+	container.Arrange(Of ITaskAsync)(Function(t) t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult)
 
-    	// Assert
-    	Assert.Equals(expectedResult, actualResult);
-	}
-{{endregion}}
+	' Act
+	Dim actualResult = Await container.Instance.TaskUsageWithValue()
 
-#### __[VB] Example 5: Using ReturnsAsync with MockingContainer__
-{{region ReturnAsync#TestTaskAutomockingReturnsAsyncResult}}
-
-	<TestMethod>
-	Public Async Function TestTaskAutomockingReturnsAsyncResult() As Task
-    	' Arange
-    	Dim container = New MockingContainer(Of TaskClient)()
-    	Dim expectedResult = 10
-
-    	container.Arrange(Of ITaskAsync)(Function(t) t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult)
-
-    	' Act
-    	Dim actualResult = Await container.Instance.TaskUsageWithValue()
-
-    	' Assert
-    	Assert.Equals(expectedResult, actualResult)
-	End Function
-{{endregion}}
+	' Assert
+	Assert.Equals(expectedResult, actualResult)
+End Function
+```
 
 In **Example 6**, we extend this by explicitly specifying the return type, showing a more controlled and type-safe approach.
 
-#### __[C#] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
+#### Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer
+```C# 
+[TestMethod]
+public async Task TestTaskAutomockingAsyncResultWithIntParameter()
+{
+	// Arange
+	var container = new MockingContainer<TaskClient>();
+	var expectedResult = 10;
 
-{{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
+	container.Arrange<ITaskAsync, int>(t => t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult);
 
-	[TestMethod]
- 	public async Task TestTaskAutomockingAsyncResultWithIntParameter()
-	{
-    	// Arange
-    	var container = new MockingContainer<TaskClient>();
-    	var expectedResult = 10;
+	// Act
+	var actualResult = await container.Instance.TaskUsageWithValue();
 
-    	container.Arrange<ITaskAsync, int>(t => t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult);
+	// Assert
+	Assert.Equals(expectedResult, actualResult);
+}
+```
+```VB
+<TestMethod>
+Public Async Function TestTaskAutomockingAsyncResultWithIntParameter() As Task
+	' Arange
+	Dim container = New MockingContainer(Of TaskClient)()
+	Dim expectedResult = 10
 
-    	// Act
-    	var actualResult = await container.Instance.TaskUsageWithValue();
+	container.Arrange(Of ITaskAsync, Integer)(Function(t) t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult)
 
-    	// Assert
-    	Assert.Equals(expectedResult, actualResult);
-	}
-{{endregion}}
+	' Act
+	Dim actualResult = Await container.Instance.TaskUsageWithValue()
 
-#### __[VB] Example 6: Extending ReturnsAsync with Explicit Return Type in MockingContainer__
-
-{{region ReturnAsync#TestTaskAutomockingAsyncResultWithIntParameter}}
-
- 	<TestMethod>
-	Public Async Function TestTaskAutomockingAsyncResultWithIntParameter() As Task
-    	' Arange
-    	Dim container = New MockingContainer(Of TaskClient)()
-    	Dim expectedResult = 10
-
-    	container.Arrange(Of ITaskAsync, Integer)(Function(t) t.GenericTaskWithValueReturnTypeAndOneParam(Arg.AnyInt)).ReturnsAsync(expectedResult)
-
-    	' Act
-    	Dim actualResult = Await container.Instance.TaskUsageWithValue()
-
-    	' Assert
-    	Assert.Equals(expectedResult, actualResult)
-	End Function
-{{endregion}}
+	' Assert
+	Assert.Equals(expectedResult, actualResult)
+End Function
+```
 
 ## Testing Exception Handling for Async Methods
 

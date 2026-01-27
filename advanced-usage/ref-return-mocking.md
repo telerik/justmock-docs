@@ -17,75 +17,70 @@ Ref return is one of the advanced features supported in __Telerik® JustMock__. 
 
 `ClassUsingRefReturns` sample class is used below to figure out different ref return use cases. Here is its implementation:
 
-  #### __[C#]__
+```C#
+class ClassUsingRefReturns
+{
+    private static int[] array = { 1, 2, 3, 4 };
 
-  {{region RefReturnMocking#Sample}}
-	class ClassUsingRefReturns
-	{
-		private static int[] array = { 1, 2, 3, 4 };
+    public ref int GetRefReturnInstanceWithArgs(ref int p)
+    {
+        ref int local = ref array[0];
+        local += p;
 
-		public ref int GetRefReturnInstanceWithArgs(ref int p)
-		{
-			ref int local = ref array[0];
-			local += p;
+        return ref local;
+    }
 
-			return ref local;
-		}
+    private ref int GetRefReturnPrivInstanceWithArgs(ref int p)
+    {
+        ref int local = ref array[1];
+        local += p;
 
-		private ref int GetRefReturnPrivInstanceWithArgs(ref int p)
-		{
-			ref int local = ref array[1];
-			local += p;
+        return ref local;
+    }
 
-			return ref local;
-		}
+    public static ref int RefReturnStatic
+    {
+        get
+        {
+            return ref array[2];
+        }
+    }
 
-		public static ref int RefReturnStatic
-		{
-			get
-			{
-				return ref array[2];
-			}
-
-		}
-
-		private static ref int RefReturnPrivStatic
-		{
-			get
-			{
-				return ref array[3];
-			}
-		}
-	}
-  {{endregion}}
+  private static ref int RefReturnPrivStatic
+  {
+      get
+      {
+          return ref array[3];
+      }
+    }
+}
+```
 
 ## Mocking Public Ref Return Members
 
 The typical example of mocking public instance method could be illustrated as following:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void MockRefReturnInstanceMethodWithArgs()
+{
+    var localRef = LocalRef.WithValue(12);
 
-  {{region RefReturnMocking#PublicInstanceMember}}
-	[TestMethod]
-	public void MockRefReturnInstanceMethodWithArgs()
-	{
-		var localRef = LocalRef.WithValue(12);
+    // Arrange
+    var sut = Mock.Create<ClassUsingRefReturns>();
+    Mock.Arrange(sut, s => s.GetRefReturnInstanceWithArgs(ref Arg.Ref(Arg.AnyInt).Value)))
+      .Returns(localRef.Handle)
+      .OccursOnce();
 
-		// Arrange
-		var sut = Mock.Create<ClassUsingRefReturns>();
-		Mock.Arrange(sut, s => s.GetRefReturnInstanceWithArgs(ref Arg.Ref(Arg.AnyInt).Value)))
-			.Returns(localRef.Handle)
-			.OccursOnce();
+    // Act
+    int param = 10;
+    ref int res = ref sut.GetRefReturnInstance(ref param);
 
-		// Act
-		int param = 10;
-		ref int res = ref sut.GetRefReturnInstance(ref param);
-
-		// Assert
-		Mock.Assert(sut);
-		Assert.AreEqual(localRef.Ref, res);
-	}
-  {{endregion}}
+    // Assert
+    Mock.Assert(sut);
+    Assert.AreEqual(localRef.Ref, res);
+}
+```
 
 
 In this example, there is an arrangement to fake ref return and verify occurrences of instance method using `Mock.Arrange`. The interesting part of this arrangement is to provide a value which can be considered as ref return. JustMock introduces a dedicated delegate type `FuncExpectation<TReturn>.RefDelegate` for this purpose and `LocalRef` helper class which simplifies ref return arrangements and verifications.
@@ -96,77 +91,71 @@ In this example, there is an arrangement to fake ref return and verify occurrenc
 
 Another common use case is mocking of public static member. The next example shows how to achieve that:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void MockRefReturnStaticProperty()
+{
+    // Arrange
+    Mock.SetupStatic<ClassUsingRefReturns>();
+    Mock.Arrange<ClassUsingRefReturns, int>(() =>ClassUsingRefReturns.RefReturnStatic)
+        .Returns(LocalRef.WithValue(12).Handle)
+        .OccursOnce();
 
-  {{region RefReturnMocking#PublicStaticMember}}
-    [TestMethod]
-    public void MockRefReturnStaticProperty()
-    {
-        // Arrange
-        Mock.SetupStatic<ClassUsingRefReturns>();
-        Mock.Arrange<ClassUsingRefReturns, int>(() =>ClassUsingRefReturns.RefReturnStatic)
-            .Returns(LocalRef.WithValue(12).Handle)
-            .OccursOnce();
+    // Act
+    ref int res = ref ClassUsingRefLocalsAndReturns.RefReturnStatic;
 
-        // Act
-        ref int res = ref ClassUsingRefLocalsAndReturns.RefReturnStatic;
-
-        // Assert
-        Mock.Assert<ClassUsingRefReturns>();
-        Assert.AreEqual(12, res);
-    }
-  {{endregion}}
+    // Assert
+    Mock.Assert<ClassUsingRefReturns>();
+    Assert.AreEqual(12, res);
+}
+```
 
 ## Mocking Non-public Ref Return Members
 
 Non-public API provides several dedicated interfaces for mocking ref returns and accessing members following a well-known JustMock approach. Let's see how this looks like in action:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void MockRefReturnPrivateInstanceMethodWithArgs()
+{
+    // Arrange
+    var sut = Mock.Create<ClassUsingRefReturns>();
+    Mock.NonPublic.RefReturn.Arrange<int>(sut, "GetRefReturnPrivInstanceWithArgs", Arg.Expr.Ref(1))
+        .Returns(LocalRef.WithValue(12).Handle)
+        .OccursOnce();
 
-  {{region RefReturnMocking#NonPublicInstanceMember}}
-    [TestMethod]
-    public void MockRefReturnPrivateInstanceMethodWithArgs()
-    {
-        // Arrange
-        var sut = Mock.Create<ClassUsingRefReturns>();
-        Mock.NonPublic.RefReturn.Arrange<int>(sut, "GetRefReturnPrivInstanceWithArgs", Arg.Expr.Ref(1))
-            .Returns(LocalRef.WithValue(12).Handle)
-            .OccursOnce();
+    // Act
+    var accessor = Mock.NonPublic.MakePrivateAccessor(sut);
+    ref int res = ref accessor.RefReturn.CallMethod<int>("GetRefReturnPrivInstanceWithArgs", Arg.Ref(1).Value);
 
-        // Act
-        var accessor = Mock.NonPublic.MakePrivateAccessor(sut);
-        ref int res = ref accessor.RefReturn.CallMethod<int>("GetRefReturnPrivInstanceWithArgs", Arg.Ref(1).Value);
-
-        // Assert
-        Mock.Assert(sut);
-        Assert.AreEqual(12, res);
-    }
-  {{endregion}}
+    // Assert
+    Mock.Assert(sut);
+    Assert.AreEqual(12, res);
+}
+```
 
 
 The example demonstrates ref return faking and occurrence verification handled by `INonPublicRefReturnExpectation` interface. Accessing non-public members is supported via `IPrivateRefReturnAccessor` interface as a part of `PrivateAccessor`. The next example gives an idea of how you can mock non-public ref return static members:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void MockRefReturnPrivateStaticProperty()
+{
+    // Arrange
+    Mock.SetupStatic<ClassUsingRefReturns>();
+    Mock.NonPublic.RefReturn.Arrange<ClassUsingRefReturns, int>("RefReturnPrivStatic")
+        .Returns(LocalRef.WithValue(12).Handle)
+        .OccursOnce();
 
-  {{region RefReturnMocking#NonPublicStaticMember}}
-    [TestMethod]
-    public void MockRefReturnPrivateStaticProperty()
-    {
-        // Arrange
-        Mock.SetupStatic<ClassUsingRefReturns>();
-        Mock.NonPublic.RefReturn.Arrange<ClassUsingRefReturns, int>("RefReturnPrivStatic")
-            .Returns(LocalRef.WithValue(12).Handle)
-            .OccursOnce();
+    // Act
+    var accessor = Mock.NonPublic.MakeStaticPrivateAccessor(typeof(ClassUsingRefReturns));
+    ref int res = ref accessor.RefReturn.GetProperty<int>("RefReturnPrivStatic");
 
-        // Act
-        var accessor = Mock.NonPublic.MakeStaticPrivateAccessor(typeof(ClassUsingRefReturns));
-        ref int res = ref accessor.RefReturn.GetProperty<int>("RefReturnPrivStatic");
-
-        // Assert
-        Mock.Assert<ClassUsingRefReturns>();
-        Assert.AreEqual(12, res);
-    }
-  {{endregion}}
+    // Assert
+    Mock.Assert<ClassUsingRefReturns>();
+    Assert.AreEqual(12, res);
+}
+```
 
 ## See Also
 

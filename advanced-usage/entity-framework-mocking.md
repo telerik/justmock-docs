@@ -21,31 +21,29 @@ __JustMock__ supports both EntityFramework and EntityFrameworkCore thanks to the
 
 In this topic, we will cover some common scenarios in the EntityFramework unit testing. In the examples below, we use the `DbContext` class along with the following methods:
 
-#### __[C#]__
+```C#
+public class NerdDinners : DbContext
+{
+    public DbSet<Dinner> Dinners { get; set; }
+    public DbSet<RSVP> RSVPs { get; set; }
+}
 
-{{region EntityFramework#Samples}}
-    public class NerdDinners : DbContext
-    {
-        public DbSet<Dinner> Dinners { get; set; }
-        public DbSet<RSVP> RSVPs { get; set; }
-    }
+public class Dinner
+{
+    public int DinnerID { get; set; }
+    public string Title { get; set; }
+    public DateTime EventDate { get; set; }
+    public string Address { get; set; }
+    public string HostedBy { get; set; }
+}
 
-    public class Dinner
-    {
-        public int DinnerID { get; set; }
-        public string Title { get; set; }
-        public DateTime EventDate { get; set; }
-        public string Address { get; set; }
-        public string HostedBy { get; set; }
-    }
-
-    public class RSVP
-    {
-        public int RSVPID { get; set; }
-        public int DinnerID { get; set; }
-        public string AtendeeEmail { get; set; }
-    }
-{{endregion}}
+public class RSVP
+{
+    public int RSVPID { get; set; }
+    public int DinnerID { get; set; }
+    public string AtendeeEmail { get; set; }
+}
+```
 
 
 ## Returning A Fake Collection
@@ -54,19 +52,17 @@ The following steps demonstrate how to return a fake collection:
 
 1. Create a method that returns a fake collection of `Dinner`s. For this example, we use the code below:
 
-#### __[C#]__
+```C#
+public IList<Dinner> FakeDinners()
+{ 
+    List<Dinner> fakeDin = new List<Dinner>
+    {
+        new Dinner { Address = "1 Microsoft way", DinnerID = 1, EventDate =DateTime.Now, HostedBy = "Telerik" , Title = "Telerik Dinner"}
+    };
 
-{{region EntityFramework#FakeDinnersReturn}}
-    public IList<Dinner> FakeDinners()
-    { 
-        List<Dinner> fakeDin = new List<Dinner>
-        {
-            new Dinner { Address = "1 Microsoft way", DinnerID = 1, EventDate =DateTime.Now, HostedBy = "Telerik" , Title = "Telerik Dinner"}
-        };
-
-      return fakeDin;
-    }
-{{endregion}}
+  return fakeDin;
+}
+```
 
 1. Create a new instance of the `NerdDinners` class.
 
@@ -80,100 +76,90 @@ The following steps demonstrate how to return a fake collection:
 >
 > Note that when you use `ReturnsCollection()` you must be using the `Telerik.JustMock.Helpers;`.
 
-#### __[C#]__
+```C#
+[TestMethod]
+public void ShouldReturnFakeCollectionWhenExpected()
+{
+    NerdDinners nerdDinners = new NerdDinners();
 
-{{region EntityFramework#MockingCollectionReturn}}
-    [TestMethod]
-    public void ShouldReturnFakeCollectionWhenExpected()
-    {
-        NerdDinners nerdDinners = new NerdDinners();
+    // Arrange
+    Mock.Arrange(() => nerdDinners.Dinners).ReturnsCollection(FakeDinners());
 
-        // Arrange
-        Mock.Arrange(() => nerdDinners.Dinners).ReturnsCollection(FakeDinners());
+    // Act
+    var query = from d in nerdDinners.Dinners
+                where d.DinnerID == 1
+                select d;
 
-        // Act
-        var query = from d in nerdDinners.Dinners
-                    where d.DinnerID == 1
-                    select d;
-
-        // Assert
-        Assert.AreEqual(1, query.Count());
-        Assert.AreEqual(1, query.First().DinnerID);
-    }
-{{endregion}}
+    // Assert
+    Assert.AreEqual(1, query.Count());
+    Assert.AreEqual(1, query.First().DinnerID);
+}
+```
 
 ## Returning A Fake Collection with Future Mocking
 
 In this example we will return the same fake collection.
 
-#### __[C#]__
+```C#
+public IList<Dinner> FakeDinners()
+{ 
+    List<Dinner> fakeDin = new List<Dinner>
+    {
+        new Dinner { Address = "1 Microsoft way", DinnerID = 1, EventDate =DateTime.Now, HostedBy = "Telerik" , Title = "Telerik Dinner"}
+    };
 
-{{region EntityFramework#FakeDinnersReturn}}
-    public IList<Dinner> FakeDinners()
-    { 
-        List<Dinner> fakeDin = new List<Dinner>
-        {
-            new Dinner { Address = "1 Microsoft way", DinnerID = 1, EventDate =DateTime.Now, HostedBy = "Telerik" , Title = "Telerik Dinner"}
-        };
-
-        return fakeDin;
-    }
-{{endregion}}
+    return fakeDin;
+}
+```
 
 To assure that the instance does not matter during the __Act__ phase we will make a repository class:
 
-#### __[C#]__
-
-{{region EntityFramework#DinnersRepository}}
-    public class DinnerRepository
+```C#
+public class DinnerRepository
+{
+    public Dinner GetById(int dinnerId)
     {
-        public Dinner GetById(int dinnerId)
-        {
-            NerdDinners nerdDinners = new NerdDinners();
-            var query = from d in nerdDinners.Dinners
-                        where d.DinnerID == 1
-                        select d;
+        NerdDinners nerdDinners = new NerdDinners();
+        var query = from d in nerdDinners.Dinners
+                    where d.DinnerID == 1
+                    select d;
 
-            return query.First();
-        }
+        return query.First();
     }
-{{endregion}}
+}
+```
 
 As you see, in the test below we are acting with a `new DinnerRepository()`, but still we are meeting the expectations and the test passes. This behavior is known and expected in [Future Mocking]({%slug justmock/advanced-usage/future-mocking%}).
 
 > Note that when you use `ReturnsCollection()` you must be using the `Telerik.JustMock.Helpers;` namespace.
 
-#### __[C#]__
+```C#
+[TestMethod]
+public void ShouldReturnFakeCollectionForFutureInstance()
+{
+    NerdDinners nerdDinners = new NerdDinners();
 
-{{region EntityFramework#FutureMockingCollectionReturn}}
-    [TestMethod]
-    public void ShouldReturnFakeCollectionForFutureInstance()
-    {
-        NerdDinners nerdDinners = new NerdDinners();
+    Mock.Arrange(() => nerdDinners.Dinners).IgnoreInstance().ReturnsCollection(FakeDinners());
 
-        Mock.Arrange(() => nerdDinners.Dinners).IgnoreInstance().ReturnsCollection(FakeDinners());
-
-        Assert.AreEqual(1, new DinnerRepository().GetById(1).DinnerID);
-    }   
-{{endregion}}
+    Assert.AreEqual(1, new DinnerRepository().GetById(1).DinnerID);
+}   
+```
 
 ## Faking the Add of an Entity
 
 In the next example we will __Arrange__ the calling of the `Add()` method to actually add an item to a previously created local collection.
 
-#### __[C#]__
+```C#
+[TestMethod]
+public void ShouldReturnFakeCollectionForFutureInstance()
+{
+    NerdDinners nerdDinners = new NerdDinners();
 
-{{region EntityFramework#FakingAdd}}
-    [TestMethod]
-    public void ShouldReturnFakeCollectionForFutureInstance()
-    {
-        NerdDinners nerdDinners = new NerdDinners();
+    Mock.Arrange(() => nerdDinners.Dinners).IgnoreInstance().ReturnsCollection(FakeDinners());
 
-        Mock.Arrange(() => nerdDinners.Dinners).IgnoreInstance().ReturnsCollection(FakeDinners());
-
-        Assert.AreEqual(1, new DinnerRepository().GetById(1).DinnerID);
-    }   
-    {{endregion}}
+    Assert.AreEqual(1, new DinnerRepository().GetById(1).DinnerID);
+}   
+```
 
 Here are the steps:
 

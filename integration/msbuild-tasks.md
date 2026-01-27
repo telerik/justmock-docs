@@ -21,43 +21,40 @@ This topic demonstrates how to integrate __Telerik® JustMock__ with an MSBuild 
 
 1. Open your MSBuild project and under the Project node include JustMock targets file. This file is named _JustMock.targets_ and can be found in the installation directory under the Libraries folder (by default *C:\Program Files (x86)\Progress\Telerik JustMock\Libraries*). 
 
-	{{region }}
+```xml
+<Import Project="JustMock.targets" />
+```
+
+> Remember to change the path to the .targets file to the one specific for your system.
+
+
+2. Add the following two tasks under the `Project` node to start and stop JustMock before and after the tests run, respectively:
 	
-		  <Import Project="JustMock.targets" />
-	{{endregion}}
+```xml
+<Target Name="BeforeTestConfiguration">
+	<JustMockStart />
+</Target>
 
+<Target Name="AfterTestConfiguration">
+	<JustMockStop />
+</Target>
+```
 
-	> Remember to change the path to the .targets file to the one specific for your system.
+You can optionally link (or unlink) 3rd-party profilers:
 
+```xml
+<JustMockStart LinkProfilers="JustTrace; Visual Studio 2012 Code Coverage/IntelliTrace"/>
 
-1. Add the following two tasks under the `Project` node to start and stop JustMock before and after the tests run, respectively:
-	
-	  {{region }}
-	    <Target Name="BeforeTestConfiguration">
-	                <JustMockStart />
-	              </Target>
-	
-	              <Target Name="AfterTestConfiguration">
-	                <JustMockStop />
-	              </Target>
-	  {{endregion}}
+<JustMockStop UnlinkProfilers="JustTrace; Visual Studio 2012 Code Coverage/IntelliTrace"/>
+```
 
-	You can optionally link (or unlink) 3rd-party profilers:
-
-	  {{region }}
-	    <JustMockStart LinkProfilers="JustTrace; Visual Studio 2012 Code Coverage/IntelliTrace" />
-	
-	              <JustMockStop UnlinkProfilers="JustTrace; Visual Studio 2012 Code Coverage/IntelliTrace"/>
-	  {{endregion}}
-
-	Multiple profilers can be specified by separating them with a semicolon. The names of the profilers must be specified exactly as they appear in the UI of the JustMock configuration tool. The files __Telerik.JustMock.Configuration.exe__ and __Telerik.JustMock.Configuration.exe.config__ must be present in the same folder as Telerik.JustMock.MSBuild.dll (by default *C:\Program Files (x86)\Progress\Telerik JustMock\Libraries*).
-	
+Multiple profilers can be specified by separating them with a semicolon. The names of the profilers must be specified exactly as they appear in the UI of the JustMock configuration tool. The files __Telerik.JustMock.Configuration.exe__ and __Telerik.JustMock.Configuration.exe.config__ must be present in the same folder as Telerik.JustMock.MSBuild.dll (by default *C:\Program Files (x86)\Progress\Telerik JustMock\Libraries*).
 	
 
 ## Installation-Free Integration with MSBuild
 
 When you don't have the possibility for installing JustMock, you can setup MSBuild to run the profiler by providing the path to the profiler assembly of JustMock. The `<JustMockStart/>` MSBuild task has the attribute __ProfilerPath__, which must be set to the full path to the profiler DLL. Usually, there is a build variable that holds the absolute path to the source code root folder. If we assume that variable is called $(SourceDir), then we can set the profiler path like so:
             
-  {{region }}
-    <JustMockStart ProfilerPath="$(SourceDir)\path\to\Telerik.CodeWeaver.Profiler.dll" />
-  {{endregion}}
+```xml
+<JustMockStart ProfilerPath="$(SourceDir)\path\to\Telerik.CodeWeaver.Profiler.dll" />
+```

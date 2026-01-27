@@ -24,20 +24,18 @@ In this topic we will cover some scenarios in unit testing Microsoft SharePoint.
 
 Disallow calling `SPContext.Current` property.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(ApplicationException))]
+public void ShouldThrowApplicationExceptionOnCurrent()
+{
+	// Arrange
+	Mock.Arrange(() => SPContext.Current).Throws(new ApplicationException("Not allowed to call SPContext.Current"));
 
-  {{region Sharepoint#DisallowCurrentSPContext}}
-    [TestMethod]
-	[ExpectedException(typeof(ApplicationException))]
-	public void ShouldThrowApplicationExceptionOnCurrent()
-	{
-	    // Arrange
-	    Mock.Arrange(() => SPContext.Current).Throws(new ApplicationException("Not allowed to call SPContext.Current"));
-	
-	    // Act
-	    SPContext currentContext = SPContext.Current;
-	}
-  {{endregion}}
+	// Act
+	SPContext currentContext = SPContext.Current;
+}
+```
 
 In this example we mock the static `SPContext` class. We arrange the `Current` property to throw an `ApplicationException` once it is called. The constructor will initialize the `Message` property of the exception using the "Not allowed to call SPContext.Current" string.
 
@@ -45,19 +43,17 @@ In this example we mock the static `SPContext` class. We arrange the `Current` p
 
 Arranging `SPContext.Current` property to return mock fake object.
 
-  #### __[C#]__
+```C#
+// Arrange
+var fakeContext = Mock.Create<SPContext>();
+Mock.Arrange(() => SPContext.Current).Returns(fakeContext);
 
-  {{region Sharepoint#MockingCurrentSPContext}}
-    // Arrange
-	var fakeContext = Mock.Create<SPContext>();
-	Mock.Arrange(() => SPContext.Current).Returns(fakeContext);
-	
-	// Act
-	SPContext currentContext = SPContext.Current;
-	
-	// Assert
-	Assert.IsNotNull(currentContext, "The current SPContext should not be null");
-  {{endregion}}
+// Act
+SPContext currentContext = SPContext.Current;
+
+// Assert
+Assert.IsNotNull(currentContext, "The current SPContext should not be null");
+```
 
 
 Here we arrange the `Current` property getter to return fake object when called. After acting with `SPContext currentContext = SPContext.Current` we verify that our fake object was actually returned initializing the `Current` property. If the assertion fails, we specify that the message "The current SPContext should not be null" should be displayed.
@@ -66,36 +62,32 @@ Here we arrange the `Current` property getter to return fake object when called.
 
 In this example we will mock the `Site` property get of the `SPContext.Current` object. We will use the following class:
 
-  #### __[C#]__
-
-  {{region Sharepoint#MockingCurrentSPContextSiteClass}}
-    public class Site
+```C#
+public class Site
+{
+	public static string GetHomePageUrl()
 	{
-	    public static string GetHomePageUrl()
-	    {
-	        return SPContext.Current.Site.Url;
-	    }
+		return SPContext.Current.Site.Url;
 	}
-  {{endregion}}
+}
+```
 
 
 Follows the actual test code:
 
-  #### __[C#]__
+```C#
+// Arrange
+var fakeSiteUrl = "https://www.telerik.com";
+var fakeSharepointSite = Mock.Create<SPSite>();
 
-  {{region Sharepoint#MockingCurrentSPContextSite}}
-    // Arrange
-	var fakeSiteUrl = "https://www.telerik.com";
-	var fakeSharepointSite = Mock.Create<SPSite>();
-	
-	Mock.Arrange(() => SPContext.Current.Site).Returns(fakeSharepointSite);
-	Mock.Arrange(() => fakeSharepointSite.Url).Returns(fakeSiteUrl);
-	
-	// Act
-	string actualUrl = Site.GetHomePageUrl();
-	
-	Assert.AreEqual(fakeSiteUrl, actualUrl);
-  {{endregion}}
+Mock.Arrange(() => SPContext.Current.Site).Returns(fakeSharepointSite);
+Mock.Arrange(() => fakeSharepointSite.Url).Returns(fakeSiteUrl);
+
+// Act
+string actualUrl = Site.GetHomePageUrl();
+
+Assert.AreEqual(fakeSiteUrl, actualUrl);
+```
 
 
 We arrange that once the `Url` property of the static `SPContext.Current.Site` is called, "https://www.telerik.com" is returned as a result. We act by calling the `GetHomePageUrl` method in our sample class. It returns the *ulr of the current site* and thus "https://www.telerik.com". Finally, this behavior is verified.
@@ -106,35 +98,31 @@ In the next two examples we mock the `AllowAnonymousAccess` property of `SPConte
 
 Firstly, let's mock `SPContext.Web`:
 
-  #### __[C#]__
+```C#
+// Arrange
+var fakeContext = Mock.Create<SPContext>();
+Mock.Arrange(() =>fakeContext.Web.AllowAnonymousAccess).Returns(true);
 
-  {{region Sharepoint#MockingAllowAnonymousAccessProperty1}}
-    // Arrange
-	var fakeContext = Mock.Create<SPContext>();
-	Mock.Arrange(() =>fakeContext.Web.AllowAnonymousAccess).Returns(true);
-	
-	// Assert
-	Assert.IsTrue(fakeContext.Web.AllowAnonymousAccess, "Our SPWeb should allow anonymous access");
-  {{endregion}}
+// Assert
+Assert.IsTrue(fakeContext.Web.AllowAnonymousAccess, "Our SPWeb should allow anonymous access");
+```
 
 Here we create fake instance of `SPContext` and then arrange the `AllowAnonymousAccess` property to return `true`.
 
 Now, let's mock `SPContext.Current.Web`:
 
-  #### __[C#]__
+```C#
+// Arrange
+var fakeContext = Mock.Create<SPContext>();
+Mock.Arrange(() => SPContext.Current).Returns(fakeContext);
 
-  {{region Sharepoint#MockingAllowAnonymousAccessProperty2}}
-    // Arrange
-	var fakeContext = Mock.Create<SPContext>();
-	Mock.Arrange(() => SPContext.Current).Returns(fakeContext);
-	
-	var fakeWeb = Mock.Create<SPWeb>();
-	Mock.Arrange(() => fakeContext.Web).Returns(fakeWeb);
-	Mock.Arrange(() => fakeWeb.AllowAnonymousAccess).Returns(true);
-	
-	// Assert
-	Assert.IsTrue(SPContext.Current.Web.AllowAnonymousAccess, "Anonymous access should be allowed on our current SPWeb");
-  {{endregion}}
+var fakeWeb = Mock.Create<SPWeb>();
+Mock.Arrange(() => fakeContext.Web).Returns(fakeWeb);
+Mock.Arrange(() => fakeWeb.AllowAnonymousAccess).Returns(true);
+
+// Assert
+Assert.IsTrue(SPContext.Current.Web.AllowAnonymousAccess, "Anonymous access should be allowed on our current SPWeb");
+```
 
 We create a fake instance of `SPContext` and pass it to the `SPContext.Current` property. Then a fake instance of `SPWeb` is created that is arranged to be returned as a result once its `Web` property getter is called. Then, as in the previous example, `AllowAnonymousAccess` is arranged to return `true`. Finally, we verify.
 
@@ -144,26 +132,24 @@ In both examples, if the assertion fails, a message is displayed.
 
 Follows a slightly more complicated example. Here we mock `SPList`.
  
- #### __[C#]__
+```C#
+// Arrange
+var spWeb = Mock.Create<SPWeb>();
+var spList = Mock.Create<SPList>();
 
-  {{region Sharepoint#MockingSPListClass}}
-    // Arrange
-	var spWeb = Mock.Create<SPWeb>();
-	var spList = Mock.Create<SPList>();
-	
-	var spListCollection = Mock.Create<SPListCollection>();
-	var spListItemCollection = Mock.Create<SPListItemCollection>();
-	
-	Mock.Arrange(() => spWeb.Lists).Returns(spListCollection);
-	Mock.Arrange(() => spListCollection[Arg.AnyString]).Returns(spList);
-	
-	Mock.Arrange(() => spList.GetItems(Arg.IsAny<SPQuery>())).Returns(spListItemCollection);
-	
-	// Assert
-	Assert.AreEqual(spListCollection, spWeb.Lists);
-	Assert.AreEqual(spList, spWeb.Lists["myList"]);
-	Assert.AreEqual(spListItemCollection, spWeb.Lists["myList"].GetItems(new SPQuery()));
-  {{endregion}}
+var spListCollection = Mock.Create<SPListCollection>();
+var spListItemCollection = Mock.Create<SPListItemCollection>();
+
+Mock.Arrange(() => spWeb.Lists).Returns(spListCollection);
+Mock.Arrange(() => spListCollection[Arg.AnyString]).Returns(spList);
+
+Mock.Arrange(() => spList.GetItems(Arg.IsAny<SPQuery>())).Returns(spListItemCollection);
+
+// Assert
+Assert.AreEqual(spListCollection, spWeb.Lists);
+Assert.AreEqual(spList, spWeb.Lists["myList"]);
+Assert.AreEqual(spListItemCollection, spWeb.Lists["myList"].GetItems(new SPQuery()));
+```
 
 
 This is what we do:

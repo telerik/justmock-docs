@@ -21,82 +21,76 @@ You can mock any extension method as you would do it with any other instance met
 
 To illustrate this in more examples we will use the following code:
 
-#### __[C#] Sample setup__
-
-{{region ExtensionMethodsMocking#SampleCode1}}
-    
-    public class Foo
+#### Sample setup
+```C#
+public class Foo
+{
+    public void Execute()
     {
-        public void Execute()
-        {
-            throw new NotImplementedException();
-        }
-    
-        public string Title { get; set; }
+        throw new NotImplementedException();
     }
     
-    public static class FooExtensions
+    public string Title { get; set; }
+}
+    
+public static class FooExtensions
+{
+    public static int Echo(this Foo foo)
     {
-        public static int Echo(this Foo foo)
-        {
-            return default(int);
-        }
-    
-        public static string Echo(this Foo foo, string value)
-        {
-            return value;
-        }
-    
-        public static int Echo(this Foo foo, int arg1, int arg2)
-        {
-            return default(int);
-        }
+        return default(int);
     }
-{{endregion}}
+    
+    public static string Echo(this Foo foo, string value)
+    {
+        return value;
+    }
+    
+    public static int Echo(this Foo foo, int arg1, int arg2)
+    {
+        return default(int);
+    }
+}
+```
 
 
 When you have to assert some expectations related to extension methods, you can use everything you already know. Let's go through a very simple example.
 
-#### __[C#] Example 1: Arrange extension method behavior__
-
-{{region ExtensionMethodsMocking#SampleCode2}}
-
-    [TestMethod]
-    public void ShouldAssertExtensionMethodMockingWithArguments()
-    {
-        var foo = new Foo();
+#### Example 1: Arrange extension method behavior
+```C#
+[TestMethod]
+public void ShouldAssertExtensionMethodMockingWithArguments()
+{
+    var foo = new Foo();
     
-        string expected = "bar";
-        // Arrange that when the `Foo.Echo` extension method is called, the returned value should be a specific value ("bar").
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<string>())).Returns(expected);
+    string expected = "bar";
+    // Arrange that when the `Foo.Echo` extension method is called, the returned value should be a specific value ("bar").
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<string>())).Returns(expected);
     
-        // Call the extension method with another value
-        string result = foo.Echo("hello");
+    // Call the extension method with another value
+    string result = foo.Echo("hello");
     
-        // Assert that the correct value is returned
-        Assert.AreEqual(expected, result);
-    }
-{{endregion}}
+    // Assert that the correct value is returned
+    Assert.AreEqual(expected, result);
+}
+```
 
 
 Next, we have a more complex sample where the extension method has more arguments.
 
-#### __[C#] Example 2: Arrange the behavior of extension method with several parameters__
-
-{{region ExtensionMethodsMocking#SampleCode3}}
-  
-    [TestMethod]
-    public void ShouldAssertExtensionMethodWithMultipleArguments()
-    {
-        var foo = new Foo();
+#### Example 2: Arrange the behavior of extension method with several parameters
+```C#
+[TestMethod]
+public void ShouldAssertExtensionMethodWithMultipleArguments()
+{
+    var foo = new Foo();
     
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>(), Arg.Matches<int>(x => x == 10))).Returns((int arg1, int arg2) => arg1 + arg2);
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>(), Arg.Matches<int>(x => x == 10))).Returns((int arg1, int arg2) => arg1 + arg2);
     
-        int ret = foo.Echo(1, 10);
+    int ret = foo.Echo(1, 10);
     
-        Assert.AreEqual(11, ret);
-    }
-{{endregion}}
+    Assert.AreEqual(11, ret);
+}
+```
 
 
 Similarly, we arrange that when the `Echo` extension method is called, it should return the sum of its arguments if the second argument is equal to 10.
@@ -107,10 +101,8 @@ Similarly, we arrange that when the `Echo` extension method is called, it should
 
 Another thing we can assert is the occurrence of the extension methods. Let's start with an example.
 
-#### __[C#] Example 3: Arrange extension method occurrence__
-
-{{region ExtensionMethodsMocking#SampleCode4}}
-
+#### Example 3: Arrange extension method occurrence
+```C#
 	[TestMethod]
 	[ExpectedException(typeof(AssertFailedException))]
 	public void ShouldAssertOccurrencesForExtenstionMethod()
@@ -126,7 +118,7 @@ Another thing we can assert is the occurrence of the extension methods. Let's st
 	
 	    Mock.Assert(foo));
 	}
-{{endregion}}
+```
 
 
 The sample code arranges that the extension method should never occur as described in the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic. However, we then call the extension method and assert that an exception is thrown.
@@ -135,10 +127,8 @@ The sample code arranges that the extension method should never occur as describ
 
 This section will show that we can easily mock interface extension method calls when needed. In the example, we will use the following classes:
 
-#### __[C#] Sample setup__
-
-{{region ExtensionMethodsMocking#SampleCode5}}
-
+#### Sample setup
+```C#
 	public interface IDataProvider
 	{
 	}
@@ -158,15 +148,13 @@ This section will show that we can easily mock interface extension method calls 
 	        throw new NotImplementedException();
 	    }
 	}
-{{endregion}}
+```
 
 
 We have the `IDataProvider` interface which we extend with the `GetScope` extension method. We can now write tests that mock the extension method's execution:
 
-#### __[C#] Example 4: Arrange the behavior of extension method on interface__
-  
-{{region ExtensionMethodsMocking#SampleCode6}}
-
+#### Example 4: Arrange the behavior of extension method on interface
+```C#
 	[TestMethod]
 	public void ShouldAssertInterfaceExtensionMethodCall()
 	{
@@ -180,7 +168,7 @@ We have the `IDataProvider` interface which we extend with the `GetScope` extens
 	
 	    Assert.IsTrue(ret.Equals(objectScope));
 	}
-{{endregion}}
+```
 
 
 Here we have arranged that the call to the `GetScope` method should return a specific mocked instance of the `IObjectScope` interface. We act and assert that the correct value is returned.

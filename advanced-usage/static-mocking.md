@@ -23,95 +23,90 @@ We can divide static mocking into the following major parts:
 
 Further in this topic we will use the following sample code to illustrate how to mock static constructors, methods and properties.
 
-  #### __[C#]__
-
-  {{region StaticMocking#Sample}}
-    public class Foo
+```C#
+public class Foo
+{
+    static Foo()
     {
-        static Foo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void Submit()
-        {
-        }
-
-        public static int Execute(int arg)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static int FooProp
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        throw new NotImplementedException();
     }
 
-    internal class FooInternal
+    public static void Submit()
     {
-        internal static void DoIt()
+    }
+
+    public static int Execute(int arg)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static int FooProp
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+        set
         {
             throw new NotImplementedException();
         }
     }
+}
 
-    public static class FooStatic
+internal class FooInternal
+{
+    internal static void DoIt()
     {
-        public static void Do()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
-  {{endregion}}
+}
 
-  #### __[VB]__
+public static class FooStatic
+{
+    public static void Do()
+    {
+        throw new NotImplementedException();
+    }
+}
+```
+```VB
+Public Class Foo
+    Shared Sub New()
+        Throw New NotImplementedException()
+    End Sub
 
-  {{region StaticMocking#Sample}}
-    Public Class Foo
-        Shared Sub New()
+    Public Shared Sub Submit()
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Shared Function Execute(arg As Integer) As Integer
+        Throw New NotImplementedException()
+    End Function
+
+    Public Shared Property FooProp As Integer
+        Get
             Throw New NotImplementedException()
-        End Sub
-
-        Public Shared Sub Submit()
+        End Get
+        Set(value As Integer)
             Throw New NotImplementedException()
-        End Sub
+        End Set
+    End Property
+End Class
 
-        Public Shared Function Execute(arg As Integer) As Integer
-            Throw New NotImplementedException()
-        End Function
+Friend Class FooInternal
+    Friend Shared Sub DoIt()
+        Throw New NotImplementedException()
+    End Sub
+End Class
 
-        Public Shared Property FooProp As Integer
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Integer)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-    End Class
-
-    Friend Class FooInternal
-        Friend Shared Sub DoIt()
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-
-    Public NotInheritable Class FooStatic
-        Private Sub New()
-        End Sub
-        Public Shared Sub [Do]()
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-  {{endregion}}
+Public NotInheritable Class FooStatic
+    Private Sub New()
+    End Sub
+    Public Shared Sub [Do]()
+        Throw New NotImplementedException()
+    End Sub
+End Class
+```
 
 
 > **Important**
@@ -122,14 +117,12 @@ Further in this topic we will use the following sample code to illustrate how to
 
 In the following example you will see how you can specify the behavior of the static constructor when the target type is mocked. The first thing you need to do is to set up the target type for mocking all static calls. You do this using one of the following calls to the `Mock.SetupStatic` method.
 
-  #### __[C#]__
-
-  {{region StaticMocking#SetupStaticConstructor}}
-	void Mock.SetupStatic( Type staticType );
-	void Mock.SetupStatic( Type targetType, Behavior behavior );
-	void Mock.SetupStatic( Type staticType, StaticConstructor staticConstructor );
-	void Mock.SetupStatic( Type targetType, Behavior behavior, StaticConstructor staticConstructor );
-  {{endregion}}
+```C#
+void Mock.SetupStatic( Type staticType );
+void Mock.SetupStatic( Type targetType, Behavior behavior );
+void Mock.SetupStatic( Type staticType, StaticConstructor staticConstructor );
+void Mock.SetupStatic( Type targetType, Behavior behavior, StaticConstructor staticConstructor );
+```
 
 
 As you can see you have a number of choices. You always have to provide the type of the target class you want to set up for mocking. You can also specify the behavior of the mock. The default behavior is [Behavior.Loose]({%slug justmock/basic-usage/mock-behaviors/loose%}).
@@ -143,130 +136,105 @@ The default value for this property is `NonMocked`.
       	
 Let's see a complete example using the class `Foo` from the sample code in the beginning.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldArrangeStaticFunction()
+{
+    // Arrange
+    Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);
+    int expected = 0;
 
-  {{region StaticMocking#StaticConstructor}}
-    [TestMethod]
-    public void ShouldArrangeStaticFunction()
-    {
-        // Arrange
-        Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);
-        int expected = 0;
+    Mock.Arrange(() => Foo.FooProp).Returns(0);
+    
+    // Assert
+    Assert.AreEqual(expected, Foo.FooProp);  
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldArrangeStaticFunction()
+    ' Arrange
+    Mock.SetupStatic(GetType(Foo), StaticConstructor.Mocked)
+    Dim expected As Integer = 0
 
-        Mock.Arrange(() => Foo.FooProp).Returns(0);
-        
-        // Assert
-        Assert.AreEqual(expected, Foo.FooProp);  
-    }
-  {{endregion}}
+    Mock.Arrange(Function() Foo.FooProp).Returns(0)
 
-  #### __[VB]__
-
-  {{region StaticMocking#StaticConstructor}}
-    <TestMethod()>
-    Public Sub ShouldArrangeStaticFunction()
-        ' Arrange
-        Mock.SetupStatic(GetType(Foo), StaticConstructor.Mocked)
-        Dim expected As Integer = 0
-
-        Mock.Arrange(Function() Foo.FooProp).Returns(0)
-
-        ' Assert            
-        Assert.AreEqual(expected, Foo.FooProp)
-    End Sub
-  {{endregion}}
+    ' Assert            
+    Assert.AreEqual(expected, Foo.FooProp)
+End Sub
+```
 
 Here we have set up the static constructor mock of the target type `Foo`. Using the `StaticConstructor` parameter in the call to `SetupStatic` we have specified that we want to mock the call to the static constructor and therefore the call to the `Foo.FooProp` will not throw a `NotImplementedException`. 
 
 ## General Static Method Mocking
 Let's start with the simplest example, namely how to mock the static `Submit` method. First, we need to call the following:
 
-  #### __[C#]__
-
-  {{region StaticMocking#SetupStaticCS}}
-    Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);
-  {{endregion}}
-
-    #### __[VB]__
-
-  {{region StaticMocking#SetupStaticVB}}
-	Mock.SetupStatic(GetType(Foo), StaticConstructor.Mocked)
-  {{endregion}}
+```C#
+Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);
+```
+```VB
+Mock.SetupStatic(GetType(Foo), StaticConstructor.Mocked)
+```
 
 This call setups the `Foo` type for static mocking and prepares all the static methods as mockable.
         
 This is actually the only difference between static and instance mocking. From now on you continue as if you are mocking instance methods.
 
-  #### __[C#]__
-
-  {{region StaticMocking#ActCS}}
-    Foo.Submit();
-  {{endregion}}
-
-    #### __[VB]__
-
-  {{region StaticMocking#ActVB}}
-	Foo.Submit()
-  {{endregion}}
+```C#
+Foo.Submit();
+```
+```VB
+Foo.Submit()
+```
 
 
 In the `Submit` method implementation we throw an exception, but as we mocked the `Foo` class that exception should not be thrown. Finally, we can assert that the method was actually called.
       
-  #### __[C#]__
-
-  {{region StaticMocking#AssertCS}}
-    Mock.Assert(() => Foo.Submit());
-  {{endregion}}
-
-    #### __[VB]__
-
-  {{region StaticMocking#AssertVB}}
-	Mock.Assert(Sub() Foo.Submit())
-  {{endregion}}
+```C#
+Mock.Assert(() => Foo.Submit());
+```
+```VB
+Mock.Assert(Sub() Foo.Submit())
+```
 
 With `Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);` we setup that *all* static methods from this class will me mocked. In certain cases you'd need to mock only methods that are setup with `Mock.Arrange`. To achieve this you need to set the M:Telerik.JustMock.Behavior to `Strict` in the `Mock.SetupStatic` call.
         
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(StrictMockException))]
+public void ShouldThrowWhenNotArranged()
+{
+    //Arrange
+    Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
 
-  {{region StaticMocking#SetupStaticStrictMode}}
-    [TestMethod]
-    [ExpectedException(typeof(StrictMockException))]
-    public void ShouldThrowWhenNotArranged()
-    {
-        //Arrange
-        Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
+    Mock.Arrange(() => Foo.Execute(10)).Returns(10);
+    
+    //Assert
+    Assert.AreEqual(10, Foo.Execute(10));
 
-        Mock.Arrange(() => Foo.Execute(10)).Returns(10);
-        
-        //Assert
-        Assert.AreEqual(10, Foo.Execute(10));
+    // Act
+    // throws MockException as there is no arrange associated with the Submit method
+    Foo.Submit();
+}
+```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(StrictMockException))>
+Public Sub ShouldThrowWhenNotArranged()
+    ' Arrange
+    Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
 
-        // Act
-        // throws MockException as there is no arrange associated with the Submit method
-        Foo.Submit();
-    }
-  {{endregion}}
+    Mock.Arrange(Function() Foo.Execute(10)).Returns(10)
 
-  #### __[VB]__
+    ' Assert
+    Assert.AreEqual(10, Foo.Execute(10))
 
-  {{region StaticMocking#SetupStaticStrictMode}}
-    <TestMethod()>
-    <ExpectedException(GetType(StrictMockException))>
-    Public Sub ShouldThrowWhenNotArranged()
-        ' Arrange
-        Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
-
-        Mock.Arrange(Function() Foo.Execute(10)).Returns(10)
-
-        ' Assert
-        Assert.AreEqual(10, Foo.Execute(10))
-
-        ' Act
-        ' Throws MockException as there is no arrange associated with the Submit method.
-        Foo.Submit()
-    End Sub
-  {{endregion}}
+    ' Act
+    ' Throws MockException as there is no arrange associated with the Submit method.
+    Foo.Submit()
+End Sub
+```
 
 
 Once we set the M:Telerik.JustMock.Behavior to `Strict`, only calls setup through arrange are mocked. Other calls will throw a `MockException`.
@@ -275,120 +243,105 @@ Once we set the M:Telerik.JustMock.Behavior to `Strict`, only calls setup throug
 
 You can also set up a static property get:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldFakeStaticPropertyGet()
+{
+    // Arrange
+    Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
+    
+    bool called = false;
 
-  {{region StaticMocking#StaticGetOnProperty}}
-    [TestMethod]
-    public void ShouldFakeStaticPropertyGet()
-    {
-        // Arrange
-        Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
-        
-        bool called = false;
+    Mock.Arrange(() => Foo.FooProp).DoInstead(() => { called = true; }).Returns(1);
 
-        Mock.Arrange(() => Foo.FooProp).DoInstead(() => { called = true; }).Returns(1);
+    // Assert
+    Assert.AreEqual(Foo.FooProp, 1);
+    Assert.IsTrue(called);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldFakeStaticPropertyGet()
+    ' Arrange
+    Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
 
-        // Assert
-        Assert.AreEqual(Foo.FooProp, 1);
-        Assert.IsTrue(called);
-    }
-  {{endregion}}
+    Dim called As Boolean = False
 
-  #### __[VB]__
+    Mock.Arrange(Function() Foo.FooProp).DoInstead(Sub() called = True).Returns(1)
 
-  {{region StaticMocking#StaticGetOnProperty}}
-    <TestMethod()>
-    Public Sub ShouldFakeStaticPropertyGet()
-        ' Arrange
-        Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
-
-        Dim called As Boolean = False
-
-        Mock.Arrange(Function() Foo.FooProp).DoInstead(Sub() called = True).Returns(1)
-
-        ' Act
-        Assert.AreEqual(Foo.FooProp, 1)
-        Assert.IsTrue(called)
-    End Sub
-  {{endregion}}
+    ' Act
+    Assert.AreEqual(Foo.FooProp, 1)
+    Assert.IsTrue(called)
+End Sub
+```
 
 We replace the actual implementation of `Foo.FooProp` with `called = true;` and return `1`. After acting we verify that the method was actually called with return value `1`.
 
 ## Mocking Static Property Set
 Now, let's mock a static property set. In the example below, we arrange the `Foo.FooProp` property. We use `DoInstead` to set a local boolean variable to `true` once it is assigned `10`.  After that, we verify that what we have expected actually happened in our test.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldFakeStaticPropertySet()
+{
+    // Arrange
+    Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
 
-  {{region StaticMocking#PropertySet}}
-    [TestMethod]
-    public void ShouldFakeStaticPropertySet()
-    {
-        // Arrange
-        Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
+    bool called = false;
 
-        bool called = false;
+    Mock.ArrangeSet(() => { Foo.FooProp = 10; }).DoInstead(() => { called = true; });
 
-        Mock.ArrangeSet(() => { Foo.FooProp = 10; }).DoInstead(() => { called = true; });
+    // Act - this line should not throw any mockexception.
+    Foo.FooProp = 10;
 
-        // Act - this line should not throw any mockexception.
-        Foo.FooProp = 10;
+    // Assert
+    Assert.IsTrue(called);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldFakeStaticPropertySet()
+    ' Arrange
+    Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
 
-        // Assert
-        Assert.IsTrue(called);
-    }
-  {{endregion}}
+    Dim called As Boolean = False
 
-  #### __[VB]__
+    Mock.ArrangeSet(Sub() Foo.FooProp = 10).DoInstead(Sub() called = True)
 
-  {{region StaticMocking#PropertySet}}
-    <TestMethod()>
-    Public Sub ShouldFakeStaticPropertySet()
-        ' Arrange
-        Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
+    ' Act - this line should not throw any mockexception.
+    Foo.FooProp = 10
 
-        Dim called As Boolean = False
-
-        Mock.ArrangeSet(Sub() Foo.FooProp = 10).DoInstead(Sub() called = True)
-
-        ' Act - this line should not throw any mockexception.
-        Foo.FooProp = 10
-
-        ' Assert
-        Assert.IsTrue(called)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsTrue(called)
+End Sub
+```
 
 Go to [Mock Properties]({%slug justmock/basic-usage/mock-properties%}) topic to learn more about mocking properties.
 
 ## Mocking Internal Static Call
 Going further, you can mock internal methods like in the following example.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldFakeInternalStaticCall()
+{
+    // Arrange
+    Mock.SetupStatic<FooInternal>();
 
-  {{region StaticMocking#InternalClassStaticMethod}}
-    [TestMethod]
-    public void ShouldFakeInternalStaticCall()
-    {
-        // Arrange
-        Mock.SetupStatic<FooInternal>();
+    // Act
+    FooInternal.DoIt();
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldFakeInternalStaticCall()
+    ' Arrange
+    Mock.SetupStatic(Of FooInternal)()
 
-        // Act
-        FooInternal.DoIt();
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region StaticMocking#InternalClassStaticMethod}}
-    <TestMethod()>
-    Public Sub ShouldFakeInternalStaticCall()
-        ' Arrange
-        Mock.SetupStatic(Of FooInternal)()
-
-        ' Act
-        FooInternal.DoIt()
-    End Sub
-  {{endregion}}
+    ' Act
+    FooInternal.DoIt()
+End Sub
+```
 
 Here, calling `FooInternal.DoIt` should not throw an exception as you are  allowed to setup static internal methods.
 
@@ -397,43 +350,36 @@ Here, calling `FooInternal.DoIt` should not throw an exception as you are  allow
 In the demonstrated examples, the class itself that we mock is a *non static* class - only the methods are static. To mock a static class you need to use the non generic version of the `Mock.SetupStatic` method, i.e.
           	
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldMockStaticClass()
+{
+    // Arrange
+    Mock.SetupStatic(typeof(FooStatic));
 
-  {{region StaticMocking#StaticClass}}
-    [TestMethod]
-    public void ShouldMockStaticClass()
-    {
-        // Arrange
-        Mock.SetupStatic(typeof(FooStatic));
+    // Act - doesn't throw MockException
+    FooStatic.Do();
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldMockStaticClass()
+    ' Arrange
+    Mock.SetupStatic(GetType(FooStatic))
 
-        // Act - doesn't throw MockException
-        FooStatic.Do();
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region StaticMocking#StaticClass}}
-    <TestMethod()>
-    Public Sub ShouldMockStaticClass()
-        ' Arrange
-        Mock.SetupStatic(GetType(FooStatic))
-
-        ' Act - doesn't throw MockException
-        FooStatic.[Do]()
-    End Sub
-  {{endregion}}
+    ' Act - doesn't throw MockException
+    FooStatic.[Do]()
+End Sub
+```
 
 
 ## Mocking Static Members Across Threads
 
 Mocking static members across all threads is an unsafe operation that may compromise the stability of the testing framework. Arrangements on static members are valid only for the current thread by default. To make an arrangement on a static member valid on all threads, add the .OnAllThreads() clause to the arrangement:
 
-  #### __[C#]__
-
-  {{region }}
-    Mock.Arrange(() => DateTime.Now).Returns(new DateTime()).OnAllThreads();
-  {{endregion}}
+```C#
+Mock.Arrange(() => DateTime.Now).Returns(new DateTime()).OnAllThreads();
+```
 
 
 ## Mocking Current HttpContext
@@ -441,41 +387,35 @@ Here is an example how to mock the *current HTTP context*.
 
 We arrange a call to `HttpContext.Current` to set a local variable to `true`. Note that the original implementation of `HttpContext.Current` won`t be executed.
     		
+```C#
+[TestMethod]
+public void ShouldAssertMockingHttpContext()
+{
+    // Arrange
+    bool called = false;
+    Mock.Arrange(() => HttpContext.Current).DoInstead(() => called = true);
 
-  #### __[C#]__
+    // Act
+    var ret = HttpContext.Current;
 
-  {{region StaticMocking#MockHTTPContext}}
-    [TestMethod]
-    public void ShouldAssertMockingHttpContext()
-    {
-        // Arrange
-        bool called = false;
-        Mock.Arrange(() => HttpContext.Current).DoInstead(() => called = true);
+    // Assert
+    Assert.IsTrue(called);
+}
+```
+```VB
+<TestMethod> _
+Public Sub ShouldAssertMockingHttpContext()
+    ' Arrange
+    Dim called As Boolean = False
+    Mock.Arrange(Function() HttpContext.Current).DoInstead(Sub() called = True)
 
-        // Act
-        var ret = HttpContext.Current;
+    ' Act
+    Dim ret = HttpContext.Current
 
-        // Assert
-        Assert.IsTrue(called);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region StaticMocking#MockHTTPContext}}
-    <TestMethod> _
-    Public Sub ShouldAssertMockingHttpContext()
-        ' Arrange
-        Dim called As Boolean = False
-        Mock.Arrange(Function() HttpContext.Current).DoInstead(Sub() called = True)
-
-        ' Act
-        Dim ret = HttpContext.Current
-
-        ' Assert
-        Assert.IsTrue(called)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsTrue(called)
+End Sub
+```
 
 After acting we verify against our expectations.
 
@@ -487,95 +427,78 @@ Mocking extension method is similar to mocking any instance methods. The only di
         
 Let's see an example of how to mock extension methods. Consider the following class:
 
-  #### __[C#]__
-
-  {{region StaticMocking#SampleClass}}
-    public class Bar
+```C#
+public class Bar
+{
+    public void Execute()
     {
-        public void Execute()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region StaticMocking#SampleClass}}
-    Public Class Bar
-        Public Sub Execute()
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-  {{endregion}}
+}
+```
+```VB
+Public Class Bar
+    Public Sub Execute()
+        Throw New NotImplementedException()
+    End Sub
+End Class
+```
 
 
 And a class that contains extension methods for the `Foo` class:
         
-
-  #### __[C#]__
-
-  {{region StaticMocking#FooExtensions}}
-    public static class BarExtensions
+```C#
+public static class BarExtensions
+{
+    public static int Echo(this Bar foo, int arg)
     {
-        public static int Echo(this Bar foo, int arg)
-        {
-            return default(int);
-        }
+        return default(int);
     }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region StaticMocking#FooExtensions}}
-    Public Module BarExtensions
-        <System.Runtime.CompilerServices.Extension()>
-        Public Function Echo(foo As Bar, arg As Integer) As Integer
-            Return 0
-        End Function
-    End Module
-  {{endregion}}
+}
+```
+```VB
+Public Module BarExtensions
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function Echo(foo As Bar, arg As Integer) As Integer
+        Return 0
+    End Function
+End Module
+```
 
 
 Let's mock the `Echo` extension method.           
         
+```C#
+[TestMethod]
+public void ShouldFakeExtensionMethod()
+{
+    // Arrange
+    var foo = new Bar();
 
-  #### __[C#]__
+    Mock.Arrange(() => foo.Echo(10)).Returns(11);
 
-  {{region StaticMocking#MockExtensionMethod}}
-    [TestMethod]
-    public void ShouldFakeExtensionMethod()
-    {
-        // Arrange
-        var foo = new Bar();
+    // Act
+    var actual = foo.Echo(10);
 
-        Mock.Arrange(() => foo.Echo(10)).Returns(11);
+    // Assert
+    Assert.AreEqual(11, actual);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldFakeExtensionMethod()
+    ' Arrange
+    Dim foo = New Bar()
 
-        // Act
-        var actual = foo.Echo(10);
+    Mock.Arrange(Function() foo.Echo(10)).Returns(11)
 
-        // Assert
-        Assert.AreEqual(11, actual);
-    }
-  {{endregion}}
+    ' Act
+    Dim actual = foo.Echo(10)
 
-  #### __[VB]__
-
-  {{region StaticMocking#MockExtensionMethod}}
-    <TestMethod()>
-    Public Sub ShouldFakeExtensionMethod()
-        ' Arrange
-        Dim foo = New Bar()
-
-        Mock.Arrange(Function() foo.Echo(10)).Returns(11)
-
-        ' Act
-        Dim actual = foo.Echo(10)
-
-        ' Assert
-        Assert.AreEqual(11, actual)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(11, actual)
+End Sub
+```
 
 
 First we create an instance of the `Foo` class. Notice that we create a standard instance of the class, not a mock instance. Then we setup the call to `Echo` through `Arrange` in the same way we do it for non static methods. Finally, we assert the return value as usual.

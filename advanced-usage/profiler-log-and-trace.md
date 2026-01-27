@@ -33,7 +33,7 @@ Let's follow up an example, showing how the profiler trace can be enabled while 
 
 1. Setting up profiler trace level using environment variable
 
- ```
+ ```bash
  set JUSTMOCK_LOG_LEVEL=DEBUG
  ```
 
@@ -45,7 +45,7 @@ Let's follow up an example, showing how the profiler trace can be enabled while 
 
 4. Launch test execution in elevated (advanced) mode. The easiest way to achieve that is to use __Telerik.JustMock.Console__
 
-```
+```bash
 "C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\Telerik.JustMock.Console.exe" --profiler-path-32="C:\Program Files (x86)\Progress\Telerik JustMock\Libraries\CodeWeaver\32\Telerik.CodeWeaver.Profiler.dll" --command="vstest.console.exe" --command-args="bin\Debug\net45\UnitTestProject.dll"
 ```
 

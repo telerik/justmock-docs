@@ -42,145 +42,125 @@ In addition to that JustMock allows you to verify that method call prerequisites
 
 __In the following examples we will use the following interface to test:__
 
-  #### __[C#]__
-
-  {{region Occurrence#IFoo}}
-    public interface IFoo
-    {
-        void Submit();
-        int Echo(int intArg);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region Occurrence#IFoo}}
-    Public Interface IFoo
-        Sub Submit()
-        Function Echo(intArg As Integer) As Integer
-    End Interface
-  {{endregion}}
+```C#
+public interface IFoo
+{
+    void Submit();
+    int Echo(int intArg);
+}
+```
+```VB
+Public Interface IFoo
+    Sub Submit()
+    Function Echo(intArg As Integer) As Integer
+End Interface
+```
 
 
 ## Occurs.Never
 `Occurs.Never` is used to verify that a method/property hasn't been called during the execution of the test.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldOccursNever()
+{
+    //Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#Never}}
-    [TestMethod]
-    public void ShouldOccursNever()
-    {
-        //Arrange
-        var foo = Mock.Create<IFoo>();
+    //Assert
+    Mock.Assert(() => foo.Submit(), Occurs.Never());
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldOccursNever()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        //Assert
-        Mock.Assert(() => foo.Submit(), Occurs.Never());
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region Occurrence#Never}}
-    <TestMethod()>
-    Public Sub ShouldOccursNever()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        ' Assert
-        Mock.Assert(Sub() foo.Submit(), Occurs.Never())
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(Sub() foo.Submit(), Occurs.Never())
+End Sub
+```
 
 In the example above, we verify that `foo.Submit()` has never been called.
 
 ## Occurs.Once
 `Occurs.Once` is used to verify that a method/property has been called exactly one time during the execution of the test.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldOccursOnce()
+{
+    //Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#Once}}
-    [TestMethod]
-    public void ShouldOccursOnce()
-    {
-        //Arrange
-        var foo = Mock.Create<IFoo>();
+    //Act
+    foo.Submit();
 
-        //Act
-        foo.Submit();
+    //Assert
+    Mock.Assert(() => foo.Submit(), Occurs.Once());
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldOccursOnce()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        //Assert
-        Mock.Assert(() => foo.Submit(), Occurs.Once());
-    }
-  {{endregion}}
+    ' Act
+    foo.Submit()
 
-  #### __[VB]__
-
-  {{region Occurrence#Once}}
-    <TestMethod()>
-    Public Sub ShouldOccursOnce()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        ' Act
-        foo.Submit()
-
-        ' Assert
-        Mock.Assert(Sub() foo.Submit(), Occurs.Once())
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(Sub() foo.Submit(), Occurs.Once())
+End Sub
+```
 
 In the example above, we verify that `foo.Submit()` has been called once.
 
 ## Occurs.AtLeastOnce
 `Occurs.AtLeastOnce` is used to verify that a method/property has been called at least once during the execution of the test.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldOccursAtLeastOnce()
+{
+    //Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#AtLeastOnce}}
-    [TestMethod]
-    public void ShouldOccursAtLeastOnce()
-    {
-        //Arrange
-        var foo = Mock.Create<IFoo>();
+    //Act
+    foo.Submit();
 
-        //Act
-        foo.Submit();
+    //Assert 
+    Mock.Assert(() => foo.Submit(), Occurs.AtLeastOnce());
 
-        //Assert 
-        Mock.Assert(() => foo.Submit(), Occurs.AtLeastOnce());
+    // Act - call Submit more than once
+    foo.Submit();
+    foo.Submit();
 
-        // Act - call Submit more than once
-        foo.Submit();
-        foo.Submit();
+    // Assert - that should pass again
+    Mock.Assert(() => foo.Submit(), Occurs.AtLeastOnce());
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldOccursAtLeastOnce()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert - that should pass again
-        Mock.Assert(() => foo.Submit(), Occurs.AtLeastOnce());
-    }
-  {{endregion}}
+    ' Act
+    foo.Submit()
 
-  #### __[VB]__
+    ' Assert
+    Mock.Assert(Sub() foo.Submit(), Occurs.AtLeastOnce())
 
-  {{region Occurrence#AtLeastOnce}}
-    <TestMethod()>
-    Public Sub ShouldOccursAtLeastOnce()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
+    ' Act - call Submit more than once
+    foo.Submit()
+    foo.Submit()
 
-        ' Act
-        foo.Submit()
-
-        ' Assert
-        Mock.Assert(Sub() foo.Submit(), Occurs.AtLeastOnce())
-
-        ' Act - call Submit more than once
-        foo.Submit()
-        foo.Submit()
-
-        ' Assert - that should pass again
-        Mock.Assert(Sub() foo.Submit(), Occurs.AtLeastOnce())
-    End Sub
-  {{endregion}}
+    ' Assert - that should pass again
+    Mock.Assert(Sub() foo.Submit(), Occurs.AtLeastOnce())
+End Sub
+```
 
 The example above shows that the `Occurs.AtLeastOnce` requirement is met whenever the method is called one or more times.
 
@@ -189,105 +169,94 @@ With `Occurs.AtLeast` you specify at least how many times you want to verify tha
 
 > The next example uses NUnit Testing Framework.
 
+```C#
+[TestMethod]
+public void ShouldOccursAtLeastCertainNumberOfTimes()
+{
+    //Arrange
+    var foo = Mock.Create<IFoo>();
 
-  #### __[C#]__
+    //Act
+    foo.Submit();
+    foo.Submit();
 
-  {{region Occurrence#AtLeastNTimes}}
-    [TestMethod]
-    public void ShouldOccursAtLeastCertainNumberOfTimes()
-    {
-        //Arrange
-        var foo = Mock.Create<IFoo>();
+    //Assert
+    NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(() => foo.Submit(), Occurs.AtLeast(3)));
 
-        //Act
-        foo.Submit();
-        foo.Submit();
+    foo.Submit();
 
-        //Assert
-        NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(() => foo.Submit(), Occurs.AtLeast(3)));
+    Mock.Assert(() => foo.Submit(), Occurs.AtLeast(3));
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldOccursAtLeastCertainNumberOfTimes()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        foo.Submit();
+    ' Act
+    foo.Submit()
+    foo.Submit()
 
-        Mock.Assert(() => foo.Submit(), Occurs.AtLeast(3));
-    }
-  {{endregion}}
+    ' Assert - foo.Submit was called only twice so this throws an exception
+    NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(Sub() foo.Submit(), Occurs.AtLeast(3)))
 
-  #### __[VB]__
+    ' Act - now, foo.Submit is called 3 times
+    foo.Submit()
 
-  {{region Occurrence#AtLeastNTimes}}
-    <TestMethod()>
-    Public Sub ShouldOccursAtLeastCertainNumberOfTimes()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        ' Act
-        foo.Submit()
-        foo.Submit()
-
-        ' Assert - foo.Submit was called only twice so this throws an exception
-        NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(Sub() foo.Submit(), Occurs.AtLeast(3)))
-
-        ' Act - now, foo.Submit is called 3 times
-        foo.Submit()
-
-        ' Assert - that one passes
-        Mock.Assert(Sub() foo.Submit(), Occurs.AtLeast(3))
-    End Sub
-  {{endregion}}
+    ' Assert - that one passes
+    Mock.Assert(Sub() foo.Submit(), Occurs.AtLeast(3))
+End Sub
+```
 
 In the example above, the first `Assert` throws an exception as the `foo.Submit` method has been called only twice at that time, but the `Occurs.AtLeast` requires the method to be called at least 3 times. Afterwards, the method is called once again which causes the conditions in the second `Assert` to be satisfied.
 
 ## Occurs.AtMost(numberOfTimes)
 With `Occurs.AtMost` you specify at most how many times you want to verify that a given method/property has been called during the execution of the test.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(AssertFailedException))]
+public void ShouldOccursCertainNumberOfTimesAtMost()
+{
+    //Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#AtMostNTimes}}
-    [TestMethod]
-    [ExpectedException(typeof(AssertFailedException))]
-    public void ShouldOccursCertainNumberOfTimesAtMost()
-    {
-        //Arrange
-        var foo = Mock.Create<IFoo>();
+    //Act
+    foo.Submit();
+    foo.Submit();
 
-        //Act
-        foo.Submit();
-        foo.Submit();
+    //Assert
+    Mock.Assert(() => foo.Submit(), Occurs.AtMost(2));
 
-        //Assert
-        Mock.Assert(() => foo.Submit(), Occurs.AtMost(2));
+    // Act - now we call Submit once again - 3 times in total
+    foo.Submit();
 
-        // Act - now we call Submit once again - 3 times in total
-        foo.Submit();
+    // Assert - that throws an exception
+    Mock.Assert(()=>foo.Submit(),Occurs.AtMost(2));
+}
+```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(AssertFailedException))>
+Public Sub ShouldOccursCertainNumberOfTimesAtMost()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert - that throws an exception
-        Mock.Assert(()=>foo.Submit(),Occurs.AtMost(2));
-    }
-  {{endregion}}
+    ' Act
+    foo.Submit()
+    foo.Submit()
 
-  #### __[VB]__
+    ' Assert
+    Mock.Assert(Sub() foo.Submit(), Occurs.AtMost(2))
 
-  {{region Occurrence#AtMostNTimes}}
-    <TestMethod()>
-    <ExpectedException(GetType(AssertFailedException))>
-    Public Sub ShouldOccursCertainNumberOfTimesAtMost()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
+    ' Act - now we call Submit once again - 3 times in total
+    foo.Submit()
 
-        ' Act
-        foo.Submit()
-        foo.Submit()
-
-        ' Assert
-        Mock.Assert(Sub() foo.Submit(), Occurs.AtMost(2))
-
-        ' Act - now we call Submit once again - 3 times in total
-        foo.Submit()
-
-        ' Assert - that throws an exception
-        Mock.Assert(Sub() foo.Submit(), Occurs.AtMost(2))
-    End Sub
-  {{endregion}}
+    ' Assert - that throws an exception
+    Mock.Assert(Sub() foo.Submit(), Occurs.AtMost(2))
+End Sub
+```
 
 
 In the example above, the first `Assert` passes as the `foo.Submit` method has been called only twice. However, the second `Assert` throws an exception because the same method has been called 3 times in total, while the condition is to be called 2 times at most.
@@ -298,64 +267,59 @@ With `Occurs.Exactly` you specify exactly how many times you want to verify that
 > The next example uses NUnit Testing Framework.
 
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldOccursExactly()
+{
+    //Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#Exactly}}
-    [TestMethod]
-    public void ShouldOccursExactly()
-    {
-        //Arrange
-        var foo = Mock.Create<IFoo>();
+    //Act - call foo.Submit twice
+    foo.Submit();
+    foo.Submit();
 
-        //Act - call foo.Submit twice
-        foo.Submit();
-        foo.Submit();
-
-        //Assert - throws an exception - foo.Submit was called only twice
-        NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(() => foo.Submit(), Occurs.Exactly(3)));
+    //Assert - throws an exception - foo.Submit was called only twice
+    NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(() => foo.Submit(), Occurs.Exactly(3)));
 
         // Act - call foo.Submit once again - 3 times in total
-        foo.Submit();
+    foo.Submit();
 
-        // Assert - that should pass
-        Mock.Assert(() => foo.Submit(), Occurs.Exactly(3));
+    // Assert - that should pass
+    Mock.Assert(() => foo.Submit(), Occurs.Exactly(3));
 
-        // Act - call foo.Submit once again - 4 times in total
-        foo.Submit();
+    // Act - call foo.Submit once again - 4 times in total
+    foo.Submit();
 
-        // Assert - fails because foo.Submit was called more times than specified
-        NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(() => foo.Submit(), Occurs.Exactly(3)));
-    }
-  {{endregion}}
+    // Assert - fails because foo.Submit was called more times than specified
+    NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(() => foo.Submit(), Occurs.Exactly(3)));
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldOccursExactly()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-  #### __[VB]__
+    ' Act - call foo.Submit twice
+    foo.Submit()
+    foo.Submit()
 
-  {{region Occurrence#Exactly}}
-    <TestMethod()>
-    Public Sub ShouldOccursExactly()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
+    ' Assert - throws an exception - foo.Submit was called only twice
+    NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(Sub() foo.Submit(), Occurs.Exactly(3)))
 
-        ' Act - call foo.Submit twice
-        foo.Submit()
-        foo.Submit()
+    ' Act - call foo.Submit once again - 3 times in total
+    foo.Submit()
 
-        ' Assert - throws an exception - foo.Submit was called only twice
-        NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(Sub() foo.Submit(), Occurs.Exactly(3)))
+    ' Assert - that should pass
+    Mock.Assert(Sub() foo.Submit(), Occurs.Exactly(3))
 
-        ' Act - call foo.Submit once again - 3 times in total
-        foo.Submit()
+    ' Act - call foo.Submit once again - 4 times in total
+    foo.Submit()
 
-        ' Assert - that should pass
-        Mock.Assert(Sub() foo.Submit(), Occurs.Exactly(3))
-
-        ' Act - call foo.Submit once again - 4 times in total
-        foo.Submit()
-
-        ' Assert - fails because foo.Submit was called more times than specified
-        NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(Sub() foo.Submit(), Occurs.Exactly(3)))
-    End Sub
-  {{endregion}}
+    ' Assert - fails because foo.Submit was called more times than specified
+    NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(Sub() foo.Submit(), Occurs.Exactly(3)))
+End Sub
+ ```
 
 In the example above, the first `Assert` throws an exception because we call `foo.Submit` less times than the `Occurs.Exactly` condition specifies. The second `Assert` passes because there are exactly 3 calls to `foo.Submit` method. The third `Assert` throws an exception again, because at than time the `foo.Submit` method is called 4 times, which is more that what is specified in the `Occurs.Exactly` condition.
 
@@ -365,201 +329,176 @@ With `Occurs(numberOfTimes)` you specify exactly how many times you want to veri
 > The next example uses NUnit Testing Framework.
 
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldFailOnAssertAllWhenExpectionIsNotMet()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#NumberOfTimes}}
-    [TestMethod]
-    public void ShouldFailOnAssertAllWhenExpectionIsNotMet()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Submit()).Occurs(2);
 
-        Mock.Arrange(() => foo.Submit()).Occurs(2);
+    // Assert
+    NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldFailOnAssertAllWhenExpectionIsNotMet()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        NUnit.Framework.Assert.Throws<AssertFailedException>(() => Mock.Assert(foo));
-    }
-  {{endregion}}
+    Mock.Arrange(Sub() foo.Submit()).Occurs(2)
 
-  #### __[VB]__
-
-  {{region Occurrence#NumberOfTimes}}
-    <TestMethod()>
-    Public Sub ShouldFailOnAssertAllWhenExpectionIsNotMet()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Sub() foo.Submit()).Occurs(2)
-
-        ' Assert
-        NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
-    End Sub
-  {{endregion}}
+    ' Assert
+    NUnit.Framework.Assert.Throws(Of AssertFailedException)(Sub() Mock.Assert(foo))
+End Sub
+ ```
 
 In the example above, `Occurs(2)` marks the call is required to be executed 2 times, therefore `Mock.Assert` will fail if not expected properly.
 
 ## OccursOnce()
 `OccursOnce()` is used to verify that a method/property has been called exactly one time during the execution of the test.
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldArrangeOccursOnce()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#OccursOnce}}
-    [TestMethod]
-    public void ShouldArrangeOccursOnce()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Submit()).OccursOnce();
 
-        Mock.Arrange(() => foo.Submit()).OccursOnce();
+    // Act
+    foo.Submit();
 
-        // Act
-        foo.Submit();
+    // Assert
+    Mock.Assert(foo);
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldArrangeOccursOnce()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    Mock.Arrange(Sub() foo.Submit()).OccursOnce()
 
-  #### __[VB]__
+    ' Act
+    foo.Submit()
 
-  {{region Occurrence#OccursOnce}}
-    <TestMethod()>
-    Public Sub ShouldArrangeOccursOnce()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Sub() foo.Submit()).OccursOnce()
-
-        ' Act
-        foo.Submit()
-
-        ' Assert
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(foo)
+End Sub
+ ```
 
 In the example above, we arrange that `foo.Submit()` must be called exactly once.
 
 ## OccursNever()
 `OccursNever()` is used to verify that a method/property hasn't been called during the execution of the test.
 
-  #### __[C#]__
-
-  {{region Occurrence#OccursNever}}
-    [TestMethod]
-    public void ShouldArrangeOccursNever()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+  ```C#
+[TestMethod]
+public void ShouldArrangeOccursNever()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
         
-        Mock.Arrange(() => foo.Submit()).OccursNever();
+    Mock.Arrange(() => foo.Submit()).OccursNever();
 
-        // Assert
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    // Assert
+    Mock.Assert(foo);
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldArrangeOccursNever()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-  #### __[VB]__
+    Mock.Arrange(Sub() foo.Submit()).OccursNever()
 
-  {{region Occurrence#OccursNever}}
-    <TestMethod()>
-    Public Sub ShouldArrangeOccursNever()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Sub() foo.Submit()).OccursNever()
-
-        ' Assert
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(foo)
+End Sub
+ ```
 
 In the example above, we verify that `foo.Submit()` has never been called.
 
 ## OccursAtLeast(numberOfTimes)
 With `OccursAtLeast(numberOfTimes)` you specify at least how many times you want to verify that a given method/property has been called during the execution of the test.
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldArrangeOccursAtLeast()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#OccursAtLeast}}
-    [TestMethod]
-    public void ShouldArrangeOccursAtLeast()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Submit()).OccursAtLeast(2);
 
-        Mock.Arrange(() => foo.Submit()).OccursAtLeast(2);
+    // Act
+    foo.Submit();
+    foo.Submit();
+    foo.Submit();
 
-        // Act
-        foo.Submit();
-        foo.Submit();
-        foo.Submit();
+    // Assert
+    Mock.Assert(foo);
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldArrangeOccursAtLeast()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    Mock.Arrange(Sub() foo.Submit()).OccursAtLeast(2)
 
-  #### __[VB]__
+    ' Act
+    foo.Submit()
+    foo.Submit()
+    foo.Submit()
 
-  {{region Occurrence#OccursAtLeast}}
-    <TestMethod()>
-    Public Sub ShouldArrangeOccursAtLeast()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Sub() foo.Submit()).OccursAtLeast(2)
-
-        ' Act
-        foo.Submit()
-        foo.Submit()
-        foo.Submit()
-
-        ' Assert
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(foo)
+End Sub
+ ```
 
 In the example above, `foo.Submit()` is called `3` times. The verification will not fail as it is expected to execute at least `2` times.
 
 ## OccursAtMost(numberOfTimes)
 With `OccursAtMost(numberOfTimes)` you specify at most how many times you want to verify that a given method/property has been called during the execution of the test.
 
-  #### __[C#]__
-
-  {{region Occurrence#OccursAtMost}}
-    [TestMethod]
-    [ExpectedException(typeof(AssertFailedException))]
-    public void ShouldFailWhenInvokedMoreThanRequried()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+  ```C#
+[TestMethod]
+[ExpectedException(typeof(AssertFailedException))]
+public void ShouldFailWhenInvokedMoreThanRequried()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
         
-        Mock.Arrange(() => foo.Submit()).OccursAtMost(2);
+    Mock.Arrange(() => foo.Submit()).OccursAtMost(2);
 
-        // Act
-        foo.Submit();
-        foo.Submit();
-        foo.Submit();
-    }
-  {{endregion}}
+    // Act
+    foo.Submit();
+    foo.Submit();
+    foo.Submit();
+}
+ ```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(AssertFailedException))>
+Public Sub ShouldFailWhenInvokedMoreThanRequried()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
+    Mock.Arrange(Sub() foo.Submit()).OccursAtMost(2)
 
-  #### __[VB]__
-
-  {{region Occurrence#OccursAtMost}}
-    <TestMethod()>
-    <ExpectedException(GetType(AssertFailedException))>
-    Public Sub ShouldFailWhenInvokedMoreThanRequried()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-        Mock.Arrange(Sub() foo.Submit()).OccursAtMost(2)
-
-        ' Act
-        foo.Submit()
-        foo.Submit()
-        foo.Submit()
-    End Sub
-  {{endregion}}
+    ' Act
+    foo.Submit()
+    foo.Submit()
+    foo.Submit()
+End Sub
+ ```
 
 In the example above, we specify that `foo.Submit()` must be called at most 2 times. As it is called 3 times, `AssertFailedException` will be thrown immediately after the third call.
 
@@ -568,50 +507,45 @@ JustMock enables you to assert multiple occurrences of similar type of call usin
 
 Here is an example:
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldBeAbleToAssertOccursUsingMatcherForSimilarCallAtOneShot()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#MultipleOccurrences}}
-    [TestMethod]
-    public void ShouldBeAbleToAssertOccursUsingMatcherForSimilarCallAtOneShot()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Echo(1)).Returns((int arg) => arg);
+    Mock.Arrange(() => foo.Echo(2)).Returns((int arg) => arg);
+    Mock.Arrange(() => foo.Echo(3)).Returns((int arg) => arg);
 
-        Mock.Arrange(() => foo.Echo(1)).Returns((int arg) => arg);
-        Mock.Arrange(() => foo.Echo(2)).Returns((int arg) => arg);
-        Mock.Arrange(() => foo.Echo(3)).Returns((int arg) => arg);
+    // Act
+    foo.Echo(1);
+    foo.Echo(2);
+    foo.Echo(3);
 
-        // Act
-        foo.Echo(1);
-        foo.Echo(2);
-        foo.Echo(3);
+    // Assert
+    Mock.Assert(() => foo.Echo(Arg.AnyInt), Occurs.Exactly(3));
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldBeAbleToAssertOccursUsingMatcherForSimilarCallAtOneShot()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Mock.Assert(() => foo.Echo(Arg.AnyInt), Occurs.Exactly(3));
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Echo(1)).Returns(Function(arg__1 As Integer) arg__1)
+    Mock.Arrange(Function() foo.Echo(2)).Returns(Function(arg__1 As Integer) arg__1)
+    Mock.Arrange(Function() foo.Echo(3)).Returns(Function(arg__1 As Integer) arg__1)
 
-  #### __[VB]__
+    ' Act
+    foo.Echo(1)
+    foo.Echo(2)
+    foo.Echo(3)
 
-  {{region Occurrence#MultipleOccurrences}}
-    <TestMethod()>
-    Public Sub ShouldBeAbleToAssertOccursUsingMatcherForSimilarCallAtOneShot()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Function() foo.Echo(1)).Returns(Function(arg__1 As Integer) arg__1)
-        Mock.Arrange(Function() foo.Echo(2)).Returns(Function(arg__1 As Integer) arg__1)
-        Mock.Arrange(Function() foo.Echo(3)).Returns(Function(arg__1 As Integer) arg__1)
-
-        ' Act
-        foo.Echo(1)
-        foo.Echo(2)
-        foo.Echo(3)
-
-        ' Assert
-        Mock.Assert(Function() foo.Echo(Arg.AnyInt), Occurs.Exactly(3))
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(Function() foo.Echo(Arg.AnyInt), Occurs.Exactly(3))
+End Sub
+ ```
 
 Our arrangement is for calling `Echo` method with `1`, `2` or `3` as argument. In assertion we use a matcher to cover all calls with *integer* as argument. As calling `foo.Echo` with `1`, `2` and `3` in acting phase applies that matcher, a call with *integer* occurred exactly `3` times.
 Refer to [Matchers]({%slug justmock/basic-usage/matchers%}) for more information about using matchers.
@@ -626,133 +560,118 @@ To ensure that a set of method calls are executed in a particular order, you can
  Next is an example, showing `InOrder()` use case: 
 
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldVerifyCallsOrder()
+{
+    // Arrange
+    var foo = Mock.Create<IFoo>();
 
-  {{region Occurrence#VerifyInvocationOrder1}}
-    [TestMethod]
-    public void ShouldVerifyCallsOrder()
-    {
-        // Arrange
-        var foo = Mock.Create<IFoo>();
+    Mock.Arrange(() => foo.Submit()).InOrder();
+    Mock.Arrange(() => foo.Echo(Arg.AnyInt)).InOrder();
 
-        Mock.Arrange(() => foo.Submit()).InOrder();
-        Mock.Arrange(() => foo.Echo(Arg.AnyInt)).InOrder();
+    // Act
+    foo.Submit();
+    foo.Echo(5);
 
-        // Act
-        foo.Submit();
-        foo.Echo(5);
+    // Assert
+    Mock.Assert(foo);
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldVerifyCallsOrder()
+    ' Arrange
+    Dim foo = Mock.Create(Of IFoo)()
 
-        // Assert
-        Mock.Assert(foo);
-    }
-  {{endregion}}
+    Mock.Arrange(Sub() foo.Submit()).InOrder()
+    Mock.Arrange(Sub() foo.Echo(Arg.AnyInt)).InOrder()
 
-  #### __[VB]__
+    ' Act
+    foo.Submit()
+    foo.Echo(5)
 
-  {{region Occurrence#VerifyInvocationOrder1}}
-    <TestMethod()>
-    Public Sub ShouldVerifyCallsOrder()
-        ' Arrange
-        Dim foo = Mock.Create(Of IFoo)()
-
-        Mock.Arrange(Sub() foo.Submit()).InOrder()
-        Mock.Arrange(Sub() foo.Echo(Arg.AnyInt)).InOrder()
-
-        ' Act
-        foo.Submit()
-        foo.Echo(5)
-
-        ' Assert
-        Mock.Assert(foo)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(foo)
+End Sub
+ ```
 
 Note that the `InOrder` option also supports asserting the order of mock calls regardless of the instance within the test scope. Imagine that you have to validate that the user has logged in before using his/hers shopping cart in your application.
         
 
-  #### __[C#]__
+  ```C#
+public interface IUserValidationService
+{
+    int ValidateUser(string userName, string password);
+}
 
-  {{region Occurrence#VerifyInvocationOrder2}}
-    public interface IUserValidationService
-    {
-        int ValidateUser(string userName, string password);
-    }
+public interface IShoppingCartService
+{
+    IList<string> LoadCart(int userID);
+}
+ ```
+```VB
+Public Interface IUserValidationService
+    Function ValidateUser(ByVal userName As String, ByVal password As String) As Integer
+End Interface
 
-    public interface IShoppingCartService
-    {
-        IList<string> LoadCart(int userID);
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region Occurrence#VerifyInvocationOrder2}}
-    Public Interface IUserValidationService
-        Function ValidateUser(ByVal userName As String, ByVal password As String) As Integer
-    End Interface
-
-    Public Interface IShoppingCartService
-        Function LoadCart(ByVal userID As Integer) As IList(Of String)
-    End Interface
-  {{endregion}}
+Public Interface IShoppingCartService
+    Function LoadCart(ByVal userID As Integer) As IList(Of String)
+End Interface
+ ```
 
 Here we have defined the `IUserValidationService` and the `IShoppingCartService` services whose invocation order we are going to assert in the following test:
         
 
-  #### __[C#]__
+  ```C#
+[TestMethod]
+public void ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
+{
+    string userName = "Bob";
+    string password = "Password";
+    int userID = 5;
+    var cart = new List<string> { "Foo", "Bar" };
 
-  {{region Occurrence#VerifyInvocationOrder3}}
-    [TestMethod]
-    public void ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
-    {
-        string userName = "Bob";
-        string password = "Password";
-        int userID = 5;
-        var cart = new List<string> { "Foo", "Bar" };
+    // Arrange
+    var userServiceMock = Mock.Create<IUserValidationService>();
+    var shoppingCartServiceMock = Mock.Create<IShoppingCartService>();
 
-        // Arrange
-        var userServiceMock = Mock.Create<IUserValidationService>();
-        var shoppingCartServiceMock = Mock.Create<IShoppingCartService>();
+    Mock.Arrange(() => userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce();
+    Mock.Arrange(() => shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce();
 
-        Mock.Arrange(() => userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce();
-        Mock.Arrange(() => shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce();
+    // Act
+    userServiceMock.ValidateUser(userName, password);
+    shoppingCartServiceMock.LoadCart(userID);
 
-        // Act
-        userServiceMock.ValidateUser(userName, password);
-        shoppingCartServiceMock.LoadCart(userID);
+    // Assert
+    Mock.Assert(userServiceMock);
+    Mock.Assert(shoppingCartServiceMock);
+}
+ ```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
+    Dim userName As String = "Bob"
+    Dim password As String = "Password"
+    Dim userID As Integer = 5
+    Dim cart As IList(Of String) = {"Foo", "Bar"}
 
-        // Assert
-        Mock.Assert(userServiceMock);
-        Mock.Assert(shoppingCartServiceMock);
-    }
-  {{endregion}}
+    ' Arrange
+    Dim userServiceMock = Mock.Create(Of IUserValidationService)()
+    Dim shoppingCartServiceMock = Mock.Create(Of IShoppingCartService)()
 
-  #### __[VB]__
+    Mock.Arrange(Function() userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce()
+    Mock.Arrange(Function() shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce()
 
-  {{region Occurrence#VerifyInvocationOrder3}}
-    <TestMethod()>
-    Public Sub ShouldAssertInOrderForDifferentInstancesInTestMethodScope()
-        Dim userName As String = "Bob"
-        Dim password As String = "Password"
-        Dim userID As Integer = 5
-        Dim cart As IList(Of String) = {"Foo", "Bar"}
+    ' Act
+    userServiceMock.ValidateUser(userName, password)
+    shoppingCartServiceMock.LoadCart(userID)
 
-        ' Arrange
-        Dim userServiceMock = Mock.Create(Of IUserValidationService)()
-        Dim shoppingCartServiceMock = Mock.Create(Of IShoppingCartService)()
-
-        Mock.Arrange(Function() userServiceMock.ValidateUser(userName, password)).Returns(userID).InOrder().OccursOnce()
-        Mock.Arrange(Function() shoppingCartServiceMock.LoadCart(userID)).Returns(cart).InOrder().OccursOnce()
-
-        ' Act
-        userServiceMock.ValidateUser(userName, password)
-        shoppingCartServiceMock.LoadCart(userID)
-
-        ' Assert
-        Mock.Assert(userServiceMock)
-        Mock.Assert(shoppingCartServiceMock)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(userServiceMock)
+    Mock.Assert(shoppingCartServiceMock)
+End Sub
+ ```
 
 
 In the arrange phase we have defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.
@@ -766,84 +685,75 @@ JustMock gives you an ability to ensure that a method can be called only after o
 
  Next is an typical example, showing `AfterAll()` in action. Imagine that you have the following interfaces:
  
-  #### __[C#]__
+  ```C#
+public interface IBar
+{
+    void Init();
+}
 
-  {{region Occurrence#VerifyAll1}}
-    public interface IBar
-    {
-        void Init();
-    }
-
-    public interface IBarContainer
-    {
-        IEnumerable<IBar> Elements { get; }
-    }   
-  {{endregion}}
+public interface IBarContainer
+{
+    IEnumerable<IBar> Elements { get; }
+}   
+ ```
   
-  #### __[VB]__
-  
-  {{region Occurrence#VerifyAll1}}  
-    Public Interface IBar
-        Sub Init()
-    End Interface
+```VB  
+Public Interface IBar
+    Sub Init()
+End Interface
 
-    Public Interface IBarContainer
-        ReadOnly Property Elements As IEnumerable(Of IBar)
-    End Interface
-  {{endregion}}
+Public Interface IBarContainer
+    ReadOnly Property Elements As IEnumerable(Of IBar)
+End Interface
+ ```
  
  and you need to verify that `FooContainer.Elements` is called after all `Foo.Init` have beeen called, than the following test can help:
 
  
-  #### __[C#]__
-  
-  {{region Occurrence#VerifyAll2}}
-    [TestMethod]
-    public void ShouldAssertPrerequisites()
+  ```C#
+[TestMethod]
+public void ShouldAssertPrerequisites()
+{
+    // Arrange
+    var barCollection = new List<IBar>()
     {
-        // Arrange
-        var barCollection = new List<IBar>()
-        {
-            Mock.Create<IBar>(),
-            Mock.Create<IBar>(),
-            Mock.Create<IBar>()
-        };
-        var barContainer = Mock.Create<IBarContainer>();
-        Mock.Arrange(() => barContainer.Elements)
+        Mock.Create<IBar>(),
+        Mock.Create<IBar>(),
+        Mock.Create<IBar>()
+    };
+    var barContainer = Mock.Create<IBarContainer>();
+    Mock.Arrange(() => barContainer.Elements)
             .ReturnsCollection(barCollection)
             .AfterAll(barCollection.Select(bar => Mock.Arrange(() => bar.Init())).ToArray());
 
-        // Act
-        barCollection.ForEach(bar => bar.Init());
-        var actualCollection = barContainer.Elements;
+    // Act
+    barCollection.ForEach(bar => bar.Init());
+    var actualCollection = barContainer.Elements;
 
-        // Assert
-        Mock.Assert(barContainer);
+    // Assert
+    Mock.Assert(barContainer);
+}
+ ```
+```VB
+<TestMethod>
+Public Sub ShouldAssertPrerequisites()
+    ' Arrange
+    Dim barCollection As New List(Of IBar) From
+    {
+        Mock.Create(Of IBar)(),
+        Mock.Create(Of IBar)(),
+        Mock.Create(Of IBar)()
     }
-  {{endregion}}
-  
-  #### __[VB]__
-  
-  {{region Occurrence#VerifyAll2}}
-    <TestMethod>
-    Public Sub ShouldAssertPrerequisites()
-        ' Arrange
-        Dim barCollection As New List(Of IBar) From
-        {
-            Mock.Create(Of IBar)(),
-            Mock.Create(Of IBar)(),
-            Mock.Create(Of IBar)()
-        }
-        Dim barContainer = Mock.Create(Of IBarContainer)()
-        Mock.Arrange(Function() barContainer.Elements) _
+    Dim barContainer = Mock.Create(Of IBarContainer)()
+    Mock.Arrange(Function() barContainer.Elements) _
             .ReturnsCollection(barCollection) _
             .AfterAll(barCollection.Select(Function(bar As IBar) Mock.Arrange(Sub() bar.Init())).ToArray())
 
-        ' Act
-        barCollection.ForEach(Sub(bar As IBar) bar.Init())
-        Dim actualCollection = barContainer.Elements
+    ' Act
+    barCollection.ForEach(Sub(bar As IBar) bar.Init())
+    Dim actualCollection = barContainer.Elements
 
-        ' Assert
-        Mock.Assert(barContainer)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Mock.Assert(barContainer)
+End Sub
+ ```

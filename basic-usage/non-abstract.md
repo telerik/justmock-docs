@@ -16,83 +16,69 @@ With JustMock Lite, you can mock non-abstract classes and their virtual members.
 
 To show you how to mock a non-abstract class and its members, let's take the following class that will be tested:
 
-#### __[C#] Sample setup__
-
-{{region ObjectMocking#VirtualSamples}}
-
-    public class Customer
+```C#
+public class Customer
+{
+    public Customer()
     {
-        public Customer()
-        {
-            throw new NotImplementedException("Constructor");
-        }
-    
-        public virtual int GetNumberOfOrders()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException("Constructor");
     }
-{{endregion}}
 
-#### __[VB] Sample setup__
+    public virtual int GetNumberOfOrders()
+    {
+        throw new NotImplementedException();
+    }
+}
+```
+```VB.NET
+Public Class Customer
+    Public Sub New()
+        Throw New NotImplementedException("Constructor")
+    End Sub
 
-{{region ObjectMocking#VirtualSamples}}
-
-    Public Class Customer
-        Public Sub New()
-            Throw New NotImplementedException("Constructor")
-        End Sub
-    
-        Public Overridable Function GetNumberOfOrders() As IList(Of Integer)
-            Throw New NotImplementedException()
-        End Function
-    End Class
-{{endregion}}
+    Public Overridable Function GetNumberOfOrders() As IList(Of Integer)
+        Throw New NotImplementedException()
+    End Function
+End Class
+```
 
 Note, that we have declared a concrete class (`Customer`) which does not implement any interfaces. To test this class with **JustMock Lite**, you should make sure that all class members are `virtual`. 
 
-#### __[C#] Example 1: Mock virtual member of concrete class__
+```C#
+[TestMethod]
+[ExpectedException(typeof(NotImplementedException))]
+public void ShouldCallOriginalForVirtualExactlyOnce()
+{
+    //Arrange
+    // Create a mock of the object
+    var customerMock = Mock.Create<Customer>();
+    // Arrange your expectations
+    Mock.Arrange(() => customerMock.GetNumberOfOrders()).CallOriginal().OccursOnce();
 
-{{region ObjectMocking#MockingVirtual}}
+    //Act
+    customerMock.GetNumberOfOrders();
 
-    [TestMethod]
-    [ExpectedException(typeof(NotImplementedException))]
-    public void ShouldCallOriginalForVirtualExactlyOnce()
-    {
-        //Arrange
-        // Create a mock of the object
-        var customerMock = Mock.Create<Customer>();
-        // Arrange your expectations
-        Mock.Arrange(() => customerMock.GetNumberOfOrders()).CallOriginal().OccursOnce();
+    //Assert
+    Mock.Assert(customerMock);
+}
+```
+```VB.NET
+<TestMethod>
+<ExpectedException(GetType(NotImplementedException))>
+Public Sub ShouldCallOriginalForVirtualExactlyOnce()
+    ' Arrange
+    ' Create a mock of the object
+    Dim customerMock = Mock.Create(Of Customer)()
+    ' Arrange your expectations
+    Mock.Arrange(Function() customerMock.GetNumberOfOrders()).CallOriginal().OccursOnce()
     
-        //Act
-        customerMock.GetNumberOfOrders();
+    ' Act
+    customerMock.GetNumberOfOrders()
     
-        //Assert
-        Mock.Assert(customerMock);
-    }
-{{endregion}}
-
-#### __[VB] Example 1: Mock virtual member of concrete class__
-
-  {{region ObjectMocking#MockingVirtual}}
-
-    <TestMethod>
-    <ExpectedException(GetType(NotImplementedException))>
-    Public Sub ShouldCallOriginalForVirtualExactlyOnce()
-        ' Arrange
-        ' Create a mock of the object
-        Dim customerMock = Mock.Create(Of Customer)()
-        ' Arrange your expectations
-        Mock.Arrange(Function() customerMock.GetNumberOfOrders()).CallOriginal().OccursOnce()
-        
-        ' Act
-        customerMock.GetNumberOfOrders()
-        
-        ' Assert
-        Mock.Assert(customerMock)
-    End Sub
-{{endregion}}
+    ' Assert
+    Mock.Assert(customerMock)
+End Sub
+```
 
 Note that, in the [Arrange]({%slug justmock/basic-usage/arrange-act-assert%}) part of this example, we use the [CallOriginal]({%slug justmock/basic-usage/mock/call-original%}) and [Occurs]({%slug justmock/basic-usage/asserting-occurrence%}) methods. This example shows how JustMock allows us to add behavior checking - it will call the original `GetNumberOfOrders()` method, verifying that the method call is made only once.
 

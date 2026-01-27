@@ -42,12 +42,10 @@ If you are not using any of the Advanced features described in this section, you
 
 Here is a quick example of how to do that:
 
-#### __[C#]__
-{{region AdvancedFeatures-DisableProfiler}}
-
-	[TestInitialize]
-	public void Setup()
-	{
-	    Mock.DoNotUseProfiler();
-	}
-{{endregion}}
+```C#
+[TestInitialize]
+public void Setup()
+{
+    Mock.DoNotUseProfiler();
+}
+```

@@ -20,77 +20,72 @@ Faking final or virtual method/property calls doesn't affect the way you write y
 
 In the next examples we will use the following sample classes to test:
 
-  #### __[C#]__
+```C#
+public class Foo
+{
+  public int Execute(int arg1, int arg2)
+  {
+      throw new NotImplementedException();
+  }
 
-  {{region FinalMocking#SampleClasses}}
-    public class Foo
-    {
-      public int Execute(int arg1, int arg2)
-      {
-          throw new NotImplementedException();
-      }
+  public int Execute(int arg1)
+  {
+      throw new NotImplementedException();
+  }
 
-      public int Execute(int arg1)
-      {
-          throw new NotImplementedException();
-      }
+  public int Echo(int arg1)
+  {
+      return arg1;
+  }
 
-      public int Echo(int arg1)
-      {
-          return arg1;
-      }
+  public string FooProp { get; set; }
 
-      public string FooProp { get; set; }
+  public delegate void EchoEventHandler(bool echoed);
+  public event EchoEventHandler OnEchoCallback;
+}
 
-      public delegate void EchoEventHandler(bool echoed);
-      public event EchoEventHandler OnEchoCallback;
-    }
+public class FooGeneric
+{
+  public TRet Echo<T, TRet>(T arg1)
+  {
+      throw new NotImplementedException();
+  }
+}
+```
+```VB
+Public Class Foo
+    Public Function Execute(arg1 As Integer, arg2 As Integer) As Integer
+        Throw New NotImplementedException()
+    End Function
 
-    public class FooGeneric
-    {
-      public TRet Echo<T, TRet>(T arg1)
-      {
-          throw new NotImplementedException();
-      }
-    }
-  {{endregion}}
+    Public Function Execute(arg1 As Integer) As Integer
+        Throw New NotImplementedException()
+    End Function
 
-  #### __[VB]__
+    Public Function Echo(arg1 As Integer) As Integer
+        Return arg1
+    End Function
 
-  {{region FinalMocking#SampleClasses}}
-    Public Class Foo
-        Public Function Execute(arg1 As Integer, arg2 As Integer) As Integer
-            Throw New NotImplementedException()
-        End Function
+    Public Property FooProp() As String
+        Get
+            Return m_FooProp
+        End Get
+        Set(value As String)
+            m_FooProp = value
+        End Set
+    End Property
+    Private m_FooProp As String
 
-        Public Function Execute(arg1 As Integer) As Integer
-            Throw New NotImplementedException()
-        End Function
+    Public Delegate Sub EchoEventHandler(echoed As Boolean)
+    Public Event OnEchoCallback As EchoEventHandler
+End Class
 
-        Public Function Echo(arg1 As Integer) As Integer
-            Return arg1
-        End Function
-
-        Public Property FooProp() As String
-            Get
-                Return m_FooProp
-            End Get
-            Set(value As String)
-                m_FooProp = value
-            End Set
-        End Property
-        Private m_FooProp As String
-
-        Public Delegate Sub EchoEventHandler(echoed As Boolean)
-        Public Event OnEchoCallback As EchoEventHandler
-    End Class
-
-    Public Class FooGeneric
-        Public Function Echo(Of T, TRet)(arg1 As T) As TRet
-            Throw New NotImplementedException()
-        End Function
-    End Class
-  {{endregion}}
+Public Class FooGeneric
+    Public Function Echo(Of T, TRet)(arg1 As T) As TRet
+        Throw New NotImplementedException()
+    End Function
+End Class
+```
 
 
 
@@ -102,42 +97,37 @@ In the next examples we will use the following sample classes to test:
 
 Set up a call to a final method and assert its return value.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldSetupACallToAFinalMethod()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-  {{region FinalMocking#FinalMethodSetup}}
-    [TestMethod]
-    public void ShouldSetupACallToAFinalMethod()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
 
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
+    // Act
+    var actual = foo.Echo(1);
 
-        // Act
-        var actual = foo.Echo(1);
+    // Assert
+    Assert.AreEqual(10, actual);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldSetupACallToAFinalMethod()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Assert
-        Assert.AreEqual(10, actual);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
 
-  #### __[VB]__
+    ' Act
+    Dim actual = foo.Echo(1)
 
-  {{region FinalMocking#FinalMethodSetup}}
-    <TestMethod()>
-    Public Sub ShouldSetupACallToAFinalMethod()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
-
-        ' Act
-        Dim actual = foo.Echo(1)
-
-        ' Assert
-        Assert.AreEqual(10, actual)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(10, actual)
+End Sub
+```
 
 Here we setup that a call to the final `foo.Echo` method with any `int` argument should return 10.
 
@@ -145,82 +135,72 @@ Here we setup that a call to the final `foo.Echo` method with any `int` argument
 
 Set up a call to a final property and assert its return value.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldSetupACallToAFinalProperty()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-  {{region FinalMocking#FinalPropertyGet}}
-    [TestMethod]
-    public void ShouldSetupACallToAFinalProperty()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    Mock.Arrange(() => foo.FooProp).Returns("bar");
 
-        Mock.Arrange(() => foo.FooProp).Returns("bar");
+    // Act
+    var actual = string.Empty;
+    actual = foo.FooProp;
 
-        // Act
-        var actual = string.Empty;
-        actual = foo.FooProp;
+    // Assert
+    Assert.AreEqual("bar", actual);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldSetupACallToAFinalProperty()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Assert
-        Assert.AreEqual("bar", actual);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.FooProp).Returns("bar")
 
-  #### __[VB]__
+    ' Act
+    Dim actual = String.Empty
+    actual = foo.FooProp
 
-  {{region FinalMocking#FinalPropertyGet}}
-    <TestMethod()>
-    Public Sub ShouldSetupACallToAFinalProperty()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Mock.Arrange(Function() foo.FooProp).Returns("bar")
-
-        ' Act
-        Dim actual = String.Empty
-        actual = foo.FooProp
-
-        ' Assert
-        Assert.AreEqual("bar", actual)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual("bar", actual)
+End Sub
+```
 
 Here we setup that a call to the final `foo.FooProp` property should return the "bar" literal.
 
 ## Assert Property Set
 In this example we arrange the `FooProp` property of the `Foo` class.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(StrictMockException))]
+public void ShouldAssertPropertySet()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>(Behavior.Strict);
 
-  {{region FinalMocking#FinalPropertySet}}
-    [TestMethod]
-    [ExpectedException(typeof(StrictMockException))]
-    public void ShouldAssertPropertySet()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>(Behavior.Strict);
+    Mock.ArrangeSet(() => foo.FooProp = "ping");
 
-        Mock.ArrangeSet(() => foo.FooProp = "ping");
+    // Act
+    foo.FooProp = "foo";
+}
+```
+```VB
+<TestMethod()>
+<ExpectedException(GetType(StrictMockException))>
+Public Sub ShouldAssertPropertySet()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)(Behavior.Strict)
 
-        // Act
-        foo.FooProp = "foo";
-    }
-  {{endregion}}
+    Mock.ArrangeSet(Function() foo.FooProp = "ping")
 
-  #### __[VB]__
-
-  {{region FinalMocking#FinalPropertySet}}
-    <TestMethod()>
-    <ExpectedException(GetType(StrictMockException))>
-    Public Sub ShouldAssertPropertySet()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)(Behavior.Strict)
-
-        Mock.ArrangeSet(Function() foo.FooProp = "ping")
-
-        ' Act
-        foo.FooProp = "foo"
-    End Sub
-  {{endregion}}
+    ' Act
+    foo.FooProp = "foo"
+End Sub
+```
 
 Here we setup that setting the final `foo.FooProp` property to any `string` value different from "ping" will cause an exception of type `MockException` to be thrown.
 
@@ -228,139 +208,122 @@ Here we setup that setting the final `foo.FooProp` property to any `string` valu
 
 The following example example shows how to mock final method overloads. `foo.Execute` has two overloads - accepting one or two *integers* as arguments. Here we mock them both by `Returns`. In the first case we return just the argument that has been passed. In the second case we return the sum of the two *integer* values. After that, we act by calling both overloads and assert what we have arranged.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertOnMethodOverload()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-  {{region FinalMocking#FinalMethodOverloads}}
-    [TestMethod]
-    public void ShouldAssertOnMethodOverload()
-    {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+    Mock.Arrange(() => foo.Execute(Arg.IsAny<int>())).Returns((int result) => result);
+    Mock.Arrange(() => foo.Execute(Arg.IsAny<int>(), Arg.IsAny<int>())).Returns((int arg1, int arg2) => arg1 + arg2);
 
-        Mock.Arrange(() => foo.Execute(Arg.IsAny<int>())).Returns((int result) => result);
-        Mock.Arrange(() => foo.Execute(Arg.IsAny<int>(), Arg.IsAny<int>())).Returns((int arg1, int arg2) => arg1 + arg2);
+    // Assert
+    Assert.AreEqual(foo.Execute(1), 1);
+    Assert.AreEqual(foo.Execute(1, 1), 2);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertOnMethodOverload()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        // Assert
-        Assert.AreEqual(foo.Execute(1), 1);
-        Assert.AreEqual(foo.Execute(1, 1), 2);
-    }
-  {{endregion}}
+    Mock.Arrange(Function() foo.Execute(Arg.IsAny(Of Integer)())).Returns(Function(result As Integer) result)
+    Mock.Arrange(Function() foo.Execute(Arg.IsAny(Of Integer)(), Arg.IsAny(Of Integer)())).Returns(Function(arg1 As Integer, arg2 As Integer) arg1 + arg2)
 
-  #### __[VB]__
-
-  {{region FinalMocking#FinalMethodOverloads}}
-    <TestMethod()>
-    Public Sub ShouldAssertOnMethodOverload()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-        Mock.Arrange(Function() foo.Execute(Arg.IsAny(Of Integer)())).Returns(Function(result As Integer) result)
-        Mock.Arrange(Function() foo.Execute(Arg.IsAny(Of Integer)(), Arg.IsAny(Of Integer)())).Returns(Function(arg1 As Integer, arg2 As Integer) arg1 + arg2)
-
-        ' Assert
-        Assert.AreEqual(foo.Execute(1), 1)
-        Assert.AreEqual(foo.Execute(1, 1), 2)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(foo.Execute(1), 1)
+    Assert.AreEqual(foo.Execute(1, 1), 2)
+End Sub
+```
 
 
 ## Assert Method Callbacks
 Follows an example of how to use the `Raises` method to fire a callback and pass event arguments once a final method is called.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertOnMethodCallbacks()
+{
+    // Arrange
+    var foo = Mock.Create<Foo>();
 
-  {{region FinalMocking#FinalMethodCallback}}
-    [TestMethod]
-    public void ShouldAssertOnMethodCallbacks()
+    Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Raises(() => foo.OnEchoCallback += null, true);
+
+    bool called = false;
+
+    foo.OnEchoCallback += delegate(bool echoed)
     {
-        // Arrange
-        var foo = Mock.Create<Foo>();
+        called = echoed;
+    };
 
-        Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Raises(() => foo.OnEchoCallback += null, true);
+    // Act
+    foo.Echo(10);
 
-        bool called = false;
+    // Assert
+    Assert.IsTrue(called);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertOnMethodCallbacks()
+    ' Arrange
+    Dim foo = Mock.Create(Of Foo)()
 
-        foo.OnEchoCallback += delegate(bool echoed)
-        {
-            called = echoed;
-        };
+    Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Raises(Sub() AddHandler foo.OnEchoCallback, Nothing, True)
 
-        // Act
-        foo.Echo(10);
+    Dim called As Boolean = False
 
-        // Assert
-        Assert.IsTrue(called);
-    }
-  {{endregion}}
+    AddHandler foo.OnEchoCallback, Sub(echoed As Boolean) called = echoed
 
-  #### __[VB]__
+    ' Act
+    foo.Echo(10)
 
-  {{region FinalMocking#FinalMethodCallback}}
-    <TestMethod()>
-    Public Sub ShouldAssertOnMethodCallbacks()
-        ' Arrange
-        Dim foo = Mock.Create(Of Foo)()
-
-
-
-        Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Raises(Sub() AddHandler foo.OnEchoCallback, Nothing, True)
-
-        Dim called As Boolean = False
-
-        AddHandler foo.OnEchoCallback, Sub(echoed As Boolean) called = echoed
-
-        ' Act
-        foo.Echo(10)
-
-        ' Assert
-        Assert.IsTrue(called)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.IsTrue(called)
+End Sub
+```
 
 When the `foo.Echo()` method is called with any *integer* value as argument, the `OnEchoCallback` is raised with parameter `true`. We attach a delegate to the event to set a local boolean variable to `true` once the method is called. We act by calling `foo.Echo(10)`. Finally, we verify that `foo.Echo()` has been called in our test.
 
 ## Assert Generic Types and Methods
 You can also assert generic types and methods. In the example below we mock generic method in non-generic type. We arrange that it should return the *string* value that has been passed to it.
 
-  #### __[C#]__
+```C#
+[TestMethod]
+public void ShouldAssertOnGenericTypesAndMethod()
+{
+    // Arrange
+    string expected = "ping";
 
-  {{region FinalMocking#FinalGenerics}}
-    [TestMethod]
-    public void ShouldAssertOnGenericTypesAndMethod()
-    {
-        // Arrange
-        string expected = "ping";
+    var foo = Mock.Create<FooGeneric>();
 
-        var foo = Mock.Create<FooGeneric>();
+    Mock.Arrange(() => foo.Echo<string, string>(expected)).Returns((string s) => s);
 
-        Mock.Arrange(() => foo.Echo<string, string>(expected)).Returns((string s) => s);
+    // Act
+    string ret = foo.Echo<string, string>(expected);
 
-        // Act
-        string ret = foo.Echo<string, string>(expected);
+    // Assert
+    Assert.AreEqual(expected, ret);
+}
+```
+```VB
+<TestMethod()>
+Public Sub ShouldAssertOnGenericTypesAndMethod()
+    ' Arrange
+    Dim expected As String = "ping"
 
-        // Assert
-        Assert.AreEqual(expected, ret);
-    }
-  {{endregion}}
+    Dim foo = Mock.Create(Of FooGeneric)()
 
-  #### __[VB]__
+    Mock.Arrange(Function() foo.Echo(Of String, String)(expected)).Returns(Function(s As String) s)
 
-  {{region FinalMocking#FinalGenerics}}
-    <TestMethod()>
-    Public Sub ShouldAssertOnGenericTypesAndMethod()
-        ' Arrange
-        Dim expected As String = "ping"
+    ' Act
+    Dim ret As String = foo.Echo(Of String, String)(expected)
 
-        Dim foo = Mock.Create(Of FooGeneric)()
-
-        Mock.Arrange(Function() foo.Echo(Of String, String)(expected)).Returns(Function(s As String) s)
-
-        ' Act
-        Dim ret As String = foo.Echo(Of String, String)(expected)
-
-        ' Assert
-        Assert.AreEqual(expected, ret)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(expected, ret)
+End Sub
+```
 
 For more information about mocking generic types and methods go to [Generics]({%slug justmock/basic-usage/generics%}) topic.

@@ -23,58 +23,48 @@ Mocks with `Behavior.CallOriginal` will follow the original implementation of th
 
 Assume the following class:
           
-  #### __[C#]__
-
-  {{region MockBehaviorCallOriginal#LogClass}}
-    public class Log
+```C#
+public class Log
+{
+    public virtual void Info()
     {
-        public virtual void Info()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region MockBehaviorCallOriginal#LogClass}}
-    Public Class Log
-        Public Overridable Sub Info()
-            Throw New NotImplementedException()
-        End Sub
-    End Class
-  {{endregion}}
+}
+```
+```VB
+Public Class Log
+    Public Overridable Sub Info()
+        Throw New NotImplementedException()
+    End Sub
+End Class
+```
 
 To show how `CallOriginal` mocks behave, we have the next example:
 
-  #### __[C#]__
+```C#
+[TestMethod]
+[ExpectedException(typeof(NotImplementedException))]
+public void ShouldThrowAnExpectedException()
+{
+    // Arrange
+    var log = Mock.Create<Log>(Behavior.CallOriginal);
 
-  {{region MockBehaviorCallOriginal#AssertCallOriginalForVoid}}
-    [TestMethod]
-    [ExpectedException(typeof(NotImplementedException))]
-    public void ShouldThrowAnExpectedException()
-    {
-        // Arrange
-        var log = Mock.Create<Log>(Behavior.CallOriginal);
+    // Act
+    log.Info();
+}
+```
+```VB
+<TestMethod> _
+<ExpectedException(GetType(NotImplementedException))> _
+Public Sub ShouldThrowAnExpectedException()
+    ' Arrange
+    Dim log = Mock.Create(Of Log)(Behavior.CallOriginal)
 
-        // Act
-        log.Info();
-    }
-  {{endregion}}
-
-  #### __[VB]__
-
-  {{region MockBehaviorCallOriginal#AssertCallOriginalForVoid}}
-    <TestMethod> _
-    <ExpectedException(GetType(NotImplementedException))> _
-    Public Sub ShouldThrowAnExpectedException()
-        ' Arrange
-        Dim log = Mock.Create(Of Log)(Behavior.CallOriginal)
-
-        ' Act
-        log.Info()
-    End Sub
-  {{endregion}}
+    ' Act
+    log.Info()
+End Sub
+```
 
 Here, we create a mock of the `Log` class, with `Behavior.CallOriginal` and call a not implemented method. This method follows its original logic and throws a `NotImplementedException`.
 
@@ -82,74 +72,64 @@ Here, we create a mock of the `Log` class, with `Behavior.CallOriginal` and call
 
 We are free to further arrange mocks with `Behavior.CallOriginal`, as shown in the next example:
           
-  #### __[C#]__
-
-  {{region MockBehaviorCallOriginal#FooBase}}
-    public class FooBase
+```C#
+public class FooBase
+{
+    public string GetString(string str)
     {
-        public string GetString(string str)
-        {
-            return str;
-        }
+        return str;
     }
-  {{endregion}}
+}
+```
+```VB
+Public Class FooBase
+    Public Function GetString(str As String) As String
+        Return str
+    End Function
+End Class
+```
 
-  #### __[VB]__
+```C#
+[TestMethod]
+public void ShouldAssertAgainstOriginalAndArrangedExpectations()
+{
+    // Arrange
+    var foo = Mock.Create<FooBase>(Behavior.CallOriginal);
 
-  {{region MockBehaviorCallOriginal#FooBase}}
-    Public Class FooBase
-        Public Function GetString(str As String) As String
-            Return str
-        End Function
-    End Class
-  {{endregion}}
+    Mock.Arrange(() => foo.GetString("y")).Returns("z");
 
-  #### __[C#]__
+    // Act
+    var actualX = foo.GetString("x");
+    var actualY = foo.GetString("y");
 
-  {{region MockBehaviorCallOriginal#AssertCallOriginal}}
-    [TestMethod]
-    public void ShouldAssertAgainstOriginalAndArrangedExpectations()
-    {
-        // Arrange
-        var foo = Mock.Create<FooBase>(Behavior.CallOriginal);
+    var expectedX = "x";
+    var expectedY = "z";
 
-        Mock.Arrange(() => foo.GetString("y")).Returns("z");
+    // Assert
+    Assert.AreEqual(expectedX, actualX);
+    Assert.AreEqual(expectedY, actualY);
+}
+```
+```VB
+<TestMethod> _
+Public Sub ShouldAssertAgainstOriginalAndArrangedExpectations()
+    ' Arrange
+    Dim foo = Mock.Create(Of FooBase)(Behavior.CallOriginal)
 
-        // Act
-        var actualX = foo.GetString("x");
-        var actualY = foo.GetString("y");
+    Mock.Arrange(Function() foo.GetString("y")).Returns("z")
 
-        var expectedX = "x";
-        var expectedY = "z";
+    ' Act
+    Dim actualX = foo.GetString("x")
+    Dim actualY = foo.GetString("y")
 
-        // Assert
-        Assert.AreEqual(expectedX, actualX);
-        Assert.AreEqual(expectedY, actualY);
-    }
-  {{endregion}}
+    Dim expectedX = "x"
+    Dim expectedY = "z"
 
-  #### __[VB]__
-
-  {{region MockBehaviorCallOriginal#AssertCallOriginal}}
-    <TestMethod> _
-    Public Sub ShouldAssertAgainstOriginalAndArrangedExpectations()
-        ' Arrange
-        Dim foo = Mock.Create(Of FooBase)(Behavior.CallOriginal)
-
-        Mock.Arrange(Function() foo.GetString("y")).Returns("z")
-
-        ' Act
-        Dim actualX = foo.GetString("x")
-        Dim actualY = foo.GetString("y")
-
-        Dim expectedX = "x"
-        Dim expectedY = "z"
-
-        ' Assert
-        Assert.AreEqual(expectedX, actualX)
-        Assert.AreEqual(expectedY, actualY)
-    End Sub
-  {{endregion}}
+    ' Assert
+    Assert.AreEqual(expectedX, actualX)
+    Assert.AreEqual(expectedY, actualY)
+End Sub
+```
 
 ## See Also
 

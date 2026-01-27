@@ -25,7 +25,7 @@ To build the solution with ccnet we first have to add the appropriate entries in
 
 Start by adding a new project, like the example below:
 
-  {{region }}
+```xml
     <cruisecontrol xmlns:cb="urn:ccnet.config.builder">
           <!-- This is your CruiseControl.NET Server Configuration file. Add your projects below! -->
 
@@ -36,11 +36,11 @@ Start by adding a new project, like the example below:
           <modificationDelaySeconds>2</modificationDelaySeconds>
 
           <state type="state" directory="C:\Program Files (x86)\CruiseControl.NET\server\State" />
-  {{endregion}}
+```
 
 To check if the tests in your project are passing or failing you will need to add a publisher like this:
 
-  {{region }}
+```xml
     <publishers>
           <merge>
           <files>
@@ -49,11 +49,11 @@ To check if the tests in your project are passing or failing you will need to ad
           </merge>
           <xmllogger />
           </publishers>
-  {{endregion}}
+```
 
 After this we will add the tasks:
 
-  {{region }}
+```xml
     <tasks>
 
           <devenv>
@@ -71,7 +71,7 @@ After this we will add the tasks:
           </exec>
 
           </tasks>
-  {{endregion}}
+```
 
 The first task is setting the path to Visual Studio (`devenv.com`) and our solution file. The second is the task that actually executes the __JustMock Runner__.
 
@@ -81,7 +81,7 @@ Finally you will be able test if everything is working as expected.
 
 	![Cruise Control.NET 1](images/CruiseControl.NET1.png)
 
-1. Build your project and check if the tests in it have passed or failed.
+2. Build your project and check if the tests in it have passed or failed.
 	
 	![Cruise Control.NET 2](images/CruiseControl.NET2.png)
 

@@ -1,0 +1,12 @@
+apiRules:
+- exclude:
+    type: Method
+    uidRegex: ^System\.Object\..*$
+- exclude:
+    uidRegex: ^Telerik\.CallHome\..*$
+- exclude:
+    uidRegex: ^Telerik\.JustMock\.AutoMock\.Ninject\..*$
+- exclude:
+    uidRegex: ^Telerik\.JustMock\.Plugins(\..*)?$
+- exclude:
+    uidRegex: ^Telerik\.JustMock\.Core\.Castle\..*$
