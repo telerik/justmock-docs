@@ -15,21 +15,21 @@ This cheat sheet is created to help you navigate faster around the JustMock API 
 
 | Code          | Description   |
 | ------------- | ------------- |
-| IFoo mock = Mock.Create<IFoo>();| Create a mock with default constructor |
-| IFoo mock = Mock.Create<Foo>(Constructor.NotMocked); | Create a mock without mocking the constructor |
-| IFoo mock = Mock.Create<IFoo>(foo => foo.Index = 5); | Create a mock with predefined value |
-| IFoo mock = Mock.Create<IFoo>(Behavior.RecursiveLoose); | Create a mock with specific behavior |
+| IFoo mock = Mock.Create&lt;IFoo&gt;();| Create a mock with default constructor |
+| IFoo mock = Mock.Create&lt;Foo&gt;(Constructor.NotMocked); | Create a mock without mocking the constructor |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(foo => foo.Index = 5); | Create a mock with predefined value |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.RecursiveLoose); | Create a mock with specific behavior |
 
 ## Mock behavior
 You can control what the [behavior](./basic-usage/mock-behaviors/mock-behaviors) of a mock will be when its members are accessed.
 
 | Code          | Description   |
 | ------------- | ------------- |
-| IFoo mock = Mock.Create<IFoo>();| **Recursive Loose** (**default**) – returns default value for value type members and empty, non-null stubs for reference type (including strings) and collection members.|
-| IFoo mock = Mock.Create<IFoo>(Behavior.RecursiveLoose); |  |
-| IFoo mock = Mock.Create<IFoo>(Behavior.Loose); | **Loose** – returns default value for value type members, null for reference type members and empty non-null stubs for collection member.|
-| IFoo mock = Mock.Create<IFoo>(Behavior.Strict); | **Strict** – behaves according to explicit arrangements, throws if there is no existing arrangement to the corresponding call. |
-| IFoo mock = Mock.Create<IFoo>(Behavior.CallOriginal); | **Call original** – behaves like original implementation except explicit arrangements.|
+| IFoo mock = Mock.Create&lt;IFoo&gt;();| **Recursive Loose** (**default**) – returns default value for value type members and empty, non-null stubs for reference type (including strings) and collection members.|
+| IFoo mock = Mock.Create &lt;IFoo&gt;(Behavior.RecursiveLoose); |  |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.Loose); | **Loose** – returns default value for value type members, null for reference type members and empty non-null stubs for collection member.|
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.Strict); | **Strict** – behaves according to explicit arrangements, throws if there is no existing arrangement to the corresponding call. |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.CallOriginal); | **Call original** – behaves like original implementation except explicit arrangements.|
 
 ## Arrangements
 Those are some of the most common arrangements.
@@ -132,8 +132,8 @@ The argument matchers are particularly useful when you want to match a broader r
 | Mock.Arrange(() => mock.Echo(Arg.AnyInt)); | Anything |
 | Mock.Arrange(() => mock.Echo(Arg.IsInRange(1, 5, RangeKind.Inclusive))); | In Range |
 | Mock.Arrange(() => mock.Echo(Arg.Matches(x => x < 10))); | Predicate |
-| Mock.Arrange(() => mock.ProcessRequest(ref Arg.Ref<string>("MoveUp").Value)); | Ref parameter |
-| Mock.Arrange(() => mock.TryGetCount(out Arg.Ref<int>(9).Value)); | Out parameter |
+| Mock.Arrange(() => mock.ProcessRequest(ref Arg.Ref&lt;string&gt;("MoveUp").Value)); | Ref parameter |
+| Mock.Arrange(() =&gt; mock.TryGetCount(out Arg.Ref&lt;int&gt;(9).Value)); | Out parameter |
 | Mock.Arrange(() => mock.Echo(0)).IgnoreArguments(); | Ignore all arguments |
 
 ## Occurrence
@@ -170,8 +170,8 @@ There is another approach to assert that a certain method was executed when you 
 | Mock.Assert(() => mock.Echo(Arg.AnyInt)); | Anything |
 | Mock.Assert(() => mock.Echo(Arg.IsInRange(1, 5, RangeKind.Inclusive)));| In range |
 | Mock.Assert(() => mock.Echo(Arg.Matches(x => x < 10))); | Predicate |
-| Mock.Assert(() => mock.Echo(ref Arg.Ref<string>("MoveUp").Value)); | Ref parameter |
-| Mock.Assert(() => mock.TryGetCount(out Arg.Ref<int>(9).Value)); |  Out parameter |
+| Mock.Assert(() => mock.Echo(ref Arg.Ref&lt;string&gt;("MoveUp").Value)); | Ref parameter |
+| Mock.Assert(() => mock.TryGetCount(out Arg.Ref&lt;int&gt;(9).Value)); |  Out parameter |
 
 ## Future mocking
 [Future mocking](./advanced-usage/future-mocking) allows you to mock members without passing the dependency through a constructor or calling a method.

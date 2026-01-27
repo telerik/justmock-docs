@@ -25,7 +25,7 @@ According to *Single Responsibility*, if a class has too many dependencies it sh
 
 The JustMock __MockingContainer__ uses the *Ninject* dependency injector to do the heavy lifting. However, as the __MockingContainer__ holds all of the Ninjects functionalities it also expands them in a way to fit well inside TelerikJustMock. The final result is a mocking tool that uses the *Ninject* dependency injector for resolving dependences for a given class. As said, users will remain completely unaware of the underlying *IOC container* and there will be no reference of *Ninject* in their code whatsoever.
 
-As *MockingContainer<T>* derives from *Ninject.StandardKernel*, you can configure it just as you would configure the Ninject dependency injector. Visit the [Ninject official page](https://www.ninject.org/) or the [Ninject wiki](https://github.com/ninject/ninject/wiki) in GitHub for further references.
+As *MockingContainer&lt;T&gt;* derives from *Ninject.StandardKernel*, you can configure it just as you would configure the Ninject dependency injector. Visit the [Ninject official page](https://www.ninject.org/) or the [Ninject wiki](https://github.com/ninject/ninject/wiki) in GitHub for further references.
 
 ## Automocking Interfaces
 
