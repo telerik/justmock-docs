@@ -20,7 +20,7 @@ To reach deeper-level functions, you will need to arrange them first. __Loose__ 
 `Mock.Create<T>(Behavior.Loose);`
 
 ## Examples
-To see the difference between `RecursiveLoose` and `Loose` `Behavior`, check [this example](recursiveloose#the-difference-between-recursiveloose-and-loose-mocks).
+To see the difference between `RecursiveLoose` and `Loose` `Behavior`, check [this example](../recursiveloose#the-difference-between-recursiveloose-and-loose-mocks).
 
 # See Also
 
