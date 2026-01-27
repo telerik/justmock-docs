@@ -35,7 +35,7 @@ public interface IBaz
     string Do(string command);
 }
 ```
- ```VB 
+```VB 
 Public Interface IFoo
     Property Bar() As IBar
     Function [Do](command As String) As String
@@ -101,8 +101,7 @@ End Sub
 
 Note: If `foo.Bar` is not arranged, it will still be instantiated. **Example 2** shows how you can verify that.
 
-#### Example 2: Verifying object instantiation__
-
+#### Example 2: Verifying object instantiation
 ```C#
 [TestMethod]
 public void ShouldNotInstantiateFooBar()
@@ -130,7 +129,7 @@ End Sub
 
 This section shows how to arrange the getter and setter of a nested property. All you need to do is to specify the property as you would do in real cases. JustMock will automatically setup all the requirements for the member like, for example, instantiating other objects in the chain.
 
-#### Example 3: Arrange the getter of a nested property__
+#### Example 3: Arrange the getter of a nested property
 ```C#
 [TestMethod]
 public void ShouldAssertNestedPropertyGet()

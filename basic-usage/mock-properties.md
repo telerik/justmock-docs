@@ -125,7 +125,7 @@ For asserting a property set in case of __[loose mocking]({%slug justmock/basic-
 Accordingly, we can do:
 
 #### Example 3: Mock setter when mocking behavior is Loose
-```C
+```C#
 [TestMethod]
 public void ShouldAssertPropertySet()
 {
