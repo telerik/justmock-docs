@@ -7,6 +7,6 @@ apiRules:
 - exclude:
     uidRegex: ^Telerik\.JustMock\.AutoMock\.Ninject\..*$
 - exclude:
-    uidRegex: ^Telerik\.JustMock\.Plugins$
+    uidRegex: ^Telerik\.JustMock\.Plugins\..$
 - exclude:
     uidRegex: ^Telerik\.JustMock\.Core\.Castle\..*$
