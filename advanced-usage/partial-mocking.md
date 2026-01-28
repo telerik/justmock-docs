@@ -46,7 +46,7 @@ End Class
 
 > **Important**
 >
-> To use partial mocking you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
+> To use partial mocking you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](../advanced-usage#how-to-enable-disable-telerik-justmock) topic.
 
 ## Partially Mock Instance Calls
 

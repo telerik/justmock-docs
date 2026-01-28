@@ -111,7 +111,7 @@ End Class
 
 > **Important**
 >
-> To use static mocking you first need to go to elevated mode by enabling JustMock from the menu. [How to Enable/Disable ]({%slug justmock/advanced-usage%}#EnableDisableJustMock)
+> To use static mocking you first need to go to elevated mode by enabling JustMock from the menu. [How to Enable/Disable ]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock)
 
 ## Static Constructor Mocking
 
