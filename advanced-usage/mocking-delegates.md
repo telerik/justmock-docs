@@ -90,7 +90,7 @@ End Sub
 
 The test from **Example 1** asserts that, during the execution of the test method, `Func<int, int>` is called at least once no matter the integer argument.
 
->note You can also verify the order and the number of invocations. For more details about that functionality, check the [Asserting Occurrence](../basic-usage/asserting-occurrence) topic.
+>note You can also verify the order and the number of invocations. For more details about that functionality, check the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic.
 
 ## Arranging Return Expectation
 

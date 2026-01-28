@@ -167,7 +167,7 @@ End Class
 
 > **Important**
 >
-> To mock non-public members and types, you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
+> To mock non-public members and types, you first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](../advanced-usage#how-to-enabledisable-telerik-justmock) topic.
 
 ## Step by Step Description
 
