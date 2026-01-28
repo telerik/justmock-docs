@@ -26,7 +26,7 @@ You can control what the [behavior](../basic-usage/mock-behaviors/mock-behaviors
 | Code          | Description   |
 | ------------- | ------------- |
 | IFoo mock = Mock.Create&lt;IFoo&gt;();| **Recursive Loose** (**default**) – returns default value for value type members and empty, non-null stubs for reference type (including strings) and collection members.|
-| IFoo mock = Mock.Create &lt;IFoo&gt;(Behavior.RecursiveLoose); |  |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.RecursiveLoose); |  |
 | IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.Loose); | **Loose** – returns default value for value type members, null for reference type members and empty non-null stubs for collection member.|
 | IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.Strict); | **Strict** – behaves according to explicit arrangements, throws if there is no existing arrangement to the corresponding call. |
 | IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.CallOriginal); | **Call original** – behaves like original implementation except explicit arrangements.|
