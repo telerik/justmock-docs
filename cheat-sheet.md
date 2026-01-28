@@ -111,13 +111,13 @@ Those are some of the most common arrangements.
     </tr>
     <tr>
         <td>
-            Mock.Arrange(() => mock.Echo(-1)).Throws<ArgumentException>(); 
+            Mock.Arrange(() => mock.Echo(-1)).Throws&lt;ArgumentException&gt;(); 
         </td>
         <td>Throws exception of type ArgumentException.</td>
     </tr>
     <tr>
         <td>
-            Mock.Arrange(() => mock.Echo(-1)).ThrowsAsync<ArgumentException>(); 
+            Mock.Arrange(() => mock.Echo(-1)).ThrowsAsync&lt;ArgumentException&gt;(); 
         </td>
         <td>Throws exception of type ArgumentException for an async method.</td>
     </tr>
@@ -238,13 +238,13 @@ There is another approach to assert that a certain method was executed when you 
     </tr>
     <tr>
         <td>
-            Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", Arg.Expr.IsAny<int>()).Returns(42);
+            Mock.NonPublic.Arrange&lt;int&gt;(foo, "PrivateEcho", Arg.Expr.IsAny&lt;int&gt;()).Returns(42);
         </td>
         <td>Arrange a private method to return a predefined value.</td>
     </tr>
     <tr>
         <td>
-            Mock.NonPublic.Arrange<int>(typeof(Foo), "PrivateStaticProperty").Returns(42);
+            Mock.NonPublic.Arrange&lt;int&gt;(typeof(Foo), "PrivateStaticProperty").Returns(42);
         </td>
         <td>Arrange a private static method to return a predefined value.</td>
     </tr>
