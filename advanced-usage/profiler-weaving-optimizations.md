@@ -23,7 +23,7 @@ There are two possible ways to enable waving filter:
 
 ## File Format
 
-Supported format is JSON. When the file cannot be parsed, failures are logged (see [Profiler Log And Trace](../advanced-usage/profiler-log-and-trace) article), and the configuration is rejected.
+Supported format is JSON. When the file cannot be parsed, failures are logged (see [Profiler Log And Trace]({%slug justmock/advanced-usage/profiler-log-and-trace%}) article), and the configuration is rejected.
 
 ### Structure
 

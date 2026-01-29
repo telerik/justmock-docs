@@ -75,7 +75,7 @@ End Class
 
 > **Important**
 >
-> To use this kind of object mocking, you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](../advanced-usage#how-to-enable-disable-telerik-justmock) topic.
+> To use this kind of object mocking, you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock) topic.
 
 
 

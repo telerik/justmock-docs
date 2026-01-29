@@ -153,7 +153,7 @@ End Class
 
 > **Important**
 >
-> You first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](../advanced-usage#how-to-enable-disable-telerik-justmock) topic.
+> You first need to go to elevated mode by enabling JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock) topic.
 
 ### Mocking Static Property
 

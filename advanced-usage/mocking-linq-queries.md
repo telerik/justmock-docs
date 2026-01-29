@@ -106,7 +106,7 @@ private List<Category> GetCategoriesLists()
 
 > **Important**
 >
-> To mock LINQ queries you first need to go to elevated mode by enabling TelerikJustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](../advanced-usage#how-to-enable-disable-telerik-justmock) topic.
+> To mock LINQ queries you first need to go to elevated mode by enabling TelerikJustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock) topic.
 
 ## Asserting Custom Select Query
 

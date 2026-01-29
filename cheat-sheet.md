@@ -21,7 +21,7 @@ This cheat sheet is created to help you navigate faster around the JustMock API 
 | IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.RecursiveLoose); | Create a mock with specific behavior |
 
 ## Mock behavior
-You can control what the [behavior](../basic-usage/mock-behaviors/mock-behaviors) of a mock will be when its members are accessed.
+You can control what the [behavior]({%slug justmock/basic-usage/mock-behaviors%}) of a mock will be when its members are accessed.
 
 | Code          | Description   |
 | ------------- | ------------- |
@@ -174,7 +174,7 @@ There is another approach to assert that a certain method was executed when you 
 | Mock.Assert(() => mock.TryGetCount(out Arg.Ref&lt;int&gt;(9).Value)); |  Out parameter |
 
 ## Future mocking
-[Future mocking](../advanced-usage/future-mocking) allows you to mock members without passing the dependency through a constructor or calling a method.
+[Future mocking]({%slug justmock/advanced-usage/future-mocking%}) allows you to mock members without passing the dependency through a constructor or calling a method.
 
 <table>
     <tr>
@@ -205,14 +205,14 @@ There is another approach to assert that a certain method was executed when you 
 </table>
 
 ## Mocking extension method
-[Mocking of an extension method](../advanced-usage/extension-methods-mocking) is the same as mocking normal method.
+[Mocking of an extension method]({%slug justmock/advanced-usage/extension-methods-mocking%}) is the same as mocking normal method.
 
 | Code          | Description   |
 | ------------- | ------------- |
 | Mock.Arrange(() => foo.ExtensionMethod).Returns(42)| Arrange an extension method to return a predefined value. |
 
 ## Static mocking
-[Static mocking](../advanced-usage/static-mocking) allows you to mock static constructors, methods and properties calls, set expectations and verify results.
+[Static mocking]({%slug justmock/advanced-usage/static-mocking%}) allows you to mock static constructors, methods and properties calls, set expectations and verify results.
 
 <table>
     <tr>
@@ -229,7 +229,7 @@ There is another approach to assert that a certain method was executed when you 
 </table>
 
 ## Mocking non-public members
-[Mocking non-public members](../advanced-usage/mocking-non-public-members-and-types) is useful when you want to isolate calls to non-public members.
+[Mocking non-public members]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%}) is useful when you want to isolate calls to non-public members.
 
 <table>
     <tr>
