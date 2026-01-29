@@ -19,7 +19,7 @@ The mocking framework strongly relies on some system types, while others are int
  - System.Reflection.PropertyInfo
  - System.Reflection.EventInfo
  - System.WeakReference
- - System.WeakReference<T>
+ - System.WeakReference&lt;T&gt;
  - System.IntPtr
  - System.Runtime.CompilerServices.CastHelpers
  - System.CannotUnloadAppDomainException

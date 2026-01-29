@@ -75,7 +75,7 @@ End Class
 
 > **Important**
 >
-> To use this kind of object mocking, you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock](./advanced-usage#how-to-enabledisable-telerik-justmock) topic.
+> To use this kind of object mocking, you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock) topic.
 
 
 
@@ -118,7 +118,7 @@ End Sub
 
 **Example 2** defines that setting the final `customerMock.Name` property to any string value other than *"TestName"* will cause an exception of type `StrictMockException` to be thrown.
 
->note If you would like to learn more about mocking properties, check the [Mock Properties](../basic-usage/mock-properties) help topic.
+>note If you would like to learn more about mocking properties, check the [Mock Properties]({%slug justmock/basic-usage/mock-properties%}) help topic.
 
 #### Example 2: Mock concrete implementation of property setter
 ```C#
@@ -188,7 +188,7 @@ Public Sub ShouldCallOriginalForNonVirtualExactlyOnce()
 End Sub
 ```
 
->note Generic methods and classes can also be mocked. Check the [Generics](../basic-usage/generics) topic for more details on that functionality.
+>note Generic methods and classes can also be mocked. Check the [Generics]({%slug justmock/basic-usage/generics%}) topic for more details on that functionality.
 
 ## Arrange Method Overloads
 
@@ -269,7 +269,7 @@ Public Sub ShouldAssertOnMethodCallbacks()
 End Sub
 ```
 
->note More information on raising mocked events is available in the [Basic Usage | Raise](../basic-usage/mock/raise) topic. 
+>note More information on raising mocked events is available in the [Basic Usage | Raise]({%slug justmock/basic-usage/mock/raise%}) topic. 
 
 ## See Also
 

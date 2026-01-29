@@ -15,21 +15,21 @@ This cheat sheet is created to help you navigate faster around the JustMock API 
 
 | Code          | Description   |
 | ------------- | ------------- |
-| IFoo mock = Mock.Create<IFoo>();| Create a mock with default constructor |
-| IFoo mock = Mock.Create<Foo>(Constructor.NotMocked); | Create a mock without mocking the constructor |
-| IFoo mock = Mock.Create<IFoo>(foo => foo.Index = 5); | Create a mock with predefined value |
-| IFoo mock = Mock.Create<IFoo>(Behavior.RecursiveLoose); | Create a mock with specific behavior |
+| IFoo mock = Mock.Create&lt;IFoo&gt;();| Create a mock with default constructor |
+| IFoo mock = Mock.Create&lt;Foo&gt;(Constructor.NotMocked); | Create a mock without mocking the constructor |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(foo => foo.Index = 5); | Create a mock with predefined value |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.RecursiveLoose); | Create a mock with specific behavior |
 
 ## Mock behavior
-You can control what the [behavior](./basic-usage/mock-behaviors/mock-behaviors) of a mock will be when its members are accessed.
+You can control what the [behavior]({%slug justmock/basic-usage/mock-behaviors%}) of a mock will be when its members are accessed.
 
 | Code          | Description   |
 | ------------- | ------------- |
-| IFoo mock = Mock.Create<IFoo>();| **Recursive Loose** (**default**) – returns default value for value type members and empty, non-null stubs for reference type (including strings) and collection members.|
-| IFoo mock = Mock.Create<IFoo>(Behavior.RecursiveLoose); |  |
-| IFoo mock = Mock.Create<IFoo>(Behavior.Loose); | **Loose** – returns default value for value type members, null for reference type members and empty non-null stubs for collection member.|
-| IFoo mock = Mock.Create<IFoo>(Behavior.Strict); | **Strict** – behaves according to explicit arrangements, throws if there is no existing arrangement to the corresponding call. |
-| IFoo mock = Mock.Create<IFoo>(Behavior.CallOriginal); | **Call original** – behaves like original implementation except explicit arrangements.|
+| IFoo mock = Mock.Create&lt;IFoo&gt;();| **Recursive Loose** (**default**) – returns default value for value type members and empty, non-null stubs for reference type (including strings) and collection members.|
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.RecursiveLoose); |  |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.Loose); | **Loose** – returns default value for value type members, null for reference type members and empty non-null stubs for collection member.|
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.Strict); | **Strict** – behaves according to explicit arrangements, throws if there is no existing arrangement to the corresponding call. |
+| IFoo mock = Mock.Create&lt;IFoo&gt;(Behavior.CallOriginal); | **Call original** – behaves like original implementation except explicit arrangements.|
 
 ## Arrangements
 Those are some of the most common arrangements.
@@ -111,13 +111,13 @@ Those are some of the most common arrangements.
     </tr>
     <tr>
         <td>
-            Mock.Arrange(() => mock.Echo(-1)).Throws<ArgumentException>(); 
+            Mock.Arrange(() => mock.Echo(-1)).Throws&lt;ArgumentException&gt;(); 
         </td>
         <td>Throws exception of type ArgumentException.</td>
     </tr>
     <tr>
         <td>
-            Mock.Arrange(() => mock.Echo(-1)).ThrowsAsync<ArgumentException>(); 
+            Mock.Arrange(() => mock.Echo(-1)).ThrowsAsync&lt;ArgumentException&gt;(); 
         </td>
         <td>Throws exception of type ArgumentException for an async method.</td>
     </tr>
@@ -132,8 +132,8 @@ The argument matchers are particularly useful when you want to match a broader r
 | Mock.Arrange(() => mock.Echo(Arg.AnyInt)); | Anything |
 | Mock.Arrange(() => mock.Echo(Arg.IsInRange(1, 5, RangeKind.Inclusive))); | In Range |
 | Mock.Arrange(() => mock.Echo(Arg.Matches(x => x < 10))); | Predicate |
-| Mock.Arrange(() => mock.ProcessRequest(ref Arg.Ref<string>("MoveUp").Value)); | Ref parameter |
-| Mock.Arrange(() => mock.TryGetCount(out Arg.Ref<int>(9).Value)); | Out parameter |
+| Mock.Arrange(() => mock.ProcessRequest(ref Arg.Ref&lt;string&gt;("MoveUp").Value)); | Ref parameter |
+| Mock.Arrange(() =&gt; mock.TryGetCount(out Arg.Ref&lt;int&gt;(9).Value)); | Out parameter |
 | Mock.Arrange(() => mock.Echo(0)).IgnoreArguments(); | Ignore all arguments |
 
 ## Occurrence
@@ -170,11 +170,11 @@ There is another approach to assert that a certain method was executed when you 
 | Mock.Assert(() => mock.Echo(Arg.AnyInt)); | Anything |
 | Mock.Assert(() => mock.Echo(Arg.IsInRange(1, 5, RangeKind.Inclusive)));| In range |
 | Mock.Assert(() => mock.Echo(Arg.Matches(x => x < 10))); | Predicate |
-| Mock.Assert(() => mock.Echo(ref Arg.Ref<string>("MoveUp").Value)); | Ref parameter |
-| Mock.Assert(() => mock.TryGetCount(out Arg.Ref<int>(9).Value)); |  Out parameter |
+| Mock.Assert(() => mock.Echo(ref Arg.Ref&lt;string&gt;("MoveUp").Value)); | Ref parameter |
+| Mock.Assert(() => mock.TryGetCount(out Arg.Ref&lt;int&gt;(9).Value)); |  Out parameter |
 
 ## Future mocking
-[Future mocking](./advanced-usage/future-mocking) allows you to mock members without passing the dependency through a constructor or calling a method.
+[Future mocking]({%slug justmock/advanced-usage/future-mocking%}) allows you to mock members without passing the dependency through a constructor or calling a method.
 
 <table>
     <tr>
@@ -205,14 +205,14 @@ There is another approach to assert that a certain method was executed when you 
 </table>
 
 ## Mocking extension method
-[Mocking of an extension method](./advanced-usage/extension-methods-mocking) is the same as mocking normal method.
+[Mocking of an extension method]({%slug justmock/advanced-usage/extension-methods-mocking%}) is the same as mocking normal method.
 
 | Code          | Description   |
 | ------------- | ------------- |
 | Mock.Arrange(() => foo.ExtensionMethod).Returns(42)| Arrange an extension method to return a predefined value. |
 
 ## Static mocking
-[Static mocking](./advanced-usage/static-mocking) allows you to mock static constructors, methods and properties calls, set expectations and verify results.
+[Static mocking]({%slug justmock/advanced-usage/static-mocking%}) allows you to mock static constructors, methods and properties calls, set expectations and verify results.
 
 <table>
     <tr>
@@ -229,7 +229,7 @@ There is another approach to assert that a certain method was executed when you 
 </table>
 
 ## Mocking non-public members
-[Mocking non-public members](./advanced-usage/mocking-non-public-members-and-types) is useful when you want to isolate calls to non-public members.
+[Mocking non-public members]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%}) is useful when you want to isolate calls to non-public members.
 
 <table>
     <tr>
@@ -238,13 +238,13 @@ There is another approach to assert that a certain method was executed when you 
     </tr>
     <tr>
         <td>
-            Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", Arg.Expr.IsAny<int>()).Returns(42);
+            Mock.NonPublic.Arrange&lt;int&gt;(foo, "PrivateEcho", Arg.Expr.IsAny&lt;int&gt;()).Returns(42);
         </td>
         <td>Arrange a private method to return a predefined value.</td>
     </tr>
     <tr>
         <td>
-            Mock.NonPublic.Arrange<int>(typeof(Foo), "PrivateStaticProperty").Returns(42);
+            Mock.NonPublic.Arrange&lt;int&gt;(typeof(Foo), "PrivateStaticProperty").Returns(42);
         </td>
         <td>Arrange a private static method to return a predefined value.</td>
     </tr>

@@ -10,3 +10,5 @@ apiRules:
     uidRegex: ^Telerik\.JustMock\.Plugins(\..*)?$
 - exclude:
     uidRegex: ^Telerik\.JustMock\.Core\.Castle\..*$
+- exclude:
+    uidRegex: ^Telerik\.JustMock\.AutoMock\.NinjectMockSyntaxExtensions(\..*)?$

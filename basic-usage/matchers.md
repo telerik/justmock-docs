@@ -11,7 +11,7 @@ position: 8
 
 # Matchers
 
-Matchers let you ignore passing actual values as arguments used in mocks. Instead, they give you the possibility to pass just an expression that satisfies the argument type or the expected value range. For example, if a method accepts a string as a first parameter, you don’t need to pass a specific string like "Camera". Instead, you can use __Arg.IsAny<string>()__. 
+Matchers let you ignore passing actual values as arguments used in mocks. Instead, they give you the possibility to pass just an expression that satisfies the argument type or the expected value range. For example, if a method accepts a string as a first parameter, you don’t need to pass a specific string like "Camera". Instead, you can use __Arg.IsAny&lt;string&gt;()__. 
 
 There are several types of matchers supported in TelerikJustMock:
 
@@ -53,7 +53,7 @@ Public Interface IPaymentService
 End Interface
 ```
 
-## Arg.IsAny<T>();
+## Arg.IsAny&lt;T&gt;();
 We've already used this matcher in one of our examples earlier.
 
 ```C#

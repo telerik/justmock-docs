@@ -5,7 +5,7 @@ description: NAnt integration with Telerik JustMock
 slug: justmock/integration/nant
 tags: nant
 published: True
-include_in_navigation: false
+hidden: true
 position: 8
 previous_url: /integration-nant.html, /integration-nant
 ---
