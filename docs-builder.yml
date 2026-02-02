@@ -1,5 +1,5 @@
-top-navigation-product: "just-mock"
-path-prefix: /products/just-mock/documentation
+top-navigation-product: "justmock"
+path-prefix: /products/justmock/documentation
 default-title-prefix: JustMock
 
 primary-color: 
