@@ -35,7 +35,7 @@ dotnet add package Telerik.JustMock.Commercial --source "https://nuget.telerik.c
 
 ## 2. Elevated Mocking Options Explained
 
-### **Option A: Environment Variables**
+## **Option A: Environment Variables**
 - **For legacy .NET Framework**: Use `COR_*` variables.
 - **For .NET Core**: Use `CORECLR_*` variables.
 - **Set `JUSTMOCK_INSTANCE=1`** to enable elevated mocking.
@@ -52,7 +52,7 @@ More details:
 
 **[Setting Up the Profiler Path]({%slug justmock/integration/general%}#setting-up-the-profiler-path)**
 
-### **Option B: `.runsettings`**
+## **Option B: `.runsettings`**
 A sample `.runsettings` that injects the required environment variables into the test host:
 
 ```xml
@@ -73,7 +73,7 @@ Run:
 dotnet test --settings justmock.runsettings
 ```
 
-### **Option C: `justmock-console` Tool**
+## **Option C: `justmock-console` Tool**
 Install [JustMock Console]({%slug justmock/integration/justmock-console/general%}):
 
 ```bash

@@ -34,7 +34,7 @@ dotnet add package Telerik.JustMock.Commercial --source "https://nuget.telerik.c
 
 ## 2. Elevated Mocking Options Explained
 
-#### **Option A: Setting Environment Variables**
+## **Option A: Setting Environment Variables**
 To enable elevated mocking, JustMock requires several environment variables. These variables control when the profiler is loaded and where its native library is located.
 The set of variables differs slightly between .NET Framework and .NET Core, but the underlying concept is the same on all platforms.
 
@@ -55,7 +55,7 @@ More details:
 
 **[Setting Up the Profiler Path]({%slug justmock/integration/general%}#setting-up-the-profiler-path)**
 
-#### **Option B: Using `.runsettings` File**
+## **Option B: Using `.runsettings` File**
 
 Create a `.runsettings` file in your repository:
 
@@ -79,7 +79,7 @@ dotnet test --settings justmock.runsettings
 ```
 
 
-#### **Option C: `justmock-console` Tool**
+## **Option C: `justmock-console` Tool**
 
 Install the [JustMock Console]({%slug justmock/integration/justmock-console/general%}) as a .NET tool:
 
