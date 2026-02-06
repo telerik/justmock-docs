@@ -9,7 +9,7 @@ position: 5
 previous_url: /scenarios/running-justmock-profiler-outside-visual-studio, /scenarios/running-justmock-profiler-outside-visual-studio.html, /integration-windows-batch-command.html, /integration-windows-batch-command
 ---
 
-# Command Line Integration (Cross‑Platform)
+# Command Line (Cross‑Platform)
 
 This article explains how to execute **Telerik JustMock** tests using the **.NET CLI ([dotnet](https://learn.microsoft.com/en-us/dotnet/core/tools/))**, including running elevated mocking scenarios in Windows, Linux, or macOS terminals. Even without installing JustMock on the machine, you can run elevated tests by configuring the required profiler environment variables.
 
@@ -59,7 +59,7 @@ $env:CORECLR_ENABLE_PROFILING = "1"
 $env:CORECLR_PROFILER = "{B7ABE522-A68F-44F2-925B-81E7488E9EC0}"
 $env:CORECLR_PROFILER_PATH = "C:\path\to\Telerik.CodeWeaver.Profiler.dll"
 
-dotnet test --logger trx --no-build --filter "FullyQualifiedName~MyNamespace.MyTestClass"
+dotnet test --logger trx --no-build
 ```
 
 ### Windows (cmd.exe)
@@ -70,7 +70,7 @@ set CORECLR_ENABLE_PROFILING=1
 set CORECLR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}
 set CORECLR_PROFILER_PATH=C:\path\to\Telerik.CodeWeaver.Profiler.dll
 
-dotnet test --logger trx --no-build --filter "FullyQualifiedName~MyNamespace.MyTestClass"
+dotnet test --logger trx --no-build
 ```
 
 ### Linux/macOS
@@ -81,12 +81,12 @@ export CORECLR_ENABLE_PROFILING=1
 export CORECLR_PROFILER="{B7ABE522-A68F-44F2-925B-81E7488E9EC0}"
 export CORECLR_PROFILER_PATH="/path/to/libTelerik.CodeWeaver.Profiler.so"
 
-dotnet test --logger trx --no-build --filter "FullyQualifiedName~MyNamespace.MyTestClass"
+dotnet test --logger trx --no-build
 ```
 
 ## Option B: Using a `.runsettings` File
 
-A `.runsettings` file allows embedding the required environment variables so that local and CI test runs behave consistently.
+A `.runsettings` file allows embedding the required environment variables so that local and CI test runs behave consistently. If you don't already have a `.runsettings` file, you need to create one or update your existing file to include the following section with the same environment variables used in Option A.
 
 ```xml
 <RunSettings>
