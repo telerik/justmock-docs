@@ -10,7 +10,7 @@ position: 0
 
 # GitHub Actions Integration
 
-This guide demonstrates how to integrate Telerik JustMock into your GitHub Actions workflows, enabling advanced mocking features in your automated test runs.
+This guide demonstrates how to integrate __Telerik JustMock__ into your __GitHub Actions__ workflows, enabling advanced mocking features in your automated test runs.
 
 ## Supported Continuous Integration Environment
 
@@ -57,7 +57,7 @@ More details:
 
 #### **Option B: Using `.runsettings` File**
 
-Create a `justmock.runsettings` file in your repository:
+Create a `.runsettings` file in your repository:
 
 ```xml
 <RunSettings>
@@ -88,6 +88,7 @@ dotnet tool install --global Telerik.JustMock.Console
 ```
 
 Run tests with elevated mocking:
+
 ```bash
 justmock-console runadvanced --profiler-path "/path/to/libTelerik.CodeWeaver.Profiler.so" --command "dotnet" --command-args "test --logger trx"
 ```
@@ -148,7 +149,10 @@ jobs:
 
 ## See Also
 
-* [Azure DevOps Pipelines](azure-devops.md)
-* [GitLab CI/CD](justmock_gitlab_guide.md)
+* [Azure DevOps Pipelines]({%slug justmock/integration/azure-devops%})
+  
+* [GitLab CI/CD]({%slug justmock/integration/gitlab%})
+  
 * [Jenkins CI]({%slug justmock/integration/jenkins-ci%})
+  
 * [TeamCity]({%slug justmock/integration/teamcity%})

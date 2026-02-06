@@ -10,7 +10,7 @@ position: 1
 
 # GitLab CI/CD Pipelines
 
-The following guide demonstrates how to integrate Telerik JustMock into your GitLab CI/CD pipelines, enabling advanced mocking features in your automated test runs.
+The following guide demonstrates how to integrate __Telerik JustMock__ into your __GitLab CI/CD pipelines__, enabling advanced mocking features in your automated test runs.
 
 ## Supported Continuous Integration Environment
 
@@ -45,7 +45,7 @@ dotnet add package Telerik.JustMock.Commercial --source "https://nuget.telerik.c
 export JUSTMOCK_INSTANCE=1
 export CORECLR_ENABLE_PROFILING=1
 export CORECLR_PROFILER="{B7ABE522-A68F-44F2-925B-81E7488E9EC0}"
-export CORECLR_PROFILER_PATH=" ${{ github.workspace }}/path/to/Telerik.CodeWeaver.Profiler"
+export CORECLR_PROFILER_PATH="${{ github.workspace }}/path/to/Telerik.CodeWeaver.Profiler"
 ```
 
 More details:
@@ -166,8 +166,10 @@ justmock_tests_linux:
 
 ## See Also
 
-* [Azure DevOps Pipelines](azure-devops.md)
+* [Azure DevOps Pipelines]({%slug justmock/integration/azure-devops%})
+  
 * [Jenkins CI]({%slug justmock/integration/jenkins-ci%})
+  
 * [TeamCity]({%slug justmock/integration/teamcity%})
 
 
