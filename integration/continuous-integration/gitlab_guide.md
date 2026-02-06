@@ -172,4 +172,4 @@ justmock_tests_linux:
   
 * [TeamCity]({%slug justmock/integration/teamcity%})
 
-
+* [GitHub Actions]({%slug justmock/integration/github%})

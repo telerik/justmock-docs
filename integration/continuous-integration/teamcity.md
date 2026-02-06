@@ -86,14 +86,12 @@ If you want to apply code coverage inside MSTest/NUnit build step, you will need
 
 ## See Also
 
- * [TFS 2010]({%slug justmock/integration/tfs-2010%})
-
  * [CodeCoverage Tools]({%slug justmock/integration/codecoverage-tools%})
-
- * [Cruise Control .NET]({%slug justmock/integration/cruise-control-.net%})
 
  * [Jenkins CI]({%slug justmock/integration/jenkins-ci%})
 
- * [MSBuild Tasks]({%slug justmock/integration/msbuild-tasks%})
-
  * [Windows Batch Command]({%slug justmock/integration/windows-batch-command%})
+
+ * [GitHub Actions]({%slug justmock/integration/github%})
+  
+ * [GitLab CI/CD]({%slug justmock/integration/gitlab%}) 

@@ -40,11 +40,8 @@ Below you will find steps to follow for running JustMock test DLLs in the Jenkin
 
 ## See Also
 
-
- * [TFS 2010]({%slug justmock/integration/tfs-2010%})
-
- * [Cruise Control .NET]({%slug justmock/integration/cruise-control-.net%})
-
  * [TeamCity]({%slug justmock/integration/teamcity%})
 
  * [Windows Batch Command]({%slug justmock/integration/windows-batch-command%})
+
+* [GitHub Actions]({%slug justmock/integration/github%})
