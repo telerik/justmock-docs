@@ -13,10 +13,6 @@ previous_url: integration-teamcity.html, integration-teamcity
 
 In this article we will show you how to integrate Telerik JustMock with __TeamCity__.
 
-## Integrating JustMock within TeamCity using MS Build Tasks
-
-The first possible way to integrate TelerikJustMock with __TeamCity__ is by using JustMock [MSBuild Tasks]({%slug justmock/integration/msbuild-tasks%}). This could be appropriate if you have predefined XML for your build process to follow.
-
 ## Integrating JustMock within TeamCity using Windows Batch Command
 
 Another approach for integrating TelerikJustMock with __TeamCity__ is provided by the __"Command Line" runner type__ build step in the project build configuration. To see how to execute __JustMock__ test DLLs via the __Command Prompt__, refer to [Windows Batch Command]({%slug justmock/integration/windows-batch-command%}).

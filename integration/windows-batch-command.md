@@ -100,7 +100,7 @@ A `.runsettings` file allows embedding the required environment variables so tha
       <JUSTMOCK_INSTANCE>1</JUSTMOCK_INSTANCE>
       <CORECLR_ENABLE_PROFILING>1</CORECLR_ENABLE_PROFILING>
       <CORECLR_PROFILER>{B7ABE522-A68F-44F2-925B-81E7488E9EC0}</CORECLR_PROFILER>
-      <CORECLR_PROFILER_PATH>C:\path	o\Telerik.CodeWeaver.Profiler.dll</CORECLR_PROFILER_PATH>
+      <CORECLR_PROFILER_PATH>C:\path\to\Telerik.CodeWeaver.Profiler.dll</CORECLR_PROFILER_PATH>
     </EnvironmentVariables>
   </RunConfiguration>
 </RunSettings>

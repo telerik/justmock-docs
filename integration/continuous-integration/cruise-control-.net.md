@@ -87,8 +87,6 @@ Finally you will be able test if everything is working as expected.
 
 ## See Also
 
- * [TFS 2010]({%slug justmock/integration/tfs-2010%})
-
  * [Jenkins CI]({%slug justmock/integration/jenkins-ci%})
 
  * [TeamCity]({%slug justmock/integration/teamcity%})
