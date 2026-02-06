@@ -5,7 +5,7 @@ description: Integrate PostSharp with Telerik JustMock
 previous_url: /integration-postsharp.html
 slug: justmock/integration/postsharp
 tags: postsharp
-published: True
+hidden: True
 position: 6
 ---
 

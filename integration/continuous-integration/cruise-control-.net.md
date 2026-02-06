@@ -4,7 +4,7 @@ page_title: Cruise Control .NET | JustMock Documentation
 description: Integrate Telerik JustMock and Cruise Control .NET
 slug: justmock/integration/cruise-control-.net
 tags: cruise,control,.net
-published: True
+hidden: true
 position: 2
 previous_url: integration-cruisecontrol.net.html, integration-cruisecontrol.net
 ---

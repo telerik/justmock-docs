@@ -38,7 +38,7 @@ meta:
     title: Code Coverage
     position: 4
   integration/continuous-integration/tfs-azure:
-    title: TFS and Azure Pipelines
+    title: Azure Pipelines
     position: 1
   integration/continuous-integration:
     title: Continuous Integration
