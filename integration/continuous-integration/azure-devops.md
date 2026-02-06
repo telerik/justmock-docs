@@ -1,12 +1,12 @@
 ---
 title: Azure Pipelines
 page_title: Azure Pipelines | JustMock Documentation
-description: Integrating Telerik JustMock with Azure DevOps Pipelines, TFS 2018 and TFS 2017
+description: Integrating Telerik JustMock with Azure DevOps Pipelines
 previous_url: azure-devops, azure-devops.html
 slug: justmock/integration/azure-devops
-tags: azure,tfs,2018
+tags: azure
 published: True
-position: 0
+position: 2
 ---
 
 # Azure DevOps Pipelines
@@ -58,8 +58,6 @@ For this scenario you have two possible variants to choose from.
 2. The second variant is to simply install JustMock at the on-premises server without the need of additional configuration.
 
 ## See Also
-
-* [Cruise Control .NET]({%slug justmock/integration/cruise-control-.net%})
 
 * [Jenkins CI]({%slug justmock/integration/jenkins-ci%})
 

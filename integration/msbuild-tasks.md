@@ -4,7 +4,7 @@ page_title: MSBuild Tasks | JustMock Documentation
 description: MSBuild Tasks
 slug: justmock/integration/msbuild-tasks
 tags: msbuild,tasks
-published: True
+hidden: True
 position: 5
 previous_url: /integration-msbuild-tasks.html, /integration-msbuild-tasks
 ---

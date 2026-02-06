@@ -13,10 +13,6 @@ previous_url: integration-jenkins-ci.html, integration-jenkins-ci
 
 In this article we will show you how to integrate __Telerik JustMock__ with __Jenkins-CI__.
 
-## Integrating JustMock within Jenkins CI using MS Build Tasks
-
-The first possible way to integrate TelerikJustMock with the __Jenkins CI__ process is by using JustMock [MSBuild Tasks]({%slug justmock/integration/msbuild-tasks%}). This could be appropriate if you have predefined XML for your build process to follow.
-
 ## Integrating JustMock within Jenkins CI using Windows Batch Command
 
 Another approach for integrating TelerikJustMock with __Jenkins__ is provided by the __Execute Windows batch command__ build step in the __Jenkins__ job configuration. To see how to execute __JustMock__ test DLLs via the __Command Prompt__, refer to [Windows Batch Command]({%slug justmock/integration/windows-batch-command%}).
@@ -40,11 +36,10 @@ Below you will find steps to follow for running JustMock test DLLs in the Jenkin
 
 ## See Also
 
-
- * [TFS 2010]({%slug justmock/integration/tfs-2010%})
-
- * [Cruise Control .NET]({%slug justmock/integration/cruise-control-.net%})
-
  * [TeamCity]({%slug justmock/integration/teamcity%})
 
  * [Windows Batch Command]({%slug justmock/integration/windows-batch-command%})
+
+ * [GitHub Actions]({%slug justmock/integration/github%})
+
+ * [GitLab CI/CD]({%slug justmock/integration/gitlab%})
