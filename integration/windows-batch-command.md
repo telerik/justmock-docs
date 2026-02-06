@@ -29,21 +29,16 @@ Elevated mocking requires enabling and loading the JustMock profiler. This is do
 
 - **Enable elevated mocking**
 
-```.NET
+```sh
 JUSTMOCK_INSTANCE=1
 ```
 
-- **Enable & load profiler (for .NET)**
+- **Enable & load profiler (for .NET CORE)**
 
-```CORE
+```sh
 CORECLR_ENABLE_PROFILING=1
 CORECLR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}
 CORECLR_PROFILER_PATH=<path-to-profiler>
-```
-```FRAMEWORK
-COR_ENABLE_PROFILING=1
-COR_PROFILER={B7ABE522-A68F-44F2-925B-81E7488E9EC0}
-COR_PROFILER_PATH=<path-to-profiler>
 ```
 
 Profiler library names differ per OS:
