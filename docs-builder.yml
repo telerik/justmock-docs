@@ -20,7 +20,7 @@ table-layout: fixed
 enable-tabbed-code-blocks: true
 
 gitLastCommitDateEnabled: true
-#search-provider: google
+search-provider: nuclia
 
 cta-overview: The @Subject component is part of @ProductLink, a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial.
 cta-intro: "@ProductLink is a professional grade mocking library that help you easily craft unit tests even for complex scenarios by isolating dependencies. To try it out sign up for a free 30-day trial."
