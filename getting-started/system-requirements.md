@@ -36,7 +36,7 @@ The list below shows the operating systems supported by Telerik JustMock:
 
 | IDE | Version |
 | --- | ------- |
-| Visual Studio | 2019, 2022 |
+| Visual Studio | 2022, 2026 |
 
 ## Next Steps
 
