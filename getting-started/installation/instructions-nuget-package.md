@@ -15,7 +15,7 @@ This topic outlines the steps required to install [Telerik JustMock](https://www
 
 ## Generate an API Key
 
-As the Telerik NuGet server requires authentication, the first step is to obtain an API key that you will use instead of a password. Using an API key instead of a password is a more secure approach, especially when working with `.NET CLI` or the `NuGet.Config` file.
+As the Telerik NuGet server requires authentication, the first step is to obtain an API key that you will use instead of a password. Using an API key instead of a password is a more secure approach, as it eliminates the need to share or store your actual password, especially when working with `.NET CLI` or the `NuGet.Config` file.
 
 1. Go to the [API Keys](https://www.telerik.com/account/downloads/api-keys) page in your Telerik account.
 2. Click **Generate New Key +**.
@@ -25,7 +25,7 @@ As the Telerik NuGet server requires authentication, the first step is to obtain
 3. In the **Key Note** field, add a note that describes the API key.
 4. Click **Generate Key**.
 5. Select **Copy and Close**. Once you close the window, you can no longer copy the generated key. For security reasons, the **API Keys** page displays only a portion of the key.
-6. Store the generated NuGet API key as you will need it in the next steps. Whenever you need to authenticate your system with the Telerik NuGet server, use `api-key` as the username and your generated API key as the password.
+6. Store the generated NuGet API key as you will need it later. Whenever you need to authenticate your system with the Telerik NuGet server, use `api-key` as the username and your generated API key as the password.
 
 > API keys expire after two years. Telerik will send you an email when a key is about to expire, but we recommend that you set your own calendar reminder with information about where you used that key: file paths, project links, AzDO and GitHub Action variable names, and so on.
 
@@ -69,8 +69,6 @@ Once you have configured Visual Studio to access the Telerik NuGet server, add t
 dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik.com" --username "api-key" --password <TELERIK_NUGET_API_KEY>
 dotnet add package JustMock.Commercial --version 2024.4.1203.350
 ```
-
-> To learn more about using the Telerik NuGet feed with NuGet API keys, check this [article](https://docs.telerik.com/kendo-ui/intro/installation/nuget-keys).
 
 ## Installing JustMock Lite
 
