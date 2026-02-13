@@ -37,13 +37,13 @@ The most common reasons for issues with the private Telerik NuGet feed are relat
 
 Errors like `Unable to load the service index for source https://nuget.telerik.com/v3/index.json` don't indicate the exact cause of the problem. In such cases, check the additional error information which usually provides an error code.
 
-To verify if you can access the Telerik NuGet server and the expected packages, open the https://nuget.telerik.com/v3/search?q=justmock&prerelease=true&skip=0&take=100&semVerLevel=2.0.0 URL directly in the web browser and enter username `api-key` and password your [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) in the prompt.
+To verify if you can access the Telerik NuGet server and the expected packages, open the https://nuget.telerik.com/v3/search?q=justmock&prerelease=true&skip=0&take=100&semVerLevel=2.0.0 URL directly in the web browser and enter username `api-key` and your [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) as password in the prompt.
 
 As a result, you will see a JSON output with the NuGet packages and versions that are available for you. You can search for `JustMock.Commercial` or `Telerik.JustMock.Console`.
 
 If the above URL doesn't open, you have either come across a local networking issue or [the NuGet server is down](#error-503-service-unavailable).
 
-If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials. Make sure your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) are correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, make sure it is using the correct values.
+If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials. Make sure your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) is correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, make sure it is using the correct values.
 
 ## Removing Saved Credentials
 
