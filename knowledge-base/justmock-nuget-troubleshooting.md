@@ -14,13 +14,11 @@ This article summarizes the issues that may occur when you work with JustMock an
 
 Regardless of the cause for the issue, it is recommended that you start from the section on the commonly occurring issues.
 
-- [Telerik NuGet Feed Troubleshooting](#telerik-nuget-feed-troubleshooting)
-- [Telerik NuGet Feed Status](#telerik-nuget-feed-status)
-- [Tips for Handling Common NuGet Issues](#tips-for-handling-common-nuget-issues)
-- [Removing Saved Credentials](#removing-saved-credentials)
-- [Error 503 Service Unavailable](#error-503-service-unavailable)
-- [Unable to Resolve Package due to PackageSourceMapping](#unable-to-resolve-package-due-to-packagesourcemapping)
-- [Failed to Retrieve Information from Remote Source](#failed-to-retrieve-information-from-remote-source)
+* [Tips for handling common NuGet issues](#tips-for-handling-common-nuget-issues)
+* [Removing stored credentials](#removing-saved-credentials)
+* [Error `503 Service Unavailable`](#error-503-service-unavailable)
+* [Error `Unable to resolve ... . PackageSourceMapping is enabled`](#unable-to-resolve-package-due-to-packagesourcemapping)
+* [Error `Failed to retrieve information about ... from remote source`](#failed-to-retrieve-information-from-remote-source)
 
 ## Telerik NuGet Feed Status
 
@@ -43,7 +41,7 @@ As a result, you will see a JSON output with the NuGet packages and versions tha
 
 If the above URL doesn't open, you have either come across a local networking issue or [the NuGet server is down](#error-503-service-unavailable).
 
-If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials. Make sure your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) is correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, make sure it is using the correct values.
+If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials. Make sure your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) is correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, ensure that it contains the correct values for the Telerik NuGet feed. For example, you can store your credentials as plain text in the `NuGet.Config` file using  `api-key` as the username and your API key as the password. For improved security, you can use environment variables to store sensitive information like your API key what wouold allow you to reference the credentials in the `NuGet.Config` file without exposing them directly.
 
 ## Removing Saved Credentials
 
