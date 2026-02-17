@@ -37,24 +37,13 @@ The most common reasons for issues with the private Telerik NuGet feed are relat
 
 Errors like `Unable to load the service index for source https://nuget.telerik.com/v3/index.json` don't indicate the exact cause of the problem. In such cases, check the additional error information which usually provides an error code.
 
-To verify if you can access the Telerik NuGet server and the expected packages, open [this URL](https://nuget.telerik.com/v3/search?q=justmock&prerelease=true&skip=0&take=100&semVerLevel=2.0.0) in your browser. Authenticate using either `api-key` as the username and your [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) as the password, or your Telerik account username and password. While both methods are valid, using an API key is recommended for better security and control.
+To verify if you can access the Telerik NuGet server and the expected packages, open the https://nuget.telerik.com/v3/search?q=justmock&prerelease=true&skip=0&take=100&semVerLevel=2.0.0 URL directly in the web browser and enter username `api-key` and your [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) as password in the prompt.
 
 As a result, you will see a JSON output with the NuGet packages and versions that are available for you. You can search for `JustMock.Commercial` or `Telerik.JustMock.Console`.
 
 If the above URL doesn't open, you have either come across a local networking issue or [the NuGet server is down](#error-503-service-unavailable).
 
-If you can access the feed in the browser, but you do not see the packages in Visual Studio, the issue is most likely caused by incorrect credentials. Ensure that your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) or username and password are correct. Both approaches are valid for authentication, but using an API key is recommended for enhanced security and better control over access. 
-
-To verify your credentials, check if you have a `NuGet.Config` file in your project. This file will add package sources and their associated credentials. If it exists, ensure that it contains the correct values for the Telerik NuGet feed. For example, you can store your credentials as plain text in the `NuGet.Config` file using either the `api-key` as the username and your API key as the password, or your Telerik account username and password. Alternatively, for improved security, you can use environment variables to store sensitive information like your API key or password. This approach allows you to reference the credentials in the `NuGet.Config` file without exposing them directly. For example:
-
-```xml
-<packageSourceCredentials>
-  <Telerik>
-    <add key="Username" value="api-key" />
-    <add key="Password" value="%TELERIK_API_KEY%" />
-  </Telerik>
-</packageSourceCredentials>
-```
+If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials. Make sure your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) is correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, make sure it is using the correct values.
 
 ## Removing Saved Credentials
 
