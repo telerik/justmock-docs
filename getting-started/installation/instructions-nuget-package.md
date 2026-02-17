@@ -15,7 +15,7 @@ This topic outlines the steps required to install [Telerik JustMock](https://www
 
 ## Generate an API Key
 
-As the Telerik NuGet server requires authentication, the first step is to obtain an API key that you will use instead of a password. Using an API key instead of a password is a more secure approach, as it eliminates the need to share or store your actual password, especially when working with `.NET CLI` or the `NuGet.Config` file.
+To access the Telerik NuGet server, you need to obtain an API key for secure authentication. While it is technically possible to use your personal account credentials, such as your username and password, this method poses unnecessary security risks, as these credentials could be exposed or misused. In contrast, using an API key provides a more secure and controlled way to authenticate. API keys protect your personal account information while allowing you to manage feed access and permissions more precisely. This approach not only reduces the risk of unauthorized access but also facilitates smoother integration with development tools and automated workflows.
 
 1. Go to the [API Keys](https://www.telerik.com/account/downloads/api-keys) page in your Telerik account.
 2. Click **Generate New Key +**.
