@@ -10,13 +10,12 @@ res_type: kb
 
 ## Telerik NuGet Feed Troubleshooting
 
-This article summarizes the issues that may occur when you work with JustMock and the online [Telerik NuGet feed]({%slug justmock/getting-started/installation/instructions-windows%}#installing-justmock-from-nuget-package), and their solutions.
+This article summarizes the issues that may occur when you work with JustMock and the online [Telerik NuGet feed](https://nuget.telerik.com/v3/index.json), and their solutions.
 
 Regardless of the cause for the issue, it is recommended that you start from the section on the commonly occurring issues.
 
 * [Tips for handling common NuGet issues](#tips-for-handling-common-nuget-issues)
 * [Removing stored credentials](#removing-saved-credentials)
-* [Error `401 Unauthorized`](#error-401-unauthorized)
 * [Error `503 Service Unavailable`](#error-503-service-unavailable)
 * [Error `Unable to resolve ... . PackageSourceMapping is enabled`](#unable-to-resolve-package-due-to-packagesourcemapping)
 * [Error `Failed to retrieve information about ... from remote source`](#failed-to-retrieve-information-from-remote-source)
@@ -36,13 +35,13 @@ The most common reasons for issues with the private Telerik NuGet feed are relat
 
 Errors like `Unable to load the service index for source https://nuget.telerik.com/v3/index.json` don't indicate the exact cause of the problem. In such cases, check the additional error information which usually provides an error code.
 
-To verify if you can access the Telerik NuGet server and the expected packages, open the https://nuget.telerik.com/v3/search?q=justmock&prerelease=true&skip=0&take=100&semVerLevel=2.0.0 URL directly in the web browser and enter your Telerik credentials in the prompt.
+To verify if you can access the Telerik NuGet server and the expected packages, open the https://nuget.telerik.com/v3/search?q=justmock&prerelease=true&skip=0&take=100&semVerLevel=2.0.0 URL directly in the web browser and enter username `api-key` and your [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) as password in the prompt.
 
 As a result, you will see a JSON output with the NuGet packages and versions that are available for you. You can search for `JustMock.Commercial` or `Telerik.JustMock.Console`.
 
 If the above URL doesn't open, you have either come across a local networking issue or [the NuGet server is down](#error-503-service-unavailable).
 
-If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials or using a different Telerik account. Make sure your saved credentials are correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, make sure it is using the correct values.
+If you can access the feed in the browser, but you do not see the packages in Visual Studio, most likely the problem is caused by entering wrong credentials. Make sure your saved [Telerik API Key](https://www.telerik.com/account/downloads/api-keys) is correct. Also, check to see if you have a `NuGet.Config` file in the project. That will add its package sources and package source credentials. If there is one, ensure that it contains the correct values for the Telerik NuGet feed. For example, you can store your credentials as plain text in the `NuGet.Config` file using  `api-key` as the username and your API key as the password. For improved security, you can use environment variables to store sensitive information like your API key what wouold allow you to reference the credentials in the `NuGet.Config` file without exposing them directly.
 
 ## Removing Saved Credentials
 
@@ -62,27 +61,11 @@ If you suspect that your saved credentials are wrong, use the following steps to
     ```XML
     <packageSourceCredentials>
       <Telerik>
-        <add key="Username" value="YOUR_TELERIK_USERNAME" />
-        <add key="ClearTextPassword" value="YOUR_TELERIK_PASSWORD" />
+        <add key="Username" value="api-key" />
+        <add key="ClearTextPassword" value="YOUR_TELERIK_API_KEY" />
       </Telerik>
     </packageSourceCredentials>
     ```
-
-## Error 401 Unauthorized
-
-If your credentials are correct and your license includes the requested product and version, then the password probably contains special characters. You need to escape these characters or the authentication can fail on the NuGet server. For example, a common character you must escape is the ampersand (`&`); however, the character causing the issue may be as unique as the section character (`§`).
-
-To solve the issue:
-
-1. Change the password so that it doesn't include characters you need to escape.
-2. Escape the special characters before storing the credentials. For example, `my§uper&P@§§word` encodes to `my&sect;uper&amp;P@&sect;&sect;word`.
-
-Avoid using an online encoder utility for a password. Instead, use a Powershell command:
-
-```
-Add-Type -AssemblyName System.Web
-[System.Web.HttpUtility]::HtmlEncode('my§uper&P@§§word')
-```
 
 ## Error 503 Service Unavailable
 
@@ -104,6 +87,6 @@ An attempt to use the [obsolete Telerik NuGet v2 feed](https://www.telerik.com/b
 
 `Failed to retrieve information about 'JustMock.Commercial' from remote source 'https://nuget.telerik.com/nuget/FindPackagesById()?id='JustMock.Commercial'&semVerLevel=2.0.0'.`
 
-The solution is to [use the Telerik NuGet v3 feed]({%slug justmock/getting-started/installation/instructions-windows%}#installing-justmock-from-nuget-package).
+The solution is to [use the Telerik NuGet v3 feed]({%slug justmock/getting-started/installation/instructions-nuget-package%}).
 
 Another possible reason for the same error is an incorrect NuGet feed URL.
