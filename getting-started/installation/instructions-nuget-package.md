@@ -15,7 +15,7 @@ This topic outlines the steps required to install [Telerik JustMock](https://www
 
 ## Generate an API Key
 
-As the Telerik NuGet server requires authentication, the first step is to obtain an API key that you will use instead of a password. Using an API key instead of a password is a more secure approach, as it eliminates the need to share or store your actual password, especially when working with [.NET CLI]({% slug nuget-dotnet-cli %}) or the [`NuGet.Config` file]({% slug nuget-config %}).
+As the Telerik NuGet server requires authentication, the first step is to obtain an API key that you will use instead of a password. Using an API key instead of a password is a more secure approach, as it eliminates the need to share or store your actual password, especially when working with [.NET CLI](#command-line) or the [`NuGet.Config` file](https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file).
 
 1. Go to the [API Keys](https://www.telerik.com/account/downloads/api-keys) page in your Telerik account.
 2. Click **Generate New Key +**.
@@ -82,9 +82,9 @@ dotnet add package JustMock.Commercial --version 2024.4.1203.350
 
 - On the command line run the following command:
 
-    ```bat
-    dotnet add package JustMock --version 2024.4.1203.350
-    ```
+```bat
+dotnet add package JustMock --version 2024.4.1203.350
+```
 
 ## Resources and Documentation
 
