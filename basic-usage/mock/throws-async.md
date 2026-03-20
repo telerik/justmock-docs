@@ -11,7 +11,9 @@ position: 10
 
 # Throws Async
 
-`ThrowsAsync` method covers a specific case when needed to test negative scenarios in asynchronous calls. 
+Use `ThrowsAsync` to make a mocked `async` method return a faulted `Task` with a specified exception. It is the async equivalent of [`Throws`]({%slug justmock/basic-usage/mock/throws%}) for `Task`-returning methods.
+
+Use `ThrowsAsync` when you need to test how your code handles a failed asynchronous dependency - for example, when a service call fails and the calling code must catch or propagate the exception.
 
 Let us have the system under test:
 
@@ -83,3 +85,5 @@ Like `Throws` method, `ThrowsAsync` gives an option to pass arguments to the exc
 ## See Also
 
  * [Throws]({%slug justmock/basic-usage/mock/throws%})
+
+ * [Returns Async]({%slug justmock/basic-usage/mock/returns-async%})

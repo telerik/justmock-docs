@@ -11,7 +11,12 @@ position: 6
 
 # Mock Properties
 
-Mocking properties is similar to mocking methods, but there are a few cases that need special attention like mocking indexers and particular set operations.
+JustMock lets you arrange property getters and setters on mocks, just like methods.
+
+- Use `Mock.Arrange(() => mock.Property).Returns(value)` to arrange a **getter** and control the value it returns.
+- Use `Mock.ArrangeSet(() => mock.Property = value)` to arrange a **setter** and control or verify what value is assigned.
+
+This article also covers indexer properties and how to assert property set operations.
 
 
 To illustrate the usage of the functionality, we will be using the following interface definition:
@@ -32,9 +37,7 @@ End Interface
 
 ## Property Getter
 
-The property get can be mocked like any other method call. You can arrange a return statement for a specific call (using [Returns]({%slug justmock/basic-usage/mock/returns%})), throw an exception (using [Throws]({%slug justmock/basic-usage/mock/throws%})), raise an event when invoked (using [Raise]({%slug justmock/basic-usage/mock/raise%})), etc.
-
-Let's consider the following example:
+Arrange a property getter with `Mock.Arrange(() => mock.Property).Returns(value)`. This works identically to arranging a method call. You can also chain [Throws]({%slug justmock/basic-usage/mock/throws%}), [Raise]({%slug justmock/basic-usage/mock/raise%}), or [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) instead of [Returns]({%slug justmock/basic-usage/mock/returns%}).
 
 #### Example 1: Arrange the return value of a getter
 ```C#
@@ -74,7 +77,7 @@ Here we test that a call to `foo.Value` property returns the value we arranged.
 
 ## Property Setter
 
-The set operation can be mocked for both indexers and normal properties. Set operations are mocked using a special set entry point which is `Mock.ArrangeSet(lambda)`.
+Arrange a property setter with `Mock.ArrangeSet(() => mock.Property = value)`. Use this to control what value a setter accepts, or to verify that a property was set to a specific value.
 
 Property set mocking is useful when you want to make sure or to verify that a particular property is set with an expected value. For this reason, we use a [strict mocking]({%slug justmock/basic-usage/mock-behaviors/strict%}).
 
@@ -186,7 +189,7 @@ End Interface
 
 #### Example 4: Return different values for different indexes
 ```C#
-// Create mock
+// Arrange
 var indexedFoo = Mock.Create<IIndexedFoo>();
     
 // Arrange that a call to index 0 should return ping, a call to index 1 should return pong.
@@ -202,7 +205,7 @@ Assert.AreEqual("ping", actualFirst);
 Assert.AreEqual("pong", actualSec);
 ```
 ```VB
-' Create mock
+' Arrange
 Dim IndexedFoo = Mock.Create(Of IIndexedFoo)()
     
 ' Arrange that a call to index 0 should return ping, a call to index 1 should return pong.
@@ -314,4 +317,13 @@ End Sub
 
 
 The first two set calls satisfy the requirements. However, the third call - `foo[0] = "bar"` throws an exception, because we arranged that the zero-indexed item can be set only to `"foo"`.
-        
+
+## See Also
+
+ * [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
+ * [Matchers]({%slug justmock/basic-usage/matchers%})
+ * [Returns]({%slug justmock/basic-usage/mock/returns%})
+ * [Throws]({%slug justmock/basic-usage/mock/throws%})
+ * [DoInstead]({%slug justmock/basic-usage/mock/do-instead%})
+ * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})
+ * [Mock Behaviors - Strict]({%slug justmock/basic-usage/mock-behaviors/strict%})

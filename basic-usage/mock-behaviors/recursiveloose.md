@@ -11,11 +11,13 @@ position: 1
 
 # RecursiveLoose
 
-__RecursiveLoose__ mocks will return new mocks (with `Behavior.RecursiveLoose`) for all members/functions of the mocked type. However, as there are types that cannot be mocked (`string`, `int`, etc.), __RecursiveLoose__ mocks will return default value for all value type members and empty, non-null stubs for `string`s. Also, a non-null empty collection will be returned for collection return types (e.g. array or `IEnumerable`) .
+**RecursiveLoose** is the default mock behavior. For any property or method that returns a reference type, RecursiveLoose automatically returns a new mock (also with `Behavior.RecursiveLoose`), so you can chain calls on returned mocks without arranging each level.
 
-__RecursiveLoose__ mocks are the same as [Loose mocks]({%slug justmock/basic-usage/mock-behaviors/loose%}), but with one difference: They will automatically generate empty stubs for all mock members, on all levels. This saves time in manually arranging or initializing all the mock prerequisites ([code examples](#examples)). Further, you can change the per-arranged behavior by defining new expectations, as described in the [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) articles.
+For types that cannot be mocked (`string`, `int`, and other value types), RecursiveLoose returns default values. For `string` it returns an empty string. For collection return types (for example, arrays or `IEnumerable`), it returns a non-null empty collection.
 
-__RecursiveLoose__ is the default behavior when creating mocks.
+RecursiveLoose is identical to [Loose mocks]({%slug justmock/basic-usage/mock-behaviors/loose%}) except that it auto-generates mocks for reference-type members at every level of the object graph. This eliminates the need to arrange the full call chain manually. You can override any member's behavior by adding an explicit arrangement, as described in the [JustMock API Basics]({%slug justmock/getting-started/basics/basics%}) articles.
+
+**RecursiveLoose** is the default behavior when creating mocks.
 
 ## Syntax
 

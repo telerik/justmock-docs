@@ -11,7 +11,14 @@ position: 3
 
 # Do Instead
 
-The `DoInstead` method is used to replace the actual implementation of a method with a mocked one. This topic goes through a number of scenarios where the `DoInstead` method is useful.
+Use `DoInstead` to execute a custom action when a mocked method is called. The action runs instead of the method's original implementation.
+
+Common uses for `DoInstead`:
+- Capturing arguments passed to the mocked method
+- Setting side-effect flags to verify a call occurred
+- Performing custom logic that depends on the call arguments
+
+`DoInstead` receives the same arguments passed to the mocked method, so you can inspect or transform them in your test. Chain it with `Returns` to also control the return value.
 
 The following system under test will be used for the examples in this article:
 
@@ -375,7 +382,7 @@ Public Delegate Sub RefAction(Of T1, T2)(arg1 As T1, ByRef arg2 As T2)
 
  * [Call Original]({%slug justmock/basic-usage/mock/call-original%})
 
- * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})[](b9461116-b200-4739-aff1-af8458c7095e)
+ * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
 
  * [Must Be Called]({%slug justmock/basic-usage/mock/must-be-called%})
 

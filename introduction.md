@@ -11,11 +11,16 @@ previous_url: basic-usage.html, basic-usage
 
 # Welcome to Telerik JustMock
 
-Telerik JustMock is an easy to use mocking tool designed to help you create better unit tests, faster than ever. JustMock makes it easier for you to create mock objects and set expectations independently of external dependencies like databases, web service calls, or proprietary code.
+**Telerik JustMock** is a .NET mocking framework that helps you write fast, focused unit tests by isolating your code from its dependencies — databases, web services, and third-party libraries.
 
-The JustMock API is completely [AAA]({%slug justmock/basic-usage/arrange-act-assert%}) (Arrange/Act/Assert) oriented thus helping you keep your unit tests well structured, clean and readable. No matter whether you try to mock an interface, a sealed class or a static class, the pattern you use is the same.
+JustMock follows the [Arrange/Act/Assert (AAA)]({%slug justmock/basic-usage/arrange-act-assert%}) pattern. You **arrange** mock behavior with `Mock.Arrange`, **act** by calling your production code, and **assert** results with `Mock.Assert` or your preferred assertion library. The same pattern works whether you mock an interface, a virtual method, or a static type.
 
-To read more please visit the [Telerik JustMock](https://www.telerik.com/products/mocking.aspx) product overview page.
+JustMock is available in two editions:
+
+- **JustMock Lite** (free) — no profiler required. Mocks interfaces, virtual members, and abstract members.
+- **JustMock** (commercial) — requires the JustMock profiler. Adds mocking of static classes and methods, sealed classes, non-virtual members, non-public members, and `mscorlib` types such as `DateTime` and `File`.
+
+For a full feature comparison, see [Commercial vs Free Version]({%slug justmock/licensing/commercial-vs-free-version%}).
 
 ## What Is Mocking and Why Do I Need It?
 [Mocking](https://en.wikipedia.org/wiki/Mock_object) is a concept in unit testing where real objects are substituted with fake objects that imitate the behavior of the real ones. Mocking is done so that a test can focus on the code being tested and not on the behavior or state of external dependencies. 
@@ -24,18 +29,29 @@ For example, if you have a data repository class that runs business logic and th
 
 ## What Can Be Mocked?
 
-Mock objects can be created and maintained manually, but this is a time consuming and ultimately unproductive approach. A tool like __Telerik JustMock__ allows you to focus on writing tests and forget about the mocking details. Mock objects are created automatically in memory when the tests run based on your simple configuration in the unit test. There are no “physical” mock objects that have to be maintained as your project changes.
+**JustMock** creates mock objects automatically at runtime — no hand-written fakes to maintain as your production code changes. The edition you use determines what you can mock:
 
-JustMock allows you to mock everything from interfaces, virtual and abstract methods and properties to sealed classes, __non-virtual methods and properties__, __static classes, methods and properties__, even those from __mscorlib__ like __DateTime, File, FileInfo__, etc.
-All these can be mocked without a single change of your production code.
+| Target | JustMock Lite (free) | JustMock commercial |
+|---|---|---|
+| Interfaces | ✔ | ✔ |
+| Abstract and virtual members | ✔ | ✔ |
+| LINQ queries | ✔ | ✔ |
+| Sealed classes | ✘ | ✔ (profiler required) |
+| Non-virtual methods and properties | ✘ | ✔ (profiler required) |
+| Static classes, methods, and properties | ✘ | ✔ (profiler required) |
+| Non-public members and types | ✘ | ✔ (profiler required) |
+| `mscorlib` members (`DateTime`, `File`, etc.) | ✘ | ✔ (profiler required) |
+| DLL imports | ✘ | ✔ (profiler required) |
+
+None of these require changes to your production code.
 
 ### Final and Static Mocking
 
 Unlike other mocking frameworks, JustMock lets you mock: 
 
-*  Sealed classes: call methods of sealed classes even with internal constructors. 
-*  Static classes, methods, properties: create mocks of static classes, set expectations for static method and property calls, verify static method calls. 
-*  Final methods or properties: assert final methods, overloads, `out` and `ref` arguments. 
+* **Sealed classes** — call methods of sealed classes, even with internal constructors.
+* **Static classes, methods, and properties** — arrange and verify static method and property calls.
+* **Non-virtual (final) methods and properties** — assert non-virtual methods, overloads, `out` parameters, and `ref` parameters.
 
 ## Features At A Glance
 * __Test objects and behaviors independently__ - fake any dependencies like databases, web service calls, proprietary code 
@@ -53,7 +69,7 @@ Unlike other mocking frameworks, JustMock lets you mock:
 * __Strongly typed fluent interface__ - no magic strings, compile time checks, refactoring support 
 * __Loose mocks, Partial mocking, Recursive/nested mocking, Sequential mocking__
 * __Fast and lightweight__ - custom dynamic proxy library meets mocking needs only
-* __Support for Visual Studio__ - JustMock supports Visual Studio 2019, 2017, 2015, and older
+* __Support for Visual Studio__ - JustMock supports Visual Studio 2019 and later
 * __Support of Microsoft SharePoint and Microsoft Entity Framework mocking__
 * __Support for CI/CD, build tools, code coverage tools, profilers, unit testing add-ins and other__
 	* Integration with Azure Pipelines. [Read how to integrate JustMock with Azure Pipelines]({%slug justmock/integration/azure-devops%})

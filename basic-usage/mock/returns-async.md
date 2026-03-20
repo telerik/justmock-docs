@@ -11,7 +11,7 @@ position: 8
 
 # Returns Async
 
-Unit testing and mocking asynchronous methods has never been easier. The `ReturnsAsync` method allows you to ignore the actual call to an async method and return a custom value. This topic explains in what scenarios the `ReturnsAsync` method is useful. 
+Unit testing and mocking asynchronous methods has never been easier. The `ReturnsAsync` method allows you to ignore the actual call to an `async` method and return a custom value. This topic explains in what scenarios the `ReturnsAsync` method is useful. 
 
 ## Sample Setup
 

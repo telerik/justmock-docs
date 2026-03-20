@@ -11,8 +11,11 @@ position: 11
 
 # When
 
-Applied, the __When__ clause enables the arrangement only if certain conditions are satisfied. It specifies what must be true (along with any argument [matcher]({%slug justmock/basic-usage/matchers%}), or [IgnoreInstance()]({%slug justmock/advanced-usage/future-mocking%}) or IgnoreArguments() clauses used on the arrangement) for that arrangement to be executed and its expectations updated.
-To understand how to use the __When__ method, check the next examples:
+Use `When` to add a conditional guard to an arrangement. The arrangement applies only when the condition you provide returns `true`. If the condition is `false`, JustMock skips the arrangement and the call is handled by the next matching arrangement or the mock's default behavior.
+
+Use `When` when the condition depends on external state rather than the method's own arguments. For argument-based conditions, use [Matchers]({%slug justmock/basic-usage/matchers%}) instead. You can also combine `When` with `IgnoreInstance()` or `IgnoreArguments()` on the same arrangement.
+
+To understand how to use the `When` method, check the next examples:
 
 ## How It Works
 Let's assume we have the following `interface`:
@@ -138,5 +141,7 @@ End Sub
  * [Returns]({%slug justmock/basic-usage/mock/returns%})
 
  * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
+
+ * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
 
  * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})

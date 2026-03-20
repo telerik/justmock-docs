@@ -11,7 +11,7 @@ position: 2
 
 # Loose
 
-__Loose__ mocks will create stubs for all void methods of the mocked type. For all value type members, the mock will return its default value and for all reference type members - `null`. For collection return types (e.g. array or `IEnumerable`) a non-null empty collection will be returned, instead of `null`.
+**Loose** mocks will create stubs for all void methods of the mocked type. For all value type members, the mock will return its default value and for all reference type members - `null`. For collection return types (e.g. array or `IEnumerable`) a non-null empty collection will be returned, instead of `null`.
 
 To reach deeper-level functions, you will need to arrange them first. __Loose__ mocks are the predecessors of the [RecursiveLoose]({%slug justmock/basic-usage/mock-behaviors/recursiveloose%}) behavior, which makes them rarely used nowadays.
 

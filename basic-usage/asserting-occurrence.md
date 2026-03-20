@@ -11,34 +11,37 @@ position: 7
 
 # Asserting Occurrence
 
-Occurrence is used in conjunction with `Mock.Assert` and `Mock.AssertSet` to determine how many times a call has occurred.
+Occurrence assertions let you verify how many times a method or property was called on a mock. You can declare occurrence expectations in the arrange phase and verify them with `Mock.Assert`.
 
-There are 6 types of occurrence:
+## Two ways to assert occurrence
 
-* [Occurs.Never()](#occursnever) - Specifies that a particular call is never made on a mock. 
-* [Occurs.Once()](#occursonce) - Specifies that a call has occurred only once on a mock. 
-* [Occurs.AtLeastOnce()](#occursatleastonce) - Specifies that a call has occurred at least once on a mock. 
-* [Occurs.AtLeast(numberOfTimes)](#occursatleastnumberoftimes) - Specifies the least number of times a call should occur on a mock. 
-* [Occurs.AtMost(numberOfTimes)](#occursatmostnumberoftimes) - Specifies the most number of times a call should occur on a mock. 
-* [Occurs.Exactly(numberOfTimes)](#occursexactlynumberoftimes) - Specifies exactly the number of times a call should occur on a mock. 
+**In the assert phase** - pass an `Occurs` value to `Mock.Assert(() => mock.Method(), Occurs.X())`:
 
-Furthermore, you can set occurrence directly in the arrangement of a method.
+| Occurrence | Description |
+|---|---|
+| [Occurs.Never()](#occursnever) | Verifies the call was never made. |
+| [Occurs.Once()](#occursonce) | Verifies the call occurred exactly once. |
+| [Occurs.AtLeastOnce()](#occursatleastonce) | Verifies the call occurred one or more times. |
+| [Occurs.AtLeast(n)](#occursatleastnumberoftimes) | Verifies the call occurred at least `n` times. |
+| [Occurs.AtMost(n)](#occursatmostnumberoftimes) | Verifies the call occurred at most `n` times. |
+| [Occurs.Exactly(n)](#occursexactlynumberoftimes) | Verifies the call occurred exactly `n` times. |
 
-You can use one of 5 different constructs of Occur: 
+**In the arrange phase** - chain an occurrence constraint onto `Mock.Arrange()`, then call `Mock.Assert(mock)` to verify all constraints at once:
 
-* [Occurs(numberOfTimes)](#occursnumberoftimes) - Specifies the exact number of times a call should occur on a mock. 
-* [OccursOnce()](#occursonce) - Specifies that a call should occur only once on a mock. 
-* [OccursNever()](#occursnever) - Specifies that a particular call should never be made on a mock. 
-* [OccursAtLeast(numberOfTimes)](#occursatleastnumberoftimes) - Specifies that a call should occur at least once on a mock. 
-* [OccursAtMost(numberOfTimes)](#occursatmostnumberoftimes) - Specifies the number of times at most a call should occur on a mock. 
+| Constraint | Description |
+|---|---|
+| [OccursOnce()](#occursonce) | Requires the call to occur exactly once. |
+| [OccursNever()](#occursnever) | Requires the call to never occur. |
+| [Occurs(n)](#occursnumberoftimes) | Requires the call to occur exactly `n` times. |
+| [OccursAtLeast(n)](#occursatleastnumberoftimes) | Requires the call to occur at least `n` times. |
+| [OccursAtMost(n)](#occursatmostnumberoftimes)| Requires the call to occur at most `n` times. |
 
-JustMock also enables you to verify the calls order, with:
+> `OccursOnce()` vs `MustBeCalled()`: Both require the method to be called, but `OccursOnce()` enforces exactly one call while `MustBeCalled()` only requires at least one call.
 
-* [InOrder()](#verifying-calls-order) - Specifies exactly the order, a call should occur on the mock. 
+JustMock also enables you to verify call order and prerequisites:
 
-In addition to that JustMock allows you to verify that method call prerequisites are satisfied
-
-* [AfterAll(prerequisites)](#verifying-call-prerequisites) - Specifies prerequisites which should be met before a method call. 
+* [InOrder()](#verifying-calls-order) — Verifies that calls occur in a specific order.
+* [AfterAll(prerequisites)](#verifying-call-prerequisites) — Verifies that a call occurs only after specified prerequisites.
 
 __In the following examples we will use the following interface to test:__
 
@@ -757,3 +760,9 @@ Public Sub ShouldAssertPrerequisites()
     Mock.Assert(barContainer)
 End Sub
  ```
+
+## See Also
+
+ * [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
+ * [Matchers]({%slug justmock/basic-usage/matchers%})
+ * [Returns]({%slug justmock/basic-usage/mock/returns%})

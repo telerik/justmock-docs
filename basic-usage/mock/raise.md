@@ -11,7 +11,9 @@ position: 5
 
 # Raise
 
-The `Raise` method is used for raising mocked events. You can use custom or standard events.
+Use `Mock.Raise` to fire a mock event directly from your test code, at the exact point in the test you choose. You can raise custom or standard events.
+
+`Mock.Raise` differs from [`Raises`]({%slug justmock/basic-usage/mock/raises%}): `Raises` is chained on `Mock.Arrange` and fires the event automatically when a specific method is called. `Mock.Raise` fires the event immediately when you call it in the test.
 
 ## Raising Custom Events
 
@@ -179,7 +181,7 @@ Here we use `Raise` to raise a standard event - `executor.Done` accepting `FooAr
 
  * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
 
- * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})[](b9461116-b200-4739-aff1-af8458c7095e)
+ * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
 
  * [Must Be Called]({%slug justmock/basic-usage/mock/must-be-called%})
 

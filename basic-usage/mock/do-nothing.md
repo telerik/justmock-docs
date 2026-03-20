@@ -11,7 +11,9 @@ position: 2
 
 # Do Nothing
 
-The `DoNothing` method is used to arrange that a call to a method or property should be ignored. When using `DoNothing`, all the logic inside the arranged method or property body is skipped and nothing happens when you call it.
+Use `DoNothing` to explicitly arrange a method or property so that calling it does nothing. All logic inside the method or property body is skipped.
+
+While mocks with [Loose]({%slug justmock/basic-usage/mock-behaviors/loose%}) or [RecursiveLoose]({%slug justmock/basic-usage/mock-behaviors/recursiveloose%}) behavior already skip void calls by default, `DoNothing` makes that intent explicit in your test. This improves readability and lets you chain further expectations such as `MustBeCalled()` on the same arrangement.
 
 We will use the following interface for the examples in this article:
 
