@@ -110,13 +110,9 @@ End Class
 ```
 
 
-## Prerequisites
-
-Before you write static mocking tests:
-
-1. Install the **Telerik.JustMock** commercial NuGet package (not Telerik.JustMock.Free).
-1. Enable the JustMock profiler in Visual Studio: **JustMock** menu → **Enable Telerik JustMock**. See [How to Enable/Disable Telerik JustMock]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock).
-
+> **Important**
+>
+> To use static mocking you first need to go to elevated mode by enabling JustMock from the menu. [How to Enable/Disable ]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock)
 
 ## Static Constructor Mocking
 

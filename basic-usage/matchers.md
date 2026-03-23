@@ -353,8 +353,7 @@ Public Sub MatchingCertainRefParameters()
 End Sub
 ```	  
 	
-> The .Value property is required syntax to unwrap the matcher into a 
-> The `.Value` property is required syntax to unwrap the matcher into a `ref`-compatible expression. Without it, the code does not compile.
+> Note, the using of the *Value* field at the end of the matcher (`Arg.Ref(5)`__.Value__) is intended and needed in order to use this feature.
 
 * Here we will use the `Arg.Ref` matcher, in order to match function that will be called with a ref argument with known __type__. To match the type, we will use a defined matcher.
 
