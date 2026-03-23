@@ -119,11 +119,8 @@ public void ShouldCreateMockForASealedClassWithInternalConstructor()
 {
     // Arrange
     var foo = Mock.Create<FooSealedInternal>();
-
     Mock.Arrange(() => foo.Echo(Arg.IsAny<int>())).Returns(10);
-
-    // Assert
-    Assert.IsNotNull(foo);
+    Assert.IsNotNull(foo); // Verify mock was created successfully.
 
     // Act
     var actual = foo.Echo(1);
@@ -137,11 +134,8 @@ public void ShouldCreateMockForASealedClassWithInternalConstructor()
 Public Sub ShouldCreateMockForASealedClassWithInternalConstructor()
     ' Arrange
     Dim foo = Mock.Create(Of FooSealedInternal)()
-
     Mock.Arrange(Function() foo.Echo(Arg.IsAny(Of Integer)())).Returns(10)
-
-    ' Assert
-    Assert.IsNotNull(foo)
+    Assert.IsNotNull(foo) ' Verify mock was created successfully.
 
     ' Act
     Dim actual = foo.Echo(1)

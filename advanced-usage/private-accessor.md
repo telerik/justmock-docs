@@ -11,9 +11,11 @@ position: 6
 
 # Private Accessor
 
-The __Telerik JustMock PrivateAccessor__ feature allows you to call non-public members of the tested code right in your unit tests. The feature is enabled for both *Free* and *Commercial* versions of JustMock.
+The __Telerik JustMock PrivateAccessor__ feature allows you to call non-public members directly in your unit tests - without writing reflection boilerplate.
 
->For arranging the behavior of non-public members, refer to the [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%}) topic.
+>note `PrivateAccessor` does **not** require the JustMock profiler and works in both **JustMock Free** and **JustMock Full**.
+
+>For arranging the behavior of non-public members, refer to [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%}).
 
 ## Calling Private Methods
 
@@ -58,8 +60,10 @@ End Class
 [TestMethod]
 public void PrivateAccessor_ShouldCallMethod()
 {
-    // Act
+    // Arrange
     var inst = new PrivateAccessor(new ClassWithNonPublicMembers());
+
+    // Act
     var actual = inst.CallMethod("EchoPrivate");
     
     // Assert
@@ -69,8 +73,10 @@ public void PrivateAccessor_ShouldCallMethod()
 ```VB
 <TestMethod> _
 Public Sub PrivateAccessor_ShouldCallMethod()
-    ' Act
+    ' Arrange
     Dim inst = New PrivateAccessor(New ClassWithNonPublicMembers())
+
+    ' Act
     Dim actual = inst.CallMethod("EchoPrivate")
     
     ' Assert
@@ -201,8 +207,10 @@ End Class
 [TestMethod]
 public void PrivateAccessor_ShouldCallStaticMethod()
 {
-    // Act
+    // Arrange
     var inst = PrivateAccessor.ForType(typeof(ClassWithNonPublicMembers));
+
+    // Act
     var actual = inst.CallMethod("EchoStaticPrivate");
     
     // Assert
@@ -212,8 +220,10 @@ public void PrivateAccessor_ShouldCallStaticMethod()
 ```VB
 <TestMethod> _
 Public Sub PrivateAccessor_ShouldCallStaticMethod()
-    ' Act
+    ' Arrange
     Dim inst = PrivateAccessor.ForType(GetType(ClassWithNonPublicMembers))
+
+    ' Act
     Dim actual = inst.CallMethod("EchoStaticPrivate")
     
     ' Assert
@@ -762,8 +772,10 @@ End Class
 [TestMethod]
 public void PrivateAccessor_ShouldGetSetProperty()
 {
-    // Act
+    // Arrange
     var inst = new PrivateAccessor(new ClassWithNonPublicMembers());
+
+    // Act
     inst.SetProperty("Prop", 555);
     
     // Assert
@@ -773,8 +785,10 @@ public void PrivateAccessor_ShouldGetSetProperty()
 ```VB
 <TestMethod> _
 Public Sub PrivateAccessor_ShouldGetSetProperty()
-    ' Act
+    ' Arrange
     Dim inst = New PrivateAccessor(New ClassWithNonPublicMembers())
+
+    ' Act
     inst.SetProperty("Prop", 555)
     
     ' Assert
@@ -960,9 +974,9 @@ End Sub
 
 __PrivateAccessor__ is using the reflection API to invoke the required method. When that method throws exception, the reflection API is automatically wrapping it in a [TargetInvocationException](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.targetinvocationexception?view=netframework-4.8). This could cause inconvenience in determining what the original problem is.
 
-__PrivateAccessor.RethrowOriginalOnCallMethod__ is a boolean property that solves that problem by controling whether the original exception should be thrown or not. For backward compatibility, *the default value is __false__*.
+__PrivateAccessor.RethrowOriginalOnCallMethod__ is a boolean property that solves that problem by controlling whether the original exception should be thrown or not. For backward compatibility, *the default value is __false__*.
 
-To better illustrate the usage of this property consinder the following code sample:
+To better illustrate the usage of this property, consider the following code sample:
 
 #### Sample setup
 ```C#
@@ -1007,5 +1021,6 @@ End Sub
 
 ## See Also
 
- * [Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})
  * [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%})
+ * [Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})
+ * [Static Mocking]({%slug justmock/advanced-usage/static-mocking%})
