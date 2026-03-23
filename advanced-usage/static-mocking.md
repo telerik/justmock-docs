@@ -13,7 +13,7 @@ position: 4
 
 Static mocking is one of the advanced features supported in __Telerik® JustMock__. It lets you arrange and verify calls to static methods, static properties, and static constructors on any type - including types you cannot modify. Use it to control the return values of static members, prevent static constructors from running, and assert that specific static calls occurred.
 
-We can divide static mocking into the following major parts: :
+We can divide static mocking into the following major parts:
 
 * Static constructor mocking
 * Static method mocking

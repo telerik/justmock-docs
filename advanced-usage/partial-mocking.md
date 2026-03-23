@@ -19,13 +19,11 @@ Use partial mocking when:
 * You need to verify calls on a real object without replacing the entire class.
 * You want to arrange a static property or method on a non-mock instance.
 
-Partial mocking works for both instance and static calls.
+>note Partial mocking can be performed on both static and instance calls.
 
-The `Behavior.CallOriginal` pattern is the closest equivalent: create a mock with `Mock.Create<T>(Behavior.CallOriginal)` and arrange only specific members. Both approaches let unmocked members run their real code. With true partial mocking (shown below), you skip `Mock.Create` entirely and arrange on the real instance directly.
+> This is an elevated feature. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
->important **This is an elevated feature.** It requires **JustMock Full** (commercial) and the JustMock profiler to be enabled at test runtime. Refer to [Commercial vs. Free Version]({%slug justmock/licensing/commercial-vs-free-version%}) to learn about the differences.
-
-## Sample Setup
+## Prerequisites
 
 The following sample class is used in the examples below:
 

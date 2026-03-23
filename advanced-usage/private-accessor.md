@@ -13,8 +13,6 @@ position: 6
 
 The __Telerik JustMock PrivateAccessor__ feature allows you to call non-public members directly in your unit tests - without writing reflection boilerplate.
 
->note `PrivateAccessor` does **not** require the JustMock profiler and works in both **JustMock Free** and **JustMock Full**.
-
 >For arranging the behavior of non-public members, refer to [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%}).
 
 ## Calling Private Methods

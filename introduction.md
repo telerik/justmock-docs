@@ -11,9 +11,11 @@ previous_url: basic-usage.html, basic-usage
 
 # Welcome to Telerik JustMock
 
-**Telerik JustMock** is a .NET mocking framework that helps you write fast, focused unit tests by isolating your code from its dependencies — databases, web services, and third-party libraries.
+Telerik JustMock is an easy to use mocking tool designed to help you create better unit tests, faster than ever. JustMock makes it easier for you to create mock objects and set expectations independently of external dependencies like databases, web service calls, or proprietary code.
 
 JustMock follows the [Arrange/Act/Assert (AAA)]({%slug justmock/basic-usage/arrange-act-assert%}) pattern. You **arrange** mock behavior with `Mock.Arrange`, **act** by calling your production code, and **assert** results with `Mock.Assert` or your preferred assertion library. The same pattern works whether you mock an interface, a virtual method, or a static type.
+
+To read more please visit the [Telerik JustMock](https://www.telerik.com/products/mocking.aspx) product overview page.
 
 JustMock is available in two editions:
 

@@ -23,7 +23,7 @@ The warehouse interface and the order class look like this:
 ```C#
 public delegate void ProductRemoveEventHandler(string productName, int quantity);
 
-public interface IWarehouse
+public interface Iwarehouse
 {
     event ProductRemoveEventHandler ProductRemoved;
 
@@ -45,7 +45,7 @@ public class Order
     public int Quantity { get; private set; }
     public bool IsFilled { get; private set; }
 
-    public void Fill(IWarehouse warehouse)
+    public void Fill(Iwarehouse warehouse)
     {
         if (warehouse.HasInventory(this.ProductName, this.Quantity))
         {
@@ -137,7 +137,7 @@ You can use the [DoInstead]({%slug justmock/basic-usage/mock/do-instead%}) metho
 public void DoInstead_TestMethod()
 {
     //Arrange
-    var warehouse = Mock.Create<IWarehouse>();
+    var warehouse = Mock.Create<Iwarehouse>();
     var order = new Order("Camera", 2);
 
     bool called = false;
@@ -238,7 +238,7 @@ public void Throws_TestMethod()
 {
     // Arrange
     var order = new Order("Camera", 0);
-    var warehouse = Mock.Create<IWarehouse>();
+    var warehouse = Mock.Create<Iwarehouse>();
 
     // Set up that the warehouse has inventory of any products with any quantities.
     Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
@@ -274,17 +274,19 @@ In this case we use the `ExpectedException` attribute from `Microsoft.VisualStud
 
 ## Matchers
 
-Matchers let you arrange mock behavior without specifying exact argument values. Use them when any value of a given type (or any value in a range) should trigger the same arranged behavior.
+Matchers let you ignore passing actual values as arguments used in mocks. Instead, they give you the possibility to pass just an expression that satisfies the argument type or expected value range. For example, if a method accepts string as a first parameter, you don’t need to pass a specific string like "Camera", instead you can use `Arg.IsAny<string>()`. 
 
-There are three matchers supported in JustMock:
+There are 3 types of matchers supported in JustMock:
 
-1. **`Arg.IsAny<T>()`** — matches any value of type `T`.
-2. **`Arg.IsInRange([FromValue : int], [ToValue : int], [RangeKind])`** — matches values within a numeric range.
-3. **`Arg.Matches<T>(Expression<Predicate<T>> expression)`** — matches values that satisfy a custom predicate.
+1. Arg.IsAny<[Type]>(); 
+1. Arg.IsInRange([FromValue : int], [ToValue : int], [RangeKind]) 
+1. Arg.Matches<T>(Expression<Predicate<T>> expression)
+  
+Let's look at each one of them in details.
 
-### Arg.IsAny&lt;T&gt;()
+### Arg.IsAny<T>();
 
-Use `Arg.IsAny<T>()` when the arranged behavior should apply regardless of what argument is passed.
+We already used this matcher in one of our examples above.
 
 ```C#
 Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
@@ -293,43 +295,43 @@ Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())
 Mock.Arrange(Function() warehouse.HasInventory(Arg.IsAny(Of String)(), Arg.IsAny(Of Integer)())).Returns(True)
 ```
 
-This arranges `HasInventory` to return `true` for any product name and any quantity.
+This matcher specifies that when the `HasInventory` method is called with any string as a first argument and any int as a second it should return `true`.
 
 ### Arg.IsInRange(int from, int to, RangeKind range)
 
-Use `Arg.IsInRange` when the arranged behavior should apply for argument values within a numeric range. `RangeKind.Inclusive` includes the boundaries; `RangeKind.Exclusive` excludes them.
+The IsInRange matcher lets us arrange a call for an expected value range. With the `RangeKind` argument we can specify whether the given range includes or excludes its boundaries.
 
-For argument values from 0 to 5 inclusive (0, 1, 2, 3, 4, 5):
+For argument values ranging from 0 to 5, the following will return `true`:
 ```C#
 Mock.Arrange(() => foo.Echo(Arg.IsInRange(0, 5, RangeKind.Inclusive))).Returns(true);
 ```
 ```VB
-Mock.Arrange(Function() foo.Echo(Arg.IsInRange(0, 5, RangeKind.Inclusive))).Returns(True)
+		Mock.Arrange(Function() foo.Echo(Arg.IsInRange(0, 5, RangeKind.Inclusive))).Returns(True)
 ```
 
-For argument values from 0 to 5 exclusive (1, 2, 3, 4):
+For argument values ranging from 1 to 4, the following will return `true`:
 
 ```C#
-Mock.Arrange(() => foo.Echo(Arg.IsInRange(0, 5, RangeKind.Exclusive))).Returns(true);
+		Mock.Arrange(() => foo.Echo(Arg.IsInRange(0, 5, RangeKind.Exclusive))).Returns(true);
 ```
 ```VB
-Mock.Arrange(Function() foo.Echo(Arg.IsInRange(0, 5, RangeKind.Exclusive))).Returns(True)
+		Mock.Arrange(Function() foo.Echo(Arg.IsInRange(0, 5, RangeKind.Exclusive))).Returns(True)
 ```
 
-### Arg.Matches&lt;T&gt;(Expression&lt;Predicate&lt;T&gt;&gt; expression)
+### Arg.Matches<T> (Expression<Predicate<T>> expression)
 
-Use `Arg.Matches<T>` when you need a custom matching condition. This is the most flexible matcher.
+This is the most flexible matcher and it allows you to specify your own matching expression. Let's illustrate it with a simple example:
 
 ```C#
-Mock.Arrange(() => foo.Echo(Arg.Matches<int>(x => x < 10))).Returns(true);
+		Mock.Arrange(() => foo.Echo(Arg.Matches<int>( x => x < 10)).Returns(true);
 ```
 ```VB
-Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x < 10))).Returns(True)
+		Mock.Arrange(Function() foo.Echo(Arg.Matches(Of Integer)(Function(x) x < 10))).Returns(True)
 ```
 
-The predicate `x => x < 10` means: apply this arrangement when `foo.Echo` is called with any integer less than 10.
+With our expression (or predicate) `x => x < 10` we specify that a call to `foo.Echo` with an argument less than 10 should return `true`.
 
-> For the full list of supported matchers, see [Basic Usage | Matchers]({%slug justmock/basic-usage/matchers%}).
+>For detailed information on the supported by JustMock matchers, visit [Basic Usage | Matchers]({%slug justmock/basic-usage/matchers%}) topic.
 
 ## Properties
 
@@ -340,7 +342,7 @@ In the above examples we mock only methods, but you can also mock properties in 
 public void MockingProperties_TestMethod()
 {
     // Arrange
-    var warehouse = Mock.Create<IWarehouse>();
+    var warehouse = Mock.Create<Iwarehouse>();
 
     Mock.Arrange(() => warehouse.Manager).Returns("John");
 
@@ -379,7 +381,7 @@ Additionally, you can assert for property set.
 public void MockingProperties_PropertySet_TestMethod()
 {
     // Arrange
-    var warehouse = Mock.Create<IWarehouse>(Behavior.Strict);
+    var warehouse = Mock.Create<Iwarehouse>(Behavior.Strict);
 
     Mock.ArrangeSet(() => warehouse.Manager = "John");
 
@@ -411,7 +413,7 @@ Another commonly used technique is to assert that setting a property to a specif
 public void MockingProperties_PropertySet_Throws_TestMethod()
 {
     // Arrange
-    var warehouse = Mock.Create<IWarehouse>();
+    var warehouse = Mock.Create<Iwarehouse>();
 
     Mock.ArrangeSet(() => warehouse.Manager = "John").Throws<ArgumentException>();
 
@@ -445,16 +447,14 @@ Here we used the `Throws` method discussed above to indicate that an exception s
 
 ## Events
 
-Use `Raises` in a `Mock.Arrange` call to fire a mock event when a method is called. `Raises` lets you pass specific event arguments, so your test can assert that event handlers received the correct data.
-
-In the example below, calling `warehouse.Remove` with any arguments fires the `ProductRemoved` event with product name `"Camera"` and quantity `2`.
+The method `Raises` allows you to raise an event when a method is called and to pass specific event arguments. Returning on our warehouse example, we may want to raise the `ProductRemoved` event once the `Remove` method is called.
 
 ```C#
 [TestMethod]
 public void RaisingAnEvent_TestMethod()
 {
     // Arrange
-    var warehouse = Mock.Create<IWarehouse>();
+    var warehouse = Mock.Create<Iwarehouse>();
 
     Mock.Arrange(() => warehouse.Remove(Arg.IsAny<string>(), Arg.IsInRange(int.MinValue, int.MaxValue, RangeKind.Exclusive)))
         .Raises(() => warehouse.ProductRemoved += null, "Camera", 2);
@@ -473,7 +473,7 @@ public void RaisingAnEvent_TestMethod()
 }
 ```
 
-The `Raises` call in the arrange step means: when `warehouse.Remove` is called, fire `ProductRemoved` with `"Camera"` and `2` as arguments. The test then asserts that the event handler captured those values.
+Here in the arrange step we set up that once the warehouse’s `Remove` method is called we will raise the `ProductRemoved` event with parameters "Camera" and 2.
 
 ## Wrapper Of Framework Assert
 
