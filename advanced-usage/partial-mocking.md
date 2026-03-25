@@ -11,7 +11,13 @@ position: 5
 
 # Partial Mocking
 
-Partial mocks allow you to mock some of the methods of a class while keeping the rest intact. Thus, you keep your original object, not a mock object, and you are still able to write your test methods in isolation. 
+Partial mocking lets you mock specific members of a class while keeping the real implementation for all other members. You use a real object instance — not a full mock — and arrange only the methods you want to intercept.
+
+Use partial mocking when:
+
+* A class has some methods you want to stub and others you want to exercise with real logic.
+* You need to verify calls on a real object without replacing the entire class.
+* You want to arrange a static property or method on a non-mock instance.
 
 >note Partial mocking can be performed on both static and instance calls.
 
@@ -19,7 +25,7 @@ Partial mocks allow you to mock some of the methods of a class while keeping the
 
 ## Prerequisites
 
-In the further examples, we will use the following sample class to test:
+The following sample class is used in the examples below:
 
 #### Sample setup
 ```C#
@@ -163,5 +169,6 @@ End Sub
 
 ## See Also
 
+ * [Concrete (Non-Abstract) Class Mocking]({%slug justmock/advanced-usage/concrete-mocking%})
+ * [Static Mocking]({%slug justmock/advanced-usage/static-mocking%})
  * [Matchers]({%slug justmock/basic-usage/matchers%})
- * [Mock Static Classes]({%slug justmock/advanced-usage/static-mocking%})

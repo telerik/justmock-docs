@@ -11,7 +11,7 @@ position: 6
 
 # Raises
 
-The `Raises` method is used to fire an event once a method is called. This topic goes through a number of scenarios where the `Raises` method is useful.
+Use `Raises` to fire a mock event automatically when a specific mocked method is called. Chain `Raises` on `Mock.Arrange` so the event fires each time the arranged method runs. This is the primary way to test that your code correctly handles events raised by its dependencies.
 
 Assume we have the following interface:
 
@@ -581,7 +581,7 @@ We first create the `ILogger` and the `IUserValidationService` instances we need
 
  * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
 
- * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})[](b9461116-b200-4739-aff1-af8458c7095e)
+ * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
 
  * [Must Be Called]({%slug justmock/basic-usage/mock/must-be-called%})
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: Matchers
 page_title: Matchers | JustMock Documentation
 description: Matchers
@@ -11,15 +11,19 @@ position: 8
 
 # Matchers
 
-Matchers let you ignore passing actual values as arguments used in mocks. Instead, they give you the possibility to pass just an expression that satisfies the argument type or the expected value range. For example, if a method accepts a string as a first parameter, you don’t need to pass a specific string like "Camera". Instead, you can use __Arg.IsAny&lt;string&gt;()__. 
+Matchers let you define flexible argument conditions in both arrangements and assertions. Instead of matching an exact value, you pass a matcher that describes acceptable arguments - such as any string, any integer in a range, or any value satisfying a custom predicate. For example, if a method accepts a string as a first parameter, you don’t need to pass a specific string like "Camera". Instead, you can use __Arg.IsAny&lt;string&gt;()__. 
 
-There are several types of matchers supported in TelerikJustMock:
+> **When to use matchers:** Use matchers when the exact argument value does not matter, or when you want to assert a method was called with arguments meeting a specific condition.
 
-1. Defined Matchers (`Arg.AnyBool`, `Arg.AnyDouble`, `Arg.AnyFloat`, `Arg.AnyGuid`, `Arg.AnyInt`, `Arg.AnyLong`, `Arg.AnyObject`, `Arg.AnyShort`, `Arg.AnyString`, `Arg.NullOrEmpty`)
-1. `Arg.IsAny<T>();`
-1. `Arg.IsInRange(`[FromValue : int], [ToValue : int], [RangeKind]`)`
-1. `Arg.Matches<T>(Expression<Predicate<T>> expression)`
-1. `Arg.Ref()`
+JustMock supports the following matchers:
+
+| Matcher | Description |
+|---|---|
+| `Arg.AnyBool`, `Arg.AnyDouble`, `Arg.AnyFloat`, `Arg.AnyGuid`, `Arg.AnyInt`, `Arg.AnyLong`, `Arg.AnyObject`, `Arg.AnyShort`, `Arg.AnyString`, `Arg.NullOrEmpty` | Predefined type-specific matchers for common types. |
+| `Arg.IsAny<T>()` | Matches any value of type `T`. This is the most commonly used matcher. |
+| `Arg.IsInRange(from, to, RangeKind)` | Matches a value in the specified range. `RangeKind.Inclusive` includes boundaries; `RangeKind.Exclusive` excludes them. |
+| `Arg.Matches<T>(predicate)` | Matches any value satisfying the predicate. This is the most flexible matcher for custom conditions. |
+| `Arg.Ref(value).Value` | Matches a `ref` argument by value or type. |
 
 Matchers also let you ignore all arguments in your mocks by a single call to `IgnoreArguments()` (in the arrangement) or `Args.Ignore()` (in the assertion).
 
@@ -53,8 +57,9 @@ Public Interface IPaymentService
 End Interface
 ```
 
-## Arg.IsAny&lt;T&gt;();
-We've already used this matcher in one of our examples earlier.
+## Arg.IsAny&lt;T&gt;()
+
+`Arg.IsAny<T>()` matches any value of the specified type. Use it when you do not care what argument is passed. This is the most commonly used matcher - it works in both arrangements and assertions.
 
 ```C#
 Mock.Arrange(() => warehouse.HasInventory(Arg.IsAny<string>(), Arg.IsAny<int>())).Returns(true);
@@ -88,11 +93,11 @@ Mock.Arrange(Function() foo.Echo(Arg.IsInRange(0, 5, RangeKind.Exclusive))).Retu
 ```
 
 
-On the second line we specify the __RangeKind__ to be __Exclusive__ so calling the method with 0 or 5 doesnâ€™t satisfy the condition because these values are excluded from the range.
+On the second line we specify the __RangeKind__ to be __Exclusive__ so calling the method with 0 or 5 doesn't satisfy the condition because these values are excluded from the range.
 
 ## Arg.Matches\<T\> (Expression\<Predicate\<T\>\> expression)
 
-This is the most flexible matcher and it allows you to specify your own matching expression. Let's illustrate it with a simple example:
+`Arg.Matches<T>` is the most flexible matcher. Use it to specify a custom predicate that the argument must satisfy.
 
 ```C#
 Mock.Arrange(() => foo.Echo(Arg.Matches<int>( x => x < 10))).Returns(true);
@@ -106,7 +111,9 @@ With our expression (or predicate) __x => x < 10__ we specify that a call to __f
 
 ## Ignoring All Arguments in Arrangement
 
-To set argument independent expectations against certain method, you have to apply `IgnoreArguments` to its arrangement. The next example demonstrates this functionality:
+Use `IgnoreArguments()` to make an arrangement match any call to a method, regardless of what arguments are passed. This is useful when you need to stub a method but do not want to write `Arg.IsAny<T>()` for every parameter.
+
+Choose `IgnoreArguments()` over `Arg.IsAny<T>()` when the method has many parameters and you want to ignore all of them.
 
 ```C#
 [TestMethod]
@@ -141,7 +148,7 @@ End Sub
 ```
 
 
-After creating mock of the `IFoo`, we arrange that every `Echo` call, no matter its arguments should return 10. For this, in the arrangement we pass arguments from their corresponding types and then we apply the `IgnoreArguments` functionality.
+In the arrangement, pass placeholder values of the correct types for each parameter, then chain IgnoreArguments(). Every call to Echo, regardless of its arguments, returns 10.
 
 ## Using Matchers in Assert
 Matchers are also useful in assertion. Consider a fictitious payment service where we don't care what the payment date is, but we want to make sure that the payment amount which is passed to the service is $54.44. We can easily achieve this by using the following statement:
@@ -431,3 +438,9 @@ End Sub
 ```	  
 	
 > Note, the using of the *Value* field at the end of the matcher (`Arg.Ref(Arg.Matches<int>(x => x > 10))`__.Value__) is intended and needed in order to use this feature.
+
+## See Also
+
+ * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})
+ * [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})
+ * [Returns]({%slug justmock/basic-usage/mock/returns%})

@@ -11,7 +11,7 @@ position: 3
 
 # CallOriginal
 
-Mocks with `Behavior.CallOriginal` will follow the original implementation of the mocked type for every non explicitly arranged function/member.
+**CallOriginal** behavior makes the mock call the original implementation of the mocked type for every method or property that has no explicit arrangement. Use it for partial mocking: create a `Behavior.CallOriginal` mock, then arrange only the specific methods you want to override. All other calls execute the actual code.
 
 ## Syntax
 

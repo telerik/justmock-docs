@@ -80,6 +80,7 @@ With **JustMock**, you can directly control the behavior of the methods and igno
 [TestMethod]
 public void Order_IsCompleted_WhenWarehouseHasInventory()
 {
+    // Arrange
     Order order = new Order("testProduct", 10);
     Warehouse warehouse = new Warehouse();
 
@@ -89,8 +90,10 @@ public void Order_IsCompleted_WhenWarehouseHasInventory()
     // We are not maintaining a collection of products, so there isn't anything to remove. 
     Mock.Arrange(() => warehouse.Remove(order.ProductName, order.Quantity)).DoNothing();
 
+    // Act
     order.Complete(warehouse);
 
+    // Assert
     Assert.IsTrue(order.IsCompleted);
 }
 ```
@@ -115,14 +118,17 @@ private Dictionary<string, int> GetTestProducts()
 [TestMethod]
 public void Order_IsCompleted_WhenWarehouseHasSampleInventory()
 {
+    // Arrange
     Order order = new Order("shirt", 1);
     Warehouse warehouse = new Warehouse();
 
     // Setup the warehouse - the Products property will always return the test products. 
     Mock.Arrange(() => warehouse.Products).Returns(this.GetTestProducts());
 
+    // Act
     order.Complete(warehouse);
 
+    // Assert
     Assert.IsTrue(order.IsCompleted);
 }
 ```

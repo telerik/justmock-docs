@@ -37,7 +37,7 @@ The warehouse interface and the order class look like this:
 ```C#
 public delegate void ProductRemoveEventHandler(string productName, int quantity);
 
-public interface Iwarehouse
+public interface IWarehouse
 {
     event ProductRemoveEventHandler ProductRemoved;
 
@@ -59,7 +59,7 @@ public class Order
     public int Quantity { get; private set; }
     public bool IsFilled { get; private set; }
 
-    public void Fill(Iwarehouse warehouse)
+    public void Fill(IWarehouse warehouse)
     {
         if (warehouse.HasInventory(this.ProductName, this.Quantity))
         {
@@ -194,9 +194,9 @@ With this simple example we illustrated the use of the AAA pattern and showed ho
 
 ## Verify Interaction
 
-Now let's take it a little further and verify not only the final result, but also the interaction while executing the test.
+You can verify not only the final result, but also that specific methods were actually called during the test.
 
-We arranged that when the warehouse’s `HasInventory` method is called with specific parameters, it should return `true`, but we never ensured that this method is actually called. Let's change the `Arrange` method and mark that `warehouse.HasInventory` must be called.
+In the example above, `HasInventory` returns `true` but we never confirmed it was actually called. Update the arrangement to require it:
 
 ```C#
 Mock.Arrange(() => warehouse.HasInventory("Camera", 2)).Returns(true).MustBeCalled();
@@ -216,7 +216,9 @@ Mock.Assert(warehouse)
 
 ## Verify Order of Calls
 
-Furthermore you may want to ensure that a set of method calls are executed in a particular order. Let\`s assume we have the following `IFoo` interface:
+Use `InOrder()` on each arranged call to define the expected execution order. Then call `Mock.Assert(mock)` in the assert phase to verify the order was respected. `InOrder()` tracks call order across all mock instances within the same test scope — not just within a single mock.
+
+For example, assume you have the following `IFoo` interface:
 
 ```C#
 public interface IFoo
@@ -232,7 +234,7 @@ Public Interface IFoo
 End Interface
 ```
 
-You use the `Arrange` method to define the methods invocation order.
+Arrange each call with InOrder() in the order you expect them to be executed:
 
 ```C#
 [TestMethod]
@@ -270,7 +272,7 @@ Public Sub ShouldVerifyCallsOrder()
 End Sub
 ```
 
-Again to verify this we need to call `Mock.Assert` in the `Assert` phase with the foo object.
+Call `Mock.Assert` in the assert phase with the mock object to verify the call order.
 
 Note that the `InOrder` option also supports asserting the order of mock calls regardless of the instance within the test scope. Imagine that you have to validate that the user has logged in before using their shopping cart in your application.
 
@@ -349,11 +351,15 @@ End Sub
 
 In the arrange phase we defined that the `ValidateUser` call should be made only once and before the `LoadCart` service call. The `LoadCart` call should also occur only once and should follow the `ValidateUser` service call. We act and then assert our expectations.
 
->noteRefer to the [Asserting Occurrence](./asserting-occurrence) topic to learn more about asserting occurrence. The example also uses the [Returns](./mock/returns) option in order to ignore the actual call and return a custom value.
+> Refer to the [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%}) topic to learn more about asserting occurrence. The example also uses the [Returns]({%slug justmock/basic-usage/mock/returns%}) option to return a custom value.
 
 
 ## See Also
 
  * [JustMock API Basics]({%slug justmock/getting-started/basics/basics%})
-
  * [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%})
+ * [Returns]({%slug justmock/basic-usage/mock/returns%})
+ * [Throws]({%slug justmock/basic-usage/mock/throws%})
+ * [DoInstead]({%slug justmock/basic-usage/mock/do-instead%})
+ * [Matchers]({%slug justmock/basic-usage/matchers%})
+ * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})

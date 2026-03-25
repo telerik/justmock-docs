@@ -72,12 +72,9 @@ Public Class Customer
 End Class
 ```
 
-
 > **Important**
 >
 > To use this kind of object mocking, you first need to go to elevated mode by enabling Telerik JustMock from the menu. Learn how to do that in the [How to Enable/Disable Telerik JustMock]({%slug justmock/advanced-usage%}#how-to-enable-disable-telerik-justmock) topic.
-
-
 
 ## Arrange Property
 
@@ -201,13 +198,16 @@ public void ShouldAssertOnMethodOverload()
 {
     // Arrange 
     var customerMock = Mock.Create<Customer>();
-
     Mock.Arrange(() => customerMock.GetNumberOfOrders()).Returns(30);
     Mock.Arrange(() => customerMock.GetNumberOfOrders(Arg.Is(true))).Returns(10);
 
+    // Act
+    var ordersTotal = customerMock.GetNumberOfOrders();
+    var ordersCompleted = customerMock.GetNumberOfOrders(true);
+
     // Assert 
-    Assert.AreEqual(customerMock.GetNumberOfOrders(), 30);
-    Assert.AreEqual(customerMock.GetNumberOfOrders(true), 10);
+    Assert.AreEqual(30, ordersTotal);
+    Assert.AreEqual(10, ordersCompleted);
 }
 ```
 ```VB
@@ -217,10 +217,14 @@ Public Sub ShouldAssertOnMethodOverload()
     Dim customerMock = Mock.Create(Of Customer)()
     Mock.Arrange(Function() customerMock.GetNumberOfOrders()).Returns(30)
     Mock.Arrange(Function() customerMock.GetNumberOfOrders(Arg.[Is](True))).Returns(10)
-    
+
+    ' Act
+    Dim ordersTotal = customerMock.GetNumberOfOrders()
+    Dim ordersCompleted = customerMock.GetNumberOfOrders(True)
+
     ' Assert
-    Assert.AreEqual(customerMock.GetNumberOfOrders(), 30)
-    Assert.AreEqual(customerMock.GetNumberOfOrders(True), 10)
+    Assert.AreEqual(30, ordersTotal)
+    Assert.AreEqual(10, ordersCompleted)
 End Sub
 ```
 
@@ -273,6 +277,8 @@ End Sub
 
 ## See Also
 
+ * [Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})
+ * [Sealed Mocking]({%slug justmock/advanced-usage/sealed-mocking%})
  * [Mock Internal Types Via Proxy]({%slug justmock/basic-usage/mock-internal-types-via-proxy%})
  * [CallOriginal]({%slug justmock/basic-usage/mock/call-original%})
  * [Occurs]({%slug justmock/basic-usage/asserting-occurrence%})

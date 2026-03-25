@@ -11,7 +11,9 @@ position: 4
 
 # Must Be Called
 
-The `MustBeCalled` method is used to assert that a call to a given method or property is made during the execution of a test.
+The `MustBeCalled` method is used to assert that a call to a given method or property is made during the execution of a test. If the arranged method or property is never called during the test, `Mock.Assert(mock)` throws an `AssertFailedException` and the test fails.
+
+Chain `MustBeCalled()` at the end of a `Mock.Arrange` call. After the Act step, call `Mock.Assert(mock)` to verify all `MustBeCalled` arrangements were satisfied.
 
 In this article you will find various examples of the `MustBeCalled` usage, for which we will be using the following class:
 
@@ -240,7 +242,7 @@ We use `IgnoreArguments()` to ignore the arguments passed to `foo.Execute` metho
 
  * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
 
- * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})[](b9461116-b200-4739-aff1-af8458c7095e)
+ * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
 
  * [Raise]({%slug justmock/basic-usage/mock/raise%})
 
@@ -249,3 +251,7 @@ We use `IgnoreArguments()` to ignore the arguments passed to `foo.Execute` metho
  * [Returns]({%slug justmock/basic-usage/mock/returns%})
 
  * [Throws]({%slug justmock/basic-usage/mock/throws%})
+
+ * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})
+
+ * [Arrange Act Assert]({%slug justmock/basic-usage/arrange-act-assert%})

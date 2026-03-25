@@ -11,13 +11,14 @@ position: 4
 
 # Static Mocking
 
-Static mocking is one of the advanced features supported in __Telerik® JustMock__. It allows you to fake static constructors, methods and properties calls, set expectations and verify results using the [AAA]({%slug justmock/basic-usage/arrange-act-assert%}) principle. 
+Static mocking is one of the advanced features supported in __Telerik® JustMock__. It lets you arrange and verify calls to static methods, static properties, and static constructors on any type - including types you cannot modify. Use it to control the return values of static members, prevent static constructors from running, and assert that specific static calls occurred.
 
-We can divide static mocking into the following major parts: 
+We can divide static mocking into the following major parts:
 
 * Static constructor mocking
 * Static method mocking
-* Extension methods mocking
+* Static property mocking
+* Extension method mocking
 
 > This is an Elevated Feature. Refer to [this]({%slug justmock/licensing/commercial-vs-free-version%}) topic to learn more about the differences between both the commercial and free versions of Telerik JustMock.
 
@@ -205,16 +206,14 @@ With `Mock.SetupStatic(typeof(Foo), StaticConstructor.Mocked);` we setup that *a
 [ExpectedException(typeof(StrictMockException))]
 public void ShouldThrowWhenNotArranged()
 {
-    //Arrange
+    // Arrange
     Mock.SetupStatic(typeof(Foo), Behavior.Strict, StaticConstructor.Mocked);
-
     Mock.Arrange(() => Foo.Execute(10)).Returns(10);
-    
-    //Assert
+
+    // Act & Assert
     Assert.AreEqual(10, Foo.Execute(10));
 
-    // Act
-    // throws MockException as there is no arrange associated with the Submit method
+    // Throws StrictMockException — no arrange is associated with Submit.
     Foo.Submit();
 }
 ```
@@ -224,14 +223,12 @@ public void ShouldThrowWhenNotArranged()
 Public Sub ShouldThrowWhenNotArranged()
     ' Arrange
     Mock.SetupStatic(GetType(Foo), Behavior.Strict, StaticConstructor.Mocked)
-
     Mock.Arrange(Function() Foo.Execute(10)).Returns(10)
 
-    ' Assert
+    ' Act & Assert
     Assert.AreEqual(10, Foo.Execute(10))
 
-    ' Act
-    ' Throws MockException as there is no arrange associated with the Submit method.
+    ' Throws StrictMockException — no arrange is associated with Submit.
     Foo.Submit()
 End Sub
 ```
@@ -385,7 +382,7 @@ Mock.Arrange(() => DateTime.Now).Returns(new DateTime()).OnAllThreads();
 ## Mocking Current HttpContext
 Here is an example how to mock the *current HTTP context*.
 
-We arrange a call to `HttpContext.Current` to set a local variable to `true`. Note that the original implementation of `HttpContext.Current` won`t be executed.
+We arrange a call to `HttpContext.Current` to set a local variable to `true`. Note that the original implementation of `HttpContext.Current` won't be executed.
     		
 ```C#
 [TestMethod]
@@ -505,6 +502,8 @@ First we create an instance of the `Foo` class. Notice that we create a standard
 
 ## See Also
 
+ * [Sealed Mocking]({%slug justmock/advanced-usage/sealed-mocking%})
+ * [Mocking Non-public Members and Types]({%slug justmock/advanced-usage/mocking-non-public-members-and-types%})
+ * [Commercial vs. Free Version]({%slug justmock/licensing/commercial-vs-free-version%})
  * [Behavior.Loose]({%slug justmock/basic-usage/mock-behaviors/loose%})
-
  * [Mock Properties]({%slug justmock/basic-usage/mock-properties%})

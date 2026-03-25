@@ -11,8 +11,7 @@ position: 1
 
 # Call Original
 
-The `CallOriginal` method marks a mocked method/property call that should execute the original method/property implementation. 
-
+Use `CallOriginal` to make a specific mocked method or property execute its real implementation instead of mock behavior. This is the primary tool for partial mocking: override only the methods you need to fake and let everything else use real logic.
 
 
 ## CallOriginal with Void Calls
@@ -161,3 +160,5 @@ End Sub
  * [Raises]({%slug justmock/basic-usage/mock/raises%})
  * [Returns]({%slug justmock/basic-usage/mock/returns%})
  * [Throws]({%slug justmock/basic-usage/mock/throws%})
+
+ * [Partial Mocking]({%slug justmock/advanced-usage/partial-mocking%})

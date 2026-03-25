@@ -11,7 +11,8 @@ position: 9
 
 # Throws
 
-The `Throws` method is used to throw an exception when a given call is made. This topic goes through a number of scenarios where the `Throws` method is useful. 
+Use `Throws` to make a mocked method throw an exception when called. This is the primary way to test that your code correctly handles exceptions thrown by its dependencies.
+
 
 Here is the system under test for these examples:
 
@@ -102,7 +103,7 @@ The assert step is done via the `ExpectedException` attribute, where we explicit
 
  * [Do Instead]({%slug justmock/basic-usage/mock/do-instead%})
 
- * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})[](b9461116-b200-4739-aff1-af8458c7095e)
+ * [Do Nothing]({%slug justmock/basic-usage/mock/do-nothing%})
 
  * [Must Be Called]({%slug justmock/basic-usage/mock/must-be-called%})
 
@@ -111,3 +112,5 @@ The assert step is done via the `ExpectedException` attribute, where we explicit
  * [Raises]({%slug justmock/basic-usage/mock/raises%})
 
  * [Returns]({%slug justmock/basic-usage/mock/returns%})
+
+ * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})

@@ -187,11 +187,9 @@ The following list describes the steps you should perform in order to mock a non
 [TestMethod]
 public void ShouldInvokeNonPublicMember()
 {
-    Foo foo = new Foo();
-
-    bool called = false;
-
     // Arrange
+    Foo foo = new Foo();
+    bool called = false;
     Mock.NonPublic.Arrange(foo, "DoPrivate").DoInstead(() => called = true);
 
     // Act
@@ -204,11 +202,9 @@ public void ShouldInvokeNonPublicMember()
 ```VB
 <TestMethod>
 Public Sub ShouldInvokeNonPublicMember()
-    Dim foo As New Foo()
-
-    Dim called As Boolean = False
-
     ' Arrange
+    Dim foo As New Foo()
+    Dim called As Boolean = False
     Mock.NonPublic.Arrange(foo, "DoPrivate").DoInstead(Sub() called = True)
 
     ' Act
@@ -228,11 +224,9 @@ End Sub
 [TestMethod]
 public void ShouldInvokeNonPublicGenericMember()
 {
-    Foo foo = new Foo();
-
-    bool called = false;
-
     // Arrange
+    Foo foo = new Foo();
+    bool called = false;
     Mock.NonPublic.Arrange(foo, "DoPrivateGeneric", new Type[] { typeof(int) }, 10).DoInstead(() => called = true);
 
     // Act
@@ -245,11 +239,9 @@ public void ShouldInvokeNonPublicGenericMember()
 ```VB
 <TestMethod>
 Public Sub ShouldInvokeNonPublicGenericMember()
-    Dim foo As Foo = New Foo()
-
-    Dim called As Boolean = False
-
     ' Arrange
+    Dim foo As Foo = New Foo()
+    Dim called As Boolean = False
     Mock.NonPublic.Arrange(foo, "DoPrivateGeneric", New Type() {GetType(Integer)}, 10).DoInstead(Sub() called = True)
 
     ' Act
@@ -274,12 +266,10 @@ End Sub
 [TestMethod]
 public void ShouldInvokeNonPublicMemberWithMatcher()
 {
-    Foo foo = new Foo();
-
-    int expected = 1;
-
     // Arrange
-    // PrivateEcho will always return 1 when invoked with an int parameter
+    Foo foo = new Foo();
+    int expected = 1;
+    // PrivateEcho will always return 1 when invoked with an int parameter.
     Mock.NonPublic.Arrange<int>(foo, "PrivateEcho", Arg.Expr.IsAny<int>()).Returns(expected);
 
     // Act
@@ -292,12 +282,10 @@ public void ShouldInvokeNonPublicMemberWithMatcher()
 ```VB
 <TestMethod>
 Public Sub ShouldInvokeNonPublicMemberWithMatcher()
-    Dim foo As New Foo()
-
-    Dim expected As Integer = 1
-
     ' Arrange
-    ' PrivateEcho will always return 1 when invoked with an int parameter
+    Dim foo As New Foo()
+    Dim expected As Integer = 1
+    ' PrivateEcho will always return 1 when invoked with an int parameter.
     Mock.NonPublic.Arrange(Of Integer)(foo, "PrivateEcho", Arg.Expr.IsAny(Of Integer)()).Returns(expected)
 
     ' Act
@@ -374,10 +362,9 @@ In the sample setup shown above, the `pExecute` method has two overloads - one w
     [TestMethod]
     public void ShouldInvokeNonPublicMemberWithOverloads()
     {
+        // Arrange
         FooInternal foo = new FooInternal();
         bool isCalled = false;
-
-        // Arrange
         Mock.NonPublic.Arrange(foo, "pExecute", 10).DoInstead(() => isCalled = true);
 
         // Act
@@ -393,8 +380,6 @@ Public Sub ShouldInvokeNonPublicMemberWithOverloads()
     ' Arrange
     Dim foo As New FooInternal()
     Dim isCalled As Boolean = False
-
-    ' Arrange
     Mock.NonPublic.Arrange(foo, "pExecute", 10).DoInstead(Sub() isCalled = True)
 
     ' Act
@@ -493,11 +478,9 @@ Mocking internal virtual methods uses similar approach to mocking public members
 [TestMethod]
 public void ShouldMockInternalVirtualMethod()
 {
-    Foo foo = new Foo();
-
-    bool isCalled = false;
-
     // Arrange
+    Foo foo = new Foo();
+    bool isCalled = false;
     Mock.Arrange(() => foo.Do()).DoInstead(() => isCalled = true);
 
     // Act
@@ -510,11 +493,9 @@ public void ShouldMockInternalVirtualMethod()
 ```VB
 <TestMethod> _
 Public Sub ShouldMockInternalVirtualMethod()
-    Dim foo As New Foo()
-
-    Dim isCalled As Boolean = False
-
     ' Arrange
+    Dim foo As New Foo()
+    Dim isCalled As Boolean = False
     Mock.Arrange(Sub() foo.Do()).DoInstead(Sub() isCalled = True)
 
     ' Act
@@ -536,9 +517,8 @@ Arranging an internal virtual property is also similar to arranging a public pro
 [TestMethod]
 public void ShouldMockInternalVirtualPropertyGET()
 {
-    Foo foo = new Foo();
-
     // Arrange
+    Foo foo = new Foo();
     Mock.Arrange(() => foo.Value).Returns("ping");
 
     // Act
@@ -551,9 +531,8 @@ public void ShouldMockInternalVirtualPropertyGET()
 ```VB
 <TestMethod> _
 Public Sub ShouldMockInternalVirtualPropertyGET()
-    Dim foo As New Foo()
-
     ' Arrange
+    Dim foo As New Foo()
     Mock.Arrange(Function() foo.Value).Returns("ping")
 
     ' Act
@@ -736,11 +715,9 @@ The property arranged in **Example 11** is `Foo.PrivateStaticProperty`. When cal
 [TestMethod]
 public void ShouldMockPrivateStaticProperty()
 {
-    var expected = 10;
-
     // Arrange
+    var expected = 10;
     Foo foo = new Foo();
-
     Mock.NonPublic.Arrange<int>(typeof(Foo), "PrivateStaticProperty").Returns(expected);
 
     // Act
@@ -753,11 +730,9 @@ public void ShouldMockPrivateStaticProperty()
 ```VB
 <TestMethod> _
 Public Sub ShouldMockPrivateStaticProperty()
-    Dim expected = 10
-
     ' Arrange
+    Dim expected = 10
     Dim foo As New Foo()
-
     Mock.NonPublic.Arrange(Of Integer)(GetType(Foo), "PrivateStaticProperty").Returns(expected)
 
     ' Act
@@ -1040,3 +1015,11 @@ Public Sub ShouldInvokeNonPublicMemberDynamic()
     Mock.Assert(foo)
 End Sub
 ```
+
+
+## See Also
+
+ * [Private Accessor]({%slug justmock/advanced-usage/private-accessor%})
+ * [Static Mocking]({%slug justmock/advanced-usage/static-mocking%})
+ * [Matchers]({%slug justmock/basic-usage/matchers%})
+ * [Commercial vs. Free Version]({%slug justmock/licensing/commercial-vs-free-version%})

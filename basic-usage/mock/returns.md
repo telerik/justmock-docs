@@ -11,7 +11,9 @@ position: 7
 
 # Returns
 
-The `Returns` method is used with non void calls to ignore the actual call and return a custom value. This topic goes through a number of scenarios where the `Returns` method is useful. For them, we will be using the following interface:
+Use `Returns` to specify the value a mocked method or property returns when called. `Returns` applies only to non-void members - for void methods, use [`DoNothing`]({%slug justmock/basic-usage/mock/do-nothing%}) or [`DoInstead`]({%slug justmock/basic-usage/mock/do-instead%}) instead.
+
+The examples use the following interface:
 
 ```C#
 public interface IFoo
@@ -246,5 +248,7 @@ In this example, `Echo` is called on a new `Foo` instance, instead of a mocked o
  * [Raises]({%slug justmock/basic-usage/mock/raises%})
 
  * [Throws]({%slug justmock/basic-usage/mock/throws%})
+
+ * [Asserting Occurrence]({%slug justmock/basic-usage/asserting-occurrence%})
 
  * [Create Mocks By Example]({%slug justmock/basic-usage/create-mocks-by-example%})
