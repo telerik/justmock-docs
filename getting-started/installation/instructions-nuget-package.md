@@ -31,6 +31,8 @@ As the Telerik NuGet server requires authentication, the first step is to obtain
 
 ## Installing JustMock
 
+> `JustMock.Commercial` is available to users with an active paid Telerik subscription. If you do not have a subscription yet, you can [purchase one](https://www.telerik.com/purchase/individual-justmock.aspx) or use the [`JustMock.Trial` package](#installing-justmock-trial) to evaluate the full feature set before committing to a purchase.
+
 #### Visual Studio
 
 To install the JustMock NuGet package, first add the Telerik NuGet feed to the package sources using NuGet Package Manager:
@@ -68,6 +70,35 @@ Once you have configured Visual Studio to access the Telerik NuGet server, add t
 ```bat
 dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik.com" --username "api-key" --password <TELERIK_NUGET_API_KEY>
 dotnet add package JustMock.Commercial --version 2024.4.1203.350
+```
+
+## Installing JustMock Trial
+
+`JustMock.Trial` lets you evaluate the full JustMock feature set through the NuGet package workflow before purchasing a subscription. To use it, start a [free 30-day trial](https://www.telerik.com/try/justmock) and then follow the steps below.
+
+> The Telerik NuGet feed setup and the API key from the [Generate an API Key](#generate-an-api-key) section above are required for installing `JustMock.Trial`. A trial license key is also required — see [Setting Up Your License Key]({%slug justmock/licensing/set-up-your-license%}).
+
+#### Visual Studio
+
+To install the `JustMock.Trial` NuGet package, add the Telerik NuGet feed to the package sources as described in the [Installing JustMock](#installing-justmock) section, and then:
+
+1. In Visual Studio, open the solution in which you will use mocking.
+
+1. Go to **Tools** > **NuGet Package Manager** > **Manage NuGet Packages for Solution...**.
+
+1. From the **Package source** drop-down, select `Telerik.com`.
+
+1. On the **Browse** tab, search for `JustMock.Trial`.
+
+1. Select the `JustMock.Trial` package, select the desired project, and then select **Install**.
+
+#### Command Line
+
+- On the command line you can use the following commands:
+
+```bat
+dotnet nuget add source "https://nuget.telerik.com/v3/index.json" --name "Telerik.com" --username "api-key" --password <TELERIK_NUGET_API_KEY>
+dotnet add package JustMock.Trial --version 2024.4.1203.350
 ```
 
 ## Installing JustMock Lite
