@@ -38,11 +38,12 @@ To download a Telerik JustMock license key, ensure you have either a developer l
 To activate the Telerik JustMock license:
 
 - Copy the [downloaded](#downloading-the-license-key) `telerik-license.txt` license key file to your home directory. This makes the license key available to all projects that you develop on your computer:
-  - For Windows: `%AppData%\Telerik\telerik-license.txt`.
+  - For Windows: `%AppData%\Telerik\telerik-license.txt`.+
   - For macOS/Linux: `${HOME}/.telerik/telerik-license.txt`.
 
   Before placing the `telerik-license.txt` file in your home directory, ensure the necessary folder structure exists. Create any required directories in your home folder if they do not already exist.
-  - Alternatively, copy the `telerik-license.txt` license key file to the root folder of your project. This makes the license key available only to this project. **Do not commit the file to source control** as this is your personal license key.
+  - Alternatively, copy the `telerik-license.txt` license key file to the root folder of your project. This makes the license key available only to this project.
+    > **Do not commit the file to source control** as this is your personal license key.
 
 ## Adding a License Key to Projects without NuGet References
 
