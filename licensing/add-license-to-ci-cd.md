@@ -43,19 +43,21 @@ The recommended approach for providing your license key to the `Telerik.Licensin
 ```yaml
 env:
   TELERIK_LICENSE: ${{ secrets.TELERIK_LICENSE }}
+run: |
+  # Your test execution command goes here
 ```
 
 ### Azure Pipelines
 
-1. Create a new secret variable named `TELERIK_LICENSE`.
+1. Create a new [secret variable](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables) named `TELERIK_LICENSE`.
 
 1. Paste the contents of the license key file or deployment key as a value.
 
-   > **Note** Always consider the Variable size limit - if you are using a Variable Group, the license key will typically exceed the character limit for the variable values. The only way to have a long value in a Variable Group is to link it from Azure Key Vault. If you cannot use a Key Vault, use a normal pipeline variable instead (see above) or use the [Secure Files approach](#using-secure-files-on-azure-devops) instead.
+   > **Note** Always consider the Variable size limit - if you are using a [Variable Group](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups), the license key will typically exceed the character limit for the variable values. The only way to have a long value in a Variable Group is to [link it from Azure Key Vault](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/link-variable-groups-to-key-vaults). If you cannot use a Key Vault, use a normal pipeline variable instead (see above) or use the [Secure Files approach](#using-secure-files-on-azure-devops) instead.
 
 ## Using Secure Files on Azure DevOps
 
-Secure files are an alternative approach for sharing the license key file in Azure Pipelines that does not have the size limitations of environment variables.
+[Secure files](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files) are an alternative approach for sharing the license key file in Azure Pipelines that does not have the size limitations of environment variables.
 
 You have two options for the file-based approach. Set the `TELERIK_LICENSE_PATH` environment variable, or аdd a file named `telerik-license.txt` to the project directory or a parent directory.
 
@@ -63,7 +65,7 @@ You have two options for the file-based approach. Set the `TELERIK_LICENSE_PATH`
 
 ### YAML Pipeline
 
-With a YAML pipeline, you can use the `DownloadSecureFile@1` task, then use `$(name.secureFilePath)` to reference it. For example:
+With a YAML pipeline, you can use the [`DownloadSecureFile@1`](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/download-secure-file-v1) task, then use `$(name.secureFilePath)` to reference it. For example:
 
 ```yaml
 - task: DownloadSecureFile@1
