@@ -31,9 +31,20 @@ An expired [perpetual license](https://www.telerik.com/purchase/faq/licensing-pu
 
 This depends on the [Telerik JustMock license type (perpetual, subscription, or trial)](https://www.telerik.com/purchase/faq/licensing-purchasing#licensing):
 
-* *Perpetual licenses* function normally, provided that the tests are executed using a Telerik JustMock version released prior to the license's expiration date.
-* *Subscription licenses* function normally as long as the subscription is active and has not expired.
-* *Trial licenses* function normally only within the 30-day trial period.
+* **Perpetual licenses** will continue to function normally with an expired license key. However, the following will happen if you update or install a Telerik JustMock version that is released after the expiration date of the license:
+  * A watermark appears on application startup.
+  * A modal dialog appears on application startup.
+  * A warning message is logged in the build log.
+  
+* **Subscription licenses** used in deployed applications will continue to function normally. However, the following will happen if you rebuild the application with an expired subscription license:
+  * A watermark appears on application startup.
+  * A modal dialog appears on application startup.
+  * A warning message is logged in the build log.
+  
+* **Trial licenses** will prevent the application from functioning normally once the trial period has expired. The following will happen if you try to build or run the application:
+  * A watermark appears on application startup.
+  * A modal dialog appears on application startup.
+  * A warning message is logged in the build log.
 
 ## I updated the Telerik JustMock version in my project and license errors appeared. Why?
 
