@@ -28,7 +28,7 @@ To activate your license in a CI/CD environment using deployment keys:
 
 ## Creating an Environment Variable
 
-The recommended approach for providing your license key to the `Telerik.Licensing` NuGet package is to use environment variables. Each CI/CD platform has a different process for setting environment variables and this article lists some of the most popular examples.
+The recommended approach for providing your license key is to use environment variables. Each CI/CD platform has a different process for setting environment variables and this article lists only some of the most popular examples.
 
 > If your CI/CD service is not listed in this article, contact the Telerik technical support.
 
@@ -60,8 +60,6 @@ run: |
 [Secure files](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files) are an alternative approach for sharing the license key file in Azure Pipelines that does not have the size limitations of environment variables.
 
 You have two options for the file-based approach. Set the `TELERIK_LICENSE_PATH` environment variable, or аdd a file named `telerik-license.txt` to the project directory or a parent directory.
-
-> Make sure you're referencing `Telerik.Licensing` v1.4.10 or later.
 
 ### YAML Pipeline
 

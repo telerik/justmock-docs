@@ -42,25 +42,6 @@ To activate the Telerik JustMock license:
   - For macOS/Linux: `${HOME}/.telerik/telerik-license.txt`.
 
   Before placing the `telerik-license.txt` file in your home directory, ensure the necessary folder structure exists. Create any required directories in your home folder if they do not already exist.
-  - Alternatively, copy the `telerik-license.txt` license key file to the root folder of your project. This makes the license key available only to this project.
-
-> **Do not commit the file to source control** as this is your personal license key.
-
-## Adding a License Key to Projects without NuGet References
-
-Telerik strongly recommends the use of NuGet packages whenever possible. Only include the license key as a code snippet when NuGet packages are not an option.
-
-If you cannot use NuGet packages in your project, add the license as a code snippet:
-
-1. Go to the [License Keys](https://www.telerik.com/account/your-licenses/license-keys) page in your Telerik account.
-
-1. On the Telerik JustMock row, click the **View key** link in the **SCRIPT KEY** column.
-
-1. Copy the C# code snippet into a new file, for example, `TelerikLicense.cs`.
-
-1. Add the `TelerikLicense.cs` file to your project.
-
-> **Do not publish the license key code snippet in publicly accessible repositories.** This is your personal license key.
 
 ## Updating Your License Key
 
