@@ -53,7 +53,7 @@ run: |
 
 1. Paste the contents of the license key file or deployment key as a value.
 
-   > **Note** Always consider the Variable size limit - if you are using a [Variable Group](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups), the license key will typically exceed the character limit for the variable values. The only way to have a long value in a Variable Group is to [link it from Azure Key Vault](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/link-variable-groups-to-key-vaults). If you cannot use a Key Vault, use a normal pipeline variable instead (see above) or use the [Secure Files approach](#using-secure-files-on-azure-devops) instead.
+> **Note** Always consider the Variable size limit - if you are using a [Variable Group](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups), the license key will typically exceed the character limit for the variable values. The only way to have a long value in a Variable Group is to [link it from Azure Key Vault](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/link-variable-groups-to-key-vaults). If you cannot use a Key Vault, use a normal pipeline variable instead (see above) or use the [Secure Files approach](#using-secure-files-on-azure-devops) instead.
 
 ## Using Secure Files on Azure DevOps
 
