@@ -11,7 +11,7 @@ position: 4
 
 Starting with the Q2 2025 release, Telerik JustMock will display specific warnings and errors if used without a valid license or with an invalid one. This article explains what defines an invalid license, the possible reasons behind it, and the related warnings and errors you might encounter.
 
-A **missing**, **expired**, or **invalid** license will result in a warning message similar to the following appearing in the build log:
+A **missing**, **expired**, or **invalid** license will result in a warning message similar to the following appearing in the test run output:
 
 > Warning: [TKL101] Progress® Telerik® JustMock is not listed in your current license file.
 

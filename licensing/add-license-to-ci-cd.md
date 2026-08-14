@@ -57,9 +57,7 @@ run: |
 
 ## Using Secure Files on Azure DevOps
 
-[Secure files](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files) are an alternative approach for sharing the license key file in Azure Pipelines that does not have the size limitations of environment variables.
-
-You have two options for the file-based approach. Set the `TELERIK_LICENSE_PATH` environment variable, or аdd a file named `telerik-license.txt` to the project directory or a parent directory.
+[Secure files](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/secure-files) are an alternative approach for sharing the license key file in Azure Pipelines that does not have the size limitations of environment variables. You can set the `TELERIK_LICENSE_PATH` environment variable.
 
 ### YAML Pipeline
 
