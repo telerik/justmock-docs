@@ -11,24 +11,21 @@ position: 2
 
 This article describes how to set up and activate your Telerik JustMock [license key]({%slug justmock/licensing/set-up-your-license%}) across popular CI/CD services.
 
-Deployment keys are a dedicated type of license key for build pipelines. They're tied to a specific application and the set of products that the application uses. Deployment keys cannot be used for application development.
+The license activation process in a CI/CD environment involves the following steps:
 
-To activate your license in a CI/CD environment using deployment keys:
+1. [Download]({%slug justmock/licensing/set-up-your-license%}) a license key from your Telerik account.
 
-1. Navigate to the [Deployment Keys](https://www.telerik.com/account/your-licenses/deployment-keys) page.
-
-1. Click **Add Application**. In the form that opens:
-   - Add the application name.
-   - Select the type of application (public or private).
-   - Select the set of products used in the application (JustMock).
-
-1. Copy the key value and store it securely.
-
-1. [Create an environment variable](#creating-an-environment-variable) named `TELERIK_LICENSE` and set it to the obtained key value. Alternatively, the key can be stored in a `telerik-license.txt` file (for example, when using the [Azure Secure Files approach](#using-secure-files-on-azure-devops)).
+1. [Create an environment variable](#creating-an-environment-variable) named `TELERIK_LICENSE` and add your Telerik JustMock license key as a value.
 
 ## Creating an Environment Variable
 
 The recommended approach for providing your license key is to use environment variables. Each CI/CD platform has a different process for setting environment variables and this article lists only some of the most popular examples.
+
+### Azure Pipelines
+
+1. Create a new [user-defined variable](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#user-defined-variables) named `TELERIK_LICENSE`.
+
+1. Paste the contents of the license key file as a value.
 
 > If your CI/CD service is not listed in this article, contact the Telerik technical support.
 
@@ -36,22 +33,23 @@ The recommended approach for providing your license key is to use environment va
 
 1. Create a new [Repository Secret](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) or an [Organization Secret](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-an-organization).
 
-1. Set the name of the secret to `TELERIK_LICENSE` and paste the contents of the license file or deployment key as a value.
+1. Set the name of the secret to `TELERIK_LICENSE` and paste the contents of the license file as a value.
 
-1. Update the build step to activate the license
+1. Update the build step that executes the tests. For example, in a GitHub Actions workflow, you can include the following step in your YAML configuration:
 
 ```yaml
-env:
-  TELERIK_LICENSE: ${{ secrets.TELERIK_LICENSE }}
-run: |
-  # Your test execution command goes here
+- name: Run Tests with Telerik JustMock
+    env:
+        TELERIK_LICENSE: ${{ secrets.TELERIK_LICENSE }}
+    run: |
+        # Your test execution command goes here
 ```
 
 ### Azure Pipelines
 
 1. Create a new [secret variable](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables) named `TELERIK_LICENSE`.
 
-1. Paste the contents of the license key file or deployment key as a value.
+1. Paste the contents of the license key file as a value.
 
 > **Note** Always consider the Variable size limit - if you are using a [Variable Group](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups), the license key will typically exceed the character limit for the variable values. The only way to have a long value in a Variable Group is to [link it from Azure Key Vault](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/link-variable-groups-to-key-vaults). If you cannot use a Key Vault, use a normal pipeline variable instead (see above) or use the [Secure Files approach](#using-secure-files-on-azure-devops) instead.
 
