@@ -30,7 +30,7 @@ When you need the advanced features, you need to go to "elevated mode", i.e. to 
 
 You only need to enable JustMock when you want to use the advanced features.
 
-To enable/disable JustMock, go to the JustMock menu in Visual Studio and select Enable/Disable or use the shortcuts `Ctrl+Shift+[` and `Ctrl+Shift+]` to enable and disable, accordingly. 
+To enable or disable JustMock, go to the JustMock menu in Visual Studio and select Enable/Disable. When the standard Visual Studio editor is active, you can also use `Ctrl+Shift+Alt+J` to enable JustMock or `Ctrl+Shift+Alt+K` to disable it.
 
 **Figure 1: Enable/disable JustMock**
 

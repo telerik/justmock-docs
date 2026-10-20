@@ -21,7 +21,10 @@ This article will walk you through the different settings the Visual Studio exte
 
 Enables or disables the JustMock profiler. The profiler is only needed when you want to use the [advanced features]({%slug justmock/advanced-usage%}) of JustMock. 
 
-You can enable and disable the profiler using the `Ctrl+Shift+[` and `Ctrl+Shift+]` shortcuts.
+When the standard Visual Studio editor is active, you can enable and disable the profiler using these shortcuts:
+
+* **Enable Profiler** — `Ctrl+Shift+Alt+J`
+* **Disable Profiler** — `Ctrl+Shift+Alt+K`
 
 ## Options
 Opens the Profiler Runtime Options from where you can configure what exactly should be instrumented by the JustMock profiler. Here are the available options:
@@ -66,6 +69,14 @@ Opens the [JustMock Ideas and Feedback Portal](https://feedback.telerik.com/just
 Opens the Telerik JustMock Updater window.  Gives you the options to *Include internal builds when checking for updates* and *Check for JustMock updates when Visual Studio starts*.
 
 ![Updater Window](images/UpdaterWindow.png)
+
+## Keyboard Menu Navigation
+
+Use Visual Studio's menu keyboard navigation to access JustMock commands without a mouse. Press `Alt`, then the mnemonic keys in sequence:
+
+* **JustMock menu** — `J`
+* **Help submenu** — `J`, then `H`
+* **Check for Updates** — `J`, then `H`, then `U`
 
 ## Customer Experience and Improvement Program 
 
@@ -120,4 +131,3 @@ Solution:
 
  * [Installation on Windows]({%slug justmock/getting-started/installation/instructions-windows%})
  * [Adding Telerik JustMock to Your Test Project]({%slug justmock/getting-started/configuration/using-telerik-justmock-in-your-test-project%})
-
